@@ -1,4 +1,7 @@
-# 8-length tab is too much
+# this file contains only some additional settings
+# you may append these lines to your existing .bashrc file
+
+# 8-length tab is too much for some (i.e. me)
 # change the default to 4
 tabs -4
 
@@ -9,7 +12,8 @@ tabs -4
 # this is for Linux Mint; you may have to modify it for your distribution
 PS1='${debian_chroot:+($debian_chroot)}[\[\033[01;32m\]\u\[\033[00m\]@\h \[\033[01;34m\]\W\[\033[00m\]]\$ '
 
-# if you have installed undistract-me, add these lines to .bashrc
+# if you have installed undistract-me, add these lines to the .bashrc file
 # so that after a bash command completes execution, a notification is sent
+# to customise the behaviour, just edit the file named in the below line
 . /usr/share/undistract-me/long-running.bash
 notify_when_long_running_commands_finish_install
