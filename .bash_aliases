@@ -95,3 +95,25 @@ _cne ()
 	COMPREPLY=()
 }
 complete -o bashdefault -o default -F _cne cne
+
+################################################################################
+
+# update local copy of GitHub repository from its master branch
+pull ()
+{
+	git pull origin master
+}
+
+# update master branch of remote copy of GitHub repository
+push ()
+{
+	if [ $# -lt 1 ];
+	then
+		echo "usage:"
+		echo -e "\tpush \"<commit message>\""
+		return
+	fi
+	git add .
+	git commit -m $1
+	git push origin master
+}
