@@ -1,5 +1,3 @@
-# aliases
-
 # view frequency of the CPU in real time
 # CPU information is found in the file '/proc/cpuinfo'
 alias Freq='watch -n 0.1 "cat /proc/cpuinfo | grep \"^cpu MHz\""'
@@ -22,47 +20,50 @@ alias pgrep='pgrep -il'
 
 # list all running processes
 # combine with 'grep' for coloured output
-# otherwise, use 'pgrep'
+# alternatively, use 'pgrep'
 alias ps='ps -e | sort -gr'
 
-# overwrite a file with zeros then delete it
-# '--iterations=0' means it is not overwritten with random data
+# overwrite a file with zeros, and then delete it
+# 'z' option tells the program to overwrite with zeros
+# long option indicates that the file should not be overwritten with random data
+# otherwise, by default, random data is overwritten before zeros are written
 alias shred='shred -uvz --iterations=0'
 
 ################################################################################
 
-# functions
-
-# change the screen resolution of the active display
-# if the resolution is not specified, change it to your preferred resolution
-# finally, display all available resolutions
-resolve()
+# display all available screen resolutions
+# set screen resolution of active display
+# if the resolution is not specified, change it to 1366x768 (set it to whatever you want)
+resolve ()
 {
-	active_display=$(xrandr | grep " connected" | cut -f 1 -d " ")
+	xrandr
+	local active_display=$(xrandr | grep " connected" | cut -d " " -f 1)
 	if [ $# -lt 1 ];
 	then
 		xrandr --output $active_display --mode 1366x768
-	else
-		xrandr --output $active_display --mode $1
+		return
 	fi
-	xrandr
+	xrandr --output $active_display --mode $1
 }
+
+################################################################################
 
 # display the total time the system has been running since being powered on
 # also display when the system was last powered on
-# using a function because 'uptime -sp' didn't work
-rtime()
+# using an alias won't work, because 'uptime -ps' ignores the 'p' option
+rtime ()
 {
 	uptime -p
 	uptime -s
 }
 
-# compile a C program
-# if compilation fails, do nothing more
+################################################################################
+
+# compile a C program (if compilation fails, do nothing more)
 # executable file name shall be same as C file name
 # only their extensions will be different
 # on compiling, forward the arguments to the executable
-cne()
+cne ()
 {
 	if [ $# -lt 1 ]
 	then
@@ -80,3 +81,17 @@ cne()
 		./$executable_file $c_program_arguments
 	fi
 }
+
+# programmable completion (using Tab) for the 'cne' function
+# the first argument must be a C program file
+# further arguments may be other files of any type
+_cne ()
+{
+	if [ $COMP_CWORD -eq 1 ];
+	then
+		COMPREPLY=( $(compgen -f -X '!*.c') )
+		return
+	fi
+	COMPREPLY=()
+}
+complete -o bashdefault -o default -F _cne cne
