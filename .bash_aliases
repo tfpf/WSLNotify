@@ -98,6 +98,28 @@ complete -o bashdefault -o default -F _cne cne
 
 ################################################################################
 
+# clone a GitHub repository
+# then change the working directory to that of the repository
+gcl ()
+{
+	# check arguments
+	if [ $# -lt 1 ];
+	then
+		echo "usage:"
+		echo -e "\tgcl <GitHub repository link>"
+		return
+	fi
+
+	# obtain 'directory', the name of the directory in which the local files get stored
+	repository=$(basename $1)
+	directory=${repository%.*}
+
+	# clone repository in desired location and enter the directory
+	cd ~/Documents/projects/
+	git clone $1
+	cd $directory
+}
+
 # update local copy of GitHub repository from its master branch
 pull ()
 {
