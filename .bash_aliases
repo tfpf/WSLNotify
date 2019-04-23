@@ -88,7 +88,7 @@ cne ()
 # further arguments may be other files of any type
 _cne ()
 {
-	if [ $COMP_CWORD -eq 1 ];
+	if [ $COMP_CWORD -eq 1 ]
 	then
 		COMPREPLY=( $(compgen -f -X '!*.c') )
 		return
@@ -104,7 +104,7 @@ complete -o bashdefault -o default -F _cne cne
 gcl ()
 {
 	# check arguments
-	if [ $# -lt 1 ];
+	if [ $# -lt 1 ]
 	then
 		echo "usage:"
 		echo -e "\tgcl <GitHub repository link>"
@@ -130,7 +130,7 @@ pull ()
 # update master branch of remote copy of GitHub repository
 push ()
 {
-	if [ $# -lt 1 ];
+	if [ $# -lt 1 ]
 	then
 		echo "usage:"
 		echo -e "\tpush \"<commit message>\""
