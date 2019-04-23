@@ -19,6 +19,7 @@ alias Mem='watch -n 0.1 free -ht'
 alias pgrep='pgrep -il'
 
 # list all running processes
+# sort them by descending order of PID
 # combine with 'grep' for coloured output
 # alternatively, use 'pgrep'
 alias ps='ps -e | sort -gr'
@@ -41,7 +42,7 @@ resolve ()
 	if [ $# -lt 1 ];
 	then
 		xrandr --output $active_display --mode 1366x768
-		return
+		return $?
 	fi
 	xrandr --output $active_display --mode $1
 }
@@ -68,14 +69,14 @@ cne ()
 	if [ $# -lt 1 ]
 	then
 		echo "usage:"
-		echo -e "\tcne main_C_program.c argument1.txt argument2.dat argument3"
-		return
+		echo -e "\tcne main_C_program.c argument1.txt argument2.dat argument3 etc."
+		return 1
 	fi
 	cne_arguments=("$@") # array of the items ($1, $2, $3, $4, ...)
 	c_program_arguments=${cne_arguments[@]:1} # array of the items ($2, $3, $4, ...)
 	c_program_file=$1
 	executable_file=${c_program_file%.*}.out
-	gcc -o $executable_file $c_program_file
+	gcc -o $executable_file -Wall -Wextra $c_program_file
 	if [ $? -eq 0 ];
 	then
 		./$executable_file $c_program_arguments
@@ -107,7 +108,7 @@ gcl ()
 	then
 		echo "usage:"
 		echo -e "\tgcl <GitHub repository link>"
-		return
+		return 1
 	fi
 
 	# obtain 'directory', the name of the directory in which the local files get stored
@@ -133,7 +134,7 @@ push ()
 	then
 		echo "usage:"
 		echo -e "\tpush \"<commit message>\""
-		return
+		return 1
 	fi
 	git add .
 	git commit -m "$1"
