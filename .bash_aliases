@@ -99,8 +99,8 @@ complete -o bashdefault -o default -F _cne cne
 
 ################################################################################
 
-# clone a GitHub repository
-# then change the working directory to that of the repository
+# clone a GitHub repository to a specific location
+# then change the working directory to that location
 gcl ()
 {
 	# check arguments
@@ -111,14 +111,14 @@ gcl ()
 		return 1
 	fi
 
-	# obtain 'directory', the name of the directory in which the local files get stored
-	repository=$(basename $1)
-	directory=${repository%.*}
+	# obtain 'directory', where the local files get stored
+	repository=$(basename $1) # of the form 'something.git'
+	directory=${repository%.*} # remove the '.git' part
+	full_path="/home/users/Documents/projects/$directory" # where you want to store repositories
 
 	# clone repository in desired location and enter the directory
-	cd ~/Documents/projects/
-	git clone $1
-	cd $directory
+	git clone $1 $full_path
+	cd $full_path
 }
 
 # update local copy of GitHub repository from its master branch
