@@ -1,30 +1,41 @@
+" set a colour to highlight trailing whitespace
+au ColorScheme * highlight trailing_whitespace ctermbg=235 guibg=#3f3f3f
+
+" on Windows: simulate a 'window maximise' keyboard command to start maximised
+au GUIEnter * sim ~x
+
+" silently write changes to disk on each change
+au TextChanged,TextChangedI <buffer> silent write
+
 colorscheme torte
 syntax on
 
-au GUIEnter * sim ~x
-au TextChanged,TextChangedI <buffer> silent write
+" indicate warning column
+highlight ColorColumn ctermbg=235 guibg=#3f3f3f
 
-highlight ColorColumn ctermbg=235 guibg=#2c2d27
+" define trailing whitespace
+match trailing_whitespace /\s\+$/
 
-set ai
-set ar
-set bs=indent,eol,start
-set cc=81,121
-set ci
-set dy=lastline
-set gfn=Consolas
-set hls
-set lsp=0
-set mh
-set noet
-set nosr
-set nosta
-set nowrap
-set nu
-set pi
-set report=0
-set ru
-set sts=0
-set sw=8
-set ts=8
-set ul=1000
+set ai                  " automatic indent
+set ar                  " automatically read file when changed from elsewhere
+set bs=indent,eol,start " backspace clears text across lines
+set cc=81,121           " define columns to highlight
+set ci                  " copy previous line indent
+set dy=lastline         " display line partially if entire line cannot be shown
+set gfn=Consolas        " font
+set hls                 " searching highlights search string
+set lsp=0               " line spacing
+set mh                  " hide mouse pointer while typing
+set noet                " do not expand tabs to spaces
+set sr                  " jump only at specified tabs when using >> or <<
+set nosta               " use hard tabs, not spaces
+set nowrap              " no word wrap
+set nu                  " line numbers
+set pi                  " preserve existing indentation when changing indent
+set report=0            " threshold for reporting number of changed lines
+set ru                  " ruler showing current cursor position
+set sts=0               " do not insert spaces when pressing <Tab>
+set sw=8                " number of spaces equal to an indent
+set ts=8                " tabstop, length of a tab
+set ul=1000             " number of undo operations allowed
+
