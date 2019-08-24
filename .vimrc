@@ -1,21 +1,22 @@
-" set a colour to highlight trailing whitespace
-au ColorScheme * highlight trailing_whitespace ctermbg=235 guibg=#3f3f3f
+colorscheme torte
+syntax on
 
 " on Windows: simulate a 'window maximise' keyboard command to start maximised
 au GUIEnter * sim ~x
 
-" silently write changes to disk on each change
+" silently write file to disk on each change
 au TextChanged,TextChangedI <buffer> silent write
 
-colorscheme torte
-syntax on
+" highlight trailing whitespace
+au Syntax * syn match trailing_whitespace /\s\+$/ containedin=ALL
 
 " indicate warning column
 highlight ColorColumn ctermbg=235 guibg=#3f3f3f
 
-" define trailing whitespace
-match trailing_whitespace /\s\+$/
+" colour to use for trailing whitespace
+highlight trailing_whitespace ctermbg=235 guibg=#3f3f3f
 
+" options setup
 set ai                  " automatic indent
 set ar                  " automatically read file when changed from elsewhere
 set bs=indent,eol,start " backspace clears text across lines
@@ -38,4 +39,3 @@ set sts=0               " do not insert spaces when pressing <Tab>
 set sw=8                " number of spaces equal to an indent
 set ts=8                " tabstop, length of a tab
 set ul=1000             " number of undo operations allowed
-
