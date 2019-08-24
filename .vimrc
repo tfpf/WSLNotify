@@ -16,6 +16,9 @@ highlight ColorColumn ctermbg=235 guibg=#3f3f3f
 " colour to use for trailing whitespace
 highlight trailing_whitespace ctermbg=235 guibg=#3f3f3f
 
+" on typing 'tw' in normal mode, search for trailing whitespace
+nnoremap tw /\s\+$<CR>
+
 " options setup
 set ai                  " automatic indent
 set ar                  " automatically read file when changed from elsewhere
