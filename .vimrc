@@ -7,13 +7,15 @@ au GUIEnter * sim ~x
 " silently write file to disk on each change
 au TextChanged,TextChangedI <buffer> silent write
 
-" highlight trailing whitespace
+" highlight whitespace
+au Syntax * syn match leading_whitespace /^\s\+/ containedin=ALL
 au Syntax * syn match trailing_whitespace /\s\+$/ containedin=ALL
 
 " indicate warning column
 highlight ColorColumn ctermbg=235 guibg=#3f3f3f
 
-" colour to use for trailing whitespace
+" colour to use for whitespace
+highlight leading_whitespace ctermbg=235 guibg=#0f0f0f
 highlight trailing_whitespace ctermbg=235 guibg=#3f3f3f
 
 " on typing 'tw' in normal mode, search for trailing whitespace
@@ -23,7 +25,7 @@ nnoremap tw /\s\+$<CR>
 set ai                  " automatic indent
 set ar                  " automatically read file when changed from elsewhere
 set bs=indent,eol,start " backspace clears text across lines
-set cc=81,121           " define columns to highlight
+set cc=80,120           " define columns to highlight
 set ci                  " copy previous line indent
 set dy=lastline         " display line partially if entire line cannot be shown
 set gfn=Consolas        " font
