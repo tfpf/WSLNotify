@@ -18,7 +18,8 @@ highlight ColorColumn ctermbg=235 guibg=#3f3f3f
 highlight leading_whitespace ctermbg=235 guibg=#0f0f0f
 highlight trailing_whitespace ctermbg=235 guibg=#3f3f3f
 
-" on typing 'tw' in normal mode, search for trailing whitespace
+" search for leading or trailing whitespace
+nnoremap lw /^\s\+<CR>
 nnoremap tw /\s\+$<CR>
 
 " options setup
