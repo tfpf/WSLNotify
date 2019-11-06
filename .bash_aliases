@@ -8,8 +8,11 @@ alias Freq='watch -n 0.1 "cat /proc/cpuinfo | grep \"^cpu MHz\""'
 alias l='ls -lNX --color=auto --group-directories-first --time-style=long-iso'
 
 # same as above, but also show all hidden files
-# and the show the size using binary prefixes
+# and show the size using binary prefixes
 alias la='ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
+
+# same again, but reverse sort by modification time
+alias lt='ls -hlNrt --color=auto --group-directories-first --time-style=long-iso'
 
 # view information about computer memory in real time
 alias Mem='watch -n 0.1 free -ht'
