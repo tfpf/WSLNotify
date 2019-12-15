@@ -1,43 +1,24 @@
-# view frequency of the CPU in real time
-# CPU information is found in the file '/proc/cpuinfo'
-alias Freq='watch -n 0.1 "cat /proc/cpuinfo | grep \"^cpu MHz\""'
+alias Freq='watch -n 1 "cat /proc/cpuinfo | grep \"^cpu MHz\""'
 
-# display non-hidden files in current directory
-# arrange files in long list format and sort by extension
-# don't use quotes in names containing special characters
+# open gVim (this is required on Windows Terminal)
+# just make sure that the path to the executable is correct
+alias g='/mnt/c/Program\ Files\ \(x86\)/Vim/vim81/gvim.exe'
+
 alias l='ls -lNX --color=auto --group-directories-first --time-style=long-iso'
-
-# same as above, but also show all hidden files
-# and show the size using binary prefixes
 alias la='ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
-
-# same again, but reverse sort by modification time
 alias lt='ls -hlNrt --color=auto --group-directories-first --time-style=long-iso'
 
-# view information about computer memory in real time
-alias Mem='watch -n 0.1 free -ht'
+alias Mem='watch -n 1 free -ht'
 
-# display PID of process matching the argument string
-# also display the name of the process
 alias pgrep='pgrep -il'
 
-# list all running processes
-# sort them by descending order of PID
-# combine with 'grep' for coloured output
-# alternatively, use 'pgrep'
 alias ps='ps -e | sort -gr'
 
-# overwrite a file with zeros, and then delete it
-# 'z' option tells the program to overwrite with zeros
-# long option indicates that the file should not be overwritten with random data
-# otherwise, by default, random data is overwritten before zeros are written
 alias shred='shred -uvz --iterations=0'
 
 ################################################################################
 
-# display all available screen resolutions
-# set screen resolution of active display
-# if the resolution is not specified, change it to 1366x768 (set it to whatever you want)
+# automatically set screen resolution
 resolve ()
 {
 	xrandr
@@ -52,9 +33,8 @@ resolve ()
 
 ################################################################################
 
-# display the total time the system has been running since being powered on
-# also display when the system was last powered on
-# using an alias won't work, because 'uptime -ps' ignores the 'p' option
+# using an alias for this won't work
+# because `uptime -ps` ignores the `p` option
 rtime ()
 {
 	uptime -p
