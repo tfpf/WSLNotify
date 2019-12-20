@@ -6,7 +6,7 @@ au GUIEnter * sim ~x
 
 " save file to disk on each change
 au TextChanged,TextChangedI <buffer> sil w
-nn <silent> <C-S> :au TextChanged,TextChangedI <buffer> silent write<CR>
+nn <silent> <C-S> :au TextChanged,TextChangedI <buffer> si w<CR>
 
 " highlight enclosing whitespace and enable searching for it
 au Syntax * syn match leading_whitespace /^\s\+/ containedin=ALL
@@ -46,3 +46,4 @@ se sts=0               " do not insert spaces when pressing <Tab>
 se sw=8                " number of spaces equal to an indent
 se ts=8                " tabstop, length of a tab
 se ul=1000             " number of undo operations allowed
+
