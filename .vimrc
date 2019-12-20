@@ -19,12 +19,16 @@ nn tw /\s\+$<CR>
 " set colour for warning column
 hi ColorColumn ctermbg=235 guibg=#3f3f3f
 
+" set colour for cursor line
+hi CursorLine guibg=#1f1f1f
+
 " remaining setup
 se ai                  " automatic indent
 se ar                  " automatically read file when changed from elsewhere
 se bs=indent,eol,start " backspace clears text across lines
 se cc=80,120           " define columns to highlight
 se ci                  " copy previous line indent
+se cul                 " highlight current line
 se dy=lastline         " display line partially if entire line cannot be shown
 se gfn=Consolas        " font
 se hls                 " searching highlights search string
