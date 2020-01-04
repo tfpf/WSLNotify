@@ -6,7 +6,11 @@ au GUIEnter * sim ~x
 
 " save file to disk on each change
 au TextChanged,TextChangedI <buffer> sil w
-nn <silent> <C-S> :au TextChanged,TextChangedI <buffer> si w<CR>
+nn <silent> <C-S> :au TextChanged,TextChangedI <buffer> sil w<CR>:w<CR>
+
+" faster navigation using arrow keys
+nn <C-Down> 10<Down>
+nn <C-Up> 10<Up>
 
 " highlight enclosing whitespace and enable searching for it
 au Syntax * syn match leading_whitespace /^\s\+/ containedin=ALL
@@ -30,7 +34,7 @@ se cc=80,120           " define columns to highlight
 se ci                  " copy previous line indent
 se cul                 " highlight current line
 se dy=lastline         " display line partially if entire line cannot be shown
-se gfn=Consolas        " font
+se gfn=Noto\ Mono:h9   " font
 se hls                 " searching highlights search string
 se lsp=0               " line spacing
 se mh                  " hide mouse pointer while typing
@@ -46,4 +50,3 @@ se sts=0               " do not insert spaces when pressing <Tab>
 se sw=8                " number of spaces equal to an indent
 se ts=8                " tabstop, length of a tab
 se ul=1000             " number of undo operations allowed
-
