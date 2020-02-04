@@ -1,36 +1,28 @@
 colo torte
 syn on
 
-" on Windows: simulate a 'window maximise' keyboard command to start maximised
-au GUIEnter * sim ~x
-
-" save file to disk on each change
-au TextChanged,TextChangedI <buffer> sil w
-nn <silent> <C-S> :au TextChanged,TextChangedI <buffer> sil w<CR>:w<CR>
-
-" faster navigation using arrow keys
-nn <C-Down> 10<Down>
-nn <C-Up> 10<Up>
-
-" highlight enclosing whitespace and enable searching for it
+au GUIEnter * sim ~x " Windows: start maximised
+au TextChanged,TextChangedI <buffer> sil w " save file on change
 au Syntax * syn match leading_whitespace /^\s\+/ containedin=ALL
-hi leading_whitespace ctermbg=235 guibg=#0f0f0f
-nn lw /^\s\+<CR>
 au Syntax * syn match trailing_whitespace /\s\+$/ containedin=ALL
-hi trailing_whitespace ctermbg=235 guibg=#3f3f3f
-nn tw /\s\+$<CR>
 
-" set colour for warning column
-hi ColorColumn ctermbg=235 guibg=#3f3f3f
+nn <silent> <C-S> :au TextChanged,TextChangedI <buffer> sil w<CR>:w<CR>
+nn <C-Down> 15<Down>
+nn <C-Up> 15<Up>
+nn <silent> <F5> :mat Search_no /\<<C-R><C-W>\>/<CR>
+nn <silent> g<F5> :mat Search_no /<C-R><C-W>/<CR>
 
-" set colour for cursor line
+hi ColorColumn guibg=#3f3f3f
 hi CursorLine guibg=#1f1f1f
+hi leading_whitespace guibg=#0f0f0f
+hi trailing_whitespace guibg=#3f3f3f
+hi Search gui=none guibg=#FF0000 guifg=#000000
+hi Search_no gui=none guibg=#00BB00 guifg=#000000
 
-" remaining setup
 se ai                  " automatic indent
 se ar                  " automatically read file when changed from elsewhere
 se bs=indent,eol,start " backspace clears text across lines
-se cc=80,120           " define columns to highlight
+se cc=80,120           " colour these columns with `ColorColumn`
 se ci                  " copy previous line indent
 se cul                 " highlight current line
 se dy=lastline         " display line partially if entire line cannot be shown
