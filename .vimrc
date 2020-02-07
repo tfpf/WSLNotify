@@ -26,8 +26,8 @@ se cc=80,120           " colour these columns with `ColorColumn`
 se ci                  " copy previous line indent
 se cul                 " highlight current line
 se dy=lastline         " display line partially if entire line cannot be shown
-se enc=utf-8           " encoding
-se fenc=utf-8          " file encoding
+se enc=utf-8           " encoding: how it is written
+se fenc=utf-8          " encoding: how it is read
 se gfn=Noto\ Mono:h9   " font
 se hls                 " searching highlights search string
 se lsp=0               " line spacing
