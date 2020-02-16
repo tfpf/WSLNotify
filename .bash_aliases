@@ -1,6 +1,7 @@
 # few things for Windows Terminal
 cd /mnt/c/Users/vpaij/Documents/projects
-alias e='export DISPLAY=localhost:0.0; /mnt/c/Program\ Files/VcXsrv/xlaunch.exe'
+export DISPLAY=localhost:0.0
+alias e='/mnt/c/Program\ Files/VcXsrv/xlaunch.exe'
 alias f='/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe'
 alias g='/mnt/c/Program\ Files\ \(x86\)/Vim/vim81/gvim.exe'
 alias o='/mnt/c/Users/vpaij/AppData/Local/Programs/Opera/launcher.exe'
