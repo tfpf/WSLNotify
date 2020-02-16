@@ -1,24 +1,27 @@
-alias Freq='watch -n 1 "cat /proc/cpuinfo | grep \"^cpu MHz\""'
-
-# open gVim (this is required on Windows Terminal)
-# just make sure that the path to the executable is correct
+# few things for Windows Terminal
+cd /mnt/c/Users/vpaij/Documents/projects
+alias e='export DISPLAY=localhost:0.0; /mnt/c/Program\ Files/VcXsrv/xlaunch.exe'
+alias f='/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe'
 alias g='/mnt/c/Program\ Files\ \(x86\)/Vim/vim81/gvim.exe'
+alias o='/mnt/c/Users/vpaij/AppData/Local/Programs/Opera/launcher.exe'
+alias p='/mnt/c/texlive/2019/bin/win32/pdflatex.exe'
 
+# other aliases
+alias Freq='watch -n 0.1 "cat /proc/cpuinfo | grep \"^cpu MHz\""'
+alias thypon='python3'
 alias l='ls -lNX --color=auto --group-directories-first --time-style=long-iso'
 alias la='ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
-alias lt='ls -hlNrt --color=auto --group-directories-first --time-style=long-iso'
-
-alias Mem='watch -n 1 free -ht'
-
+alias lt='ls -hlNtr --color=auto --group-directories-first --time-style=long-iso'
+alias Mem='watch -n 0.1 free -ht'
 alias pgrep='pgrep -il'
-
 alias ps='ps -e | sort -gr'
-
 alias shred='shred -uvz --iterations=0'
 
 ################################################################################
 
-# automatically set screen resolution
+# display all available screen resolutions
+# set screen resolution of active display
+# if the resolution is not specified, change it to 1366x768 (set it to whatever you want)
 resolve ()
 {
 	xrandr
@@ -33,8 +36,9 @@ resolve ()
 
 ################################################################################
 
-# using an alias for this won't work
-# because `uptime -ps` ignores the `p` option
+# display the total time the system has been running since being powered on
+# also display when the system was last powered on
+# using an alias won't work, because 'uptime -ps' ignores the 'p' option
 rtime ()
 {
 	uptime -p
@@ -113,13 +117,13 @@ pull ()
 # update master branch of remote copy of GitHub repository
 push ()
 {
-	if [ $# -lt 1 ]
+	if [[ $# -lt 2 ]]
 	then
 		echo "usage:"
-		echo -e "\tpush \"<commit message>\""
+		echo -e "\tpush <file name> \"<commit message>\""
 		return 1
 	fi
-	git add .
-	git commit -m "$1"
+	git add "$1"
+	git commit -m "$2"
 	git push origin master
 }
