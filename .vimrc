@@ -7,6 +7,7 @@ au TextChanged,TextChangedI <buffer> sil w " save file on change
 hi ColorColumn                                              guibg=#1f1f1f
 hi CursorLine                                               guibg=#1f1f1f
 hi Search                                          gui=none guibg=#FF0000 guifg=#000000
+hi Cursor                                          gui=none
 hi whitespace                                               guibg=#1f1f1f
 hi perfectly_balanced_as_all_things_should_be      gui=none guibg=#00BB00 guifg=#000000
 hi the_hardest_choices_require_the_strongest_wills gui=none guibg=#00BBBB guifg=#000000
