@@ -17,6 +17,7 @@ alias Mem='watch -n 0.1 free -ht'
 alias pgrep='pgrep -il'
 alias ps='ps -e | sort -gr'
 alias shred='shred -uvz --iterations=0'
+alias grep='grep --color=auto'
 
 ################################################################################
 
