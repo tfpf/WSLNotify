@@ -1,4 +1,4 @@
-colo torte
+colo desert
 syn on
 
 au GUIEnter * sim ~x " Windows: start maximised
@@ -31,6 +31,7 @@ se cul                 " highlight current line
 se dy=lastline         " display line partially if entire line cannot be shown
 se enc=utf-8           " encoding: how it is written
 se fenc=utf-8          " encoding: how it is read
+se gcr=n:blinkwait0    " disable cursor blink
 se gfn=Noto\ Mono:h9   " font
 se hls                 " searching highlights search string
 se lsp=0               " line spacing
