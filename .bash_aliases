@@ -9,15 +9,16 @@ alias p='/mnt/c/texlive/2019/bin/win32/pdflatex.exe'
 
 # other aliases
 alias Freq='watch -n 0.1 "cat /proc/cpuinfo | grep \"^cpu MHz\""'
-alias thypon='python3'
+alias j='/mnt/c/Users/vpaij/AppData/Local/Julia-1.3.1/bin/julia.exe'
 alias l='ls -lNX --color=auto --group-directories-first --time-style=long-iso'
 alias la='ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
 alias lt='ls -hlNtr --color=auto --group-directories-first --time-style=long-iso'
 alias Mem='watch -n 0.1 free -ht'
 alias pgrep='pgrep -il'
+alias grep='grep --color=auto'
 alias ps='ps -e | sort -gr'
 alias shred='shred -uvz --iterations=0'
-alias grep='grep --color=auto'
+alias t='/usr/local/bin/python3.8'
 
 ################################################################################
 
