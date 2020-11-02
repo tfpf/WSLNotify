@@ -10,7 +10,7 @@ alias g='/mnt/c/Program\ Files\ \(x86\)/Vim/vim82/gvim.exe'
 
 # some sort of a system monitor
 alias F='watch -n 0.1 "cat /proc/cpuinfo | grep MHz"'
-alias Mem='watch -n 0.1 free -ht'
+alias M='watch -n 0.1 free -ht'
 
 # file listing
 alias l='ls -lNX --color=auto --group-directories-first --time-style=long-iso'
