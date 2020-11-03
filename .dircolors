@@ -51,6 +51,7 @@ OTHER_WRITABLE        01;34    # dir that is other-writable (o+w) and not sticky
 STICKY                01;34    # dir with the sticky bit set (+t) and not other-writable
 EXEC                  00       # if you're using actual Linux (not Windows Terminal), comment this line
 
+# I uncommented these for Windows Terminal
 .cmd 01;32
 .exe 01;32
 .com 01;32
@@ -58,6 +59,9 @@ EXEC                  00       # if you're using actual Linux (not Windows Termi
 .bat 01;32
 .sh  01;32
 .csh 01;32
+.py  01;32
+.out 01;32
+.elf 01;32
 
 .tar  01;31
 .tgz  01;31
