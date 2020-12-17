@@ -27,4 +27,6 @@ alias ps='ps -e | sort -gr'
 alias p='/usr/local/bin/python3.8 -B'
 alias pip='/usr/local/bin/python3.8 -m pip'
 
+alias time='/usr/bin/time'
+
 alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose'
