@@ -30,3 +30,21 @@ alias pip='/usr/local/bin/python3.8 -m pip'
 alias time='/usr/bin/time -f "----------\n%e s, %M kB (max)\n%I FS inputs, %O FS outputs, %W swaps\n%F major PFs, %R minor PFs" '
 
 alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose'
+
+# commit changes to a GitHub repository
+push ()
+{
+    if [[ $# < 2 ]]
+    then
+        printf "usage:\n"
+        printf "\tpush \"commit message\" file1 file2 file3 ...\n"
+        return 1
+    fi
+
+    args=( "$@" )
+    files=("${args[@]:1}")
+
+    git add ${files[*]}
+    git commit -m "$1"
+    git push origin master
+}
