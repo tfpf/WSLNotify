@@ -34,7 +34,7 @@ alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -
 # commit changes to a GitHub repository
 push ()
 {
-    if [[ $# < 2 ]]
+    if [[ $# -lt 2 ]]
     then
         printf "usage:\n"
         printf "\tpush \"commit message\" file1 file2 file3 ...\n"
