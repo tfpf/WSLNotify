@@ -1,7 +1,10 @@
 # ~/.bash_aliases
 
-# Windows Terminal: set up a virtual display so that GUI apps can be run.
+# Windows Terminal: set up a virtual display using VcXsrv to run Qt and other
+# GUI apps.
 export DISPLAY=localhost:0.0
+export LIBGL_ALWAYS_INDIRECT=1
+export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
 alias e='/mnt/c/Program\ Files/VcXsrv/xlaunch.exe'
 
 # Windows Terminal: prevent exit failure if the previous command failed.
