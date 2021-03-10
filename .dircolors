@@ -1,3 +1,6 @@
+# ~/.dircolors
+# This is useful in WSL. To display defaults, use the command `dircolors -p'.
+
 TERM Eterm
 TERM ansi
 TERM *color*
