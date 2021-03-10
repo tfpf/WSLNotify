@@ -1,3 +1,6 @@
+//  C:/Users/vpaij/AppData/Local/Packages/Microsoft.WindowsTerminal/LocalState
+// This is the configuration file for Windows Terminal.
+
 {
     "$schema": "https://aka.ms/terminal-profiles-schema",
     "defaultProfile": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
