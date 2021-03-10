@@ -1,0 +1,28 @@
+# ~/.config/matplotlib/matplotlibrc
+
+###############################################################################
+# Backend.
+###############################################################################
+# Install PyQt5. If you get an error because of missing plugins, go to the
+# directory where the PyQt5 files are saved. Enter the directory containing the
+# Qt plugins. Use `ldd' on the file whose plugins are missing. See the output
+# and install the packages which are 'not found'.
+backend: Qt5Agg
+
+###############################################################################
+# Figure layout.
+###############################################################################
+# When True, automatically adjust subplot parameters to make the plot fit the
+# figure using `tight_layout'.
+figure.autolayout: True
+
+# # When True, automatically make plot elements fit on the figure. (Not
+# # compatible with `autolayout` above.)
+# figure.constrained_layout.use: True
+
+###############################################################################
+# Saving figures.
+###############################################################################
+# Default directory in savefig box. Leave empty to always use current working
+# directory.
+savefig.directory: /mnt/c/Users/vpaij/Pictures/graphs/
