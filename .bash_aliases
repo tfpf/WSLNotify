@@ -1,8 +1,10 @@
 # ~/.bash_aliases
+# Aliases and virtual display setup.
 
 # Windows Terminal: set up a virtual display using VcXsrv to run Qt and other
 # GUI apps.
 export DISPLAY=localhost:0.0
+export GDK_SCALE=2
 export LIBGL_ALWAYS_INDIRECT=1
 export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
 alias e='/mnt/c/Program\ Files/VcXsrv/xlaunch.exe'
@@ -42,7 +44,6 @@ push ()
     then
         printf "usage:\n"
         printf "\tpush \"commit message\" file1 file2 file3 ...\n"
-        printf "$#\n"
         return 1
     fi
 
