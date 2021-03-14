@@ -1,15 +1,14 @@
 # ~/.bash_aliases
 # Aliases and virtual display setup.
 
-# Windows Terminal: set up a virtual display using VcXsrv to run Qt and other
-# GUI apps.
+# WSL: set up a virtual display using VcXsrv to run Qt and other GUI apps.
 export DISPLAY=localhost:0.0
 export GDK_SCALE=2
 export LIBGL_ALWAYS_INDIRECT=1
 export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
-alias e='/mnt/c/Program\ Files/VcXsrv/xlaunch.exe'
+alias vcx='/mnt/c/Program\ Files/VcXsrv/xlaunch.exe'
 
-# Windows Terminal: prevent exit failure if the previous command failed.
+# WSL: prevent exit failure if the previous command failed.
 alias exit='printf "\n" && exit'
 
 alias g='/mnt/c/Program\ Files\ \(x86\)/Vim/vim82/gvim.exe'
@@ -53,4 +52,21 @@ push ()
     git add ${files[*]}
     git commit -m "$1"
     git push origin master
+}
+
+# Windows Explorer can open WSL folders, but the command must be invoked from
+# within the WSL folder to be opened. This is a convenience function to do
+# that.
+e ()
+{
+    if [[ $# -lt 1 || ! -d "$1" ]]
+    then
+        printf "usage:\n"
+        printf "\te dirpath\n"
+        return 1
+    fi
+
+    cd "$1"
+    explorer.exe .
+    cd -
 }
