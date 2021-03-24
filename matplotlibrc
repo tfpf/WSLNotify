@@ -1,5 +1,3 @@
-# ~/.config/matplotlib/matplotlibrc
-
 ###############################################################################
 # Backend.
 ###############################################################################
@@ -16,9 +14,9 @@ backend: Qt5Agg
 # figure using `tight_layout'.
 figure.autolayout: True
 
-# # When True, automatically make plot elements fit on the figure. (Not
-# # compatible with `autolayout` above.)
-# figure.constrained_layout.use: True
+# When True, automatically make plot elements fit on the figure. (Not
+# compatible with `autolayout' above.)
+figure.constrained_layout.use: False
 
 ###############################################################################
 # Saving figures.
@@ -26,3 +24,7 @@ figure.autolayout: True
 # Default directory in savefig box. Leave empty to always use current working
 # directory.
 savefig.directory: /mnt/c/Users/vpaij/Pictures/graphs/
+
+# Amount of blank space around the hardcopied image.
+savefig.bbox:       tight
+savefig.pad_inches: 0.6
