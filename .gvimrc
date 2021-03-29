@@ -57,6 +57,7 @@ se nu                      " line numbers
 se pi                      " preserve existing indentation when changing indent
 se report=0                " threshold for reporting number of changed lines
 se ru                      " ruler showing current cursor position
+se so=10                   " always keep these many lines visible above and below
 se sts=0                   " do not insert spaces when pressing <Tab>
 se sw=8                    " number of spaces equal to an indent
 se ts=8                    " tabstop, length of a tab
