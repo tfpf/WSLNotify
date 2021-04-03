@@ -3,7 +3,7 @@
 
 # WSL: set up a virtual display using VcXsrv to run Qt and other GUI apps.
 export DISPLAY=localhost:0.0
-export GDK_SCALE=2
+export GDK_SCALE=1
 export LIBGL_ALWAYS_INDIRECT=1
 export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
 alias vcx='/mnt/c/Program\ Files/VcXsrv/xlaunch.exe'
@@ -42,7 +42,7 @@ push ()
     if [[ $# -lt 2 ]]
     then
         printf "usage:\n"
-        printf "\tpush \"commit message\" file1 file2 file3 ...\n"
+        printf "\t${FUNCNAME[0]} \"commit message\" file1 [file2] [file3] [...]\n"
         return 1
     fi
 
@@ -62,11 +62,37 @@ e ()
     if [[ $# -lt 1 || ! -d "$1" ]]
     then
         printf "usage:\n"
-        printf "\te dirpath\n"
+        printf "\t${FUNCNAME[0]} dirpath\n"
         return 1
     fi
 
     cd "$1"
     explorer.exe .
     cd -
+}
+
+# PDF optimiser. This requires that `ghostscript' be installed.
+pdfopt ()
+{
+    if [[ $# -lt 2 ]]
+    then
+        printf "usage:\n"
+        printf "\t${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n"
+        return
+    fi
+
+    if [[ $# -ge 3 ]]
+    then
+        opt_level=$3
+    else
+        opt_level=72
+    fi
+
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress     \
+       -dNOPAUSE -dQUIET -dBATCH                                              \
+       -sOutputFile=$2                                                        \
+       -dDownsampleColorImages=true -dColorImageResolution=$opt_level         \
+       -dDownsampleGrayImages=true  -dGrayImageResolution=$opt_level          \
+       -dDownsampleMonoImages=true  -dMonoImageResolution=$opt_level          \
+       $1
 }
