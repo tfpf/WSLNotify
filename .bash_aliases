@@ -28,6 +28,9 @@ alias pgrep='pgrep -il'
 
 alias ps='ps -e | sort -gr'
 
+# Run a PowerShell script without globally changing the execution policy.
+alias psh='powershell.exe -ExecutionPolicy Bypass'
+
 alias p='/usr/local/bin/python3.8 -B'
 alias t='/usr/local/bin/python3.8 -m timeit'
 alias pip='/usr/local/bin/python3.8 -m pip'
