@@ -3,10 +3,10 @@
 colo desert
 syn on
 
-" " maximise the GUI when gVim starts
+" " Maximise the GUI when gVim starts (Windows only).
 " au GUIEnter * sim ~x
 
-" " save the file whenever the buffer is changed
+" " Save the file whenever the buffer is changed.
 " au TextChanged,TextChangedI <buffer> sil w
 " nn <silent> <C-S> :au TextChanged,TextChangedI <buffer> sil w<CR>:w<CR>
 
@@ -24,12 +24,12 @@ hi the_hardest_choices_require_the_strongest_wills gui=none guibg=#CFCFCF guifg=
 
 cal matchadd('whitespace', '\s\+$')
 
-nn <silent> <M-1> :silent! cal matchdelete(alt_1)<CR> :let alt_1 = matchadd('a_small_price_to_pay_for_salvation',              '\<<C-R><C-W>\>')<CR>h
-nn <silent> <M-2> :silent! cal matchdelete(alt_2)<CR> :let alt_2 = matchadd('perfectly_balanced_as_all_things_should_be',      '\<<C-R><C-W>\>')<CR>h
-nn <silent> <M-3> :silent! cal matchdelete(alt_3)<CR> :let alt_3 = matchadd('this_universe_is_finite_its_resources_finite',    '\<<C-R><C-W>\>')<CR>h
-nn <silent> <M-4> :silent! cal matchdelete(alt_4)<CR> :let alt_4 = matchadd('dread_it_run_from_it_destiny_still_arrives',      '\<<C-R><C-W>\>')<CR>h
-nn <silent> <M-5> :silent! cal matchdelete(alt_5)<CR> :let alt_5 = matchadd('reality_is_often_dissapointing',                  '\<<C-R><C-W>\>')<CR>h
-nn <silent> <M-6> :silent! cal matchdelete(alt_6)<CR> :let alt_6 = matchadd('the_hardest_choices_require_the_strongest_wills', '\<<C-R><C-W>\>')<CR>h
+nn <silent> <M-1> :silent! cal matchdelete(alt_1)<CR>:let alt_1 = matchadd('a_small_price_to_pay_for_salvation',              '\<<C-R><C-W>\>')<CR>
+nn <silent> <M-2> :silent! cal matchdelete(alt_2)<CR>:let alt_2 = matchadd('perfectly_balanced_as_all_things_should_be',      '\<<C-R><C-W>\>')<CR>
+nn <silent> <M-3> :silent! cal matchdelete(alt_3)<CR>:let alt_3 = matchadd('this_universe_is_finite_its_resources_finite',    '\<<C-R><C-W>\>')<CR>
+nn <silent> <M-4> :silent! cal matchdelete(alt_4)<CR>:let alt_4 = matchadd('dread_it_run_from_it_destiny_still_arrives',      '\<<C-R><C-W>\>')<CR>
+nn <silent> <M-5> :silent! cal matchdelete(alt_5)<CR>:let alt_5 = matchadd('reality_is_often_dissapointing',                  '\<<C-R><C-W>\>')<CR>
+nn <silent> <M-6> :silent! cal matchdelete(alt_6)<CR>:let alt_6 = matchadd('the_hardest_choices_require_the_strongest_wills', '\<<C-R><C-W>\>')<CR>
 
 nn <C-Down> 15<Down>
 nn <C-Up>   15<Up>
@@ -44,7 +44,7 @@ se dy=lastline             " display line partially if entire line cannot be sho
 se enc=utf-8               " encoding: how it is written
 se fenc=utf-8              " encoding: how it is read
 se gcr=n:blinkwait0        " disable cursor blink
-se gfn=Cascadia\ Code:h12  " font
+se gfn=Cascadia\ Code:h11  " font
 se hls                     " searching highlights search string
 se lsp=0                   " line spacing
 se mh                      " hide mouse pointer while typing
@@ -57,7 +57,6 @@ se nu                      " line numbers
 se pi                      " preserve existing indentation when changing indent
 se report=0                " threshold for reporting number of changed lines
 se ru                      " ruler showing current cursor position
-se so=10                   " always keep these many lines visible above and below
 se sts=0                   " do not insert spaces when pressing <Tab>
 se sw=8                    " number of spaces equal to an indent
 se ts=8                    " tabstop, length of a tab
