@@ -31,3 +31,23 @@ savefig.directory: /mnt/c/Users/vpaij/Pictures/graphs/
 # Amount of blank space around the hardcopied image.
 savefig.bbox:       tight
 savefig.pad_inches: 0.45
+
+###############################################################################
+# Modify some keyboard shortcuts so that they do not get triggered while typing
+# into Matplotlib text boxes.
+###############################################################################
+keymap.fullscreen: ctrl+f
+keymap.home:       home
+keymap.back:       MouseButton.BACK
+keymap.forward:    MouseButton.FORWARD
+keymap.pan:        ctrl+p
+keymap.zoom:       ctrl+o
+keymap.save:       ctrl+s
+keymap.help:       f1
+keymap.quit:       ctrl+w
+keymap.quit_all:   alt+q
+keymap.grid:       ctrl+g
+keymap.grid_minor: ctrl+G
+keymap.yscale:     ctrl+l
+keymap.xscale:     ctrl+L
+keymap.copy:       ctrl+c
