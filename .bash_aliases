@@ -44,7 +44,7 @@ push ()
 {
     if [[ $# -lt 2 ]]
     then
-        printf "usage:\n"
+        printf "Usage:\n"
         printf "\t${FUNCNAME[0]} \"commit message\" file1 [file2] [file3] [...]\n"
         return 1
     fi
@@ -64,7 +64,7 @@ e ()
 {
     if [[ $# -lt 1 || ! -d "$1" ]]
     then
-        printf "usage:\n"
+        printf "Usage:\n"
         printf "\t${FUNCNAME[0]} dirpath\n"
         return 1
     fi
@@ -79,7 +79,7 @@ pdfopt ()
 {
     if [[ $# -lt 2 ]]
     then
-        printf "usage:\n"
+        printf "Usage:\n"
         printf "\t${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n"
         return
     fi
@@ -98,4 +98,19 @@ pdfopt ()
        -dDownsampleGrayImages=true  -dGrayImageResolution=$opt_level          \
        -dDownsampleMonoImages=true  -dMonoImageResolution=$opt_level          \
        $1
+}
+
+# A little hack to run Python programs without writing to a file. Open a
+# Tkinter window, read text, and execute. This works only if there are no
+# functions or classes defined in the file.
+P ()
+{
+    if [[ $# -lt 1 ]]
+    then
+        printf "Usage:\n"
+        printf "\t${FUNCNAME[0]} file\n"
+        return
+    fi
+
+    p -c "import tkinter as tk; root = tk.Tk(); t = tk.Text(root, width = 180); t.grid(padx = 10, pady = 10); t.bind('<F1>', lambda event: exec(t.get('1.0', tk.END))); f = open('$1'); t.insert('1.0', f.read()); f.close(); root.mainloop()"
 }
