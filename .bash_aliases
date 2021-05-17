@@ -112,6 +112,5 @@ P ()
         return
     fi
 
-    p -c "import tkinter as tk; root = tk.Tk(); t = tk.Text(root, width = 180, fg = '#CCCCCC', bg = '#333333'); t.pack(); t.bind('<F1>', lambda event: exec(t.get('1.0', tk.END))); f = open('$1'); t.insert('1.0', f.read()); f.close(); root.mainloop()"
-
+    p -c "import tkinter as tk; root = tk.Tk(); t = tk.Text(root, width = 180, fg = '#CCCCCC', bg = '#333333', insertbackground = '#CCCCCC'); t.pack(); t.bind('<F1>', lambda event: exec(t.get('1.0', tk.END))); f = open('$1'); t.insert('1.0', f.read()); f.close(); root.mainloop()"
 }
