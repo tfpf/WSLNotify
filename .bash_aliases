@@ -101,8 +101,9 @@ pdfopt ()
 }
 
 # A little hack to run Python programs without writing to a file. Open a
-# Tkinter window, read text, and execute. This works only if there are no
-# functions or classes defined in the file.
+# Tkinter window and read the file. Execute the program when the F1 key is
+# pressed. This should work on all single-threaded Python programs which do not
+# create any Tkinter widgets.
 P ()
 {
     if [[ $# -lt 1 ]]
@@ -112,5 +113,23 @@ P ()
         return
     fi
 
-    p -c "import tkinter as tk; root = tk.Tk(); t = tk.Text(root, width = 180, fg = '#CCCCCC', bg = '#333333', insertbackground = '#CCCCCC'); t.pack(); t.bind('<F1>', lambda event: exec(t.get('1.0', tk.END), globals(), globals())); t.insert('1.0', open('$1').read()); t.focus_set(); root.mainloop()"
+    p -c "
+import functools as ft
+import multiprocessing as mp
+import tkinter as tk
+
+def wrapper(event):
+    text = event.widget
+    func_to_exec = ft.partial(exec, text.get('1.0', tk.END), globals(), globals())
+    mp.Process(target = func_to_exec).start()
+
+root = tk.Tk()
+text = tk.Text(root, height = 50, width = 180, fg = '#CCCCCC', bg = '#333333', insertbackground = '#CCCCCC')
+text.insert('1.0', open('$1').read())
+text.focus_set()
+text.mark_set('insert', '1.0')
+text.bind('<F1>', wrapper)
+text.pack()
+root.mainloop()
+"
 }
