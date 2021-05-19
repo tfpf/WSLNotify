@@ -103,7 +103,7 @@ pdfopt ()
 # A little hack to run Python programs without writing to a file. Open a
 # Tkinter window and read the file. Execute the program when the F1 key is
 # pressed. This should work on all single-threaded Python programs which do not
-# create any Tkinter widgets.
+# create any Tkinter widgets. The random names should prevent name collisions.
 P ()
 {
     if [[ $# -lt 1 ]]
@@ -114,22 +114,29 @@ P ()
     fi
 
     p -c "
-import functools as ft
-import multiprocessing as mp
-import tkinter as tk
+import sys as _GDuGgNpKDItgUKPxVexp
+import tkinter as _ArFfEXZloCCjFNnmSwdw
 
-def wrapper(event):
-    text = event.widget
-    func_to_exec = ft.partial(exec, text.get('1.0', tk.END), globals(), globals())
-    mp.Process(target = func_to_exec).start()
+def _sQIvYlfwvgZJnQNmxRyF(event):
+    command = event.widget.get('1.0', _ArFfEXZloCCjFNnmSwdw.END)
+    exec(command, globals(), globals())
 
-root = tk.Tk()
-text = tk.Text(root, height = 50, width = 180, fg = '#CCCCCC', bg = '#333333', insertbackground = '#CCCCCC')
-text.insert('1.0', open('$1').read())
-text.focus_set()
-text.mark_set('insert', '1.0')
-text.bind('<F1>', wrapper)
-text.pack()
-root.mainloop()
+def _xtBzBMfnpdQGhwINyACP():
+    root = _ArFfEXZloCCjFNnmSwdw.Tk()
+    kwargs = {'height':           50,
+              'width':            180,
+              'bg':               '#333333',
+              'fg':               '#CCCCCC',
+              'insertbackground': '#CCCCCC',
+             }
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, **kwargs)
+    text.insert('1.0', open('$1').read())
+    text.focus_set()
+    text.mark_set('insert', '1.0')
+    text.bind('<F1>', _sQIvYlfwvgZJnQNmxRyF)
+    text.pack()
+    root.mainloop()
+
+_xtBzBMfnpdQGhwINyACP()
 "
 }
