@@ -123,11 +123,13 @@ def _sQIvYlfwvgZJnQNmxRyF(event):
 
 def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
-    kwargs = {'height':           50,
+    root.title('Python Executor')
+    kwargs = {'height':           40,
               'width':            180,
               'bg':               '#333333',
               'fg':               '#CCCCCC',
               'insertbackground': '#CCCCCC',
+              'font':             ('Cascadia Code', 13),
              }
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, **kwargs)
     text.insert('1.0', open('$1').read())
