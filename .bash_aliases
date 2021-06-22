@@ -74,6 +74,22 @@ e ()
     cd -
 }
 
+# Just like Windows Explorer, to open WSL files using GVIM, the command must be
+# invoked from within the folder containing the file.
+eg ()
+{
+    if [[ $# -lt 1 || ! -f "$1" ]]
+    then
+        printf "Usage:\n"
+        printf "\t${FUNCNAME[0]} filepath\n"
+        return 1
+    fi
+
+    cd $(dirname "$1")
+    g $(basename "$1") &
+    cd -
+}
+
 # PDF optimiser. This requires that `ghostscript' be installed.
 pdfopt ()
 {
