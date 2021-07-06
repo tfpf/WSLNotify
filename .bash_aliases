@@ -116,6 +116,8 @@ pdfopt ()
        $1
 }
 
+executor_icon_data='\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x14\x00\x00\x00\x14\x08\x06\x00\x00\x00\x8d\x89\x1d\r\x00\x00\x00gIDAT8\x11\xad\xc1A\x11\x000\x10\x840\xf0/\x9a\x1a\xd8\xd7M\x13+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06\x81\xf8H >\x12\x88\x8f\x04\xe2#+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x86\x07\xc6\x97D\x01a\xc1\x9d\x0b\x00\x00\x00\x00IEND\xaeB`\x82'
+
 # A little hack to run Python programs without writing to a file. Open a
 # Tkinter window and read the file. Execute the program when the F1 key is
 # pressed. This should work on all single-threaded Python programs which do not
@@ -129,10 +131,7 @@ P ()
         return
     fi
 
-    icon_data='\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x14\x00\x00\x00\x14\x08\x06\x00\x00\x00\x8d\x89\x1d\r\x00\x00\x00gIDAT8\x11\xad\xc1A\x11\x000\x10\x840\xf0/\x9a\x1a\xd8\xd7M\x13+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06\x81\xf8H >\x12\x88\x8f\x04\xe2#+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x86\x07\xc6\x97D\x01a\xc1\x9d\x0b\x00\x00\x00\x00IEND\xaeB`\x82'
-
     p -c "
-import sys as _GDuGgNpKDItgUKPxVexp
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 
 def _sQIvYlfwvgZJnQNmxRyF(event):
@@ -144,21 +143,72 @@ def _sQIvYlfwvgZJnQNmxRyF(event):
 
 def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
-    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data = b'$icon_data'))
+    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data = b'$executor_icon_data'))
     root.title('Python Executor')
-    kwargs = {'height':           40,
-              'width':            180,
-              'bg':               '#333333',
+
+    kwargs = {'bg':               '#333333',
               'fg':               '#CCCCCC',
               'insertbackground': '#CCCCCC',
               'font':             ('Cascadia Code', 13),
+              'wrap':             'none',
              }
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, **kwargs)
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height = 40, width = 150, **kwargs)
     text.insert('1.0', open('$1').read())
     text.focus_set()
     text.mark_set('insert', '1.0')
     text.bind('<F1>', _sQIvYlfwvgZJnQNmxRyF)
-    text.pack()
+    text.grid(row = 0, column = 0)
+
+    root.mainloop()
+
+_xtBzBMfnpdQGhwINyACP()
+"
+}
+
+# Just like the last one, this is a hack to render LaTeX expression without
+# creating a new file. Uses the Tex parser that comes with Matplotlib.
+L ()
+{
+    p -c "
+import matplotlib as _EhdhMmAprSRzwpUPoHvW; _EhdhMmAprSRzwpUPoHvW.use('TkAgg')
+import matplotlib.backends.backend_tkagg as _hNzVCYEPlZTSmIqqKOhB
+import matplotlib.figure as _WFHjDXaGDEVBLyVLsdmR
+import tkinter as _ArFfEXZloCCjFNnmSwdw
+
+def _sQIvYlfwvgZJnQNmxRyF(ax, text, entry):
+    ax.texts = []
+    ax.text(5, 30, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size = int(entry.get()), color = '#CCCCCC')
+    ax.figure.canvas.draw()
+
+def _xtBzBMfnpdQGhwINyACP():
+    root = _ArFfEXZloCCjFNnmSwdw.Tk()
+    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data = b'$executor_icon_data'))
+    root.title('LaTeX Renderer')
+
+    fig = _WFHjDXaGDEVBLyVLsdmR.Figure()
+    fig.patch.set_facecolor('#333333')
+    ax = fig.add_subplot()
+    ax.axis('off')
+    ax.set_xlim(0, 100)
+    ax.set_ylim(0, 100)
+    canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master = root)
+    canvas.draw()
+    canvas.get_tk_widget().grid(row = 0, column = 0, rowspan = 2)
+
+    kwargs = {'bg':               '#333333',
+              'fg':               '#CCCCCC',
+              'insertbackground': '#CCCCCC',
+              'font':             ('Cascadia Code', 13),
+             }
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height = 20, width = 60, **kwargs)
+    root.after(1000, text.focus_set)
+    text.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(ax, text, entry))
+    text.grid(row = 0, column = 1)
+    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, width = 60, **kwargs)
+    entry.insert(0, '20')
+    entry.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(ax, text, entry))
+    entry.grid(row = 1, column = 1)
+
     root.mainloop()
 
 _xtBzBMfnpdQGhwINyACP()
