@@ -177,7 +177,10 @@ import tkinter as _ArFfEXZloCCjFNnmSwdw
 
 def _sQIvYlfwvgZJnQNmxRyF(ax, text, entry):
     ax.texts = []
-    ax.text(5, 30, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size = int(entry.get()), color = '#CCCCCC')
+    try:
+        ax.text(0, 0, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size = int(entry.get()), color = '#CCCCCC')
+    except Exception as e:
+        print(e)
     ax.figure.canvas.draw()
 
 def _xtBzBMfnpdQGhwINyACP():
