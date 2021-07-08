@@ -73,7 +73,7 @@ keymap.pan:        ctrl+p
 keymap.zoom:       ctrl+o
 keymap.save:       ctrl+s
 keymap.help:       f1
-keymap.quit:       ctrl+w
+keymap.quit:       q,ctrl+w
 keymap.quit_all:   alt+q
 keymap.grid:       ctrl+g
 keymap.grid_minor: ctrl+G
