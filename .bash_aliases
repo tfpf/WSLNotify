@@ -85,7 +85,7 @@ g ()
     local gvimpath='/mnt/c/Program Files (x86)/Vim/vim82/gvim.exe'
     local dirpath=$(dirname "$1")
     local filename=$(basename "$1")
-    bash -c "cd '$dirpath' && '$gvimpath' '$filename'"
+    bash -c "cd '$dirpath' && '$gvimpath' '$filename' &"
 }
 
 # PDF optimiser. This requires that `ghostscript' be installed.
