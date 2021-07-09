@@ -1,5 +1,4 @@
 # ~/.bash_aliases
-# Aliases and virtual display setup.
 
 # WSL: set up a virtual display using VcXsrv to run Qt and other GUI apps.
 export DISPLAY=localhost:0.0
@@ -9,9 +8,7 @@ export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
 alias vcx='/mnt/c/Program\ Files/VcXsrv/xlaunch.exe'
 
 # WSL: prevent exit failure if the previous command failed.
-alias exit='printf "\n" && exit'
-
-alias g='/mnt/c/Program\ Files\ \(x86\)/Vim/vim82/gvim.exe'
+alias exit='clear && exit'
 
 # Some sort of a system monitor.
 alias F='watch -n 0.1 "cat /proc/cpuinfo | grep MHz"'
@@ -49,13 +46,14 @@ push ()
         return 1
     fi
 
-    args=( "$@" )
-    files=("${args[@]:1}")
+    local args=( "$@" )
+    local files=("${args[@]:1}")
 
     git add ${files[*]}
     git commit -m "$1"
     git push origin master
 }
+
 
 # Windows Explorer can open WSL folders, but the command must be invoked from
 # within the WSL folder to be opened. This is a convenience function to do
@@ -69,14 +67,13 @@ e ()
         return 1
     fi
 
-    cd "$1"
-    explorer.exe .
-    cd -
+    local dirpath="$1"
+    bash -c "cd '$dirpath' && explorer.exe ."
 }
 
 # Just like Windows Explorer, to open WSL files using GVIM, the command must be
 # invoked from within the folder containing the file.
-eg ()
+g ()
 {
     if [[ $# -lt 1 || ! -f "$1" ]]
     then
@@ -85,9 +82,10 @@ eg ()
         return 1
     fi
 
-    cd $(dirname "$1")
-    g $(basename "$1") &
-    cd -
+    local gvimpath='/mnt/c/Program Files (x86)/Vim/vim82/gvim.exe'
+    local dirpath=$(dirname "$1")
+    local filename=$(basename "$1")
+    bash -c "cd '$dirpath' && '$gvimpath' '$filename'"
 }
 
 # PDF optimiser. This requires that `ghostscript' be installed.
@@ -97,7 +95,7 @@ pdfopt ()
     then
         printf "Usage:\n"
         printf "\t${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n"
-        return
+        return 1
     fi
 
     if [[ $# -ge 3 ]]
@@ -128,7 +126,7 @@ P ()
     then
         printf "Usage:\n"
         printf "\t${FUNCNAME[0]} file\n"
-        return
+        return 1
     fi
 
     p -c "
