@@ -34,7 +34,7 @@ alias pip='/usr/local/bin/python3.8 -m pip'
 
 alias time='/usr/bin/time -f "----------\n%e s, %M kB (max)\n%I FS inputs, %O FS outputs, %W swaps\n%F major PFs, %R minor PFs\n----------\n" '
 
-alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose'
+alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
 # Commit and push changes to the master branch of a GitHub repository.
 push ()
@@ -85,6 +85,11 @@ g ()
     local gvimpath='/mnt/c/Program Files (x86)/Vim/vim82/gvim.exe'
     local dirpath=$(dirname "$1")
     local filename=$(basename "$1")
+
+    # The Bash process continues running (and using some CPU resources) for
+    # as long as the GVIM process is running. Killing the latter after GVIM
+    # starts does not adversely affect GVIM, since it is a Windows application.
+    # TODO Figure out how to kill it without displaying anything on the screen.
     bash -c "cd '$dirpath' && '$gvimpath' '$filename' &"
 }
 
@@ -186,7 +191,7 @@ def _xtBzBMfnpdQGhwINyACP():
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data = b'$executor_icon_data'))
     root.title('LaTeX Renderer')
 
-    fig = _WFHjDXaGDEVBLyVLsdmR.Figure()
+    fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(10, 8))
     fig.patch.set_facecolor('#333333')
     ax = fig.add_subplot()
     ax.axis('off')
@@ -201,7 +206,7 @@ def _xtBzBMfnpdQGhwINyACP():
               'insertbackground': '#CCCCCC',
               'font':             ('Cascadia Code', 13),
              }
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height = 20, width = 60, **kwargs)
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height = 35, width = 60, **kwargs)
     root.after(1000, text.focus_set)
     text.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(ax, text, entry))
     text.grid(row = 0, column = 1)
