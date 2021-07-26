@@ -168,7 +168,7 @@ _xtBzBMfnpdQGhwINyACP()
 "
 }
 
-# Just like the last one, this is a hack to render LaTeX expression without
+# Just like the last one, this is a hack to render LaTeX expressions without
 # creating a new file. Uses the Tex parser that comes with Matplotlib.
 L ()
 {
@@ -178,13 +178,13 @@ import matplotlib.backends.backend_tkagg as _hNzVCYEPlZTSmIqqKOhB
 import matplotlib.figure as _WFHjDXaGDEVBLyVLsdmR
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 
-def _sQIvYlfwvgZJnQNmxRyF(ax, text, entry):
-    ax.texts = []
+def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
+    fig.texts = []
     try:
-        ax.text(0, 0, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size = int(entry.get()), color = '#CCCCCC')
+        fig.text(0, 0, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size = int(entry.get()), color = '#CCCCCC')
     except Exception as e:
         print(e)
-    ax.figure.canvas.draw()
+    fig.canvas.draw()
 
 def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
@@ -193,10 +193,6 @@ def _xtBzBMfnpdQGhwINyACP():
 
     fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(10, 8))
     fig.patch.set_facecolor('#333333')
-    ax = fig.add_subplot()
-    ax.axis('off')
-    ax.set_xlim(0, 100)
-    ax.set_ylim(0, 100)
     canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master = root)
     canvas.draw()
     canvas.get_tk_widget().grid(row = 0, column = 0, rowspan = 2)
@@ -208,11 +204,11 @@ def _xtBzBMfnpdQGhwINyACP():
              }
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, height = 35, width = 60, **kwargs)
     root.after(1000, text.focus_set)
-    text.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(ax, text, entry))
+    text.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     text.grid(row = 0, column = 1)
     entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, width = 60, **kwargs)
-    entry.insert(0, '20')
-    entry.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(ax, text, entry))
+    entry.insert(0, '120')
+    entry.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     entry.grid(row = 1, column = 1)
 
     root.mainloop()
