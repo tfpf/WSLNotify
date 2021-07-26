@@ -190,8 +190,9 @@ def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data = b'$executor_icon_data'))
     root.title('LaTeX Renderer')
+    root.attributes('-zoomed', True)
 
-    fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(10, 8))
+    fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 10.55))
     fig.patch.set_facecolor('#333333')
     canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master = root)
     canvas.draw()
@@ -202,12 +203,12 @@ def _xtBzBMfnpdQGhwINyACP():
               'insertbackground': '#CCCCCC',
               'font':             ('Cascadia Code', 13),
              }
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height = 35, width = 60, **kwargs)
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height = 46, width = 45, **kwargs)
     root.after(1000, text.focus_set)
     text.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     text.grid(row = 0, column = 1)
-    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, width = 60, **kwargs)
-    entry.insert(0, '120')
+    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, width = 45, **kwargs)
+    entry.insert(0, '100')
     entry.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     entry.grid(row = 1, column = 1)
 
