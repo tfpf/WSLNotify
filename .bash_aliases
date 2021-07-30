@@ -54,7 +54,6 @@ push ()
     git push origin master
 }
 
-
 # Windows Explorer can open WSL folders, but the command must be invoked from
 # within the WSL folder to be opened. This is a convenience function to do
 # that.
@@ -146,7 +145,7 @@ def _sQIvYlfwvgZJnQNmxRyF(event):
 
 def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
-    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data = b'$executor_icon_data'))
+    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$executor_icon_data'))
     root.title('Python Executor')
 
     kwargs = {'bg':               '#333333',
@@ -155,12 +154,12 @@ def _xtBzBMfnpdQGhwINyACP():
               'font':             ('Cascadia Code', 13),
               'wrap':             'none',
              }
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height = 40, width = 150, **kwargs)
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height=40, width=150, **kwargs)
     text.insert('1.0', open('$1').read())
     text.focus_set()
     text.mark_set('insert', '1.0')
     text.bind('<F1>', _sQIvYlfwvgZJnQNmxRyF)
-    text.grid(row = 0, column = 0)
+    text.grid(row=0, column=0)
 
     root.mainloop()
 
@@ -181,36 +180,36 @@ import tkinter as _ArFfEXZloCCjFNnmSwdw
 def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
     fig.texts = []
     try:
-        fig.text(0, 0, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size = int(entry.get()), color = '#CCCCCC')
+        fig.text(0, 0, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size=int(entry.get()), color='#CCCCCC')
     except Exception as e:
         print(e)
     fig.canvas.draw()
 
 def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
-    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data = b'$executor_icon_data'))
+    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$executor_icon_data'))
     root.title('LaTeX Renderer')
     root.attributes('-zoomed', True)
 
     fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 10.55))
     fig.patch.set_facecolor('#333333')
-    canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master = root)
+    canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master=root)
     canvas.draw()
-    canvas.get_tk_widget().grid(row = 0, column = 0, rowspan = 2)
+    canvas.get_tk_widget().grid(row=0, column=0, rowspan=2)
 
     kwargs = {'bg':               '#333333',
               'fg':               '#CCCCCC',
               'insertbackground': '#CCCCCC',
               'font':             ('Cascadia Code', 13),
              }
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height = 46, width = 45, **kwargs)
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height=46, width=45, **kwargs)
     root.after(1000, text.focus_set)
     text.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
-    text.grid(row = 0, column = 1)
-    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, width = 45, **kwargs)
+    text.grid(row=0, column=1)
+    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, width=45, **kwargs)
     entry.insert(0, '100')
     entry.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
-    entry.grid(row = 1, column = 1)
+    entry.grid(row=1, column=1)
 
     root.mainloop()
 
