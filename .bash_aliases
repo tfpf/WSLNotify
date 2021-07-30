@@ -66,8 +66,7 @@ e ()
         return 1
     fi
 
-    local dirpath="$1"
-    bash -c "cd '$dirpath' && explorer.exe ."
+    (cd "$1" && explorer.exe .)
 }
 
 # Just like Windows Explorer, to open WSL files using GVIM, the command must be
