@@ -82,14 +82,17 @@ g ()
     fi
 
     local gvimpath='/mnt/c/Program Files (x86)/Vim/vim82/gvim.exe'
-    local dirpath=$(dirname "$1")
+    local gvimname=$(basename "$gvimpath")
+    local filedir=$(dirname "$1")
     local filename=$(basename "$1")
 
-    # The Bash process continues running (and using some CPU resources) for
-    # as long as the GVIM process is running. Killing the latter after GVIM
-    # starts does not adversely affect GVIM, since it is a Windows application.
-    # TODO Figure out how to kill it without displaying anything on the screen.
-    bash -c "cd '$dirpath' && '$gvimpath' '$filename' &"
+    # GVIM is opened in a subshell to avoid changing the environment variable
+    # `OLDPWD'. However, this causes two new processes to remain running
+    # (`bash' and `gvim.exe', as the `ps' command tells me) for as long as GVIM
+    # is kept open. Killing `gvim.exe' automatically results in the termination
+    # of `bash' without affecting GVIM (probably it is a Windows application,
+    # which WSL does not have the ability to close). That's what is done here.
+    (cd "$filedir" && "$gvimpath" "$filename" & pkill "$gvimname") 2> /dev/null
 }
 
 # PDF optimiser. This requires that `ghostscript' be installed.
