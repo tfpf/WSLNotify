@@ -54,9 +54,10 @@ push ()
     git push origin master
 }
 
-# Windows Explorer can open WSL folders, but the command must be invoked from
-# within the WSL folder to be opened. This is a convenience function to do
-# that.
+# Windows Explorer can open WSL folders, but the command must be invoked after
+# navigating to the target folder. Doing so directly will change the
+# environment variable `OLDPWD', which is undesirable. Hence, this is done in a
+# subshell.
 e ()
 {
     if [[ $# -lt 1 || ! -d "$1" ]]
@@ -69,8 +70,8 @@ e ()
     (cd "$1" && explorer.exe .)
 }
 
-# Just like Windows Explorer, to open WSL files using GVIM, the command must be
-# invoked from within the folder containing the file.
+# GVIM for Windows can open WSL files, but (like Windows Explorer), the command
+# must be invoked after navigating to the containing folder.
 g ()
 {
     if [[ $# -lt 1 || ! -f "$1" ]]
@@ -85,12 +86,12 @@ g ()
     local filedir=$(dirname "$1")
     local filename=$(basename "$1")
 
-    # GVIM is opened in a subshell to avoid changing the environment variable
-    # `OLDPWD'. However, this causes two new processes to remain running
-    # (`bash' and `gvim.exe', as the `ps' command tells me) for as long as GVIM
-    # is kept open. Killing `gvim.exe' automatically results in the termination
-    # of `bash' without affecting GVIM (probably it is a Windows application,
-    # which WSL does not have the ability to close). That's what is done here.
+    # Running the commands in a subshell causes two new processes (`bash' and
+    # `gvim.exe', as the `ps' command tells me) to remain running for as long
+    # as GVIM is kept open. Killing `gvim.exe' automatically results in the
+    # termination of `bash' without affecting GVIM (probably because it is a
+    # Windows application, which WSL does not have the ability to close).
+    # That's what is done here.
     (cd "$filedir" && "$gvimpath" "$filename" & pkill "$gvimname") 2> /dev/null
 }
 
@@ -149,6 +150,7 @@ def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$executor_icon_data'))
     root.title('Python Executor')
+    root.attributes('-zoomed', True)
 
     kwargs = {'bg':               '#333333',
               'fg':               '#CCCCCC',
@@ -156,12 +158,12 @@ def _xtBzBMfnpdQGhwINyACP():
               'font':             ('Cascadia Code', 13),
               'wrap':             'none',
              }
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height=40, width=150, **kwargs)
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, **kwargs)
     text.insert('1.0', open('$1').read())
     text.focus_set()
     text.mark_set('insert', '1.0')
     text.bind('<F1>', _sQIvYlfwvgZJnQNmxRyF)
-    text.grid(row=0, column=0)
+    text.pack(expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
     root.mainloop()
 
@@ -193,25 +195,25 @@ def _xtBzBMfnpdQGhwINyACP():
     root.title('LaTeX Renderer')
     root.attributes('-zoomed', True)
 
-    fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 10.55))
+    fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 12))
     fig.patch.set_facecolor('#333333')
     canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master=root)
     canvas.draw()
-    canvas.get_tk_widget().grid(row=0, column=0, rowspan=2)
+    canvas.get_tk_widget().pack(side=_ArFfEXZloCCjFNnmSwdw.LEFT, anchor=_ArFfEXZloCCjFNnmSwdw.W, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
     kwargs = {'bg':               '#333333',
               'fg':               '#CCCCCC',
               'insertbackground': '#CCCCCC',
               'font':             ('Cascadia Code', 13),
              }
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, height=46, width=45, **kwargs)
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, **kwargs)
     root.after(1000, text.focus_set)
     text.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
-    text.grid(row=0, column=1)
-    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, width=45, **kwargs)
+    text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
+    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, **kwargs)
     entry.insert(0, '100')
     entry.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
-    entry.grid(row=1, column=1)
+    entry.pack(side=_ArFfEXZloCCjFNnmSwdw.BOTTOM, anchor=_ArFfEXZloCCjFNnmSwdw.SE, expand=False, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
     root.mainloop()
 
