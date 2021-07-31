@@ -1,6 +1,8 @@
 # ~/.bash_aliases
 
-# WSL: set up a virtual display using VcXsrv to run Qt and other GUI apps.
+# WSL: set up a virtual display using VcXsrv to run Qt and other GUI apps. Note
+# that you may need to install `x11-xserver-utils', `dconf-editor' and
+# `dbus-x11', and create the file `~/.config/dconf/user'.
 export DISPLAY=localhost:0.0
 export GDK_SCALE=1
 export LIBGL_ALWAYS_INDIRECT=1
@@ -92,7 +94,7 @@ g ()
     # termination of `bash' without affecting GVIM (probably because it is a
     # Windows application, which WSL does not have the ability to close).
     # That's what is done here.
-    (cd "$filedir" && "$gvimpath" "$filename" & pkill "$gvimname") 2> /dev/null
+    (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") 2> /dev/null
 }
 
 # PDF optimiser. This requires that `ghostscript' be installed.
