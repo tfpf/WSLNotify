@@ -186,7 +186,13 @@ import tkinter as _ArFfEXZloCCjFNnmSwdw
 def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
     fig.texts = []
     try:
-        fig.text(0, 0, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size=int(entry.get()), color='#CCCCCC')
+        size_and_wrap = entry.get().split()
+        if len(size_and_wrap) >= 2:
+            size, wrap = size_and_wrap[: 2]
+        else:
+            size = size_and_wrap[0]
+            wrap = False
+        fig.text(0, 0, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size=int(size), color='#CCCCCC', wrap=int(wrap))
     except Exception as e:
         print(e)
     fig.canvas.draw()
@@ -213,7 +219,7 @@ def _xtBzBMfnpdQGhwINyACP():
     text.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
     entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, **kwargs)
-    entry.insert(0, '100')
+    entry.insert(0, '100 0')
     entry.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     entry.pack(side=_ArFfEXZloCCjFNnmSwdw.BOTTOM, anchor=_ArFfEXZloCCjFNnmSwdw.SE, expand=False, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
