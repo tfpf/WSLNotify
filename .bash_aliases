@@ -139,8 +139,8 @@ P ()
     fi
 
     p -c "
-import idlelib.colorizer as ic
-import idlelib.percolator as ip
+import idlelib.colorizer as _IFAYgQKFNUDWRMDyOcfZ
+import idlelib.percolator as _kiZxwOhpBzEnmVHOeiaz
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 
 def _sQIvYlfwvgZJnQNmxRyF(event):
@@ -163,7 +163,7 @@ def _xtBzBMfnpdQGhwINyACP():
     text.bind('<F1>', _sQIvYlfwvgZJnQNmxRyF)
     text.pack(expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
-    cdg = ic.ColorDelegator()
+    cdg = _IFAYgQKFNUDWRMDyOcfZ.ColorDelegator()
     cdg.tagdefs['COMMENT']    = {'foreground': '#007FFF', 'background': '#333333'}
     cdg.tagdefs['KEYWORD']    = {'foreground': '#00FF00', 'background': '#333333'}
     cdg.tagdefs['BUILTIN']    = {'foreground': '#FFFF00', 'background': '#333333'}
@@ -171,7 +171,7 @@ def _xtBzBMfnpdQGhwINyACP():
     cdg.tagdefs['DEFINITION'] = {'foreground': '#00FFFF', 'background': '#333333'}
     cdg.tagdefs['ERROR']      = {'foreground': '#000000', 'background': '#333333'}
     cdg.tagdefs['HIT']        = {'foreground': '#000000', 'background': '#333333'}
-    ip.Percolator(text).insertfilter(cdg)
+    _kiZxwOhpBzEnmVHOeiaz.Percolator(text).insertfilter(cdg)
 
     root.mainloop()
 
