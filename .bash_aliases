@@ -123,7 +123,7 @@ pdfopt ()
        $1
 }
 
-executor_icon_data='\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x14\x00\x00\x00\x14\x08\x06\x00\x00\x00\x8d\x89\x1d\r\x00\x00\x00gIDAT8\x11\xad\xc1A\x11\x000\x10\x840\xf0/\x9a\x1a\xd8\xd7M\x13+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06\x81\xf8H >\x12\x88\x8f\x04\xe2#+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x86\x07\xc6\x97D\x01a\xc1\x9d\x0b\x00\x00\x00\x00IEND\xaeB`\x82'
+icon_data='\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x14\x00\x00\x00\x14\x08\x06\x00\x00\x00\x8d\x89\x1d\r\x00\x00\x00gIDAT8\x11\xad\xc1A\x11\x000\x10\x840\xf0/\x9a\x1a\xd8\xd7M\x13+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06\x81\xf8H >\x12\x88\x8f\x04\xe2#+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x86\x07\xc6\x97D\x01a\xc1\x9d\x0b\x00\x00\x00\x00IEND\xaeB`\x82'
 
 # A little hack to run Python programs without writing to a file. Open a
 # Tkinter window and read the file. Execute the program when the F1 key is
@@ -139,6 +139,8 @@ P ()
     fi
 
     p -c "
+import idlelib.colorizer as ic
+import idlelib.percolator as ip
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 
 def _sQIvYlfwvgZJnQNmxRyF(event):
@@ -150,22 +152,26 @@ def _sQIvYlfwvgZJnQNmxRyF(event):
 
 def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
-    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$executor_icon_data'))
+    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('Python Executor')
     root.attributes('-zoomed', True)
 
-    kwargs = {'bg':               '#333333',
-              'fg':               '#CCCCCC',
-              'insertbackground': '#CCCCCC',
-              'font':             ('Cascadia Code', 13),
-              'wrap':             'none',
-             }
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, **kwargs)
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     text.insert('1.0', open('$1').read())
     text.focus_set()
     text.mark_set('insert', '1.0')
     text.bind('<F1>', _sQIvYlfwvgZJnQNmxRyF)
     text.pack(expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
+
+    cdg = ic.ColorDelegator()
+    cdg.tagdefs['COMMENT']    = {'foreground': '#007FFF', 'background': '#333333'}
+    cdg.tagdefs['KEYWORD']    = {'foreground': '#00FF00', 'background': '#333333'}
+    cdg.tagdefs['BUILTIN']    = {'foreground': '#FFFF00', 'background': '#333333'}
+    cdg.tagdefs['STRING']     = {'foreground': '#FF7F00', 'background': '#333333'}
+    cdg.tagdefs['DEFINITION'] = {'foreground': '#00FFFF', 'background': '#333333'}
+    cdg.tagdefs['ERROR']      = {'foreground': '#000000', 'background': '#333333'}
+    cdg.tagdefs['HIT']        = {'foreground': '#000000', 'background': '#333333'}
+    ip.Percolator(text).insertfilter(cdg)
 
     root.mainloop()
 
@@ -199,7 +205,7 @@ def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
 
 def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
-    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$executor_icon_data'))
+    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('LaTeX Renderer')
     root.attributes('-zoomed', True)
 
@@ -209,16 +215,12 @@ def _xtBzBMfnpdQGhwINyACP():
     canvas.draw()
     canvas.get_tk_widget().pack(side=_ArFfEXZloCCjFNnmSwdw.LEFT, anchor=_ArFfEXZloCCjFNnmSwdw.W, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
-    kwargs = {'bg':               '#333333',
-              'fg':               '#CCCCCC',
-              'insertbackground': '#CCCCCC',
-              'font':             ('Cascadia Code', 13),
-             }
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, **kwargs)
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     root.after(1000, text.focus_set)
     text.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
-    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, **kwargs)
+
+    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     entry.insert(0, '100 0')
     entry.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     entry.pack(side=_ArFfEXZloCCjFNnmSwdw.BOTTOM, anchor=_ArFfEXZloCCjFNnmSwdw.SE, expand=False, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
