@@ -72,8 +72,8 @@ fi
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
-if [ -f /mnt/c/Users/vpaij/Documents/.bash_aliases ]; then
-    . /mnt/c/Users/vpaij/Documents/.bash_aliases
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
 fi
 
 # enable programmable completion features (you don't need to enable
