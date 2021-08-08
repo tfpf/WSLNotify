@@ -126,7 +126,7 @@ pdfopt ()
 icon_data='\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x14\x00\x00\x00\x14\x08\x06\x00\x00\x00\x8d\x89\x1d\r\x00\x00\x00gIDAT8\x11\xad\xc1A\x11\x000\x10\x840\xf0/\x9a\x1a\xd8\xd7M\x13+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06\x81\xf8H >\x12\x88\x8f\x04\xe2#+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x06+.\xd4\x18\xac\xb8Pc\xb0\xe2B\x8d\xc1\x8a\x0b5\x86\x07\xc6\x97D\x01a\xc1\x9d\x0b\x00\x00\x00\x00IEND\xaeB`\x82'
 
 # A little hack to run Python programs without writing to a file. Open a
-# Tkinter window and read the file. Execute the program when the F1 key is
+# Tkinter window and read the file. Execute the program when the Escape key is
 # pressed. This should work on all single-threaded Python programs which do not
 # create any Tkinter widgets. The random names should prevent name collisions.
 P ()
@@ -160,7 +160,7 @@ def _xtBzBMfnpdQGhwINyACP():
     text.insert('1.0', open('$1').read())
     text.focus_set()
     text.mark_set('insert', '1.0')
-    text.bind('<F1>', _sQIvYlfwvgZJnQNmxRyF)
+    text.bind('<Escape>', _sQIvYlfwvgZJnQNmxRyF)
     text.pack(expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
     cdg = _IFAYgQKFNUDWRMDyOcfZ.ColorDelegator()
@@ -219,12 +219,12 @@ def _xtBzBMfnpdQGhwINyACP():
 
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     root.after(1000, text.focus_set)
-    text.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
+    text.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
     entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     entry.insert(0, '100 0')
-    entry.bind('<F1>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
+    entry.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     entry.pack(side=_ArFfEXZloCCjFNnmSwdw.BOTTOM, anchor=_ArFfEXZloCCjFNnmSwdw.SE, expand=False, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
     root.mainloop()
