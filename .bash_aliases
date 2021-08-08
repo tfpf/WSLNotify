@@ -179,14 +179,20 @@ _xtBzBMfnpdQGhwINyACP()
 "
 }
 
+key_words='Cap|Cup|Vert|acute|barwedge|bf|binom|breve|cal|cap|cup|ddot|ddots|dfrac|dot|doteq|doteq|doteqdot|dotplus|dots|enspace|forall|frac|frak|genfrac|grave|hat|hspace|iiint|iint|imath|infty|int|it|left|leftarrow|leftharpoonup|lfloor|lim|limsup|mathbf|mathcal|mathfrak|mathit|mathring|mathrm|mathsf|mathtt|oiiint|oiint|oint|operatorname|overline|partial|prime|prod|qquad|quad|rfloor|right|rightharpoonup|rm|sf|sqrt|sum|thinspace|tilde|tt|vec|vert|widehat|widetilde'
+key_words='bf|binom|cal|dfrac|enspace|forall|frac|frak|genfrac|hspace|infty|it|leftarrow|leftharpoonup|lfloor|mathbf|mathcal|mathfrak|mathit|mathring|mathrm|mathsf|mathtt|operatorname|overline|qquad|quad|rfloor|rightharpoonup|rm|sf|sqrt|thinspace|tt|vec|widehat|widetilde'
+
 # Just like the last one, this is a hack to render LaTeX expressions without
 # creating a new file. Uses the Tex parser that comes with Matplotlib.
 L ()
 {
     p -c "
+import idlelib.colorizer as _IFAYgQKFNUDWRMDyOcfZ
+import idlelib.percolator as _kiZxwOhpBzEnmVHOeiaz
 import matplotlib as _EhdhMmAprSRzwpUPoHvW; _EhdhMmAprSRzwpUPoHvW.use('TkAgg')
 import matplotlib.backends.backend_tkagg as _hNzVCYEPlZTSmIqqKOhB
 import matplotlib.figure as _WFHjDXaGDEVBLyVLsdmR
+import re as _afyRmMKilJpSPSjJlWfG
 import time as _FLnhAHSmRHaLdieVRHGq
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 
@@ -221,6 +227,18 @@ def _xtBzBMfnpdQGhwINyACP():
     root.after(1000, text.focus_set)
     text.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
+
+    cdg = _IFAYgQKFNUDWRMDyOcfZ.ColorDelegator()
+    cdg.prog                  = _afyRmMKilJpSPSjJlWfG.compile(r'\\b(?P<KEYWORD>' + r'$key_words' + r')\\b', _afyRmMKilJpSPSjJlWfG.S)
+    cdg.idprog                = _afyRmMKilJpSPSjJlWfG.compile('\\s+(\\w+)', _afyRmMKilJpSPSjJlWfG.S)
+    cdg.tagdefs['COMMENT']    = {'foreground': '#007FFF', 'background': '#333333'}
+    cdg.tagdefs['KEYWORD']    = {'foreground': '#00FF00', 'background': '#333333'}
+    cdg.tagdefs['BUILTIN']    = {'foreground': '#FFFF00', 'background': '#333333'}
+    cdg.tagdefs['STRING']     = {'foreground': '#FF7F00', 'background': '#333333'}
+    cdg.tagdefs['DEFINITION'] = {'foreground': '#00FFFF', 'background': '#333333'}
+    cdg.tagdefs['ERROR']      = {'foreground': '#000000', 'background': '#333333'}
+    cdg.tagdefs['HIT']        = {'foreground': '#000000', 'background': '#333333'}
+    _kiZxwOhpBzEnmVHOeiaz.Percolator(text).insertfilter(cdg)
 
     entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     entry.insert(0, '100 0')
