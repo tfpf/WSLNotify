@@ -229,9 +229,9 @@ def _xtBzBMfnpdQGhwINyACP():
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
     cdg = _IFAYgQKFNUDWRMDyOcfZ.ColorDelegator()
-    cdg.prog               = _afyRmMKilJpSPSjJlWfG.compile(r'\\b(?P<KEYWORD>' + r'$key_words' + r')\\b', _afyRmMKilJpSPSjJlWfG.S)
-    cdg.idprog             = _afyRmMKilJpSPSjJlWfG.compile(r'\\s+(\\w+)', _afyRmMKilJpSPSjJlWfG.S)
-    cdg.tagdefs['KEYWORD'] = {'foreground': '#00FF00', 'background': '#333333'}
+    cdg.prog    = _afyRmMKilJpSPSjJlWfG.compile(r'\\b(?P<KEYWORD>' + r'$key_words' + r')\\b', _afyRmMKilJpSPSjJlWfG.S)
+    cdg.idprog  = _afyRmMKilJpSPSjJlWfG.compile(r'\\s+(\\w+)', _afyRmMKilJpSPSjJlWfG.S)
+    cdg.tagdefs = {'KEYWORD': {'foreground': '#00FF00', 'background': '#333333'}}
     _kiZxwOhpBzEnmVHOeiaz.Percolator(text).insertfilter(cdg)
 
     entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
