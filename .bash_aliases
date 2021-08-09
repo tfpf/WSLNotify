@@ -205,7 +205,8 @@ def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
         else:
             size = size_and_wrap[0]
             wrap = False
-        fig.text(0, 0, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size=int(size), color='#CCCCCC', wrap=int(wrap))
+        size = int(size)
+        fig.text(size / 25000, -size / 1000, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size=size, color='#CCCCCC', wrap=int(wrap))
     except Exception as e:
         print(e)
     fig.canvas.draw()
