@@ -230,7 +230,7 @@ def _xtBzBMfnpdQGhwINyACP():
 
     cdg = _IFAYgQKFNUDWRMDyOcfZ.ColorDelegator()
     cdg.prog               = _afyRmMKilJpSPSjJlWfG.compile(r'\\b(?P<KEYWORD>' + r'$key_words' + r')\\b', _afyRmMKilJpSPSjJlWfG.S)
-    cdg.idprog             = _afyRmMKilJpSPSjJlWfG.compile('\\s+(\\w+)', _afyRmMKilJpSPSjJlWfG.S)
+    cdg.idprog             = _afyRmMKilJpSPSjJlWfG.compile(r'\\s+(\\w+)', _afyRmMKilJpSPSjJlWfG.S)
     cdg.tagdefs['KEYWORD'] = {'foreground': '#00FF00', 'background': '#333333'}
     _kiZxwOhpBzEnmVHOeiaz.Percolator(text).insertfilter(cdg)
 
