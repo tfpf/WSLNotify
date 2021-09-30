@@ -2,8 +2,10 @@
 
 # WSL: set up a virtual display using VcXsrv to run Qt and other GUI apps. Note
 # that you may need to install `x11-xserver-utils', `dconf-editor' and
-# `dbus-x11', and create the file `~/.config/dconf/user'.
+# `dbus-x11', and create the file `~/.config/dconf/user'. The first `DISPLAY'
+# is for WSL, and the second, for WSL2.
 export DISPLAY=localhost:0.0
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 export GDK_SCALE=1
 export LIBGL_ALWAYS_INDIRECT=1
 export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
@@ -30,9 +32,9 @@ alias ps='ps -e | sort -gr'
 # Run a PowerShell script without globally changing the execution policy.
 alias psh='powershell.exe -ExecutionPolicy Bypass'
 
-alias p='/usr/local/bin/python3.8 -B'
-alias t='/usr/local/bin/python3.8 -m timeit'
-alias pip='/usr/local/bin/python3.8 -m pip'
+alias p='/usr/bin/python3.8 -B'
+alias t='/usr/bin/python3.8 -m timeit'
+alias pip='/usr/bin/python3.8 -m pip'
 
 alias time='/usr/bin/time -f "----------\n%e s, %M kB (max)\n%I FS inputs, %O FS outputs, %W swaps\n%F major PFs, %R minor PFs\n----------\n" '
 
