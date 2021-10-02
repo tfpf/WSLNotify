@@ -9,7 +9,7 @@ export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 export GDK_SCALE=1
 export LIBGL_ALWAYS_INDIRECT=1
 export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
-alias vcx='/mnt/c/Program\ Files/VcXsrv/xlaunch.exe'
+alias vcx='/mnt/c/Program\ Files/VcXsrv/vcxsrv.exe -ac -clipboard -clipboardprimary -multiwindow -wgl'
 
 # WSL: prevent exit failure if the previous command failed.
 alias bye='clear && exit'
