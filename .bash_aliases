@@ -9,7 +9,6 @@ export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 export GDK_SCALE=1
 export LIBGL_ALWAYS_INDIRECT=1
 export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
-alias vcx='/mnt/c/Program\ Files/VcXsrv/vcxsrv.exe -ac -clipboard -clipboardprimary -multiwindow -wgl'
 
 # WSL: prevent exit failure if the previous command failed.
 alias bye='clear && exit'
@@ -56,6 +55,14 @@ push ()
     git add ${files[*]}
     git commit -m "$1"
     git push origin master
+}
+
+# Create a virtual display for WSL2.
+vcx ()
+{
+    local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
+    local vcxsrvname=$(basename "$vcxsrvpath")
+    ("$vcxsrvpath" -ac -clipboard -multiwindow -wgl & sleep 1 && pkill "$vcxsrvname") 2> /dev/null
 }
 
 # Windows Explorer can open WSL folders, but the command must be invoked after
