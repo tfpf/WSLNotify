@@ -13,6 +13,9 @@ export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
 # WSL: prevent exit failure if the previous command failed.
 alias bye='clear && exit'
 
+# Save history with date and time.
+export HISTTIMEFORMAT="[%Y-%m-%d %T] "
+
 # Some sort of a system monitor.
 alias F='watch -n 0.1 "cat /proc/cpuinfo | grep MHz"'
 alias M='watch -n 0.1 free -ht'
