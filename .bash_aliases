@@ -202,7 +202,9 @@ import matplotlib.figure as _WFHjDXaGDEVBLyVLsdmR
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 
 def _trawgorDBwAQawMZniUb(text):
-    lines = text.get(1.0, _ArFfEXZloCCjFNnmSwdw.END).split('\n')
+    for tag in text.tag_names():
+        text.tag_remove(tag, '1.0', _ArFfEXZloCCjFNnmSwdw.END)
+    lines = text.get(1.0, _ArFfEXZloCCjFNnmSwdw.END).split('\\n')
     for i, line in enumerate(lines, 1):
         lo, hi = 0, -1
         while True:
