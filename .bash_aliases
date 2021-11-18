@@ -151,6 +151,7 @@ P ()
     fi
 
     p -c "
+import matplotlib.pyplot as _gKEFgMRsGkTgLsQsBojH
 import idlelib.colorizer as _IFAYgQKFNUDWRMDyOcfZ
 import idlelib.percolator as _kiZxwOhpBzEnmVHOeiaz
 import tkinter as _ArFfEXZloCCjFNnmSwdw
@@ -167,8 +168,8 @@ def _xtBzBMfnpdQGhwINyACP():
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('Python Executor')
     root.attributes('-zoomed', True)
-
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
+
     text.insert('1.0', open('$1').read())
     text.focus_set()
     text.mark_set('insert', '1.0')
@@ -187,6 +188,7 @@ def _xtBzBMfnpdQGhwINyACP():
 
     root.mainloop()
 
+_gKEFgMRsGkTgLsQsBojH.close(_gKEFgMRsGkTgLsQsBojH.figure())
 _xtBzBMfnpdQGhwINyACP()
 "
 }
