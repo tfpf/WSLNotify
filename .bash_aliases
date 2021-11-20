@@ -203,10 +203,16 @@ import matplotlib.backends.backend_tkagg as _hNzVCYEPlZTSmIqqKOhB
 import matplotlib.figure as _WFHjDXaGDEVBLyVLsdmR
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 
-def _trawgorDBwAQawMZniUb(text):
+def _trawgorDBwAQawMZniUb(text, hashes):
+    lines = text.get(1.0, _ArFfEXZloCCjFNnmSwdw.END)
+    hashes[0] = hashes[1]
+    hashes[1] = hash(lines)
+    if hashes[0] == hashes[1]:
+        return
+
+    lines = lines.split('\\n')
     for tag in text.tag_names():
         text.tag_remove(tag, '1.0', _ArFfEXZloCCjFNnmSwdw.END)
-    lines = text.get(1.0, _ArFfEXZloCCjFNnmSwdw.END).split('\\n')
     for i, line in enumerate(lines, 1):
         lo, hi = 0, -1
         while True:
@@ -247,10 +253,11 @@ def _xtBzBMfnpdQGhwINyACP():
     canvas.draw()
     canvas.get_tk_widget().pack(side=_ArFfEXZloCCjFNnmSwdw.LEFT, anchor=_ArFfEXZloCCjFNnmSwdw.W, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
+    hashes = [None, None]
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     root.after(1000, text.focus_set)
     text.tag_config('ltag', background='#333333', foreground='#FFFF00')
-    text.bind('<KeyRelease>', lambda event: _trawgorDBwAQawMZniUb(text))
+    text.bind('<KeyRelease>', lambda event: _trawgorDBwAQawMZniUb(text, hashes))
     text.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
