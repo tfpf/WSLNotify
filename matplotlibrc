@@ -30,7 +30,7 @@ savefig.directory: /mnt/c/Users/vpaij/Pictures/graphs/
 
 # Amount of blank space around the hardcopied image.
 savefig.bbox:       tight
-savefig.pad_inches: 0.4
+savefig.pad_inches: 0.3
 
 ###############################################################################
 # Font.
