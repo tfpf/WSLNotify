@@ -264,3 +264,34 @@ def _xtBzBMfnpdQGhwINyACP():
 _xtBzBMfnpdQGhwINyACP()
 "
 }
+
+# Make a given colour in an image transparent.
+T ()
+{
+    if [[ $# -lt 5 ]]
+    then
+        printf "Usage:\n"
+        printf "\t${FUNCNAME[0]} file red green blue threshold\n"
+        return 1
+    fi
+
+    p -c "
+import numpy as _YNbCrBdBmvMfWxWTPFeq
+import PIL.Image as _qWonDbVEFZquydrdRtVd
+
+img = _YNbCrBdBmvMfWxWTPFeq.asarray(_qWonDbVEFZquydrdRtVd.open('$1').convert('RGBA')) / 255
+target = [$2, $3, $4]
+threshold = $5
+
+diff = _YNbCrBdBmvMfWxWTPFeq.zeros(img[:, :, 3].shape)
+for i in range(3):
+    diff += _YNbCrBdBmvMfWxWTPFeq.abs(img[:, :, i] - target[i])
+diff /= _YNbCrBdBmvMfWxWTPFeq.amax(diff)
+diff = (diff - 1) / (1 - threshold) + 1
+_YNbCrBdBmvMfWxWTPFeq.clip(diff, 0, 1, out=diff)
+img[:, :, 3] = diff
+
+_qWonDbVEFZquydrdRtVd.fromarray((img * 255).astype(_YNbCrBdBmvMfWxWTPFeq.uint8)).save('out.png')
+"
+}
+
