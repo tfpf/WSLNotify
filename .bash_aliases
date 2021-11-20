@@ -5,7 +5,7 @@
 # `dbus-x11', and create the file `~/.config/dconf/user'. The first `DISPLAY'
 # is for WSL, and the second, for WSL2.
 export DISPLAY=localhost:0.0
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+# export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 export GDK_SCALE=1
 export LIBGL_ALWAYS_INDIRECT=1
 export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
@@ -146,7 +146,7 @@ P ()
     if [[ $# -lt 1 ]]
     then
         printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} file\n"
+        printf "\t${FUNCNAME[0]} <file>\n"
         return 1
     fi
 
@@ -168,8 +168,8 @@ def _xtBzBMfnpdQGhwINyACP():
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('Python Executor')
     root.attributes('-zoomed', True)
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
 
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     text.insert('1.0', open('$1').read())
     text.focus_set()
     text.mark_set('insert', '1.0')
@@ -268,30 +268,51 @@ _xtBzBMfnpdQGhwINyACP()
 # Make a given colour in an image transparent.
 T ()
 {
-    if [[ $# -lt 5 ]]
+    if [[ $# -lt 6 ]]
     then
         printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} file red green blue threshold\n"
+        printf "\t${FUNCNAME[0]} <file> <R> <G> <B> <threshold1> <threshold2>\n"
         return 1
     fi
 
     p -c "
+import matplotlib.pyplot as _gKEFgMRsGkTgLsQsBojH
 import numpy as _YNbCrBdBmvMfWxWTPFeq
 import PIL.Image as _qWonDbVEFZquydrdRtVd
 
-img = _YNbCrBdBmvMfWxWTPFeq.asarray(_qWonDbVEFZquydrdRtVd.open('$1').convert('RGBA')) / 255
-target = [$2, $3, $4]
-threshold = $5
+def _xtBzBMfnpdQGhwINyACP():
+    src = _YNbCrBdBmvMfWxWTPFeq.asarray(_qWonDbVEFZquydrdRtVd.open('$1').convert('RGBA')) / 255
+    target = [$2, $3, $4]
+    threshold = [$5, $6]
 
-diff = _YNbCrBdBmvMfWxWTPFeq.zeros(img[:, :, 3].shape)
-for i in range(3):
-    diff += _YNbCrBdBmvMfWxWTPFeq.abs(img[:, :, i] - target[i])
-diff /= _YNbCrBdBmvMfWxWTPFeq.amax(diff)
-diff = (diff - 1) / (1 - threshold) + 1
-_YNbCrBdBmvMfWxWTPFeq.clip(diff, 0, 1, out=diff)
-img[:, :, 3] = diff
+    diff = _YNbCrBdBmvMfWxWTPFeq.zeros(src[:, :, 3].shape)
+    for i in range(3):
+        diff += _YNbCrBdBmvMfWxWTPFeq.abs(src[:, :, i] - target[i])
+    # diff /= _YNbCrBdBmvMfWxWTPFeq.amax(diff)
+    diff /= 3
+    diff = (diff - threshold[0]) / (threshold[1] - threshold[0])
+    _YNbCrBdBmvMfWxWTPFeq.clip(diff, 0, 1, out=diff)
+    dst = src.copy()
+    dst[:, :, 3] = diff
 
-_qWonDbVEFZquydrdRtVd.fromarray((img * 255).astype(_YNbCrBdBmvMfWxWTPFeq.uint8)).save('out.png')
+    fig, ax = _gKEFgMRsGkTgLsQsBojH.subplots(1, 2)
+    # ax[0].axis('off')
+    ax[0].imshow(src)
+    # ax[1].axis('off')
+    ax[1].imshow(dst)
+
+    _gKEFgMRsGkTgLsQsBojH.show()
+
+    print('Type the name of the file to save the image to, and press Enter.')
+    print('Pressing Enter without typing anything will cancel the operation.')
+    out = input('> ')
+    if not out or out.isspace():
+        print('Cancelled.')
+        return
+
+    _qWonDbVEFZquydrdRtVd.fromarray((dst * 255).astype(_YNbCrBdBmvMfWxWTPFeq.uint8)).save(out)
+
+_gKEFgMRsGkTgLsQsBojH.close(_gKEFgMRsGkTgLsQsBojH.figure())
+_xtBzBMfnpdQGhwINyACP()
 "
 }
-
