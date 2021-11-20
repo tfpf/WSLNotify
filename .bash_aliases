@@ -204,15 +204,15 @@ import matplotlib.figure as _WFHjDXaGDEVBLyVLsdmR
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 
 def _trawgorDBwAQawMZniUb(text, hashes):
-    lines = text.get(1.0, _ArFfEXZloCCjFNnmSwdw.END)
+    lines = text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END)
     hashes[0] = hashes[1]
     hashes[1] = hash(lines)
     if hashes[0] == hashes[1]:
         return
 
-    lines = lines.split('\\n')
     for tag in text.tag_names():
         text.tag_remove(tag, '1.0', _ArFfEXZloCCjFNnmSwdw.END)
+    lines = lines.split('\\n')
     for i, line in enumerate(lines, 1):
         lo, hi = 0, -1
         while True:
