@@ -246,22 +246,25 @@ def _xtBzBMfnpdQGhwINyACP():
     root.title('LaTeX Renderer')
     root.attributes('-zoomed', True)
 
-    fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 12))
+    fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(11, 6))
     fig.patch.set_facecolor('#333333')
-    root.bind('<F5>', lambda event: fig.savefig(_EhdhMmAprSRzwpUPoHvW.rcParams['savefig.directory'] + f'lr_{_FLnhAHSmRHaLdieVRHGq.time_ns()}.svg'))
     canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master=root)
     canvas.draw()
     canvas.get_tk_widget().pack(side=_ArFfEXZloCCjFNnmSwdw.LEFT, anchor=_ArFfEXZloCCjFNnmSwdw.W, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
+    nav_tb_frame = _ArFfEXZloCCjFNnmSwdw.Frame(master=root)
+    nav_tb_frame.pack(side=_ArFfEXZloCCjFNnmSwdw.BOTTOM, anchor=_ArFfEXZloCCjFNnmSwdw.SE, expand=False, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
+    nav_tb = _hNzVCYEPlZTSmIqqKOhB.NavigationToolbar2Tk(canvas, nav_tb_frame)
+
     hashes = [None, None]
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 12))
     root.after(1000, text.focus_set)
     text.tag_config('ltag', background='#333333', foreground='#FFFF00')
     text.bind('<KeyRelease>', lambda event: _trawgorDBwAQawMZniUb(text, hashes))
     text.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
-    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
+    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 12))
     entry.insert(0, '100 0')
     entry.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     entry.pack(side=_ArFfEXZloCCjFNnmSwdw.BOTTOM, anchor=_ArFfEXZloCCjFNnmSwdw.SE, expand=False, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
