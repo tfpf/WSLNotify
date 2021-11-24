@@ -202,6 +202,7 @@ import matplotlib as _EhdhMmAprSRzwpUPoHvW; _EhdhMmAprSRzwpUPoHvW.use('TkAgg')
 import matplotlib.backends.backend_tkagg as _hNzVCYEPlZTSmIqqKOhB
 import matplotlib.figure as _WFHjDXaGDEVBLyVLsdmR
 import tkinter as _ArFfEXZloCCjFNnmSwdw
+import time as _HgyxeWRPXNtbhqWyVhlC
 
 def _trawgorDBwAQawMZniUb(text, hashes):
     lines = text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END)
@@ -258,14 +259,17 @@ def _xtBzBMfnpdQGhwINyACP():
 
     hashes = [None, None]
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
+    timefmt = '%Y-%m-%d_%H.%M.%S'
+    text.insert('1.0', f'lr_{_HgyxeWRPXNtbhqWyVhlC.strftime(timefmt)}\\n')
     root.after(1000, text.focus_set)
     text.tag_config('ltag', background='#333333', foreground='#FFFF00')
+    text.tag_raise('sel')
     text.bind('<KeyRelease>', lambda event: _trawgorDBwAQawMZniUb(text, hashes))
     text.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
     entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
-    entry.insert(0, '100 0')
+    entry.insert(0, '50 0')
     entry.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     entry.pack(side=_ArFfEXZloCCjFNnmSwdw.BOTTOM, anchor=_ArFfEXZloCCjFNnmSwdw.SE, expand=False, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
