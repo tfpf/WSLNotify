@@ -215,6 +215,10 @@ def _trawgorDBwAQawMZniUb(text, hashes):
         text.tag_remove(tag, '1.0', _ArFfEXZloCCjFNnmSwdw.END)
     lines = lines.split('\\n')
     for i, line in enumerate(lines, 1):
+        if i == 1:
+            text.tag_add('ctag', '1.0', f'1.{len(line)}')
+            continue
+
         lo, hi = 0, -1
         while True:
             lo = line.find('$', hi + 1)
@@ -222,7 +226,7 @@ def _trawgorDBwAQawMZniUb(text, hashes):
                 break
             hi = line.find('$', lo + 1)
             if hi == -1:
-                hi = len(line)
+                hi = len(line) - 1
             text.tag_add('ltag', f'{i}.{lo}', f'{i}.{hi + 1}')
             lo = hi
 
@@ -236,7 +240,7 @@ def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
             size = size_and_wrap[0]
             wrap = False
         size = int(size)
-        fig.text(size / 25000, -size / 1000, text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END), size=size, color='#CCCCCC', wrap=int(wrap))
+        fig.text(size / 25000, -size / 1000, text.get('2.0', _ArFfEXZloCCjFNnmSwdw.END), size=size, color='#CCCCCC', wrap=int(wrap))
     except Exception as e:
         print(e)
     fig.canvas.draw()
@@ -263,6 +267,7 @@ def _xtBzBMfnpdQGhwINyACP():
     text.insert('1.0', f'lr_{_HgyxeWRPXNtbhqWyVhlC.strftime(timefmt)}\\n')
     root.after(1000, text.focus_set)
     text.tag_config('ltag', background='#333333', foreground='#FFFF00')
+    text.tag_config('ctag', background='#333333', foreground='#007FFF')
     text.tag_raise('sel')
     text.bind('<KeyRelease>', lambda event: _trawgorDBwAQawMZniUb(text, hashes))
     text.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
