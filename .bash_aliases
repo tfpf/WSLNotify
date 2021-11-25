@@ -1,20 +1,36 @@
 # ~/.bash_aliases
 
-# WSL: set up a virtual display using VcXsrv to run Qt and other GUI apps. Note
-# that you may need to install `x11-xserver-utils', `dconf-editor' and
-# `dbus-x11', and create the file `~/.config/dconf/user'. The first `DISPLAY'
-# is for WSL, and the second, for WSL2.
-export DISPLAY=localhost:0.0
-# export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
-export GDK_SCALE=1
-export LIBGL_ALWAYS_INDIRECT=1
-export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
+# Is this running on WSL?
+is_wsl=false
+if [[ $(grep -i "microsoft" /proc/version) ]]
+then
+    is_wsl=true
+fi
 
-# WSL: prevent exit failure if the previous command failed.
-alias bye='clear && exit'
+# WSL-specific settings.
+if [[ "$is_wsl" == true ]]
+then
+
+    # Set up a virtual display using VcXsrv to run GUI apps. You may want to
+    # install `x11-xserver-utils', `dconf-editor' and `dbus-x11', and create
+    # the file `~/.config/dconf/user'. The first `DISPLAY' is for WSL, and the
+    # second, for WSL2.
+    export DISPLAY=localhost:0.0
+    # export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+    export GDK_SCALE=1
+    export LIBGL_ALWAYS_INDIRECT=1
+    export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
+
+    # Run a PowerShell script without changing the global execution policy.
+    alias psh='powershell.exe -ExecutionPolicy Bypass'
+fi
 
 # Save history with date and time.
 export HISTTIMEFORMAT="[%Y-%m-%d %T] "
+
+# Some terminals exit only if the previous command was successful. This can be
+# be used to exit unconditionally.
+alias bye='clear && exit'
 
 # Some sort of a system monitor.
 alias F='watch -n 0.1 "cat /proc/cpuinfo | grep MHz"'
@@ -30,9 +46,6 @@ alias grep='grep --binary-files=without-match --color=auto'
 alias pgrep='pgrep -il'
 
 alias ps='ps -e | sort -gr'
-
-# Run a PowerShell script without globally changing the execution policy.
-alias psh='powershell.exe -ExecutionPolicy Bypass'
 
 alias p='/usr/bin/python3.8 -B'
 alias t='/usr/bin/python3.8 -m timeit'
@@ -335,3 +348,12 @@ _gKEFgMRsGkTgLsQsBojH.close(_gKEFgMRsGkTgLsQsBojH.figure())
 _xtBzBMfnpdQGhwINyACP()
 "
 }
+
+# Some functions are specific to WSL.
+if [[ "$is_wsl" == false ]]
+then
+    unset vcx
+    unset e
+    unset g
+    alias g='gvim'
+fi
