@@ -43,7 +43,7 @@ se cul                     " Highlight current line.
 se dy=lastline             " If the last line cannot be shown in its entirety, show a part of it.
 se enc=utf-8               " Internal representation.
 se fenc=utf-8              " Representation of current buffer.
-se gcr=n:blinkwait0        " disable cursor blink
+se gcr=n:blinkwait0        " Disable cursor blink in normal mode.
 se gfn=Cascadia\ Code\ 12  " Set the typeface on GNU/Linux. Remove this line if you are on Windows.
 se gfn=Cascadia\ Code:h12  " Set the typeface on Windows. Remove this line if you are on GNU/Linux.
 se hls                     " Searching highlights all matches.
