@@ -34,30 +34,35 @@ nn <silent> <M-6> :silent! cal matchdelete(alt_6)<CR>:let alt_6 = matchadd('the_
 nn <C-Down> 15<Down>
 nn <C-Up>   15<Up>
 
-se ai                      " automatic indent
-se ar                      " automatically read file when changed from elsewhere
-se bs=indent,eol,start     " backspace clears text across lines
-se cc=80,120               " colour these columns with `ColorColumn'
-se ci                      " copy previous line indent
-se cul                     " highlight current line
-se dy=lastline             " display line partially if entire line cannot be shown
-se enc=utf-8               " encoding: how it is written
-se fenc=utf-8              " encoding: how it is read
+se ai                      " New line is automatically indented.
+se ar                      " Automatically read file when changed from elsewhere.
+se bs=indent,eol,start     " Backspace freely.
+se cc=80,120               " Columns to be coloured with `ColorColumn'.
+se ci                      " Indentation for a new line is identical to the previous line.
+se cul                     " Highlight current line.
+se dy=lastline             " If the last line cannot be shown in its entirety, show a part of it.
+se enc=utf-8               " Internal representation.
+se fenc=utf-8              " Representation of current buffer.
 se gcr=n:blinkwait0        " disable cursor blink
-se gfn=Cascadia\ Code:h11  " font
-se hls                     " searching highlights search string
-se lsp=0                   " line spacing
-se mh                      " hide mouse pointer while typing
-se noet                    " do not expand tabs to spaces
-se noswapfile              " do not create swap files
-se sr                      " jump only at specified tabs when using >> or <<
-se nosta                   " use hard tabs, not spaces
-se nowrap                  " no word wrap
-se nu                      " line numbers
-se pi                      " preserve existing indentation when changing indent
-se report=0                " threshold for reporting number of changed lines
-se ru                      " ruler showing current cursor position
-se sts=0                   " do not insert spaces when pressing <Tab>
-se sw=8                    " number of spaces equal to an indent
-se ts=8                    " tabstop, length of a tab
-se ul=1000                 " number of undo operations allowed
+se gfn=Cascadia\ Code\ 12  " Set the typeface on GNU/Linux. Remove this line if you are on Windows.
+se gfn=Cascadia\ Code:h12  " Set the typeface on Windows. Remove this line if you are on GNU/Linux.
+se hls                     " Searching highlights all matches.
+se is                      " Incremental search.
+se lsp=0                   " Line spacing.
+se mh                      " Hide mouse pointer while typing.
+se noet                    " Do not expand tabs to spaces.
+se noswapfile              " Do not create swap files.
+se nowrap                  " Do not wrap lines.
+se nu                      " Line numbers.
+se pi                      " Preserve as much of the existing indentation as possible when changing said indentation.
+se report=0                " Threshold for reporting number of changed lines.
+se ru                      " Ruler showing current cursor position.
+se sc                      " Show partial command information.
+se so=3                    " Number of lines visible above and below cursor.
+se sr                      " When using '>>' or '<<', only jump to columns which are multiples of `sw'.
+se sta                     " Tab inserts an `sw'-size character at the start of a line, and `ts'-size elsewhere.
+se sts=0                   " Do not insert spaces when pressing Tab.
+se sw=8                    " Shift width. See `sta'.
+se ts=8                    " Tab stop. See `sta'.
+se tw=0                    " Do not break lines automatically.
+se ul=1000                 " Number of undo operations allowed.
