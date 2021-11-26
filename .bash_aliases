@@ -342,7 +342,7 @@ def _xtBzBMfnpdQGhwINyACP():
         print('Cancelled.')
         return
 
-    _qWonDbVEFZquydrdRtVd.fromarray((dst * 255).astype(_YNbCrBdBmvMfWxWTPFeq.uint8)).save(out)
+    _qWonDbVEFZquydrdRtVd.fromarray(_YNbCrBdBmvMfWxWTPFeq.uint8(dst * 255)).save(out)
 
 _gKEFgMRsGkTgLsQsBojH.close(_gKEFgMRsGkTgLsQsBojH.figure())
 _xtBzBMfnpdQGhwINyACP()
