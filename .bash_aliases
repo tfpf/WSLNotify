@@ -35,6 +35,7 @@ alias bye='clear && exit'
 # Some sort of a system monitor.
 alias F='watch -n 0.1 "cat /proc/cpuinfo | grep MHz"'
 alias M='watch -n 0.1 free -ht'
+alias top='top -d 0.1'
 
 alias l='ls -lNX --color=auto --group-directories-first --time-style=long-iso'
 alias la='ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
