@@ -35,7 +35,7 @@ alias bye='clear && exit'
 # Some sort of a system monitor.
 alias F='watch -n 0.1 "cat /proc/cpuinfo | grep MHz"'
 alias M='watch -n 0.1 free -ht'
-alias top='top -d 0.1'
+alias top='top -d 1'
 
 alias l='ls -lNX --color=auto --group-directories-first --time-style=long-iso'
 alias la='ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
@@ -278,7 +278,8 @@ def _xtBzBMfnpdQGhwINyACP():
     hashes = [None, None]
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     timefmt = '%Y-%m-%d_%H.%M.%S'
-    text.insert('1.0', f'lr_{_HgyxeWRPXNtbhqWyVhlC.strftime(timefmt)}\\n')
+    greek_symbols = r'\$\\Alpha\\Beta\\Gamma\\Delta\\Epsilon\\Zeta\\Eta\\Theta\\Iota\\Kappa\\Lambda\\Mu\\Nu\\Xi\\Omicron\\Pi\\Rho\\Sigma\\Tau\\Upsilon\\Phi\\Chi\\Psi\\Omega\$ \$\\alpha\\beta\\gamma\\delta\\epsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\varkappa\\lambda\\mu\\nu\\xi\\omicron\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega\$'
+    text.insert('1.0', f'lr_{_HgyxeWRPXNtbhqWyVhlC.strftime(timefmt)} {greek_symbols}\\n')
     root.after(1000, text.focus_set)
     text.tag_config('ltag', background='#333333', foreground='#FFFF00')
     text.tag_config('ctag', background='#333333', foreground='#007FFF')
