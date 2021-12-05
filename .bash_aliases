@@ -33,7 +33,7 @@ export HISTTIMEFORMAT="[%Y-%m-%d %T] "
 alias bye='clear && exit'
 
 # Some sort of a system monitor.
-alias F='watch -n 0.1 "cat /proc/cpuinfo | grep MHz"'
+alias F='watch -n 1 "grep MHz /proc/cpuinfo | nl -w 2"'
 alias M='watch -n 0.1 free -ht'
 alias top='top -d 1'
 
