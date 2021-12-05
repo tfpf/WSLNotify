@@ -56,6 +56,9 @@ alias time='/usr/bin/time -f "----------\n%e s, %M kB (max)\n%I FS inputs, %O FS
 
 alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
+# Notify when a command gets completed. Use `sudo apt install undistract-me`.
+source /etc/profile.d/undistract-me.sh
+
 # Commit and push changes to the master branch of a GitHub repository.
 push ()
 {
