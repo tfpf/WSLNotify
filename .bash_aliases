@@ -32,6 +32,10 @@ export HISTTIMEFORMAT="[%Y-%m-%d %T] "
 # be used to exit unconditionally.
 alias bye='clear && exit'
 
+# Some Linux distributions use swap space even when there is sufficient RAM
+# available. This will reuce the swap affinity.
+alias rs='cat /proc/sys/vm/swappiness && sudo sysctl vm.swappiness=10'
+
 # Some sort of a system monitor.
 alias F='watch -n 1 "grep MHz /proc/cpuinfo | nl -w 2"'
 alias M='watch -n 0.1 free -ht'
