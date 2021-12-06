@@ -60,8 +60,60 @@ alias time='/usr/bin/time -f "----------\n%e s, %M kB (max)\n%I FS inputs, %O FS
 
 alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
-# Notify when a command gets completed. Use `sudo apt install undistract-me`.
-source /etc/profile.d/undistract-me.sh
+# Pre-command for command timing. It will be called just before any command is
+# executed.
+before_command ()
+{
+    # This function may get called multiple times before the prompt is
+    # displayed. Ignore the subsequent calls.
+    if [[ "$CLI_ready" == false ]]
+    then
+        return
+    fi
+
+    start_time=$(date +%s)
+    CLI_ready=false
+}
+
+# Post-command for command timing. It will be called just before the prompt is
+# displayed (i.e. just after any command is executed).
+after_command ()
+{
+    # Check the exit status of the previous command.
+    if [[ $? -eq 0 ]]
+    then
+        local icon="dialog-information"
+    else
+        local icon="dialog-error"
+    fi
+
+    local finish_time=$(date +%s)
+    local delay=$((finish_time-start_time))
+    unset start_time
+    CLI_ready=true
+
+    if [[ $delay -le 4 ]]
+    then
+        return
+    fi
+
+    local seconds=$((delay%60))
+    local minutes=$((delay/60%60))
+    local hours=$((delay/3600))
+    local command=$(history 1 | xargs | cut -d " " -f 4-)
+
+    # Build a string to represent the elapsed time.
+    local delay_notif=""
+    [[ $hours -gt 0 ]] && delay_notif="${delay_notif}$hours h  "
+    [[ $hours -gt 0 || $minutes -gt 0 ]] && delay_notif="${delay_notif}$minutes m  "
+    [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && delay_notif="${delay_notif}$seconds s"
+
+    notify-send -i "$icon" -t 5000 "CLI Ready" "$command\n$delay_notif"
+}
+
+CLI_ready=true
+trap before_command DEBUG
+PROMPT_COMMAND=after_command
 
 # Commit and push changes to the master branch of a GitHub repository.
 push ()
