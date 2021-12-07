@@ -104,11 +104,12 @@ after_command ()
 
     # Build a string to represent the elapsed time.
     local delay_notif=""
-    [[ $hours -gt 0 ]] && delay_notif="${delay_notif}$hours h  "
-    [[ $hours -gt 0 || $minutes -gt 0 ]] && delay_notif="${delay_notif}$minutes m  "
+    [[ $hours -gt 0 ]] && delay_notif="${delay_notif}$hours h "
+    [[ $hours -gt 0 || $minutes -gt 0 ]] && delay_notif="${delay_notif}$minutes m "
     [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && delay_notif="${delay_notif}$seconds s"
 
-    notify-send -i "$icon" -t 5000 "CLI Ready" "$command\n$delay_notif"
+    notify-send -i "$icon" -t 8000 "CLI Ready" "$command\n$delay_notif"
+    printf "%*s\n" $COLUMNS "$command ($delay_notif)"
 }
 
 CLI_ready=true
