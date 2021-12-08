@@ -79,14 +79,7 @@ before_command ()
 # displayed (i.e. just after any command is executed).
 after_command ()
 {
-    # Check the exit status of the previous command.
-    if [[ $? -eq 0 ]]
-    then
-        local icon="dialog-information"
-    else
-        local icon="dialog-error"
-    fi
-
+    local exit_status=$?
     local finish_time=$(date +%s)
     local delay=$((finish_time-start_time))
     unset start_time
@@ -107,6 +100,14 @@ after_command ()
     [[ $hours -gt 0 ]] && delay_notif="${delay_notif}$hours h "
     [[ $hours -gt 0 || $minutes -gt 0 ]] && delay_notif="${delay_notif}$minutes m "
     [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && delay_notif="${delay_notif}$seconds s"
+
+    # Check the exit status of the previous command and choose an icon.
+    if [[ $exit_status -eq 0 ]]
+    then
+        local icon="dialog-information"
+    else
+        local icon="dialog-error"
+    fi
 
     notify-send -i "$icon" -t 8000 "CLI Ready" "$command\n$delay_notif"
     printf "%*s\n" $COLUMNS "$command ($delay_notif)"
