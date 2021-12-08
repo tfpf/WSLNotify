@@ -113,9 +113,13 @@ after_command ()
     printf "%*s\n" $COLUMNS "$command ($delay_notif)"
 }
 
-CLI_ready=true
-trap before_command DEBUG
-PROMPT_COMMAND=after_command
+# The functions don't get triggered as expected on WSL.
+if [[ "$is_wsl" == false ]]
+then
+    CLI_ready=true
+    trap before_command DEBUG
+    PROMPT_COMMAND=after_command
+fi
 
 # Commit and push changes to the master branch of a GitHub repository.
 push ()
