@@ -72,6 +72,7 @@ before_command ()
     fi
 
     start_time=$(date +%s)
+    window=$(xdotool getactivewindow)
     CLI_ready=false
 }
 
@@ -85,8 +86,9 @@ after_command ()
     unset start_time
     CLI_ready=true
 
-    if [[ $delay -le 4 ]]
+    if [[ $delay -le 4 || $window -eq $(xdotool getactivewindow) ]]
     then
+        unset window
         return
     fi
 
