@@ -225,6 +225,7 @@ r ()
     fi
 
     tr -cd "A-Za-z" < /dev/urandom | head -c $length
+    printf "\n"
     tr -cd "A-Za-z0-9" < /dev/urandom | head -c $length
     printf "\n"
 }
