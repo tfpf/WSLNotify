@@ -56,6 +56,7 @@ se nowrap                  " Do not wrap lines.
 se nu                      " Line numbers.
 se pi                      " Preserve as much of the existing indentation as possible when changing said indentation.
 se report=0                " Threshold for reporting number of changed lines.
+se rop=type:directx        " Enable ligatures on Windows. Remove this line if you are on GNU/Linux.
 se ru                      " Ruler showing current cursor position.
 se sc                      " Show partial command information.
 se so=3                    " Number of lines visible above and below cursor.
