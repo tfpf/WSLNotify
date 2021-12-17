@@ -55,7 +55,7 @@ mathtext.cal:      cmsy10
 mathtext.bf:       Cochineal:bold
 mathtext.it:       Cochineal:italic
 mathtext.rm:       Cochineal
-mathtext.sf:       sans
+mathtext.sf:       Noto Sans
 mathtext.tt:       Cascadia Code
 mathtext.fontset:  custom           # dejavusans, dejavuserif, cm, stix, stixsans, custom
 mathtext.fallback: stix
