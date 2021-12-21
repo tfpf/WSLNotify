@@ -56,7 +56,10 @@ alias p='/usr/bin/python3.8 -B'
 alias t='/usr/bin/python3.8 -m timeit'
 alias pip='/usr/bin/python3.8 -m pip'
 
-alias time='/usr/bin/time -f "----------\n%e s, %M kB (max)\n%I FS inputs, %O FS outputs, %W swaps\n%F major PFs, %R minor PFs\n----------\n" '
+alias time='/usr/bin/time -f "\
+$(printf "%*s" $COLUMNS " " | tr " " "-")
+Real: %e s. User: %U s. Kernel: %S s.
+Maximum RSS: %M kB." '
 
 alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
