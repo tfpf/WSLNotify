@@ -7,7 +7,7 @@ then
     running_on_WSL=true
 fi
 
-if [[ "$running_on_WSL" != true ]]
+if [[ "$running_on_WSL" == true ]]
 then
 
     # Set up a virtual display using VcXsrv to run GUI apps. You may want to
