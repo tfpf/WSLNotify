@@ -1,14 +1,13 @@
 # ~/.bash_aliases
 
-# Is this running on WSL?
-is_wsl=false
+# WSL: Windows Subsystem for Linux.
+running_on_WSL=false
 if [[ $(grep -i "microsoft" /proc/version) ]]
 then
-    is_wsl=true
+    running_on_WSL=true
 fi
 
-# WSL-specific settings.
-if [[ "$is_wsl" == true ]]
+if [[ "$running_on_WSL" != true ]]
 then
 
     # Set up a virtual display using VcXsrv to run GUI apps. You may want to
@@ -16,7 +15,7 @@ then
     # the file `~/.config/dconf/user'. The first `DISPLAY' is for WSL, and the
     # second, for WSL2.
     export DISPLAY=localhost:0.0
-    # export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+    # export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
     export GDK_SCALE=1
     export LIBGL_ALWAYS_INDIRECT=1
     export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
@@ -100,13 +99,11 @@ after_command ()
     local hours=$((delay/3600))
     local command=$(history 1 | xargs | cut -d " " -f 4-)
 
-    # Build a string to represent the elapsed time.
     local delay_notif=""
     [[ $hours -gt 0 ]] && delay_notif="${delay_notif}$hours h "
     [[ $hours -gt 0 || $minutes -gt 0 ]] && delay_notif="${delay_notif}$minutes m "
     [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && delay_notif="${delay_notif}$seconds s"
 
-    # Check the exit status of the previous command and choose an icon.
     if [[ $exit_status -eq 0 ]]
     then
         local icon="dialog-information"
@@ -119,7 +116,7 @@ after_command ()
 }
 
 # The functions don't get triggered as expected on WSL.
-if [[ "$is_wsl" == false ]]
+if [[ "$running_on_WSL" == false ]]
 then
     CLI_ready=true
     trap before_command DEBUG
@@ -144,7 +141,7 @@ push ()
     git push origin master
 }
 
-# Create a virtual display for WSL2.
+# Create a virtual display for WSL.
 vcx ()
 {
     local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
@@ -161,7 +158,7 @@ e ()
     if [[ $# -lt 1 || ! -d "$1" ]]
     then
         printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} dirpath\n"
+        printf "\t${FUNCNAME[0]} <directory>\n"
         return 1
     fi
 
@@ -175,11 +172,13 @@ g ()
     if [[ $# -lt 1 || ! -f "$1" ]]
     then
         printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} filepath\n"
+        printf "\t${FUNCNAME[0]} <file>\n"
         return 1
     fi
 
-    local gvimpath='/mnt/c/Program Files (x86)/Vim/vim82/gvim.exe'
+    # A 64-bit GVIM binary should be available here.
+    # https://tuxproject.de/projects/vim/
+    local gvimpath='/mnt/c/Users/vpaij/Downloads/gVim/gvim.exe'
     local gvimname=$(basename "$gvimpath")
     local filedir=$(dirname "$1")
     local filename=$(basename "$1")
@@ -437,8 +436,7 @@ _xtBzBMfnpdQGhwINyACP()
 "
 }
 
-# Some functions are specific to WSL.
-if [[ "$is_wsl" == false ]]
+if [[ "$running_on_WSL" == false ]]
 then
     unset vcx
     unset e

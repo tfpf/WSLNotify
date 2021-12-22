@@ -3,9 +3,6 @@
 colo desert
 syn on
 
-" " Maximise the GUI when gVim starts (Windows only).
-" au GUIEnter * sim ~x
-
 " " Save the file whenever the buffer is changed.
 " au TextChanged,TextChangedI <buffer> sil w
 " nn <silent> <C-S> :au TextChanged,TextChangedI <buffer> sil w<CR>:w<CR>
@@ -44,8 +41,6 @@ se dy=lastline             " If the last line cannot be shown in its entirety, s
 se enc=utf-8               " Internal representation.
 se fenc=utf-8              " Representation of current buffer.
 se gcr=n:blinkwait0        " Disable cursor blink in normal mode.
-se gfn=Cascadia\ Code\ 12  " GNU/Linux: set the typeface. Remove if you are on Windows.
-se gfn=Cascadia\ Code:h12  " Windows: set the typeface. Remove if you are on GNU/Linux.
 se hls                     " Searching highlights all matches.
 se is                      " Incremental search.
 se lsp=0                   " Line spacing.
@@ -56,10 +51,8 @@ se nowrap                  " Do not wrap lines.
 se nu                      " Line numbers.
 se pi                      " Preserve as much of the existing indentation as possible when changing said indentation.
 se report=0                " Threshold for reporting number of changed lines.
-se rop=type:directx        " Windows: enable ligatures. Remove if you are on GNU/Linux.
 se ru                      " Ruler showing current cursor position.
 se sc                      " Show partial command information.
-se scf                     " Windows: scroll the window under the mouse pointer. Remove if you are on GNU/Linux.
 se so=3                    " Number of lines visible above and below cursor.
 se sr                      " When using '>>' or '<<', only jump to columns which are multiples of `sw'.
 se sta                     " Tab inserts an `sw'-size character at the start of a line, and `ts'-size elsewhere.
@@ -68,3 +61,12 @@ se sw=8                    " Shift width. See `sta'.
 se ts=8                    " Tab stop. See `sta'.
 se tw=0                    " Do not break lines automatically.
 se ul=1000                 " Number of undo operations allowed.
+
+if has('win32') || has('win64')
+    au GUIEnter * sim ~x
+    se gfn=Cascadia\ Code:h13 " GUI font.
+    se rop=type:directx       " Enable ligatures.
+    se scf                    " Scroll focus follows mouse pointer.
+elseif has('unix')
+    se gfn=Cascadia\ Code\ 13
+endif
