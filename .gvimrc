@@ -44,8 +44,8 @@ se dy=lastline             " If the last line cannot be shown in its entirety, s
 se enc=utf-8               " Internal representation.
 se fenc=utf-8              " Representation of current buffer.
 se gcr=n:blinkwait0        " Disable cursor blink in normal mode.
-se gfn=Cascadia\ Code\ 12  " Set the typeface on GNU/Linux. Remove this line if you are on Windows.
-se gfn=Cascadia\ Code:h12  " Set the typeface on Windows. Remove this line if you are on GNU/Linux.
+se gfn=Cascadia\ Code\ 12  " GNU/Linux: set the typeface. Remove if you are on Windows.
+se gfn=Cascadia\ Code:h12  " Windows: set the typeface. Remove if you are on GNU/Linux.
 se hls                     " Searching highlights all matches.
 se is                      " Incremental search.
 se lsp=0                   " Line spacing.
@@ -56,9 +56,10 @@ se nowrap                  " Do not wrap lines.
 se nu                      " Line numbers.
 se pi                      " Preserve as much of the existing indentation as possible when changing said indentation.
 se report=0                " Threshold for reporting number of changed lines.
-se rop=type:directx        " Enable ligatures on Windows. Remove this line if you are on GNU/Linux.
+se rop=type:directx        " Windows: enable ligatures. Remove if you are on GNU/Linux.
 se ru                      " Ruler showing current cursor position.
 se sc                      " Show partial command information.
+se scf                     " Windows: scroll the window under the mouse pointer. Remove if you are on GNU/Linux.
 se so=3                    " Number of lines visible above and below cursor.
 se sr                      " When using '>>' or '<<', only jump to columns which are multiples of `sw'.
 se sta                     " Tab inserts an `sw'-size character at the start of a line, and `ts'-size elsewhere.
