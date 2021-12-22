@@ -189,7 +189,7 @@ g ()
     # termination of `bash' without affecting GVIM (probably because it is a
     # Windows application, which WSL does not have the ability to close).
     # That's what is done here.
-    (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") 2> /dev/null
+    (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") > /dev/null 2> /dev/null
 }
 
 # PDF optimiser. This requires that `ghostscript' be installed.
