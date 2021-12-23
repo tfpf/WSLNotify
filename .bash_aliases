@@ -73,7 +73,7 @@ before_command ()
     fi
 
     start_time=$(date +%s)
-    [[ -z $running_on_WSL ]] && window=$(xdotool getactivewindow)
+    [[ -z $running_on_WSL ]] && window=$WINDOWID
     CLI_ready=""
 }
 
