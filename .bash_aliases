@@ -103,9 +103,10 @@ after_command ()
     [[ $hours -gt 0 || $minutes -gt 0 ]] && delay_notif="${delay_notif}$minutes m "
     [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && delay_notif="${delay_notif}$seconds s"
 
-    # https://github.com/stuartleeks/wsl-notify-send to emulate `notify-send'.
     if [[ -n $running_on_WSL ]]
     then
+
+        # https://github.com/stuartleeks/wsl-notify-send
         /mnt/c/Users/vpaij/Downloads/wsl-notify-send/wsl-notify-send.exe --appId "Windows Terminal" -c "CLI Ready" "$command ($delay_notif)"
     else
         [[ $exit_status -eq 0 ]] && local icon="dialog-information" || local icon="dialog-error"
@@ -171,7 +172,7 @@ g ()
         return 1
     fi
 
-    # https://tuxproject.de/projects/vim/ for 64-bit Windows binaries.
+    # https://tuxproject.de/projects/vim/ (64-bit Windows binaries)
     local gvimpath='/mnt/c/Users/vpaij/Downloads/gVim/gvim.exe'
     local gvimname=$(basename "$gvimpath")
     local filedir=$(dirname "$1")
