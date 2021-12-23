@@ -1,7 +1,7 @@
 # ~/.bash_aliases
 
 # WSL: Windows Subsystem for Linux.
-if [[ $(grep -i "microsoft" /proc/version) ]]
+if [[ $(grep -i microsoft /proc/version) ]]
 then
     running_on_WSL=1
 fi
@@ -67,14 +67,14 @@ before_command ()
 {
     # This function may get called multiple times before the prompt is
     # displayed. Ignore the subsequent calls.
-    if [[ "$CLI_ready" == false ]]
+    if [[ -z $CLI_ready ]]
     then
         return
     fi
 
     start_time=$(date +%s)
     [[ -z $running_on_WSL ]] && window=$(xdotool getactivewindow)
-    CLI_ready=false
+    CLI_ready=""
 }
 
 # Post-command for command timing. It will be called just before the prompt is
@@ -85,7 +85,7 @@ after_command ()
     local finish_time=$(date +%s)
     local delay=$((finish_time-start_time))
     unset start_time
-    CLI_ready=true
+    CLI_ready=1
 
     if [[ $delay -le 10 || -z $running_on_WSL && $window -eq $(xdotool getactivewindow) ]]
     then
@@ -109,13 +109,13 @@ after_command ()
         # https://github.com/stuartleeks/wsl-notify-send
         /mnt/c/Users/vpaij/Downloads/wsl-notify-send/wsl-notify-send.exe --appId "Windows Terminal" -c "CLI Ready" "$command ($delay_notif)"
     else
-        [[ $exit_status -eq 0 ]] && local icon="dialog-information" || local icon="dialog-error"
-        notify-send -i "$icon" -t 8000 "CLI Ready" "$command\n$delay_notif"
+        [[ $exit_status -eq 0 ]] && local icon=dialog-information || local icon=dialog-error
+        notify-send -i $icon -t 8000 "CLI Ready" "$command\n$delay_notif"
     fi
     printf "%*s\n" $COLUMNS "$command ($delay_notif)"
 }
 
-CLI_ready=true
+CLI_ready=1
 trap before_command DEBUG
 PROMPT_COMMAND=after_command
 
