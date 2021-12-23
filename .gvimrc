@@ -68,5 +68,6 @@ if has('win32') || has('win64')
     se rop=type:directx       " Enable ligatures.
     se scf                    " Scroll focus follows mouse pointer.
 elseif has('unix')
+    au GUIEnter * call system('wmctrl -b add,maximized_horz,maximized_vert -i -r ' . v:windowid)
     se gfn=Cascadia\ Code\ 13
 endif
