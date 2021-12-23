@@ -1,13 +1,12 @@
 # ~/.bash_aliases
 
 # WSL: Windows Subsystem for Linux.
-running_on_WSL=false
 if [[ $(grep -i "microsoft" /proc/version) ]]
 then
-    running_on_WSL=true
+    running_on_WSL=1
 fi
 
-if [[ "$running_on_WSL" == true ]]
+if [[ -n $running_on_WSL ]]
 then
 
     # Set up a virtual display using VcXsrv to run GUI apps. You may want to
@@ -74,7 +73,7 @@ before_command ()
     fi
 
     start_time=$(date +%s)
-    window=$(xdotool getactivewindow)
+    [[ -z $running_on_WSL ]] && window=$(xdotool getactivewindow)
     CLI_ready=false
 }
 
@@ -88,7 +87,7 @@ after_command ()
     unset start_time
     CLI_ready=true
 
-    if [[ $delay -le 4 || $window -eq $(xdotool getactivewindow) ]]
+    if [[ $delay -le 10 || -z $running_on_WSL && $window -eq $(xdotool getactivewindow) ]]
     then
         unset window
         return
@@ -104,24 +103,19 @@ after_command ()
     [[ $hours -gt 0 || $minutes -gt 0 ]] && delay_notif="${delay_notif}$minutes m "
     [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && delay_notif="${delay_notif}$seconds s"
 
-    if [[ $exit_status -eq 0 ]]
+    if [[ -z $running_on_WSL ]]
     then
-        local icon="dialog-information"
+        [[ $exit_status -eq 0 ]] && local icon="dialog-information" || local icon="dialog-error"
+        notify-send -i "$icon" -t 8000 "CLI Ready" "$command\n$delay_notif"
     else
-        local icon="dialog-error"
+        /mnt/c/Users/vpaij/Downloads/wsl-notify-send/wsl-notify-send.exe --appId "Windows Terminal" -c "CLI Ready" "$command ($delay_notif)"
     fi
-
-    notify-send -i "$icon" -t 8000 "CLI Ready" "$command\n$delay_notif"
     printf "%*s\n" $COLUMNS "$command ($delay_notif)"
 }
 
-# The functions don't get triggered as expected on WSL.
-if [[ "$running_on_WSL" == false ]]
-then
-    CLI_ready=true
-    trap before_command DEBUG
-    PROMPT_COMMAND=after_command
-fi
+CLI_ready=true
+trap before_command DEBUG
+PROMPT_COMMAND=after_command
 
 # Commit and push changes to the master branch of a GitHub repository.
 push ()
@@ -436,7 +430,7 @@ _xtBzBMfnpdQGhwINyACP()
 "
 }
 
-if [[ "$running_on_WSL" == false ]]
+if [[ -z $running_on_WSL ]]
 then
     unset vcx
     unset e
