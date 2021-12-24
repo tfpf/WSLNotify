@@ -108,8 +108,6 @@ after_command ()
 
     if [[ -n $running_on_WSL ]]
     then
-
-        # https://github.com/tfpf/toast
         if [[ $exit_status -eq 0 ]]
         then
             local icon='C:\Users\vpaij\Downloads\toast\icon-tick-transparent.png'
