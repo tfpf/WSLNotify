@@ -109,10 +109,21 @@ after_command ()
     if [[ -n $running_on_WSL ]]
     then
 
-        # https://github.com/go-toast/toast
-        /mnt/c/Users/vpaij/Downloads/toast64.exe --app-id "Windows Terminal" -t "CLI Ready" -m "$command ($delay_notif)"
+        # https://github.com/tfpf/toast
+        if [[ $exit_status -eq 0 ]]
+        then
+            local icon='C:\Users\vpaij\Downloads\toast\icon-tick-transparent.png'
+        else
+            local icon='C:\Users\vpaij\Downloads\toast\icon-cross-transparent.png'
+        fi
+        /mnt/c/Users/vpaij/Downloads/toast/toast64.exe --app-id "Windows Terminal" -t "CLI Ready" -m "$command ($delay_notif)" -i $icon
     else
-        [[ $exit_status -eq 0 ]] && local icon=dialog-information || local icon=dialog-error
+        if [[ $exit_status -eq 0 ]]
+        then
+            local icon=dialog-information
+        else
+            local icon=dialog-error
+        fi
         notify-send -i $icon -t 8000 "CLI Ready" "$command\n$delay_notif"
     fi
     printf "%*s\n" $COLUMNS "$command ($delay_notif)"
