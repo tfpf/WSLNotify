@@ -73,8 +73,11 @@ before_command ()
     fi
 
     start_time=$(date +%s)
-    [[ -z $running_on_WSL ]] && window=$WINDOWID
     CLI_ready=""
+    if [[ -z $running_on_WSL ]]
+    then
+        window=$WINDOWID
+    fi
 }
 
 # Post-command for command timing. It will be called just before the prompt is
