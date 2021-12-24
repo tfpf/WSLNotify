@@ -106,8 +106,8 @@ after_command ()
     if [[ -n $running_on_WSL ]]
     then
 
-        # https://github.com/stuartleeks/wsl-notify-send
-        /mnt/c/Users/vpaij/Downloads/wsl-notify-send/wsl-notify-send.exe --appId "Windows Terminal" -c "CLI Ready" "$command ($delay_notif)"
+        # https://github.com/go-toast/toast
+        /mnt/c/Users/vpaij/Downloads/toast64.exe --app-id "Windows Terminal" -t "CLI Ready" -m "$command ($delay_notif)"
     else
         [[ $exit_status -eq 0 ]] && local icon=dialog-information || local icon=dialog-error
         notify-send -i $icon -t 8000 "CLI Ready" "$command\n$delay_notif"
