@@ -1,10 +1,7 @@
 # ~/.bash_aliases
 
 # WSL: Windows Subsystem for Linux.
-if [[ -n $(grep -i microsoft /proc/version) ]]
-then
-    running_on_WSL=1
-fi
+running_on_WSL=$(grep -i microsoft /proc/version)
 
 if [[ -n $running_on_WSL ]]
 then
@@ -72,7 +69,7 @@ before_command ()
         return
     fi
 
-    start_time=$(date +%s)
+    start_time=$(($(date +%s%N)/1000000))
     CLI_ready=""
     if [[ -z $running_on_WSL ]]
     then
@@ -85,25 +82,26 @@ before_command ()
 after_command ()
 {
     local exit_status=$?
-    local finish_time=$(date +%s)
+    local finish_time=$(($(date +%s%N)/1000000))
     local delay=$((finish_time-start_time))
     unset start_time
     CLI_ready=1
 
-    if [[ $delay -le 10 || -z $running_on_WSL && $terminal_window_ID -eq $(xdotool getactivewindow) ]]
+    if [[ $delay -le 10000 || -z $running_on_WSL && $terminal_window_ID -eq $(xdotool getactivewindow) ]]
     then
         return
     fi
 
-    local seconds=$((delay%60))
-    local minutes=$((delay/60%60))
-    local hours=$((delay/3600))
+    local milliseconds=$((delay%1000))
+    local seconds=$((delay/1000%60))
+    local minutes=$((delay/60000%60))
+    local hours=$((delay/3600000))
     local command=$(history 1 | xargs | cut -d " " -f 4-)
 
     local delay_notif=""
     [[ $hours -gt 0 ]] && delay_notif="${delay_notif}$hours h "
     [[ $hours -gt 0 || $minutes -gt 0 ]] && delay_notif="${delay_notif}$minutes m "
-    [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && delay_notif="${delay_notif}$seconds s"
+    [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && delay_notif="${delay_notif}$seconds s $milliseconds ms"
 
     if [[ $exit_status -eq 0 ]]
     then
