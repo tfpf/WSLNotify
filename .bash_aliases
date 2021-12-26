@@ -1,7 +1,7 @@
 # ~/.bash_aliases
 
 # WSL: Windows Subsystem for Linux.
-if [[ $(grep -i microsoft /proc/version) ]]
+if [[ -n $(grep -i microsoft /proc/version) ]]
 then
     running_on_WSL=1
 fi
@@ -76,7 +76,7 @@ before_command ()
     CLI_ready=""
     if [[ -z $running_on_WSL ]]
     then
-        window=$WINDOWID
+        terminal_window_ID=$(xdotool getactivewindow)
     fi
 }
 
@@ -90,9 +90,8 @@ after_command ()
     unset start_time
     CLI_ready=1
 
-    if [[ $delay -le 10 || -z $running_on_WSL && $window -eq $(xdotool getactivewindow) ]]
+    if [[ $delay -le 10 || -z $running_on_WSL && $terminal_window_ID -eq $(xdotool getactivewindow) ]]
     then
-        unset window
         return
     fi
 
@@ -106,25 +105,29 @@ after_command ()
     [[ $hours -gt 0 || $minutes -gt 0 ]] && delay_notif="${delay_notif}$minutes m "
     [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && delay_notif="${delay_notif}$seconds s"
 
-    if [[ -n $running_on_WSL ]]
+    if [[ $exit_status -eq 0 ]]
     then
-        if [[ $exit_status -eq 0 ]]
+        # local exit_symbol="✓"
+        if [[ -n $running_on_WSL ]]
         then
             local icon='C:\Users\vpaij\Downloads\toast\icon-tick-transparent.png'
+            /mnt/c/Users/vpaij/Downloads/toast/toast64.exe --app-id "Windows Terminal" -t "CLI Ready" -m "$command ($delay_notif)" -i $icon
         else
-            local icon='C:\Users\vpaij\Downloads\toast\icon-cross-transparent.png'
-        fi
-        /mnt/c/Users/vpaij/Downloads/toast/toast64.exe --app-id "Windows Terminal" -t "CLI Ready" -m "$command ($delay_notif)" -i $icon
-    else
-        if [[ $exit_status -eq 0 ]]
-        then
             local icon=dialog-information
+            notify-send -i $icon -t 8000 "CLI Ready" "$command\n$delay_notif"
+        fi
+    else
+        # local exit_symbol="✗"
+        if [[ -n $running_on_WSL ]]
+        then
+            local icon='C:\Users\vpaij\Downloads\toast\icon-cross-transparent.png'
+            /mnt/c/Users/vpaij/Downloads/toast/toast64.exe --app-id "Windows Terminal" -t "CLI Ready" -m "$command ($delay_notif)" -i $icon
         else
             local icon=dialog-error
+            notify-send -i $icon -t 8000 "CLI Ready" "$command\n$delay_notif"
         fi
-        notify-send -i $icon -t 8000 "CLI Ready" "$command\n$delay_notif"
     fi
-    printf "%*s\n" $COLUMNS "$command ($delay_notif)"
+    printf "%*s\n" $COLUMNS "$exit_symbol $command ($delay_notif)"
 }
 
 CLI_ready=1
