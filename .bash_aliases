@@ -105,7 +105,7 @@ after_command ()
 
     if [[ $exit_status -eq 0 ]]
     then
-        # local exit_symbol="✓"
+        local exit_symbol="✓"
         if [[ -n $running_on_WSL ]]
         then
             local icon='C:\Users\vpaij\Downloads\toast\icon-tick-transparent.png'
@@ -115,7 +115,7 @@ after_command ()
             notify-send -i $icon -t 8000 "CLI Ready" "$command\n$delay_notif"
         fi
     else
-        # local exit_symbol="✗"
+        local exit_symbol="✗"
         if [[ -n $running_on_WSL ]]
         then
             local icon='C:\Users\vpaij\Downloads\toast\icon-cross-transparent.png'
@@ -125,7 +125,10 @@ after_command ()
             notify-send -i $icon -t 8000 "CLI Ready" "$command\n$delay_notif"
         fi
     fi
-    printf "%*s\n" $COLUMNS "$exit_symbol $command ($delay_notif)"
+
+    # Right-aligning the following string requires accounting for the fact that
+    # the tick and cross symbols are three-byte characters.
+    printf "%*s\n" $((COLUMNS+2)) "$exit_symbol $command ($delay_notif)"
 }
 
 CLI_ready=1
