@@ -18,6 +18,9 @@ then
 
     # Run a PowerShell script without changing the global execution policy.
     alias psh='powershell.exe -ExecutionPolicy Bypass'
+
+    # Compile programs written in C#.
+    alias csc='/mnt/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe /platform:x64'
 fi
 
 # Save history with date and time.
@@ -106,24 +109,16 @@ after_command ()
     if [[ $exit_status -eq 0 ]]
     then
         local exit_symbol="✓"
-        if [[ -n $running_on_WSL ]]
-        then
-            local icon='C:\Users\vpaij\Downloads\toast\icon-tick-transparent.png'
-            /mnt/c/Users/vpaij/Downloads/toast/toast64.exe --app-id "Windows Terminal" -t "CLI Ready" -m "$command ($delay_notif)" -i $icon
-        else
-            local icon=dialog-information
-            notify-send -i $icon -t 8000 "CLI Ready" "$command\n$delay_notif"
-        fi
+        local icon=dialog-information
     else
         local exit_symbol="✗"
-        if [[ -n $running_on_WSL ]]
-        then
-            local icon='C:\Users\vpaij\Downloads\toast\icon-cross-transparent.png'
-            /mnt/c/Users/vpaij/Downloads/toast/toast64.exe --app-id "Windows Terminal" -t "CLI Ready" -m "$command ($delay_notif)" -i $icon
-        else
-            local icon=dialog-error
-            notify-send -i $icon -t 8000 "CLI Ready" "$command\n$delay_notif"
-        fi
+        local icon=dialog-error
+    fi
+    if [[ -n $running_on_WSL ]]
+    then
+        /mnt/c/Users/vpaij/Downloads/WSLNotify/WSLNotify.exe "CLI Ready" "$command ($delay_notif)" $icon
+    else
+        notify-send -i $icon "CLI Ready" "$command\n$delay_notif"
     fi
 
     # Right-aligning the following string requires accounting for the fact that
