@@ -72,7 +72,7 @@ before_command ()
         return
     fi
 
-    start_time=$(($(date +%s%N)/1000000))
+    start_time=$(date +%s%3N)
     CLI_ready=""
     if [[ -z $running_on_WSL ]]
     then
@@ -85,7 +85,7 @@ before_command ()
 after_command ()
 {
     local exit_status=$?
-    local finish_time=$(($(date +%s%N)/1000000))
+    local finish_time=$(date +%s%3N)
     local delay=$((finish_time-start_time))
     unset start_time
     CLI_ready=1
@@ -101,10 +101,10 @@ after_command ()
     local hours=$((delay/3600000))
     local command=$(history 1 | xargs | cut -d " " -f 4-)
 
-    local delay_notif=""
-    [[ $hours -gt 0 ]] && delay_notif="${delay_notif}$hours h "
-    [[ $hours -gt 0 || $minutes -gt 0 ]] && delay_notif="${delay_notif}$minutes m "
-    [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && delay_notif="${delay_notif}$seconds s $milliseconds ms"
+    local breakup=""
+    [[ $hours -gt 0 ]] && breakup="${breakup}$hours h "
+    [[ $hours -gt 0 || $minutes -gt 0 ]] && breakup="${breakup}$minutes m "
+    [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && breakup="${breakup}$seconds s $milliseconds ms"
 
     if [[ $exit_status -eq 0 ]]
     then
@@ -116,14 +116,14 @@ after_command ()
     fi
     if [[ -n $running_on_WSL ]]
     then
-        /mnt/c/Users/vpaij/Downloads/WSLNotify/WSLNotify.exe "CLI Ready" "$command ($delay_notif)" $icon
+        /mnt/c/Users/vpaij/Downloads/WSLNotify/WSLNotify.exe "CLI Ready" "$command ($breakup)" $icon
     else
-        notify-send -i $icon "CLI Ready" "$command\n$delay_notif"
+        notify-send -i $icon "CLI Ready" "$command\n$breakup"
     fi
 
     # Right-aligning the following string requires accounting for the fact that
     # the tick and cross symbols are three-byte characters.
-    printf "%*s\n" $((COLUMNS+2)) "$exit_symbol $command ($delay_notif)"
+    printf "%*s\n" $((COLUMNS+2)) "$exit_symbol $command ($breakup)"
 }
 
 CLI_ready=1
