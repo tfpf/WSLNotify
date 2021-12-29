@@ -72,12 +72,12 @@ before_command ()
         return
     fi
 
-    start_time=$(date +%s%3N)
-    CLI_ready=""
     if [[ -z $running_on_WSL ]]
     then
         terminal_window_ID=$(xdotool getactivewindow)
     fi
+    CLI_ready=""
+    start_time=$(date +%s%3N)
 }
 
 # Post-command for command timing. It will be called just before the prompt is
