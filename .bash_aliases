@@ -23,7 +23,6 @@ then
     alias csc='/mnt/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe /platform:x64'
 fi
 
-# Save history with date and time.
 export HISTTIMEFORMAT="[%Y-%m-%d %T] "
 
 # Some terminals exit only if the previous command was successful. This can be
@@ -42,7 +41,7 @@ alias top='top -d 1'
 alias l='ls -lNX --color=auto --group-directories-first --time-style=long-iso'
 alias la='ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
 alias ls='ls -C --color=auto'
-alias lt='ls -hlNtr --color=auto --group-directories-first --time-style=long-iso'
+alias lt='ls -hlNrt --color=auto --group-directories-first --time-style=long-iso'
 
 alias grep='grep --binary-files=without-match --color=auto'
 
@@ -99,7 +98,10 @@ after_command ()
     local seconds=$((delay/1000%60))
     local minutes=$((delay/60000%60))
     local hours=$((delay/3600000))
-    local command=$(history 1 | xargs | cut -d " " -f 4-)
+
+    # Remove everything up to and including the first closing square bracket
+    # and a single space from the last history entry. (See `HISTTIMEFORMAT'.)
+    local command=$(history 1 | sed 's/^[^]]*\] //')
 
     local breakup=""
     [[ $hours -gt 0 ]] && breakup="${breakup}$hours h "
