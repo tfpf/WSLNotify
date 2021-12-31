@@ -1,4 +1,4 @@
-# Notifications for WSL
+# Native Windows Notifications for WSL
 `notify-send` doesn't work on WSL. `WSLNotify.exe` may be used instead. You can
 grab it from one of the [releases](https://github.com/tfpf/WSLNotify/releases).
 
@@ -41,4 +41,9 @@ based on system accessibility settings.
 other applications). These can be used on GNU/Linux or WSL without making any
 changes whatsoever. Having identical files for both means I don't have to spend
 time setting up my environment.
+
+# Known Bugs
+* Hovering the mouse over the system tray icon after the application has
+returned makes the notification disappear.
+* Multiple notifications fill up the system tray with the application icon.
 
