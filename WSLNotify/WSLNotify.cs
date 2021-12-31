@@ -1,5 +1,7 @@
-// csc.exe /win32icon:WSLNotify.ico WSLNotify.cs
-// csc.exe /platform:x64 /win32icon:WSLNotify.ico WSLNotify.cs
+/*
+ * Microsoft (R) Visual C# Compiler version 4.8.4084.0 for C# 5
+ * csc /platform:x64 /win32icon:WSLNotify.ico /o+ /w:4 /nologo WSLNotify.cs
+ */
 
 using System;
 using System.Drawing;
@@ -8,6 +10,8 @@ using System.Windows.Forms;
 
 class WSLNotify
 {
+    const string helpOption = "-?";
+
     const string BallonTipIconOption = "-i";
     ToolTipIcon BalloonTipIcon;
 
@@ -68,6 +72,21 @@ class WSLNotify
 
     ///////////////////////////////////////////////////////////////////////////
     // Method
+    // Display usage information.
+    ///////////////////////////////////////////////////////////////////////////
+    void showHelp()
+    {
+        Console.WriteLine("Usage:");
+        Console.WriteLine("  " + Assembly.GetExecutingAssembly().GetName().Name + " [OPTIONS] <SUMMARY> [BODY]\n");
+        Console.WriteLine("Help Options:");
+        Console.WriteLine("  -?         Show help\n");
+        Console.WriteLine("Application Options:");
+        Console.WriteLine("  -i ICON    Stock icon (\"dialog-information\", \"dialog-warning\", \"dialog-error\")\n");
+        Environment.Exit(0);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Method
     // Read the command line arguments into class member variables. Apparently,
     // there is no out-of-the-box support for parsing command line arguments.
     // But there aren't too many arguments to process, so a quick-and-dirty
@@ -88,6 +107,10 @@ class WSLNotify
                 case BallonTipIconOption:
                     i += 1;
                     setBalloonTipIcon(args[i]);
+                    break;
+
+                case helpOption:
+                    showHelp();
                     break;
 
                 default:
@@ -130,7 +153,7 @@ class WSLNotify
         NotifyIcon notifyIcon = new NotifyIcon
         {
             Visible = true,
-            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath),
+            Icon = Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location),
             BalloonTipTitle = wNotify.BalloonTipTitle,
             BalloonTipText = wNotify.BalloonTipText,
             BalloonTipIcon = wNotify.BalloonTipIcon,

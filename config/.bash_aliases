@@ -20,7 +20,10 @@ then
     alias psh='powershell.exe -ExecutionPolicy Bypass'
 
     # Compile programs written in C#.
-    alias csc='/mnt/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe /platform:x64'
+    alias csc='/mnt/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe'
+
+    # Notifications for WSL, since `notify-send' does not work.
+    alias notify-send='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLNotify.exe'
 fi
 
 export HISTTIMEFORMAT="[%Y-%m-%d %T] "
@@ -116,12 +119,7 @@ after_command ()
         local exit_symbol="✗"
         local icon=dialog-error
     fi
-    if [[ -n $running_on_WSL ]]
-    then
-        /mnt/c/Users/vpaij/Downloads/WSLNotify/WSLNotify.exe "CLI Ready" "$command ($breakup)" $icon
-    else
-        notify-send -i $icon "CLI Ready" "$command\n$breakup"
-    fi
+    notify-send -i $icon "CLI Ready" "$command ($breakup)"
 
     # Right-aligning the following string requires accounting for the fact that
     # the tick and cross symbols are three-byte characters.
