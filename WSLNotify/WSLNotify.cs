@@ -39,7 +39,7 @@ class WSLNotify
         }
         else
         {
-            Console.WriteLine("Invalid number of options.");
+            Console.WriteLine("Invalid number of options");
             Environment.Exit(1);
         }
     }
@@ -105,7 +105,7 @@ class WSLNotify
             switch(args[i])
             {
                 case BallonTipIconOption:
-                    i += 1;
+                    ++i;
                     setBalloonTipIcon(args[i]);
                     break;
 
@@ -114,6 +114,8 @@ class WSLNotify
                     break;
 
                 default:
+                    Console.WriteLine("Unknown option " + args[i]);
+                    Environment.Exit(1);
                     break;
             }
         }
@@ -127,7 +129,7 @@ class WSLNotify
     {
         if(BalloonTipTitle == " ")
         {
-            Console.WriteLine("No summary specified.");
+            Console.WriteLine("No summary specified");
             Environment.Exit(1);
         }
     }
@@ -144,7 +146,7 @@ class WSLNotify
         }
         catch(IndexOutOfRangeException)
         {
-            Console.WriteLine("Missing argument.");
+            Console.WriteLine("Missing argument");
             Environment.Exit(1);
         }
 
