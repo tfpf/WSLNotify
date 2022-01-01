@@ -2,9 +2,9 @@
 `notify-send` doesn't work on WSL. `WSLNotify.exe` may be used instead. You can
 grab it from one of the [releases](https://github.com/tfpf/WSLNotify/releases).
 
-The following commands were run in Windows Terminal after navigating to the
-directory containing `WSLNotify.exe`. (If you use Windows Command Prompt, you
-can skip the path specifier `./` and the extension `.exe`.)
+The following commands were run in Bash on Windows Terminal after navigating to
+the directory containing `WSLNotify.exe`. (If you use Windows Command Prompt,
+type `WSLNotify` instead of `./WSLNotify.exe` while entering these commands.)
 
 ```
 ./WSLNotify.exe "Summary Goes Here"
