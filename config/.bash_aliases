@@ -26,7 +26,7 @@ then
     alias notify-send='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLNotify.exe'
 fi
 
-export HISTTIMEFORMAT="[%Y-%m-%d %T] "
+export HISTTIMEFORMAT="[%F %T] "
 
 # Some terminals exit only if the previous command was successful. This can be
 # be used to exit unconditionally.
