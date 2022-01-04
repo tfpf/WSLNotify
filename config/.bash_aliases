@@ -442,6 +442,24 @@ _xtBzBMfnpdQGhwINyACP()
 "
 }
 
+# Display the prime divisors of a natural number.
+factors ()
+{
+    if [[ $# -lt 1 ]]
+    then
+        printf "Usage:\n"
+        printf "\t${FUNCNAME[0]} <number>\n"
+        return 1
+    fi
+
+    p -c "
+import sympy
+
+for (factor, count) in sympy.factorint($1).items():
+    print(f'{factor} ** {count}')
+"
+}
+
 if [[ -z $running_on_WSL ]]
 then
     unset vcx
