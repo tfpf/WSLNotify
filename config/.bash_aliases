@@ -6,7 +6,7 @@ running_on_WSL=$(grep -il microsoft /proc/version)
 if [[ -n $running_on_WSL ]]
 then
 
-    # Set up a virtual display using VcXsrv to run GUI apps. You may want to
+    # Setup for a virtual display using VcXsrv to run GUI apps. You may want to
     # install `x11-xserver-utils', `dconf-editor' and `dbus-x11', and create
     # the file `~/.config/dconf/user'. The first `DISPLAY' is for WSL, and the
     # second, for WSL2.
@@ -24,6 +24,58 @@ then
 
     # Notifications for WSL, since `notify-send' does not work.
     alias notify-send='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLNotify.exe'
+
+    # Create the virtual display.
+    vcx ()
+    {
+        local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
+        local vcxsrvname=$(basename "$vcxsrvpath")
+        ("$vcxsrvpath" -ac -clipboard -multiwindow -wgl & sleep 1 && pkill "$vcxsrvname") 2> /dev/null
+    }
+
+    # Windows Explorer can open WSL folders, but the command must be invoked after
+    # navigating to the target folder. Doing so directly will change the
+    # environment variable `OLDPWD', which is undesirable. Hence, this is done in a
+    # subshell.
+    e ()
+    {
+        if [[ $# -lt 1 || ! -d "$1" ]]
+        then
+            printf "Usage:\n"
+            printf "\t${FUNCNAME[0]} <directory>\n"
+            return 1
+        fi
+
+        (cd "$1" && explorer.exe .)
+    }
+
+    # GVIM for Windows can open WSL files, but (like Windows Explorer), the command
+    # must be invoked after navigating to the containing folder.
+    g ()
+    {
+        if [[ $# -lt 1 || ! -f "$1" ]]
+        then
+            printf "Usage:\n"
+            printf "\t${FUNCNAME[0]} <file>\n"
+            return 1
+        fi
+
+        # https://tuxproject.de/projects/vim/ (64-bit Windows binaries)
+        local gvimpath='/mnt/c/Users/vpaij/Downloads/gVim/gvim.exe'
+        local gvimname=$(basename "$gvimpath")
+        local filedir=$(dirname "$1")
+        local filename=$(basename "$1")
+
+        # Running the commands in a subshell causes two new processes (`bash' and
+        # `gvim.exe', as the `ps' command tells me) to remain running for as long
+        # as GVIM is kept open. Killing `gvim.exe' automatically results in the
+        # termination of `bash' without affecting GVIM (probably because it is a
+        # Windows application, which WSL does not have the ability to close).
+        # That's what is done here.
+        (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") > /dev/null 2> /dev/null
+    }
+else
+    alias g='gvim'
 fi
 
 export HISTTIMEFORMAT="[%F %T] "
@@ -148,56 +200,6 @@ push ()
     git push origin master
 }
 
-# Create a virtual display for WSL.
-vcx ()
-{
-    local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
-    local vcxsrvname=$(basename "$vcxsrvpath")
-    ("$vcxsrvpath" -ac -clipboard -multiwindow -wgl & sleep 1 && pkill "$vcxsrvname") 2> /dev/null
-}
-
-# Windows Explorer can open WSL folders, but the command must be invoked after
-# navigating to the target folder. Doing so directly will change the
-# environment variable `OLDPWD', which is undesirable. Hence, this is done in a
-# subshell.
-e ()
-{
-    if [[ $# -lt 1 || ! -d "$1" ]]
-    then
-        printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <directory>\n"
-        return 1
-    fi
-
-    (cd "$1" && explorer.exe .)
-}
-
-# GVIM for Windows can open WSL files, but (like Windows Explorer), the command
-# must be invoked after navigating to the containing folder.
-g ()
-{
-    if [[ $# -lt 1 || ! -f "$1" ]]
-    then
-        printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <file>\n"
-        return 1
-    fi
-
-    # https://tuxproject.de/projects/vim/ (64-bit Windows binaries)
-    local gvimpath='/mnt/c/Users/vpaij/Downloads/gVim/gvim.exe'
-    local gvimname=$(basename "$gvimpath")
-    local filedir=$(dirname "$1")
-    local filename=$(basename "$1")
-
-    # Running the commands in a subshell causes two new processes (`bash' and
-    # `gvim.exe', as the `ps' command tells me) to remain running for as long
-    # as GVIM is kept open. Killing `gvim.exe' automatically results in the
-    # termination of `bash' without affecting GVIM (probably because it is a
-    # Windows application, which WSL does not have the ability to close).
-    # That's what is done here.
-    (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") > /dev/null 2> /dev/null
-}
-
 # PDF optimiser. This requires that `ghostscript' be installed.
 pdfopt ()
 {
@@ -225,7 +227,7 @@ pdfopt ()
 }
 
 # Random string generator.
-r ()
+rr ()
 {
     if [[ "$1" =~ ^[0-9]+$ ]]
     then
@@ -459,11 +461,3 @@ for (factor, count) in sympy.factorint($1).items():
     print(f'{factor} ** {count}')
 "
 }
-
-if [[ -z $running_on_WSL ]]
-then
-    unset vcx
-    unset e
-    unset g
-    alias g='gvim'
-fi
