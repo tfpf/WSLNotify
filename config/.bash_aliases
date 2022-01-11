@@ -461,3 +461,27 @@ for (factor, count) in sympy.factorint($1).items():
     print(f'{factor} ** {count}')
 "
 }
+
+# Display the b-array (multiple-precision) representation of a number.
+barray ()
+{
+    if [[ $# -lt 2 ]]
+    then
+        printf "Usage:\n"
+        printf "\t${FUNCNAME[0]} <number> <base>\n"
+        return 1
+    fi
+
+    p -c "
+number_string = '$1'
+base = int('$2')
+number = 0
+for digit in number_string:
+    multiprecision = []
+    temp = number = number * 10 + int(digit)
+    while temp:
+        multiprecision.append(temp % base)
+        temp //= base
+    print(multiprecision)
+"
+}
