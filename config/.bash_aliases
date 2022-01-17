@@ -462,26 +462,47 @@ for (factor, count) in sympy.factorint($1).items():
 "
 }
 
-# Display the b-array (multiple-precision) representation of a number.
-barray ()
+# Display the multiple-precision representation given a decimal integer.
+dec2bary ()
 {
     if [[ $# -lt 2 ]]
     then
         printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <number> <base>\n"
+        printf "\t${FUNCNAME[0]} <base> <number>\n"
         return 1
     fi
 
     p -c "
-number_string = '$1'
-base = int('$2')
-number = 0
-for digit in number_string:
+number = eval('$2')
+base = eval('$1')
+value = 0
+for digit in str(number):
     multiprecision = []
-    temp = number = number * 10 + int(digit)
+    temp = value = value * 10 + int(digit)
     while temp:
         multiprecision.append(temp % base)
         temp //= base
     print(multiprecision)
+"
+}
+
+# Display the decimal representation given a multiple-precision integer.
+bary2dec ()
+{
+    if [[ $# -lt 2 ]]
+    then
+        printf "Usage:\n"
+        printf "\t${FUNCNAME[0]} <base> <comma-separated digits>\n"
+        return 1
+    fi
+
+    p -c "
+base = eval('$1')
+multiplier = 1
+value = 0
+for digit in map(int, '$2'.split(',')):
+    value += multiplier * digit
+    multiplier *= base
+print(value)
 "
 }
