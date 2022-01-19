@@ -236,8 +236,8 @@ rr ()
         local length=20
     fi
 
-    printf "$(tr -cd 'A-Za-z' < /dev/urandom | head -c $length)\n"
     printf "$(tr -cd '0-9' < /dev/urandom | head -c $length)\n"
+    printf "$(tr -cd 'A-Za-z' < /dev/urandom | head -c $length)\n"
     printf "$(tr -cd 'A-Za-z0-9' < /dev/urandom | head -c $length)\n"
     printf "$(tr -cd 'A-Za-z0-9!@#$*()' < /dev/urandom | head -c $length)\n"
 }
