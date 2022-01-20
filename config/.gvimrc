@@ -36,17 +36,21 @@ se ar                      " Automatically read file when changed from elsewhere
 se bs=indent,eol,start     " Backspace freely.
 se cc=80,120               " Columns to be coloured with `ColorColumn'.
 se ci                      " Indentation for a new line is identical to the previous line.
+se cink=                   " Don't change the indentation of the being typed.
 se cul                     " Highlight current line.
 se dy=lastline             " If the last line cannot be shown in its entirety, show a part of it.
 se enc=utf-8               " Internal representation.
+se et                      " Expand tabs to spaces.
 se fenc=utf-8              " Representation of current buffer.
 se fixeol                  " Add an end-of-line character at the end of a file.
 se gcr=n:blinkwait0        " Disable cursor blink in normal mode.
 se hls                     " Searching highlights all matches.
+se inde=                   " Don't calculate the proper indentation.
+se indk=                   " Don't change the indentation of the being typed.
 se is                      " Incremental search.
 se lsp=0                   " Line spacing.
 se mh                      " Hide mouse pointer while typing.
-se noet                    " Do not expand tabs to spaces.
+se nosi                    " Don't try to be oversmart while indenting.
 se noswapfile              " Do not create swap files.
 se nowrap                  " Do not wrap lines.
 se nu                      " Line numbers.
