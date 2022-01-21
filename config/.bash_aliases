@@ -102,7 +102,7 @@ alias grep='grep --binary-files=without-match --color=auto'
 
 alias pgrep='pgrep -il'
 
-alias ps='ps -e | sort -gr'
+alias ps='ps a -c'
 
 alias p='/usr/bin/python3.8 -B'
 alias t='/usr/bin/python3.8 -m timeit'
