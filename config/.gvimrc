@@ -43,6 +43,7 @@ se enc=utf-8               " Internal representation.
 se et                      " Expand tabs to spaces.
 se fenc=utf-8              " Representation of current buffer.
 se fixeol                  " Add an end-of-line character at the end of a file.
+se fo=                     " Do not insert the comment marker when starting a new line.
 se gcr=n:blinkwait0        " Disable cursor blink in normal mode.
 se hls                     " Searching highlights all matches.
 se inde=                   " Don't calculate the proper indentation.
