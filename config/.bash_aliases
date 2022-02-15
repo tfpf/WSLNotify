@@ -33,10 +33,10 @@ then
         ("$vcxsrvpath" -ac -clipboard -multiwindow -wgl & sleep 1 && pkill "$vcxsrvname") 2> /dev/null
     }
 
-    # Windows Explorer can open WSL folders, but the command must be invoked after
-    # navigating to the target folder. Doing so directly will change the
-    # environment variable `OLDPWD', which is undesirable. Hence, this is done in a
-    # subshell.
+    # Windows Explorer can open WSL folders, but the command must be invoked
+    # after navigating to the target folder. Doing so directly will change the
+    # environment variable `OLDPWD', which is undesirable. Hence, this is done
+    # in a subshell.
     e ()
     {
         if [[ $# -lt 1 || ! -d "$1" ]]
@@ -49,8 +49,8 @@ then
         (cd "$1" && explorer.exe .)
     }
 
-    # GVIM for Windows can open WSL files, but (like Windows Explorer), the command
-    # must be invoked after navigating to the containing folder.
+    # GVIM for Windows can open WSL files, but (like Windows Explorer), the
+    # command must be invoked after navigating to the containing folder.
     g ()
     {
         if [[ $# -lt 1 || ! -f "$1" ]]
@@ -66,12 +66,12 @@ then
         local filedir=$(dirname "$1")
         local filename=$(basename "$1")
 
-        # Running the commands in a subshell causes two new processes (`bash' and
-        # `gvim.exe', as the `ps' command tells me) to remain running for as long
-        # as GVIM is kept open. Killing `gvim.exe' automatically results in the
-        # termination of `bash' without affecting GVIM (probably because it is a
-        # Windows application, which WSL does not have the ability to close).
-        # That's what is done here.
+        # Running the commands in a subshell causes two new processes (`bash'
+        # and `gvim.exe', as the `ps' command tells me) to remain running for
+        # as long as GVIM is kept open. Killing `gvim.exe' automatically
+        # results in the termination of `bash' without affecting GVIM (probably
+        # because it is a Windows application, which WSL does not have the
+        # ability to close). That's what is done here.
         (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") > /dev/null 2> /dev/null
     }
 else
@@ -81,7 +81,7 @@ fi
 export HISTTIMEFORMAT="[%F %T] "
 
 # Some terminals exit only if the previous command was successful. This can be
-# be used to exit unconditionally.
+# used to exit unconditionally.
 alias bye='clear && exit'
 
 # Some Linux distributions use swap space even when there is sufficient RAM
