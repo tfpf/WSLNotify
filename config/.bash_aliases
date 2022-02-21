@@ -91,6 +91,7 @@ alias rs='cat /proc/sys/vm/swappiness && sudo sysctl vm.swappiness=10'
 # Some sort of a system monitor.
 alias F='watch -n 1 "grep MHz /proc/cpuinfo | nl -w 2"'
 alias M='watch -n 0.1 free -ht'
+alias s='watch -n 1 sensors'
 alias top='top -d 1'
 
 alias l='ls -lNX --color=auto --group-directories-first --time-style=long-iso'
@@ -504,5 +505,24 @@ for digit in map(int, '$2'.split(',')):
     value += multiplier * digit
     multiplier *= base
 print(value)
+"
+}
+
+# Calculate the Lengendre symbol.
+legendre ()
+{
+    if [[ $# -lt 2 ]]
+    then
+        printf "Usage:\n"
+        printf "\t${FUNCNAME[0]} <num1> <num2>\n"
+        return 1
+    fi
+
+    p -c "
+import sympy.ntheory as nt
+
+num1 = int('$1')
+num2 = int('$2')
+print(nt.legendre_symbol(num1, num2))
 "
 }
