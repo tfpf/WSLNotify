@@ -526,3 +526,22 @@ num2 = int('$2')
 print(nt.legendre_symbol(num1, num2))
 "
 }
+
+# Calculate the Jacobi symbol.
+jacobi ()
+{
+    if [[ $# -lt 2 ]]
+    then
+        printf "Usage:\n"
+        printf "\t${FUNCNAME[0]} <num1> <num2>\n"
+        return 1
+    fi
+
+    p -c "
+import sympy.ntheory as nt
+
+num1 = int('$1')
+num2 = int('$2')
+print(nt.jacobi_symbol(num1, num2))
+"
+}
