@@ -545,3 +545,25 @@ num2 = int('$2')
 print(nt.jacobi_symbol(num1, num2))
 "
 }
+
+# Calculate the multiplicative order.
+ord ()
+{
+    if [[ $# -lt 2 ]]
+    then
+        printf "Usage:\n"
+        printf "\t${FUNCNAME[0]} <modulus> <number>\n"
+        return 1
+    fi
+
+    p -c "
+m = int('$1')
+a = int('$2')
+r = 1
+for e in range(1, m):
+    r = r * a % m
+    if r == 1:
+        print(e)
+        break
+"
+}
