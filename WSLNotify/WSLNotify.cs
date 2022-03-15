@@ -8,6 +8,12 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
+///////////////////////////////////////////////////////////////////////////////
+/// <summary>
+/// Emulates some features of <c>notify-send</c>, a Linux program which is used
+/// to send desktop notifications.
+/// </summary>
+///////////////////////////////////////////////////////////////////////////////
 class WSLNotify
 {
     const string helpOption = "-?";
@@ -19,8 +25,9 @@ class WSLNotify
     string BalloonTipText = " ";
 
     ///////////////////////////////////////////////////////////////////////////
-    // Method
-    // Set the contents of the notification balloon.
+    /// <summary>
+    /// Set the contents of the notification balloon.
+    /// </summary>
     ///////////////////////////////////////////////////////////////////////////
     void setBalloonTip(string text)
     {
@@ -45,8 +52,9 @@ class WSLNotify
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // Method
-    // Set an icon for the notification balloon.
+    /// <summary>
+    /// Set an icon for the notification balloon.
+    /// </summary>
     ///////////////////////////////////////////////////////////////////////////
     void setBalloonTipIcon(string text)
     {
@@ -71,8 +79,9 @@ class WSLNotify
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // Method
-    // Display usage information.
+    /// <summary>
+    /// Display usage information.
+    /// <summary>
     ///////////////////////////////////////////////////////////////////////////
     void showHelp()
     {
@@ -86,11 +95,12 @@ class WSLNotify
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // Method
-    // Read the command line arguments into class member variables. Apparently,
-    // there is no out-of-the-box support for parsing command line arguments.
-    // But there aren't too many arguments to process, so a quick-and-dirty
-    // implementation shouldn't hurt.
+    /// <summary>
+    /// Read the command line arguments into class member variables.
+    /// Apparently, there is no out-of-the-box support for parsing command line
+    /// arguments. But there aren't too many arguments to process, so a
+    // quick-and-dirty implementation shouldn't hurt.
+    /// </summary>
     ///////////////////////////////////////////////////////////////////////////
     void parseArguments(string[] args)
     {
@@ -122,8 +132,9 @@ class WSLNotify
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // Method
-    // Check the parsed information for errors.
+    /// <summary>
+    /// Check the parsed information for errors.
+    /// </summary>
     ///////////////////////////////////////////////////////////////////////////
     void validateParsed()
     {
@@ -135,7 +146,9 @@ class WSLNotify
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // Main function.
+    /// <summary>
+    /// Main function.
+    /// <summary>
     ///////////////////////////////////////////////////////////////////////////
     static void Main(string[] args)
     {
@@ -164,4 +177,3 @@ class WSLNotify
         notifyIcon.ShowBalloonTip(8000);
     }
 }
-
