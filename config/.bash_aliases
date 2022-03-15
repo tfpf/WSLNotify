@@ -22,8 +22,9 @@ then
     # Compile programs written in C#.
     alias csc='/mnt/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe'
 
-    # Notifications for WSL, since `notify-send' does not work.
+    # For notifications, since `notify-send' does not work.
     alias notify-send='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLNotify.exe'
+    alias getactivewindow='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLGetActiveWindow.exe'
 
     # Create the virtual display.
     vcx ()
@@ -76,6 +77,7 @@ then
     }
 else
     alias g='gvim'
+    alias getactivewindow='xdotool getactivewindow'
 fi
 
 export HISTTIMEFORMAT="[%F %T] "
@@ -127,10 +129,7 @@ before_command ()
         return
     fi
 
-    if [[ -z $running_on_WSL ]]
-    then
-        terminal_window_ID=$(xdotool getactivewindow)
-    fi
+    terminal_window_ID=$(getactivewindow)
     CLI_ready=""
     start_time=$(date +%s%3N)
 }
@@ -145,7 +144,7 @@ after_command ()
     unset start_time
     CLI_ready=1
 
-    if [[ $delay -le 10000 || -z $running_on_WSL && $terminal_window_ID -eq $(xdotool getactivewindow) ]]
+    if [[ $delay -le 10000 || $terminal_window_ID -eq $(getactivewindow) ]]
     then
         return
     fi
