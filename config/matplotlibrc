@@ -30,7 +30,7 @@ savefig.directory: /mnt/c/Users/vpaij/Pictures/graphs/
 
 # Amount of blank space around the hardcopied image.
 savefig.bbox:       tight
-savefig.pad_inches: 0.3
+savefig.pad_inches: 0.2
 
 ###############################################################################
 # Font.
@@ -55,7 +55,7 @@ mathtext.cal:      cmsy10
 mathtext.bf:       Cochineal:bold
 mathtext.it:       Cochineal:italic
 mathtext.rm:       Cochineal
-mathtext.sf:       Noto Sans
+mathtext.sf:       Ubuntu
 mathtext.tt:       Cascadia Code
 mathtext.fontset:  custom           # dejavusans, dejavuserif, cm, stix, stixsans, custom
 mathtext.fallback: stix
