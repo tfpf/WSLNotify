@@ -36,6 +36,40 @@ icons seen above. Support for the `-u` (for urgency) and `-t` (for expire time)
 options may never be added, because Windows notification display times are
 based on system accessibility settings.
 
+# Use Case
+I created this package so that my command timer would also work on WSL. On
+GNU/Linux, if you add the following to `~/.bashrc` (or perhaps
+`~/.bash_aliases`):
+```bash
+before_command ()
+{
+    if [[ -z $CLI_ready ]]
+    then
+        return
+    fi
+
+    CLI_ready=""
+}
+
+after_command ()
+{
+    CLI_ready=1
+    notify-send "Command Complete"
+}
+
+CLI_ready=1
+trap before_command DEBUG
+PROMPT_COMMAND=after_command
+```
+you will get a notification every time a terminal command gets completed. With
+a little more work, you can make it so that the notification reports the
+elapsed time if the terminal is not the currently active window. To emulate the
+same behaviour on WSL (which behaves like a headless system, whereby
+notifications and active windows are meaningless), Windows notifications and
+Windows window IDs can be used. With a few tricks (as seen in
+[`config/.bash_aliases`](config/.bash_aliases)), the timer works seamlessly on
+GNU/Linux and WSL both.
+
 # Configuration Files
 `config` contains my personal configuration files for Bash and GVIM (and some
 other applications). These can be used on GNU/Linux or WSL without making any
@@ -46,4 +80,3 @@ time setting up my environment.
 * Hovering the mouse over the system tray icon after the application has
 returned makes the notification disappear.
 * Multiple notifications fill up the system tray with the application icon.
-
