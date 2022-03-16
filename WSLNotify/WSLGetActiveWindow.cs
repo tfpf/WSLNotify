@@ -24,11 +24,11 @@ class WSLGetActiveWindow
     ///////////////////////////////////////////////////////////////////////////
     static void Main(string[] args)
     {
+        // The text this program writes on the terminal is supposed to be
+        // stored in a Bash variable. However, Bash doesn't like carriage
+        // return characters. Hence, the line ending is changed.
+        Console.Out.NewLine = "\n";
         IntPtr handle = GetForegroundWindow();
-        
-        // Not using `WriteLine', because that would also print a carriage
-        // return character. Bash complains about that when it tries to get the
-        // active window ID using this program.
-        Console.Write(handle);
+        Console.WriteLine(handle);
     }
 }
