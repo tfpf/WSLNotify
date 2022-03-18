@@ -63,8 +63,8 @@ se so=3                    " Number of lines visible above and below cursor.
 se sr                      " When using '>>' or '<<', only jump to columns which are multiples of `sw'.
 se sta                     " Tab inserts an `sw'-size character at the start of a line, and `ts'-size elsewhere.
 se sts=0                   " Do not insert spaces when pressing Tab.
-se sw=8                    " Shift width. See `sta'.
-se ts=8                    " Tab stop. See `sta'.
+se sw=4                    " Shift width. See `sta'.
+se ts=4                    " Tab stop. See `sta'.
 se tw=0                    " Do not break lines automatically.
 se ul=1000                 " Number of undo operations allowed.
 
