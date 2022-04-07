@@ -82,6 +82,8 @@ fi
 
 export HISTTIMEFORMAT="[%F %T] "
 
+export QT_LOGGING_RULES="qt5ct.debug=false"
+
 # Some terminals exit only if the previous command was successful. This can be
 # used to exit unconditionally.
 alias bye='clear && exit'
