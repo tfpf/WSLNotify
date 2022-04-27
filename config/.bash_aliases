@@ -26,6 +26,8 @@ then
     alias notify-send='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLNotify.exe'
     alias getactivewindow='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLGetActiveWindow.exe'
 
+    alias wp='/mnt/c/Users/vpaij/AppData/Local/Programs/Python/Python310/python.exe'
+
     # Create the virtual display.
     vcx ()
     {
