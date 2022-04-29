@@ -111,9 +111,9 @@ alias pgrep='pgrep -il'
 
 alias ps='ps a -c'
 
-alias p='/usr/bin/python3.8 -B'
-alias t='/usr/bin/python3.8 -m timeit'
-alias pip='/usr/bin/python3.8 -m pip'
+alias p='/usr/bin/python3 -B'
+alias t='/usr/bin/python3 -m timeit'
+alias pip='/usr/bin/python3 -m pip'
 
 alias time='/usr/bin/time -f "\
 $(printf "%*s" $COLUMNS " " | tr " " "-")
@@ -126,8 +126,6 @@ alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -
 # executed.
 before_command ()
 {
-    # This function may get called multiple times before the prompt is
-    # displayed. Ignore the subsequent calls.
     if [[ -z $CLI_ready ]]
     then
         return
@@ -143,6 +141,11 @@ before_command ()
 after_command ()
 {
     local exit_status=$?
+    if [[ -n $CLI_ready ]]
+    then
+        return
+    fi
+
     local finish_time=$(date +%s%3N)
     local delay=$((finish_time-start_time))
     unset start_time
@@ -157,9 +160,6 @@ after_command ()
     local seconds=$((delay/1000%60))
     local minutes=$((delay/60000%60))
     local hours=$((delay/3600000))
-
-    # Remove everything up to and including the first closing square bracket
-    # and a single space from the last history entry. (See `HISTTIMEFORMAT'.)
     local command=$(history 1 | sed 's/^[^]]*\] //')
 
     local breakup=""
@@ -175,11 +175,11 @@ after_command ()
         local exit_symbol="✗"
         local icon=dialog-error
     fi
-    notify-send -i $icon "CLI Ready" "$command ($breakup)"
+    notify-send -i $icon "CLI Ready" "$command · $breakup"
 
-    # Right-aligning the following string requires accounting for the fact that
-    # the tick and cross symbols are three-byte characters.
-    printf "%*s\n" $((COLUMNS+2)) "$exit_symbol $command ($breakup)"
+    # The tick, cross and middle dot symbols may have to be treated as
+    # multi-byte characters, depending on the shell.
+    printf "%*s\n" $((COLUMNS+3)) "$exit_symbol $command · $breakup"
 }
 
 CLI_ready=1
@@ -327,7 +327,7 @@ def _trawgorDBwAQawMZniUb(text, hashes):
     lines = lines.split('\\n')
     for i, line in enumerate(lines, 1):
         if i == 1:
-            text.tag_add('ctag', '1.0', f'1.{len(line)}')
+            text.tag_add('ctag', '1.0', '2.0')
             continue
 
         lo, hi = 0, -1
@@ -396,7 +396,10 @@ _xtBzBMfnpdQGhwINyACP()
 "
 }
 
-# Make a given colour in an image transparent.
+# Given a target colour, make transparent all colours differing from it by
+# `threshold1' or less, but don't touch colours differing from it by
+# `threshold2' or more. The alpha (opacity) for colours in between will
+# gradually change from 0 to 1.
 T ()
 {
     if [[ $# -lt 6 ]]
@@ -445,128 +448,5 @@ def _xtBzBMfnpdQGhwINyACP():
 
 _gKEFgMRsGkTgLsQsBojH.close(_gKEFgMRsGkTgLsQsBojH.figure())
 _xtBzBMfnpdQGhwINyACP()
-"
-}
-
-# Display the prime divisors of a natural number.
-factors ()
-{
-    if [[ $# -lt 1 ]]
-    then
-        printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <number>\n"
-        return 1
-    fi
-
-    p -c "
-import sympy
-
-for (factor, count) in sympy.factorint($1).items():
-    print(f'{factor} ** {count}')
-"
-}
-
-# Display the multiple-precision representation given a decimal integer.
-dec2bary ()
-{
-    if [[ $# -lt 2 ]]
-    then
-        printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <base> <number>\n"
-        return 1
-    fi
-
-    p -c "
-number = eval('$2')
-base = eval('$1')
-value = 0
-for digit in str(number):
-    multiprecision = []
-    temp = value = value * 10 + int(digit)
-    while temp:
-        multiprecision.append(temp % base)
-        temp //= base
-    print(multiprecision)
-"
-}
-
-# Display the decimal representation given a multiple-precision integer.
-bary2dec ()
-{
-    if [[ $# -lt 2 ]]
-    then
-        printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <base> <comma-separated digits>\n"
-        return 1
-    fi
-
-    p -c "
-base = eval('$1')
-multiplier = 1
-value = 0
-for digit in map(int, '$2'.split(',')):
-    value += multiplier * digit
-    multiplier *= base
-print(value)
-"
-}
-
-# Calculate the Lengendre symbol.
-legendre ()
-{
-    if [[ $# -lt 2 ]]
-    then
-        printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <num1> <num2>\n"
-        return 1
-    fi
-
-    p -c "
-import sympy.ntheory as nt
-
-num1 = int('$1')
-num2 = int('$2')
-print(nt.legendre_symbol(num1, num2))
-"
-}
-
-# Calculate the Jacobi symbol.
-jacobi ()
-{
-    if [[ $# -lt 2 ]]
-    then
-        printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <num1> <num2>\n"
-        return 1
-    fi
-
-    p -c "
-import sympy.ntheory as nt
-
-num1 = int('$1')
-num2 = int('$2')
-print(nt.jacobi_symbol(num1, num2))
-"
-}
-
-# Calculate the multiplicative order.
-ord ()
-{
-    if [[ $# -lt 2 ]]
-    then
-        printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <modulus> <number>\n"
-        return 1
-    fi
-
-    p -c "
-m = int('$1')
-a = int('$2')
-r = 1
-for e in range(1, m):
-    r = r * a % m
-    if r == 1:
-        print(e)
-        break
 "
 }
