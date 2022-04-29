@@ -342,6 +342,7 @@ def _trawgorDBwAQawMZniUb(text, hashes):
             lo = hi
 
 def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
+    text.config(highlightcolor='#000000', highlightbackground='#D9D9D9')
     fig.texts = []
     try:
         size_and_wrap = entry.get().split()
@@ -361,6 +362,7 @@ def _xtBzBMfnpdQGhwINyACP():
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('LaTeX Renderer')
     root.attributes('-zoomed', True)
+    root.report_callback_exception = lambda *args: text.config(highlightcolor='#FF0000', highlightbackground='#FF0000')
 
     fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 12))
     fig.patch.set_facecolor('#333333')
