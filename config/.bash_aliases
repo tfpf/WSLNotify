@@ -263,6 +263,7 @@ P ()
 
     p -c "
 import matplotlib.pyplot as _gKEFgMRsGkTgLsQsBojH
+import platform as _kcvGDoKwwVmzVFPNNBzH
 import idlelib.colorizer as _IFAYgQKFNUDWRMDyOcfZ
 import idlelib.percolator as _kiZxwOhpBzEnmVHOeiaz
 import tkinter as _ArFfEXZloCCjFNnmSwdw
@@ -278,7 +279,10 @@ def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('Python Executor')
-    root.attributes('-zoomed', True)
+    if _kcvGDoKwwVmzVFPNNBzH.system() == 'Linux':
+        root.attributes('-zoomed', True)
+    else:
+        root.state('zoomed')
 
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     text.insert('1.0', open('$1').read())
@@ -312,6 +316,7 @@ L ()
 import matplotlib as _EhdhMmAprSRzwpUPoHvW; _EhdhMmAprSRzwpUPoHvW.use('TkAgg')
 import matplotlib.backends.backend_tkagg as _hNzVCYEPlZTSmIqqKOhB
 import matplotlib.figure as _WFHjDXaGDEVBLyVLsdmR
+import platform as _kcvGDoKwwVmzVFPNNBzH
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 import time as _HgyxeWRPXNtbhqWyVhlC
 
@@ -361,7 +366,10 @@ def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('LaTeX Renderer')
-    root.attributes('-zoomed', True)
+    if _kcvGDoKwwVmzVFPNNBzH.system() == 'Linux':
+        root.attributes('-zoomed', True)
+    else:
+        root.state('zoomed')
     root.report_callback_exception = lambda *args: text.config(highlightcolor='#FF0000', highlightbackground='#FF0000')
 
     fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 12))
