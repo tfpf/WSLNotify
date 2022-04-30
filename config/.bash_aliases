@@ -279,10 +279,10 @@ def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('Python Executor')
-    if _kcvGDoKwwVmzVFPNNBzH.system() == 'Linux':
-        root.attributes('-zoomed', True)
-    else:
+    if _kcvGDoKwwVmzVFPNNBzH.system() in {'Darwin', 'Windows'}:
         root.state('zoomed')
+    else:
+        root.attributes('-zoomed', True)
 
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     text.insert('1.0', open('$1').read())
@@ -366,10 +366,10 @@ def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('LaTeX Renderer')
-    if _kcvGDoKwwVmzVFPNNBzH.system() == 'Linux':
-        root.attributes('-zoomed', True)
-    else:
+    if _kcvGDoKwwVmzVFPNNBzH.system() in {'Darwin', 'Windows'}:
         root.state('zoomed')
+    else:
+        root.attributes('-zoomed', True)
     root.report_callback_exception = lambda *args: text.config(highlightcolor='#FF0000', highlightbackground='#FF0000')
 
     fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 12))
