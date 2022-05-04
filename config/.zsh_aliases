@@ -178,7 +178,7 @@ after_command ()
 
     # The tick, cross and middle dot symbols may have to be treated as
     # multi-byte characters, depending on the shell.
-    printf "%*s\n" $COLUMNS "$exit_symbol $command · $breakup"
+    printf "%*s\n\n" $COLUMNS "$exit_symbol $command · $breakup"
 }
 
 CLI_ready=1
