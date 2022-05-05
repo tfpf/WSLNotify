@@ -1,6 +1,7 @@
 # Native Windows Notifications for WSL
 `notify-send` doesn't work on WSL. `WSLNotify.exe` may be used instead. You can
-grab it from one of the [releases](https://github.com/tfpf/WSLNotify/releases).
+grab it from the
+[latest release](https://github.com/tfpf/WSLNotify/releases/latest).
 
 The following commands were run in Bash on Windows Terminal after navigating to
 the directory containing `WSLNotify.exe`. (If you use Windows Command Prompt,
@@ -36,7 +37,7 @@ icons seen above. Support for the `-u` (for urgency) and `-t` (for expire time)
 options may never be added, because Windows notification display times are
 based on system accessibility settings.
 
-# Use Case
+## Use Case
 I created this package so that my command timer would also work on WSL. On
 GNU/Linux, if you add the following to `~/.bashrc` (or perhaps
 `~/.bash_aliases`):
@@ -66,17 +67,34 @@ a little more work, you can make it so that the notification reports the
 elapsed time if the terminal is not the currently active window. To emulate the
 same behaviour on WSL (which behaves like a headless system, whereby
 notifications and active windows are meaningless), Windows notifications and
-Windows window IDs can be used. With a few tricks (as seen in
+Windows window IDs can be used. With a few tricks (using
+[`WSLNotify.exe`](https://github.com/tfpf/WSLNotify/releases/latest) and
+[`WSLGetActiveWindow.exe`](https://github.com/tfpf/WSLNotify/releases/latest),
+as seen in
 [`config/.bash_aliases`](config/.bash_aliases)), the timer works seamlessly on
 GNU/Linux and WSL both.
 
-# Configuration Files
-`config` contains my personal configuration files for Bash and GVIM (and some
-other applications). These can be used on GNU/Linux or WSL without making any
-changes whatsoever. Having identical files for both means I don't have to spend
-time setting up my environment.
-
-# Known Bugs
+## Known Bugs
 * Hovering the mouse over the system tray icon after the application has
 returned makes the notification disappear.
 * Multiple notifications fill up the system tray with the application icon.
+
+# Environment-Agnostic Configuration Files
+`config` contains my configuration files for Bash, Zsh and GVIM (and some other
+stuff). These can be used on GNU/Linux or WSL without making any changes
+whatsoever. Having identical files for both means I don't have to spend time
+setting up my environment.
+
+There are a few nifty hacks implemented.
+
+## Command Timer
+As mentioned above. If the terminal in which a command was executed is not the
+active window when the execution is complete, a notification is sent.
+
+## Python Executor
+Run Python programs without writing a new file.
+
+## LaTeX Renderer
+Render mathematical expressions written in a small subset of LaTeX (the subset
+supported by Matplotlib) alongside the code. Basically, a crude version of
+Overleaf.
