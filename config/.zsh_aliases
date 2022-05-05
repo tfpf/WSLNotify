@@ -26,12 +26,14 @@ then
     alias notify-send='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLNotify.exe'
     alias getactivewindow='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLGetActiveWindow.exe'
 
+    alias wp='/mnt/c/Users/vpaij/AppData/Local/Programs/Python/Python310/python.exe'
+
     # Create the virtual display.
     vcx ()
     {
         local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
         local vcxsrvname=$(basename "$vcxsrvpath")
-        ("$vcxsrvpath" -ac -clipboard -multiwindow -wgl & sleep 1 && pkill "$vcxsrvname") 2> /dev/null
+        ("$vcxsrvpath" -ac -clipboard -multiwindow -wgl & sleep 1 && pkill "$vcxsrvname") &> /dev/null
     }
 
     # Windows Explorer can open WSL folders, but the command must be invoked
@@ -73,14 +75,14 @@ then
         # results in the termination of `bash' without affecting GVIM (probably
         # because it is a Windows application, which WSL does not have the
         # ability to close). That's what is done here.
-        (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") > /dev/null 2> /dev/null
+        (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") &> /dev/null
     }
 else
     alias g='gvim'
     alias getactivewindow='xdotool getactivewindow'
 fi
 
-# ZSH might already have aliased this command, so undo that.
+# Zsh might already have aliased this command, so undo that.
 unalias history
 
 export QT_LOGGING_RULES="qt5ct.debug=false"
@@ -162,9 +164,9 @@ after_command ()
     local command=$(history -1 -1 | sed 's/^\s*[0-9]\+\s*//')
 
     local breakup=""
-    [[ $hours -gt 0 ]] && breakup="${breakup}$hours h "
+    [[ $hours -gt 0 ]] && breakup="$hours h "
     [[ $hours -gt 0 || $minutes -gt 0 ]] && breakup="${breakup}$minutes m "
-    [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && breakup="${breakup}$seconds s $milliseconds ms"
+    breakup="${breakup}$seconds s $milliseconds ms"
 
     if [[ $exit_status -eq 0 ]]
     then
@@ -262,6 +264,7 @@ P ()
 
     p -c "
 import matplotlib.pyplot as _gKEFgMRsGkTgLsQsBojH
+import platform as _kcvGDoKwwVmzVFPNNBzH
 import idlelib.colorizer as _IFAYgQKFNUDWRMDyOcfZ
 import idlelib.percolator as _kiZxwOhpBzEnmVHOeiaz
 import tkinter as _ArFfEXZloCCjFNnmSwdw
@@ -277,7 +280,10 @@ def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('Python Executor')
-    root.attributes('-zoomed', True)
+    if _kcvGDoKwwVmzVFPNNBzH.system() in {'Darwin', 'Windows'}:
+        root.state('zoomed')
+    else:
+        root.attributes('-zoomed', True)
 
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
     text.insert('1.0', open('$1').read())
@@ -311,6 +317,7 @@ L ()
 import matplotlib as _EhdhMmAprSRzwpUPoHvW; _EhdhMmAprSRzwpUPoHvW.use('TkAgg')
 import matplotlib.backends.backend_tkagg as _hNzVCYEPlZTSmIqqKOhB
 import matplotlib.figure as _WFHjDXaGDEVBLyVLsdmR
+import platform as _kcvGDoKwwVmzVFPNNBzH
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 import time as _HgyxeWRPXNtbhqWyVhlC
 
@@ -360,7 +367,10 @@ def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
     root.title('LaTeX Renderer')
-    root.attributes('-zoomed', True)
+    if _kcvGDoKwwVmzVFPNNBzH.system() in {'Darwin', 'Windows'}:
+        root.state('zoomed')
+    else:
+        root.attributes('-zoomed', True)
     root.report_callback_exception = lambda *args: text.config(highlightcolor='#FF0000', highlightbackground='#FF0000')
 
     fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 12))

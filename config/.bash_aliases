@@ -33,7 +33,7 @@ then
     {
         local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
         local vcxsrvname=$(basename "$vcxsrvpath")
-        ("$vcxsrvpath" -ac -clipboard -multiwindow -wgl & sleep 1 && pkill "$vcxsrvname") 2> /dev/null
+        ("$vcxsrvpath" -ac -clipboard -multiwindow -wgl & sleep 1 && pkill "$vcxsrvname") &> /dev/null
     }
 
     # Windows Explorer can open WSL folders, but the command must be invoked
@@ -75,7 +75,7 @@ then
         # results in the termination of `bash' without affecting GVIM (probably
         # because it is a Windows application, which WSL does not have the
         # ability to close). That's what is done here.
-        (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") > /dev/null 2> /dev/null
+        (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") &> /dev/null
     }
 else
     alias g='gvim'
@@ -163,9 +163,9 @@ after_command ()
     local command=$(history 1 | sed 's/^[^]]*\] //')
 
     local breakup=""
-    [[ $hours -gt 0 ]] && breakup="${breakup}$hours h "
+    [[ $hours -gt 0 ]] && breakup="$hours h "
     [[ $hours -gt 0 || $minutes -gt 0 ]] && breakup="${breakup}$minutes m "
-    [[ $hours -gt 0 || $minutes -gt 0 || $seconds -gt 0 ]] && breakup="${breakup}$seconds s $milliseconds ms"
+    breakup="${breakup}$seconds s $milliseconds ms"
 
     if [[ $exit_status -eq 0 ]]
     then
