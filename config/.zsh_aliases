@@ -348,7 +348,6 @@ def _trawgorDBwAQawMZniUb(text, hashes):
             lo = hi
 
 def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
-    text.config(highlightcolor='#000000', highlightbackground='#D9D9D9')
     fig.texts = []
     try:
         size_and_wrap = entry.get().split()
@@ -363,6 +362,11 @@ def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
         print(e)
     fig.canvas.draw()
 
+def _tovFFPjGPBAdfDHOlVTr(fig, *args):
+    fig.texts = []
+    fig.text(0.02, 0.02, str(args[1]), size=16, color='#CCCCCC', fontname=_EhdhMmAprSRzwpUPoHvW.rcParams['mathtext.tt'])
+    fig.canvas.draw()
+
 def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
     root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
@@ -371,10 +375,10 @@ def _xtBzBMfnpdQGhwINyACP():
         root.state('zoomed')
     else:
         root.attributes('-zoomed', True)
-    root.report_callback_exception = lambda *args: text.config(highlightcolor='#FF0000', highlightbackground='#FF0000')
 
     fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 12))
     fig.patch.set_facecolor('#333333')
+    root.report_callback_exception = lambda *args: _tovFFPjGPBAdfDHOlVTr(fig, *args)
     canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master=root)
     canvas.draw()
     canvas.get_tk_widget().pack(side=_ArFfEXZloCCjFNnmSwdw.LEFT, anchor=_ArFfEXZloCCjFNnmSwdw.W, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
