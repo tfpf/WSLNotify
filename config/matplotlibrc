@@ -15,11 +15,11 @@ backend: Qt5Agg
 ###############################################################################
 # When True, automatically adjust subplot parameters to make the plot fit the
 # figure using `tight_layout'.
-figure.autolayout: True
+figure.autolayout: False
 
 # When True, automatically make plot elements fit on the figure. (Not
 # compatible with `autolayout' above.)
-figure.constrained_layout.use: False
+figure.constrained_layout.use: True
 
 ###############################################################################
 # Saving figures.
@@ -31,6 +31,10 @@ savefig.directory: /mnt/c/Users/vpaij/Pictures/graphs/
 # Amount of blank space around the hardcopied image.
 savefig.bbox:       tight
 savefig.pad_inches: 0.2
+
+# Embed text as text, not as paths. Use with caution: Xviewer does not
+# correctly display SVG files generated with this setting.
+svg.fonttype: none
 
 ###############################################################################
 # Font.
