@@ -15,11 +15,11 @@ backend: Qt5Agg
 ###############################################################################
 # When True, automatically adjust subplot parameters to make the plot fit the
 # figure using `tight_layout'.
-figure.autolayout: False
+figure.autolayout: True
 
 # When True, automatically make plot elements fit on the figure. (Not
 # compatible with `autolayout' above.)
-figure.constrained_layout.use: True
+figure.constrained_layout.use: False
 
 ###############################################################################
 # Saving figures.
