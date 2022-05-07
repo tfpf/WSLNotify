@@ -396,6 +396,7 @@ def _xtBzBMfnpdQGhwINyACP():
     text.tag_config('ctag', background='#333333', foreground='#007FFF')
     text.tag_raise('sel')
     text.bind('<KeyRelease>', lambda event: _trawgorDBwAQawMZniUb(text, hashes))
+    _trawgorDBwAQawMZniUb(text, hashes)
     text.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
