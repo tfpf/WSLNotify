@@ -309,11 +309,11 @@ _xtBzBMfnpdQGhwINyACP()
 }
 
 # Just like the last one, this is a hack to render LaTeX expressions without
-# creating a new file. Uses the Tex parser that comes with Matplotlib.
+# creating a new file. Uses the parser that comes with Matplotlib.
 L ()
 {
-    p -c "
-import matplotlib as _EhdhMmAprSRzwpUPoHvW; _EhdhMmAprSRzwpUPoHvW.use('TkAgg')
+    MPLBACKEND=TkAgg p -c "
+import matplotlib as _EhdhMmAprSRzwpUPoHvW
 import matplotlib.backends.backend_tkagg as _hNzVCYEPlZTSmIqqKOhB
 import matplotlib.figure as _WFHjDXaGDEVBLyVLsdmR
 import platform as _kcvGDoKwwVmzVFPNNBzH
