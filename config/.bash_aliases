@@ -169,17 +169,17 @@ after_command ()
 
     if [[ $exit_status -eq 0 ]]
     then
-        local exit_symbol="✓"
+        local exit_symbol="[1;32m✓[0m"
         local icon=dialog-information
     else
-        local exit_symbol="✗"
+        local exit_symbol="[1;31m✗[0m"
         local icon=dialog-error
     fi
-    notify-send -i $icon "CLI Ready" "$command · $breakup"
+    notify-send -i $icon "CLI Ready" "$command ⏳︎ $breakup"
 
-    # The tick, cross and middle dot symbols may have to be treated as
-    # multi-byte characters, depending on the shell.
-    printf "%*s\n" $((COLUMNS+3)) "$exit_symbol $command · $breakup"
+    # Non-ASCII symbols may have to be treated as multi-byte characters,
+    # depending on the shell.
+    printf "%*s\n" $((COLUMNS+16)) "$exit_symbol $command ⏳︎ $breakup"
 }
 
 CLI_ready=1
