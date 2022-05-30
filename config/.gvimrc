@@ -77,3 +77,5 @@ elseif has('unix')
     au GUIEnter * call system('wmctrl -b add,maximized_horz,maximized_vert -i -r ' . v:windowid)
     se gfn=Cascadia\ Code\ 13
 endif
+
+unlet c_comment_strings " No syntax highlighting in comment strings.
