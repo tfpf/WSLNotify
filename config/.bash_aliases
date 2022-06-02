@@ -86,6 +86,10 @@ export HISTTIMEFORMAT="[%F %T] "
 
 export QT_LOGGING_RULES="qt5ct.debug=false"
 
+# I have accidentally quit the shell by pressing <CTRL-D> enough times that I'd
+# consider doing this.
+set -o ignoreeof
+
 # Some terminals exit only if the previous command was successful. This can be
 # used to exit unconditionally.
 alias bye='clear && exit'
