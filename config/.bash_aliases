@@ -179,11 +179,11 @@ after_command ()
         local exit_symbol="[1;31m✗[0m"
         local icon=dialog-error
     fi
-    notify-send -i $icon "CLI Ready" "$command ⏳︎ $breakup"
+    notify-send -i $icon "CLI Ready" "$command ⏳ $breakup"
 
     # Non-ASCII symbols may have to be treated as multi-byte characters,
     # depending on the shell.
-    printf "%*s\n" $((COLUMNS+17)) "$exit_symbol $command ⏳︎ $breakup"
+    printf "%*s\n" $((COLUMNS+14)) "$exit_symbol $command ⏳ $breakup"
 }
 
 CLI_ready=1
