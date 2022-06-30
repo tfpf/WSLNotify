@@ -5,7 +5,9 @@ syn on
 
 " " Save the file whenever the buffer is changed.
 " au TextChanged,TextChangedI <buffer> sil w
-" nn <silent> <C-S> :au TextChanged,TextChangedI <buffer> sil w<CR>:w<CR>
+
+" To re-load this file. Useful if some stupid plugin overwrites my preferences.
+nn <silent> <C-S> :so ~/.gvimrc<CR>
 
 hi ColorColumn                                              guibg=#1F1F1F
 hi CursorLine                                               guibg=#1F1F1F
