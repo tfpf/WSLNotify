@@ -78,4 +78,7 @@ elseif has('unix')
     se gfn=Cascadia\ Code\ 13
 endif
 
-unlet c_comment_strings " No syntax highlighting in comment strings.
+" No syntax highlighting in comment strings.
+if exists("c_comment_strings")
+    unlet c_comment_strings
+endif
