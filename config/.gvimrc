@@ -6,6 +6,9 @@ syn on
 " " Save the file whenever the buffer is changed.
 " au TextChanged,TextChangedI <buffer> sil w
 
+" Specify syntax for files GVIM does not know about.
+au BufRead,BufNewFile *.sage setfiletype python
+
 " To re-load this file. Useful if some stupid plugin overwrites my preferences.
 nn <silent> <C-S> :so ~/.gvimrc<CR>
 
