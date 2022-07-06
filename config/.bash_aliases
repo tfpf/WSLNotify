@@ -86,6 +86,10 @@ export HISTTIMEFORMAT="[%F %T] "
 
 export QT_LOGGING_RULES="qt5ct.debug=false"
 
+# To ensure that Ipe can render LaTeX (if it is installed).
+export IPELATEXPATH=~/.ipe/latexrun/
+export IPELATEXDIR=$IPELATEXPATH
+
 # I have accidentally quit the shell by pressing <CTRL-D> enough times that I'd
 # consider doing this.
 set -o ignoreeof
