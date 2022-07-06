@@ -10,6 +10,14 @@
 	status = auto
 	transport = auto
 	ui = auto
+[color "diff"]
+	old = red
+	oldMoved = red
+	new = green
+	newMoved = green
+[color "status"]
+	changed = red
+	untracked = red
 [column]
 	ui = auto,column,nodense
 [core]
