@@ -1,5 +1,21 @@
+[blame]
+	coloring = repeatedLines
+	date = iso
+[color]
+	advice = auto
+	branch = auto
+	diff = auto
+	push = auto
+	showBranch = auto
+	status = auto
+	transport = auto
+	ui = auto
+[column]
+	ui = auto,column,nodense
+[core]
+	compression = 9
+[log]
+	date = iso
 [user]
 	email = 19171016+tfpf@users.noreply.github.com
 	name = tfpf
-[log]
-	date = iso
