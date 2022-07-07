@@ -11,13 +11,14 @@
 	transport = auto
 	ui = auto
 [color "diff"]
-	old = red
-	oldMoved = red
-	new = green
-	newMoved = green
+	old = brightred
+	oldMoved = brightred
+	new = brightgreen
+	newMoved = brightgreen
 [color "status"]
-	changed = red
-	untracked = red
+	added = brightgreen
+	changed = brightred
+	untracked = brightred
 [column]
 	ui = auto,column,nodense
 [core]
