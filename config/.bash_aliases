@@ -90,6 +90,8 @@ export QT_LOGGING_RULES="qt5ct.debug=false"
 export IPELATEXPATH=~/.ipe/latexrun/
 export IPELATEXDIR=$IPELATEXPATH
 
+export GIT_EDITOR=vim
+
 # I have accidentally quit the shell by pressing <CTRL-D> enough times that I'd
 # consider doing this.
 set -o ignoreeof
