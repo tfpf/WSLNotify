@@ -16,6 +16,7 @@ hi ColorColumn                                              guibg=#1F1F1F
 hi CursorLine                                               guibg=#1F1F1F
 hi Search                                          gui=none guibg=#FF0000 guifg=#000000
 hi Cursor                                          gui=none
+hi MatchParen                                               guibg=#008888 guifg=#FFFFFF
 hi NonText                                                  guibg=#444444
 hi whitespace                                               guibg=#1F1F1F
 hi a_small_price_to_pay_for_salvation              gui=none guibg=#00CF00 guifg=#000000
