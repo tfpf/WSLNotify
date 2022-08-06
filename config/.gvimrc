@@ -9,9 +9,6 @@ syn on
 " Specify syntax for files GVIM does not know about.
 au BufRead,BufNewFile *.sage setfiletype python
 
-" To re-load this file. Useful if some stupid plugin overwrites my preferences.
-nn <silent> <C-S> :so ~/.gvimrc<CR>
-
 hi ColorColumn                                              guibg=#1F1F1F
 hi CursorLine                                               guibg=#1F1F1F
 hi Search                                          gui=none guibg=#FF0000 guifg=#000000
@@ -45,7 +42,7 @@ nn <C-Up>   15<Up>
 se ai                      " New line is automatically indented.
 se ar                      " Automatically read file when changed from elsewhere.
 se bs=indent,eol,start     " Backspace freely.
-se cc=80,120               " Columns to be coloured with `ColorColumn'.
+se cc=80,120               " Columns to be coloured with `ColorColumn`.
 se ci                      " Indentation for a new line is identical to the previous line.
 se cink=                   " Don't change the indentation of the being typed.
 se cul                     " Highlight current line.
@@ -71,21 +68,23 @@ se report=0                " Threshold for reporting number of changed lines.
 se ru                      " Ruler showing current cursor position.
 se sc                      " Show partial command information.
 se so=3                    " Number of lines visible above and below cursor.
-se sr                      " When using '>>' or '<<', only jump to columns which are multiples of `sw'.
-se sta                     " Tab inserts an `sw'-size character at the start of a line, and `ts'-size elsewhere.
+se sr                      " When using '>>' or '<<', only jump to columns which are multiples of `sw`.
+se sta                     " Tab inserts an `sw`-size character at the start of a line, and `ts`-size elsewhere.
 se sts=0                   " Do not insert spaces when pressing Tab.
-se sw=4                    " Shift width. See `sta'.
-se ts=4                    " Tab stop. See `sta'.
+se sw=4                    " Shift width. See `sta`.
+se ts=4                    " Tab stop. See `sta`.
 se tw=0                    " Do not break lines automatically.
 se ul=1000                 " Number of undo operations allowed.
 
 if has('win32') || has('win64')
     au GUIEnter * sim ~x
-    se gfn=Cascadia\ Code:h13 " GUI font.
-    se rop=                   " `type:directx' enables ligatures, but makes text bold. I don't like that.
-    se scf                    " Scroll focus follows mouse pointer.
+    nn <silent> <C-S> :so ~/_gvimrc<CR>
+    se gfn=Cascadia\ Code:h13           " GUI font.
+    se rop=                             " `type:directx` enables ligatures, but makes text bold. I don't like that.
+    se scf                              " Scroll focus follows mouse pointer.
 elseif has('unix')
     au GUIEnter * call system('wmctrl -b add,maximized_horz,maximized_vert -i -r ' . v:windowid)
+    nn <silent> <C-S> :so ~/.gvimrc<CR>
     se gfn=Cascadia\ Code\ 13
 endif
 
