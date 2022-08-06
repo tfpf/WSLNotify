@@ -190,6 +190,7 @@ EXEC 00  # Executable files. If not on WSL, delete this line or set to `01;32`.
 .yuv   01;35
 .cgm   01;35
 .emf   01;35
+.ico   01;35
 
 .axv 01;35
 .anx 01;35
