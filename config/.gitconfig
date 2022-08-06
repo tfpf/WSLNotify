@@ -1,3 +1,5 @@
+# ~/.gitconfig
+
 [blame]
 	coloring = repeatedLines
 	date = iso
