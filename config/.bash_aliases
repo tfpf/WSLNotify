@@ -129,7 +129,7 @@ alias pip='/usr/bin/python3 -m pip'
 alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
 
 alias time='/usr/bin/time -f "\
-$(printf "%*s" $COLUMNS " " | tr " " "-")
+$(printf "%*s" $COLUMNS " " | sed "s/ /─/g")
 Real: %e s. User: %U s. Kernel: %S s.
 Maximum RSS: %M kB." '
 
