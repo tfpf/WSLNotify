@@ -164,7 +164,7 @@ after_command ()
     unset start_time
     CLI_ready=1
 
-    if [[ $delay -le 10000 || $terminal_window_ID -eq $(getactivewindow) ]]
+    if [[ $delay -le 5000 ]]
     then
         return
     fi
@@ -188,11 +188,14 @@ after_command ()
         local exit_symbol="[1;31m✗[0m"
         local icon=dialog-error
     fi
-    notify-send -i $icon "CLI Ready" "$command ⏳ $breakup"
 
     # Non-ASCII symbols may have to be treated as multi-byte characters,
     # depending on the shell.
     printf "%*s\n" $((COLUMNS+14)) "$exit_symbol $command ⏳ $breakup"
+    if [[ delay -ge 10000 && $terminal_window_ID -ne $(getactivewindow) ]]
+    then
+        notify-send -i $icon "CLI Ready" "$command ⏳ $breakup"
+    fi
 }
 
 CLI_ready=1
