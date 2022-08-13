@@ -173,7 +173,7 @@ after_command ()
     local seconds=$((delay/1000%60))
     local minutes=$((delay/60000%60))
     local hours=$((delay/3600000))
-    local command=$(history 1 | sed 's/^[^]]*\] //')
+    local last_command=$(history 1 | sed 's/^[^]]*\] //')
 
     local breakup=""
     [[ $hours -gt 0 ]] && breakup="$hours h "
@@ -191,10 +191,10 @@ after_command ()
 
     # Non-ASCII symbols may have to be treated as multi-byte characters,
     # depending on the shell.
-    printf "%*s\n" $((COLUMNS+14)) "$exit_symbol $command ⏳ $breakup"
+    printf "%*s\n" $((COLUMNS+14)) "$exit_symbol $last_command ⏳ $breakup"
     if [[ delay -ge 10000 && $terminal_window_ID -ne $(getactivewindow) ]]
     then
-        notify-send -i $icon "CLI Ready" "$command ⏳ $breakup"
+        notify-send -i $icon "CLI Ready" "$last_command ⏳ $breakup"
     fi
 }
 
