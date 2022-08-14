@@ -16,6 +16,9 @@ then
     export LIBGL_ALWAYS_INDIRECT=1
     export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
 
+    # Inkscape doesn't work on WSL Ubuntu using GLIBC.
+    export _INKSCAPE_GC="disable"
+
     # Run a PowerShell script without changing the global execution policy.
     alias psh='powershell.exe -ExecutionPolicy Bypass'
 
