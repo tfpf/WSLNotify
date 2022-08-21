@@ -13,7 +13,7 @@ hi ColorColumn                                              guibg=#1F1F1F
 hi CursorLine                                               guibg=#1F1F1F
 hi Search                                          gui=none guibg=#FF0000 guifg=#000000
 hi Cursor                                          gui=none
-hi MatchParen                                               guibg=#008888 guifg=#EEEEEE
+hi MatchParen                                               guibg=#008888
 hi NonText                                                  guibg=#444444
 hi DiffAdd                                                  guibg=#000077               term=bold               ctermbg=4
 hi DiffChange                                               guibg=#770077               term=bold               ctermbg=5
