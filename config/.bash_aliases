@@ -138,6 +138,8 @@ Maximum RSS: %M kB." '
 
 alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
+alias S='perf stat -e instructions,branches,branch-misses '
+
 # Pre-command for command timing. It will be called just before any command is
 # executed.
 before_command ()
