@@ -333,6 +333,15 @@ _xtBzBMfnpdQGhwINyACP()
 # creating a new file. Uses the parser that comes with Matplotlib.
 L ()
 {
+    if [[ $# -eq 0 ]]
+    then
+        local bgcolour='#333333'
+        local fgcolour='#CCCCCC'
+    else
+        local bgcolour='#FFFFFF'
+        local fgcolour='#000000'
+    fi
+
     MPLBACKEND=TkAgg p -c "
 import matplotlib as _EhdhMmAprSRzwpUPoHvW
 import matplotlib.backends.backend_tkagg as _hNzVCYEPlZTSmIqqKOhB
@@ -377,14 +386,14 @@ def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
             size = size_and_wrap[0]
             wrap = False
         size = int(size)
-        fig.text(0.02, size / 700, text.get('2.0', _ArFfEXZloCCjFNnmSwdw.END).strip(), size=size, color='#CCCCCC', wrap=int(wrap))
+        fig.text(0.02, size / 700, text.get('2.0', _ArFfEXZloCCjFNnmSwdw.END).strip(), size=size, color='$fgcolour', wrap=int(wrap))
     except Exception as e:
         print(e)
     fig.canvas.draw()
 
 def _tovFFPjGPBAdfDHOlVTr(fig, *args):
     fig.texts = []
-    fig.text(0.02, 0.02, str(args[1]), size=16, color='#CCCCCC', fontname=_EhdhMmAprSRzwpUPoHvW.rcParams['mathtext.tt'])
+    fig.text(0.02, 0.02, str(args[1]), size=16, color='$fgcolour', fontname=_EhdhMmAprSRzwpUPoHvW.rcParams['mathtext.tt'])
     fig.canvas.draw()
 
 def _xtBzBMfnpdQGhwINyACP():
@@ -397,7 +406,7 @@ def _xtBzBMfnpdQGhwINyACP():
         root.attributes('-zoomed', True)
 
     fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 12))
-    fig.patch.set_facecolor('#333333')
+    fig.patch.set_facecolor('$bgcolour')
     root.report_callback_exception = lambda *args: _tovFFPjGPBAdfDHOlVTr(fig, *args)
     canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master=root)
     canvas.draw()
