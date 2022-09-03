@@ -350,6 +350,9 @@ import platform as _kcvGDoKwwVmzVFPNNBzH
 import tkinter as _ArFfEXZloCCjFNnmSwdw
 import time as _HgyxeWRPXNtbhqWyVhlC
 
+if '$bgcolour' == '#FFFFFF':
+    _EhdhMmAprSRzwpUPoHvW.rcParams['savefig.transparent'] = True
+
 def _trawgorDBwAQawMZniUb(text, hashes):
     lines = text.get('1.0', _ArFfEXZloCCjFNnmSwdw.END)
     hashes[0] = hashes[1]

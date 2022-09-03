@@ -32,9 +32,8 @@ savefig.directory: /mnt/c/Users/vpaij/Pictures/graphs/
 savefig.bbox:       tight
 savefig.pad_inches: 0.2
 
-# Embed text as text, not as paths. Use with caution: Xviewer does not
-# correctly display SVG files generated with this setting.
-svg.fonttype: none
+svg.fonttype: path
+savefig.transparent: False
 
 ###############################################################################
 # Font.
