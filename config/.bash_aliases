@@ -422,7 +422,7 @@ def _xtBzBMfnpdQGhwINyACP():
 
     hashes = [None, None]
     text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
-    greek_symbols = r'\$\\Alpha\\Beta\\Gamma\\Delta\\Epsilon\\Zeta\\Eta\\Theta\\Iota\\Kappa\\Lambda\\Mu\\Nu\\Xi\\Omicron\\Pi\\Rho\\Sigma\\Tau\\Upsilon\\Phi\\Chi\\Psi\\Omega\$ \$\\alpha\\beta\\gamma\\delta\\epsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\varkappa\\lambda\\mu\\nu\\xi\\omicron\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega\$'
+    greek_symbols = r'\$\\Alpha\\Beta\\Gamma\\Digamma\\Delta\\Epsilon\\Zeta\\Eta\\Theta\\Iota\\Kappa\\Lambda\\Mu\\Nu\\Xi\\Omicron\\Pi\\Rho\\Sigma\\Stigma\\Tau\\Upsilon\\Phi\\Chi\\Psi\\Omega\$ \$\\alpha\\beta\\gamma\\digamma\\delta\\epsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\varkappa\\lambda\\mu\\nu\\xi\\omicron\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\stigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega\$'
     text.insert('1.0', f'{greek_symbols}\\n')
     root.after(1000, text.focus_set)
     text.tag_config('ltag', background='#333333', foreground='#FFFF00')
