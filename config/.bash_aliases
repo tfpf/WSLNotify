@@ -384,15 +384,15 @@ def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry, wrap_variable):
         size = int(entry.get())
         wrap = wrap_variable.get()
     except Exception as e:
-        _tovFFPjGPBAdfDHOlVTr(fig, None, e)
+        _tovFFPjGPBAdfDHOlVTr(fig, e)
     else:
         fig.texts = []
         fig.text(0.02, size / 700, text.get('2.0', _ArFfEXZloCCjFNnmSwdw.END).strip(), size=size, color='$fgcolour', wrap=wrap)
         fig.canvas.draw()
 
-def _tovFFPjGPBAdfDHOlVTr(fig, *args):
+def _tovFFPjGPBAdfDHOlVTr(fig, e):
     fig.texts = []
-    fig.text(0.02, 0.02, str(args[1]), size=16, color='$fgcolour', fontname=_EhdhMmAprSRzwpUPoHvW.rcParams['mathtext.tt'])
+    fig.text(0.02, 0.02, str(e), size=16, color='$fgcolour', fontname=_EhdhMmAprSRzwpUPoHvW.rcParams['mathtext.tt'])
     fig.canvas.draw()
 
 def _xtBzBMfnpdQGhwINyACP():
@@ -406,7 +406,7 @@ def _xtBzBMfnpdQGhwINyACP():
 
     fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 12))
     fig.patch.set_facecolor('$bgcolour')
-    root.report_callback_exception = lambda *args: _tovFFPjGPBAdfDHOlVTr(fig, *args)
+    root.report_callback_exception = lambda *args: _tovFFPjGPBAdfDHOlVTr(fig, args[1])
     canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master=root)
     canvas.draw()
     canvas.get_tk_widget().pack(side=_ArFfEXZloCCjFNnmSwdw.LEFT, anchor=_ArFfEXZloCCjFNnmSwdw.W, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
