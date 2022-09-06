@@ -379,20 +379,16 @@ def _trawgorDBwAQawMZniUb(text, hashes):
             text.tag_add('ltag', f'{i}.{lo}', f'{i}.{hi + 1}')
             lo = hi
 
-def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry):
-    fig.texts = []
+def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry, wrap_variable):
     try:
-        size_and_wrap = entry.get().split()
-        if len(size_and_wrap) >= 2:
-            size, wrap = size_and_wrap[: 2]
-        else:
-            size = size_and_wrap[0]
-            wrap = False
-        size = int(size)
-        fig.text(0.02, size / 700, text.get('2.0', _ArFfEXZloCCjFNnmSwdw.END).strip(), size=size, color='$fgcolour', wrap=int(wrap))
+        size = int(entry.get())
+        wrap = wrap_variable.get()
     except Exception as e:
-        print(e)
-    fig.canvas.draw()
+        _tovFFPjGPBAdfDHOlVTr(fig, None, e)
+    else:
+        fig.texts = []
+        fig.text(0.02, size / 700, text.get('2.0', _ArFfEXZloCCjFNnmSwdw.END).strip(), size=size, color='$fgcolour', wrap=wrap)
+        fig.canvas.draw()
 
 def _tovFFPjGPBAdfDHOlVTr(fig, *args):
     fig.texts = []
@@ -430,13 +426,17 @@ def _xtBzBMfnpdQGhwINyACP():
     text.tag_raise('sel')
     text.bind('<KeyRelease>', lambda event: _trawgorDBwAQawMZniUb(text, hashes))
     _trawgorDBwAQawMZniUb(text, hashes)
-    text.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
+    text.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry, wrap_variable))
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
     entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
-    entry.insert(0, '50 0')
-    entry.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry))
+    entry.insert(0, '50')
+    entry.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry, wrap_variable))
     entry.pack(side=_ArFfEXZloCCjFNnmSwdw.BOTTOM, anchor=_ArFfEXZloCCjFNnmSwdw.SE, expand=False, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
+
+    wrap_variable = _ArFfEXZloCCjFNnmSwdw.BooleanVar()
+    checkbutton = _ArFfEXZloCCjFNnmSwdw.Checkbutton(root, font=('Cascadia Code', 13), text=' Wrap Text', activebackground='#333333', activeforeground='#CCCCCC', bg='#333333', fg='#CCCCCC', selectcolor='#555555', variable=wrap_variable, command=lambda: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry, wrap_variable))
+    checkbutton.pack(side=_ArFfEXZloCCjFNnmSwdw.BOTTOM, anchor=_ArFfEXZloCCjFNnmSwdw.SE, expand=False, fill=_ArFfEXZloCCjFNnmSwdw.X)
 
     root.mainloop()
 
