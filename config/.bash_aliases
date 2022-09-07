@@ -404,7 +404,10 @@ def _xtBzBMfnpdQGhwINyACP():
     else:
         root.attributes('-zoomed', True)
 
-    fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(14, 12))
+    dpi = root.winfo_fpixels('1i')
+    width = 0.7 * root.winfo_screenwidth() / dpi
+    height = root.winfo_screenheight() / dpi
+    fig = _WFHjDXaGDEVBLyVLsdmR.Figure(figsize=(width, height))
     fig.patch.set_facecolor('$bgcolour')
     root.report_callback_exception = lambda *args: _tovFFPjGPBAdfDHOlVTr(fig, args[1])
     canvas = _hNzVCYEPlZTSmIqqKOhB.FigureCanvasTkAgg(fig, master=root)
