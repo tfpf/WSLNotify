@@ -1,0 +1,18 @@
+/* tfpf.css
+ * A few customisations for all websites. Import this Mozilla format code in
+ * Stylish (a browser add-on) for Firefox.
+ */
+
+@namespace url(http://www.w3.org/1999/xhtml);
+
+/* Use the system theme colour as the text selection colour. */
+::-moz-selection
+{
+    color: #FFFFFF;
+    background: #27B4A6;
+}
+::selection
+{
+    color: #FFFFFF;
+    background: #27B4A6;
+}
