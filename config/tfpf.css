@@ -20,5 +20,5 @@
 /* Set the typeface for code blocks. */
 pre, code, .blob-code, .blob-code-marker
 {
-    font-family: 'Cascadia Code';
+    font-family: 'Cascadia Code', monospace !important;
 }
