@@ -149,8 +149,8 @@ alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
 
 alias time='/usr/bin/time -f "\
 $(printf "%*s" $COLUMNS " " | sed "s/ /─/g")
-Real: %e s. User: %U s. Kernel: %S s.
-Maximum RSS: %M kB." '
+[0;33mReal: %e s. User: %U s. Kernel: %S s.
+Maximum RSS: %M kB. CPU usage: %P.[0m" '
 
 alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
