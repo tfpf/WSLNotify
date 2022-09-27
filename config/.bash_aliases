@@ -95,6 +95,22 @@ export IPELATEXDIR=$IPELATEXPATH
 
 export GIT_EDITOR=vim
 
+# Locale settings. Commented variables are set implicitly.
+export LANG=en_GB.UTF-8
+export LANGUAGE=en_GB
+export LC_ADDRESS=en_IN
+# export LC_COLLATE="en_GB.UTF-8"
+# export LC_CTYPE="en_GB.UTF-8"
+export LC_IDENTIFICATION=en_IN
+export LC_MEASUREMENT=en_IN
+# export LC_MESSAGES="en_GB.UTF-8"
+export LC_MONETARY=en_IN
+export LC_NAME=en_IN
+export LC_NUMERIC=en_GB.UTF-8
+export LC_PAPER=en_IN
+export LC_TELEPHONE=en_IN
+export LC_TIME=en_GB.UTF-8
+
 # I have accidentally quit the shell by pressing <CTRL-D> enough times that I'd
 # consider doing this.
 set -o ignoreeof
