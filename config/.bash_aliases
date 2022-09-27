@@ -108,7 +108,7 @@ alias bye='clear && exit'
 alias rs='cat /proc/sys/vm/swappiness && sudo sysctl vm.swappiness=10'
 
 # Some sort of a system monitor.
-alias F='watch -n 1 "grep MHz /proc/cpuinfo | nl -w 2"'
+alias F='watch -n 1 "grep MHz /proc/cpuinfo | sort -nr | nl -w 2"'
 alias M='watch -n 0.1 free -ht'
 alias s='watch -n 1 sensors'
 alias top='top -d 1 -H -u $USER'
