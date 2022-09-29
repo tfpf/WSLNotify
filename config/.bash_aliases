@@ -212,7 +212,7 @@ after_command ()
 
     # Non-ASCII symbols may have to be treated as multi-byte characters,
     # depending on the shell.
-    printf "%*s\n" $((COLUMNS+14)) "$exit_symbol $last_command ⏳ $breakup"
+    printf "\r%*s\n" $((COLUMNS+14)) "$exit_symbol $last_command ⏳ $breakup"
     if [[ delay -ge 10000 && $terminal_window_ID -ne $(getactivewindow) ]]
     then
         notify-send -i $icon "CLI Ready" "$last_command ⏳ $breakup"
