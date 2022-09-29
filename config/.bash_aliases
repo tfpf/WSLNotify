@@ -7,8 +7,8 @@ if [[ -n $running_on_WSL ]]
 then
 
     # Setup for a virtual display using VcXsrv to run GUI apps. You may want to
-    # install `x11-xserver-utils', `dconf-editor' and `dbus-x11', and create
-    # the file `~/.config/dconf/user'. The first `DISPLAY' is for WSL, and the
+    # install `x11-xserver-utils`, `dconf-editor` and `dbus-x11`, and create
+    # the file `~/.config/dconf/user`. The first `DISPLAY` is for WSL, and the
     # second, for WSL2.
     export DISPLAY=localhost:0.0
     # export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
@@ -25,7 +25,7 @@ then
     # Compile programs written in C#.
     alias csc='/mnt/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe'
 
-    # For notifications, since `notify-send' does not work.
+    # For notifications, since `notify-send` does not work.
     alias notify-send='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLNotify.exe'
     alias getactivewindow='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLGetActiveWindow.exe'
 
@@ -41,7 +41,7 @@ then
 
     # Windows Explorer can open WSL folders, but the command must be invoked
     # after navigating to the target folder. Doing so directly will change the
-    # environment variable `OLDPWD', which is undesirable. Hence, this is done
+    # environment variable `OLDPWD`, which is undesirable. Hence, this is done
     # in a subshell.
     e ()
     {
@@ -72,10 +72,10 @@ then
         local filedir=$(dirname "$1")
         local filename=$(basename "$1")
 
-        # Running the commands in a subshell causes two new processes (`bash'
-        # and `gvim.exe', as the `ps' command tells me) to remain running for
-        # as long as GVIM is kept open. Killing `gvim.exe' automatically
-        # results in the termination of `bash' without affecting GVIM (probably
+        # Running the commands in a subshell causes two new processes (`bash`
+        # and `gvim.exe`, as the `ps` command tells me) to remain running for
+        # as long as GVIM is kept open. Killing `gvim.exe` automatically
+        # results in the termination of `bash` without affecting GVIM (probably
         # because it is a Windows application, which WSL does not have the
         # ability to close). That's what is done here.
         (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") &> /dev/null
@@ -147,14 +147,20 @@ alias pip='/usr/bin/python3 -m pip'
 
 alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
 
-alias time='/usr/bin/time -f "\
-$(printf "%*s" $COLUMNS " " | sed "s/ /─/g")
-[0;33mReal: %e s. User: %U s. Kernel: %S s.
-Maximum RSS: %M kB. CPU usage: %P.[0m" '
+# `time` may be a shell keyword. I prefer GNU's `time` to Bash's.
+alias time='/usr/bin/time -f "$(timefmt)" '
 
 alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
 alias S='perf stat -e instructions,branches,branch-misses,cache-references,cache-misses '
+
+# Format string for the `time` command.
+timefmt ()
+{
+    printf "%*s\n" $COLUMNS " " | sed "s/ /─/g"
+    printf "Real: %%e s.  User: %%U s.  Kernel: %%S s.  "
+    printf "Maximum RSS: %%M KiB.  CPU usage: %%P.\n"
+}
 
 # Pre-command for command timing. It will be called just before any command is
 # executed.
@@ -241,7 +247,7 @@ push ()
     git push origin master
 }
 
-# PDF optimiser. This requires that `ghostscript' be installed.
+# PDF optimiser. This requires that `ghostscript` be installed.
 pdfopt ()
 {
     if [[ $# -lt 2 ]]
@@ -464,8 +470,8 @@ _xtBzBMfnpdQGhwINyACP()
 }
 
 # Given a target colour, make transparent all colours differing from it by
-# `threshold1' or less, but don't touch colours differing from it by
-# `threshold2' or more. The alpha (opacity) for colours in between will
+# `threshold1` or less, but don't touch colours differing from it by
+# `threshold2` or more. The alpha (opacity) for colours in between will
 # gradually change from 0 to 1.
 T ()
 {
