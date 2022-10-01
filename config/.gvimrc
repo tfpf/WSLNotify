@@ -19,6 +19,7 @@ hi DiffAdd                                                  guibg=#000077       
 hi DiffChange                                               guibg=#770077               term=bold               ctermbg=5
 hi DiffDelete                                      gui=bold guibg=#008888 guifg=#0000BB term=bold    cterm=bold ctermbg=6 ctermfg=4
 hi DiffText                                        gui=bold guibg=#CC0000 guifg=#CCCCCC term=reverse cterm=bold ctermbg=1
+hi Visual                                                   guibg=#079486 guifg=#FFFFFF
 hi whitespace                                               guibg=#1F1F1F
 hi a_small_price_to_pay_for_salvation              gui=none guibg=#00CF00 guifg=#000000
 hi perfectly_balanced_as_all_things_should_be      gui=none guibg=#0000FF guifg=#FFFFFF
