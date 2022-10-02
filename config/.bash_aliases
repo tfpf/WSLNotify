@@ -159,7 +159,8 @@ timefmt ()
 {
     printf "%*s\n" $COLUMNS " " | sed "s/ /─/g"
     printf "Real: %%e s.  User: %%U s.  Kernel: %%S s.  "
-    printf "Maximum RSS: %%M KiB.  CPU usage: %%P.\n"
+    printf "MRSS: %%M KiB.  CPU: %%P.  "
+    printf "ICS: %%c.  VCS: %%w.\n"
 }
 
 # Pre-command for command timing. It will be called just before any command is
