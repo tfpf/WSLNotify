@@ -230,22 +230,22 @@ CLI_ready=1
 trap before_command DEBUG
 PROMPT_COMMAND=after_command
 
-# Commit and push changes to the master branch of a GitHub repository.
+# Commit and push changes to the current branch of a GitHub repository.
 push ()
 {
     if [[ $# -lt 2 ]]
     then
         printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} \"commit message\" file1 [file2] [file3] [...]\n"
+        printf "\t${FUNCNAME[0]} 'commit message' file1 [file2] [file3] [...]\n"
         return 1
     fi
 
-    local args=( "$@" )
+    local args=("$@")
     local files=("${args[@]:1}")
 
     git add ${files[*]}
     git commit -m "$1"
-    git push origin master
+    git push
 }
 
 # PDF optimiser. This requires that `ghostscript` be installed.
