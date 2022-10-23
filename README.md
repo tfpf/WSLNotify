@@ -70,9 +70,8 @@ notifications and active windows are meaningless), Windows notifications and
 Windows window IDs can be used. With a few tricks (using
 [`WSLNotify.exe`](https://github.com/tfpf/WSLNotify/releases/latest) and
 [`WSLGetActiveWindow.exe`](https://github.com/tfpf/WSLNotify/releases/latest),
-as seen in
-[`config/.bash_aliases`](config/.bash_aliases)), the timer works seamlessly on
-GNU/Linux and WSL both.
+as seen in [`dotfiles/.bash_aliases`](dotfiles/.bash_aliases)), the timer works
+seamlessly on GNU/Linux and WSL both.
 
 ## Known Bugs
 * Hovering the mouse over the system tray icon after the application has
@@ -80,7 +79,7 @@ returned makes the notification disappear.
 * Multiple notifications fill up the system tray with the application icon.
 
 # Environment-Agnostic Configuration Files
-`config` contains my configuration files for Bash, Zsh and GVIM (and some other
+`dotfiles` contains my configuration files for Bash, Zsh and GVIM (and some other
 stuff). These can be used on GNU/Linux or WSL without making any changes
 whatsoever. Having identical files for both means I don't have to spend time
 setting up my environment.
