@@ -79,10 +79,10 @@ returned makes the notification disappear.
 * Multiple notifications fill up the system tray with the application icon.
 
 # Environment-Agnostic Configuration Files
-`dotfiles` contains my configuration files for Bash, Zsh and GVIM (and some other
-stuff). These can be used on GNU/Linux or WSL without making any changes
-whatsoever. Having identical files for both means I don't have to spend time
-setting up my environment.
+I am also using this repository to store my dotfiles; the ones for Bash, Zsh
+and GVIM can be used on GNU/Linux or WSL without making any changes whatsoever.
+Having identical files for both means I don't have to spend time setting up my
+environment.
 
 There are a few nifty hacks implemented.
 
