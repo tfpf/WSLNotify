@@ -89,6 +89,11 @@ export HISTTIMEFORMAT="[%F %T] "
 
 export QT_LOGGING_RULES="qt5ct.debug=false"
 
+# Maximum line length of LaTeX output.
+export max_print_line=1000
+export error_line=254
+export half_error_line=238
+
 # To ensure that Ipe can render LaTeX (if it is installed).
 export IPELATEXPATH=~/.ipe/latexrun/
 export IPELATEXDIR=$IPELATEXPATH
