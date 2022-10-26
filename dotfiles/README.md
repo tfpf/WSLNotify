@@ -7,4 +7,5 @@ will do just that. I am not responsible if this borks your system.
 
 # Notes
 * `.xsessionrc` is a feature of Linux distributions based on Debian. For
-  others, consider using `.xsession`.
+  others, consider using `.xsession`. (Even better: set the locale using
+  `localectl`.)
