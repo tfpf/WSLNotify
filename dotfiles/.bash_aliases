@@ -90,7 +90,7 @@ export HISTTIMEFORMAT="[%F %T] "
 export QT_LOGGING_RULES="qt5ct.debug=false"
 
 # Maximum line length of LaTeX output.
-export max_print_line=1000
+export max_print_line=1048576
 export error_line=254
 export half_error_line=238
 
