@@ -115,6 +115,10 @@ alias rs='cat /proc/sys/vm/swappiness && sudo sysctl vm.swappiness=10'
 # Disable CPU frequency scaling.
 alias dfs='printf "performance\n" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
 
+# Enable the Ctrl-Shift-D (or Ctrl-Shift-I) keyboard shortcut to start GTK
+# Inspector.
+alias egi='gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true'
+
 # Some sort of a system monitor.
 alias F='watch -n 1 "grep MHz /proc/cpuinfo | sort -k 4 -gr | nl -w 2"'
 alias M='watch -n 0.1 free -ht'
