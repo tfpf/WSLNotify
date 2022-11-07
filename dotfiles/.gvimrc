@@ -9,24 +9,24 @@ syn on
 " Specify syntax for files GVIM does not know about.
 au BufRead,BufNewFile *.sage setfiletype python
 
-hi ColorColumn                                              guibg=#1F1F1F
-hi CursorLine                                               guibg=#1F1F1F
-hi Search                                          gui=none guibg=#FF0000 guifg=#000000
-hi Cursor                                          gui=none
-hi MatchParen                                               guibg=#008888
-hi NonText                                                  guibg=#444444
-hi DiffAdd                                                  guibg=#000077               term=bold               ctermbg=4
-hi DiffChange                                               guibg=#770077               term=bold               ctermbg=5
-hi DiffDelete                                      gui=bold guibg=#008888 guifg=#0000BB term=bold    cterm=bold ctermbg=6 ctermfg=4
-hi DiffText                                        gui=bold guibg=#CC0000 guifg=#CCCCCC term=reverse cterm=bold ctermbg=1
-hi Visual                                                   guibg=#079486 guifg=#FFFFFF
+hi ColorColumn                                     gui=NONE guibg=#1F1F1F guifg=NONE    term=reverse                   ctermbg=4
+hi CursorLine                                      gui=NONE guibg=#1F1F1F guifg=NONE    term=underline cterm=underline
+hi Search                                          gui=NONE guibg=#FF0000 guifg=#000000 term=reverse                   ctermbg=9 ctermfg=7
+hi Cursor                                          gui=NONE guibg=#F0E68C guifg=#4D4D4D
+hi MatchParen                                      gui=NONE guibg=#008888 guifg=NONE    term=reverse                   ctermbg=3
+hi NonText                                                  guibg=#4D4D4D
+hi DiffAdd                                         gui=NONE guibg=#00008B guifg=NONE    term=bold                      ctermbg=4
+hi DiffChange                                      gui=NONE guibg=#8B008B guifg=NONE    term=bold                      ctermbg=5
+hi DiffDelete                                      gui=bold guibg=#008B8B guifg=#0000FF term=bold      cterm=bold      ctermbg=6 ctermfg=4
+hi DiffText                                        gui=bold guibg=#B80000 guifg=NONE    term=reverse   cterm=bold      ctermbg=1
+hi Visual                                                   guibg=#079486 guifg=#FFFFFF term=reverse   cterm=reverse   ctermbg=8
 hi whitespace                                               guibg=#1F1F1F
-hi a_small_price_to_pay_for_salvation              gui=none guibg=#00CF00 guifg=#000000
-hi perfectly_balanced_as_all_things_should_be      gui=none guibg=#0000FF guifg=#FFFFFF
-hi this_universe_is_finite_its_resources_finite    gui=none guibg=#CFCF00 guifg=#000000
-hi dread_it_run_from_it_destiny_still_arrives      gui=none guibg=#00CFCF guifg=#000000
-hi reality_is_often_dissapointing                  gui=none guibg=#CF00CF guifg=#FFFFFF
-hi the_hardest_choices_require_the_strongest_wills gui=none guibg=#CFCFCF guifg=#000000
+hi a_small_price_to_pay_for_salvation              gui=NONE guibg=#00CF00 guifg=#000000
+hi perfectly_balanced_as_all_things_should_be      gui=NONE guibg=#0000FF guifg=#FFFFFF
+hi this_universe_is_finite_its_resources_finite    gui=NONE guibg=#CFCF00 guifg=#000000
+hi dread_it_run_from_it_destiny_still_arrives      gui=NONE guibg=#00CFCF guifg=#000000
+hi reality_is_often_dissapointing                  gui=NONE guibg=#CF00CF guifg=#FFFFFF
+hi the_hardest_choices_require_the_strongest_wills gui=NONE guibg=#CFCFCF guifg=#000000
 
 cal matchadd('whitespace', '\s\+$')
 
