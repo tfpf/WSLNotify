@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-panel" version="1.0">
+  <property name="configver" type="empty"/>
+  <property name="panels" type="empty">
+    <property name="panel-1" type="empty">
+      <property name="position" type="empty"/>
+      <property name="length" type="empty"/>
+      <property name="position-locked" type="empty"/>
+      <property name="size" type="empty"/>
+      <property name="background-style" type="uint" value="0"/>
+      <property name="background-alpha" type="empty"/>
+      <property name="enter-opacity" type="empty"/>
+      <property name="leave-opacity" type="empty"/>
+      <property name="plugin-ids" type="array">
+        <value type="int" value="1"/>
+        <value type="int" value="6"/>
+        <value type="int" value="7"/>
+        <value type="int" value="8"/>
+        <value type="int" value="9"/>
+        <value type="int" value="10"/>
+        <value type="int" value="11"/>
+        <value type="int" value="12"/>
+        <value type="int" value="13"/>
+        <value type="int" value="3"/>
+        <value type="int" value="14"/>
+        <value type="int" value="4"/>
+        <value type="int" value="5"/>
+        <value type="int" value="2"/>
+      </property>
+      <property name="background-rgba" type="array">
+        <value type="double" value="0.333333"/>
+        <value type="double" value="0.341176"/>
+        <value type="double" value="0.325490"/>
+        <value type="double" value="1.000000"/>
+      </property>
+    </property>
+  </property>
+  <property name="plugins" type="empty">
+    <property name="plugin-1" type="empty"/>
+    <property name="plugin-2" type="empty"/>
+    <property name="plugin-3" type="empty">
+      <property name="items" type="array">
+        <value type="string" value="16534864281.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-4" type="empty">
+      <property name="items" type="array">
+        <value type="string" value="16534864282.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-5" type="empty">
+      <property name="items" type="array">
+        <value type="string" value="16534864283.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-6" type="empty">
+      <property name="show-handle" type="bool" value="false"/>
+      <property name="middle-click" type="empty"/>
+      <property name="grouping" type="uint" value="0"/>
+      <property name="flat-buttons" type="bool" value="false"/>
+      <property name="show-labels" type="bool" value="false"/>
+    </property>
+    <property name="plugin-7" type="empty">
+      <property name="expand" type="empty"/>
+      <property name="style" type="empty"/>
+    </property>
+    <property name="plugin-8" type="empty">
+      <property name="names-visible" type="empty"/>
+      <property name="show-frame" type="empty"/>
+      <property name="known-items" type="array">
+        <value type="string" value="zoom "/>
+        <value type="string" value="vlc"/>
+        <value type="string" value="blueman"/>
+        <value type="string" value="SimpleScreenRecorder"/>
+        <value type="string" value="Microsoft Teams - Preview1"/>
+      </property>
+      <property name="known-legacy-items" type="array">
+        <value type="string" value="mintupdate.py"/>
+        <value type="string" value="networkmanager applet"/>
+        <value type="string" value="bluetooth enabled"/>
+        <value type="string" value="blueberry-tray.py"/>
+        <value type="string" value="tray.py"/>
+        <value type="string" value="task manager"/>
+        <value type="string" value="anydesk"/>
+        <value type="string" value="thunar"/>
+      </property>
+    </property>
+    <property name="plugin-9" type="empty"/>
+    <property name="plugin-10" type="empty"/>
+    <property name="plugin-11" type="empty"/>
+    <property name="plugin-12" type="empty">
+      <property name="enable-keyboard-shortcuts" type="empty"/>
+      <property name="enable-mpris" type="empty"/>
+      <property name="mixer-command" type="empty"/>
+      <property name="show-notifications" type="empty"/>
+      <property name="mpris-players" type="string" value="firefox.instance12116;firefox.instance14210;firefox.instance1535;firefox.instance1599;firefox.instance1628;firefox.instance1641;firefox.instance1653;firefox.instance1672;firefox.instance1676;firefox.instance1679;firefox.instance16793;firefox.instance1684;firefox.instance1687;firefox.instance1688;firefox.instance1702;firefox.instance1703;firefox.instance1717;firefox.instance1721;firefox.instance1722;firefox.instance1728;firefox.instance1738;firefox.instance1739;firefox.instance1744;firefox.instance1747;firefox.instance1761;firefox.instance1782;firefox.instance1788;firefox.instance1797;firefox.instance1803;firefox.instance1816;firefox.instance1817;firefox.instance1821;firefox.instance1822;firefox.instance1826;firefox.instance1833;firefox.instance1842;firefox.instance1848;firefox.instance1851;firefox.instance1859;firefox.instance1863;firefox.instance1883;firefox.instance1902;firefox.instance1987;firefox.instance1997;firefox.instance2011;firefox.instance2031;firefox.instance2071;firefox.instance2156;firefox.instance2206;firefox.instance2270;firefox.instance2307;firefox.instance2394;firefox.instance24673;firefox.instance2473;firefox.instance2646;firefox.instance3470;firefox.instance3471;firefox.instance4638;firefox.instance5142;firefox.instance7064;firefox.instance8177;io.github.celluloid_player.Celluloid.instance-1;rhythmbox;smplayer;vlc"/>
+    </property>
+    <property name="plugin-13" type="empty">
+      <property name="digital-format" type="string" value="%Y-%m-%d %a %H:%M:%S"/>
+    </property>
+    <property name="plugin-14" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="16674692191.desktop"/>
+      </property>
+    </property>
+  </property>
+</channel>
