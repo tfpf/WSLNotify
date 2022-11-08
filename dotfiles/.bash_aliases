@@ -85,6 +85,11 @@ else
     alias getactivewindow='xdotool getactivewindow'
 fi
 
+# Terminal prompt.
+export PS1='
+┌[\[\033[1;32m\]\u@\h\[\033[0m\] \[\033[1;96m\]\w\[\033[0m\]]
+└─\$ '
+
 export HISTTIMEFORMAT="[%F %T] "
 
 export QT_LOGGING_RULES="qt5ct.debug=false"
