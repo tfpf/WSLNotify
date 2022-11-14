@@ -117,8 +117,8 @@ alias bye='clear && exit'
 # available. This will reuce the swap affinity.
 alias rs='cat /proc/sys/vm/swappiness && sudo sysctl vm.swappiness=10'
 
-# Disable CPU frequency scaling.
-alias dfs='printf "performance\n" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'
+# Control CPU frequency scaling.
+alias cfs='sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor <<< '
 
 # Enable the Ctrl-Shift-D (or Ctrl-Shift-I) keyboard shortcut to start GTK
 # Inspector.
