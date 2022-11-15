@@ -9,3 +9,5 @@ will do just that. I am not responsible if this borks your system.
 * `.xsessionrc` is a feature of Linux distributions based on Debian. For
   others, consider using `.xsession`. (Even better: set the locale using
   `localectl`, or modify one of `/etc/default/locale` and `/etc/locale.conf`.)
+* An hourglass is printed by the command timer in `.bash_aliases`; if this is
+  correctly displayed, `sudo apt install fonts-noto` should fix the problem.
