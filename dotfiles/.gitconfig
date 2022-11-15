@@ -27,6 +27,8 @@
 	compression = 9
 [log]
 	date = iso
+[pull]
+	rebase = false
 [user]
 	email = 19171016+tfpf@users.noreply.github.com
 	name = tfpf
