@@ -90,6 +90,10 @@ export PS1='
 ╭[\[\033[1;32m\]\u@\h\[\033[0m\] \[\033[1;96m\]\w\[\033[0m\]]
 ╰─\$ '
 
+# History settings.
+export HISTCONTROL=ignoreboth
+export HISTFILESIZE=2000
+export HISTSIZE=1000
 export HISTTIMEFORMAT="[%F %T] "
 
 export QT_LOGGING_RULES="qt5ct.debug=false"
