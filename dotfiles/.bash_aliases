@@ -129,7 +129,7 @@ alias cfs='sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor <<< '
 alias egi='gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true'
 
 # Some sort of a system monitor.
-alias F='watch -n 1 "grep MHz /proc/cpuinfo | sort -k 4 -gr | nl -w 2"'
+alias F='watch -n 1 "grep MHz /proc/cpuinfo | nl -w 2 | sort -k 5 -gr"'
 alias M='watch -n 0.1 free -ht'
 alias s='watch -n 1 sensors'
 alias top='top -d 1 -H -u $USER'
