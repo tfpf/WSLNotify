@@ -1,5 +1,3 @@
-# ~/.gitconfig
-
 [blame]
 	coloring = repeatedLines
 	date = iso
@@ -25,6 +23,8 @@
 	ui = auto,column,nodense
 [core]
 	compression = 9
+[init]
+    defaultBranch = main
 [log]
 	date = iso
 [pull]
