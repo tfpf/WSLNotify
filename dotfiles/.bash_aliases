@@ -1,5 +1,3 @@
-# ~/.bash_aliases
-
 # WSL: Windows Subsystem for Linux.
 running_on_WSL=$(grep -il microsoft /proc/version)
 

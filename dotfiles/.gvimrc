@@ -1,5 +1,3 @@
-" ~/.gvimrc
-
 colo desert
 syn on
 
