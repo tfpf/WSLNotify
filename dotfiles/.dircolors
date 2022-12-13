@@ -1,4 +1,4 @@
-# This is useful in WSL. To display defaults, use the command `dircolors -p`.
+# To display defaults, use the command `dircolors -p`.
 
 # Copyright (C) 1996-2018 Free Software Foundation, Inc.
 # Copying and distribution of this file, with or without modification,
@@ -80,18 +80,18 @@ MISSING 01;05;37;41  # Whatever an `ORPHAN` file points to.
 SETUID 37;41  # Setuid (U+S) file.
 SETGID 30;43  # Setgid (G+S) file.
 CAPABILITY 30;41  # File with capability.
-EXEC 00  # Executable files. If not on WSL, delete this line or set to `01;32`.
+EXEC 01;32  # Executable files. On WSL, consider setting this to `00`.
 
-# Other scripts. If not on WSL, delete these lines.
-.cmd 01;32
-.exe 01;32
-.com 01;32
-.btm 01;32
-.bat 01;32
-.sh  01;32
-.csh 01;32
-.py  01;32
-.out 01;32
+# Other scripts. On WSL, consider uncommenting these lines.
+# .cmd 01;32
+# .exe 01;32
+# .com 01;32
+# .btm 01;32
+# .bat 01;32
+# .sh  01;32
+# .csh 01;32
+# .py  01;32
+# .out 01;32
 
 # Archives.
 .tar  01;31

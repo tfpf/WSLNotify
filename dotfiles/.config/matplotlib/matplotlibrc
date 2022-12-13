@@ -3,11 +3,7 @@
 ###############################################################################
 # Backend.
 ###############################################################################
-# Install PyQt5. If you get an error because of missing plugins, go to the
-# directory where the PyQt5 files are saved. Enter the directory containing the
-# Qt plugins. Use `ldd' on the file whose plugins are missing. See the output
-# and install the packages which are 'not found'.
-backend: Qt5Agg
+backend: GTK3Agg
 
 ###############################################################################
 # Figure layout.
@@ -25,7 +21,7 @@ figure.constrained_layout.use: False
 ###############################################################################
 # Default directory in savefig box. Leave empty to always use current working
 # directory.
-savefig.directory: /mnt/c/Users/vpaij/Pictures/graphs/
+savefig.directory: /home/tfpf/Pictures/graphs/
 
 # Amount of blank space around the hardcopied image.
 savefig.bbox:       tight
@@ -57,7 +53,7 @@ mathtext.cal:      cmsy10
 mathtext.bf:       Cochineal:bold
 mathtext.it:       Cochineal:italic
 mathtext.rm:       Cochineal
-mathtext.sf:       Ubuntu
+mathtext.sf:       Noto Sans
 mathtext.tt:       Cascadia Code
 mathtext.fontset:  custom           # dejavusans, dejavuserif, cm, stix, stixsans, custom
 mathtext.fallback: stix
