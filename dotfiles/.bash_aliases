@@ -65,7 +65,7 @@ then
         fi
 
         # https://tuxproject.de/projects/vim/ (64-bit Windows binaries)
-        local gvimpath='/mnt/c/Users/vpaij/Downloads/gVim/gvim.exe'
+        local gvimpath='/mnt/c/Program Files (x86)/Vim/vim90/gvim.exe'
         local gvimname=$(basename "$gvimpath")
         local filedir=$(dirname "$1")
         local filename=$(basename "$1")
