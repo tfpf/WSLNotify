@@ -1,15 +1,17 @@
-# WSL: Windows Subsystem for Linux.
-running_on_WSL=$(grep -il microsoft /proc/version)
-
-if [[ -n $running_on_WSL ]]
+# This block is executed only if Bash is running on WSL (Windows Subsystem for
+# Linux).
+if [[ -n $(grep -il microsoft /proc/version) ]]
 then
 
     # Setup for a virtual display using VcXsrv to run GUI apps. You may want to
     # install `x11-xserver-utils`, `dconf-editor` and `dbus-x11`, and create
-    # the file `~/.config/dconf/user`. The first `DISPLAY` is for WSL, and the
-    # second, for WSL2.
-    export DISPLAY=localhost:0.0
-    # export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
+    # the file `~/.config/dconf/user`.
+    if [[ -n $(grep -l WSL2 /proc/version) ]]
+    then
+        export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
+    else
+        export DISPLAY=localhost:0.0
+    fi
     export GDK_SCALE=1
     export LIBGL_ALWAYS_INDIRECT=1
     export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
@@ -29,7 +31,7 @@ then
 
     alias wp='/mnt/c/Users/vpaij/AppData/Local/Programs/Python/Python310/python.exe'
 
-    # Create the virtual display.
+    # Create the virtual display. VcXsrv should be installed.
     vcx ()
     {
         local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
@@ -81,6 +83,13 @@ then
 else
     alias g='gvim'
     alias getactivewindow='xdotool getactivewindow'
+
+    # Control CPU frequency scaling.
+    alias cfs='sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor <<< '
+
+    # Enable the Ctrl-Shift-D (or Ctrl-Shift-I) keyboard shortcut to start GTK
+    # Inspector.
+    alias egi='gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true'
 fi
 
 # Terminal prompt.
@@ -118,13 +127,6 @@ alias bye='clear && exit'
 # Some Linux distributions use swap space even when there is sufficient RAM
 # available. This will reuce the swap affinity.
 alias rs='cat /proc/sys/vm/swappiness && sudo sysctl vm.swappiness=10'
-
-# Control CPU frequency scaling.
-alias cfs='sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor <<< '
-
-# Enable the Ctrl-Shift-D (or Ctrl-Shift-I) keyboard shortcut to start GTK
-# Inspector.
-alias egi='gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true'
 
 # Some sort of a system monitor.
 alias F='watch -n 1 "grep MHz /proc/cpuinfo | nl -w 2 | sort -k 5 -gr"'
