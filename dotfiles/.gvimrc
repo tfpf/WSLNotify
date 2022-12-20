@@ -11,10 +11,12 @@ hi ColorColumn                                     gui=NONE      guibg=#1F1F1F g
 hi Comment                                         gui=italic    guibg=NONE    guifg=#889999 term=bold      cterm=italic    ctermbg=NONE ctermfg=245
 hi Cursor                                          gui=NONE      guibg=#F0E68C guifg=#4D4D4D
 hi CursorLine                                      gui=NONE      guibg=#1F1F1F guifg=NONE    term=underline cterm=NONE      ctermbg=234  ctermfg=NONE
+hi CursorLineNr                                    gui=NONE      guibg=NONE    guifg=#EEEE00 term=underline cterm=NONE      ctermbg=NONE ctermfg=226
 hi DiffAdd                                         gui=NONE      guibg=#00008B guifg=NONE    term=bold      cterm=NONE      ctermbg=4    ctermfg=NONE
 hi DiffChange                                      gui=NONE      guibg=#8B008B guifg=NONE    term=bold      cterm=NONE      ctermbg=5    ctermfg=NONE
 hi DiffDelete                                      gui=bold      guibg=#008B8B guifg=#0000FF term=bold      cterm=bold      ctermbg=6    ctermfg=4
 hi DiffText                                        gui=bold      guibg=#B80000 guifg=NONE    term=reverse   cterm=bold      ctermbg=1    ctermfg=NONE
+hi LineNr                                          gui=NONE      guibg=NONE    guifg=#808000 term=underline cterm=NONE      ctermbg=NONE ctermfg=3
 hi MatchParen                                      gui=NONE      guibg=#008888 guifg=NONE    term=reverse                   ctermbg=30   ctermfg=NONE
 hi NonText                                                       guibg=#4D4D4D
 hi Normal                                          gui=NONE      guibg=#333333 guifg=#FFFFFF term=NONE      cterm=NONE      ctermbg=236  ctermfg=231
