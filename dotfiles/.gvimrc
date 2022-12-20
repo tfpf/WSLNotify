@@ -9,18 +9,19 @@ au BufRead,BufNewFile *.sage setfiletype python
 
 hi ColorColumn                                     gui=NONE      guibg=#1F1F1F guifg=NONE    term=reverse   cterm=NONE      ctermbg=234  ctermfg=NONE
 hi Comment                                         gui=italic    guibg=NONE    guifg=#889999 term=bold      cterm=italic    ctermbg=NONE ctermfg=245
-hi CursorLine                                      gui=NONE      guibg=#1F1F1F guifg=NONE    term=underline cterm=NONE      ctermbg=234  ctermfg=NONE
-hi Search                                          gui=NONE      guibg=#FF0000 guifg=#000000 term=reverse                   ctermbg=196  ctermfg=16
 hi Cursor                                          gui=NONE      guibg=#F0E68C guifg=#4D4D4D
-hi MatchParen                                      gui=NONE      guibg=#008888 guifg=NONE    term=reverse                   ctermbg=30   ctermfg=NONE
-hi NonText                                                       guibg=#4D4D4D
+hi CursorLine                                      gui=NONE      guibg=#1F1F1F guifg=NONE    term=underline cterm=NONE      ctermbg=234  ctermfg=NONE
 hi DiffAdd                                         gui=NONE      guibg=#00008B guifg=NONE    term=bold      cterm=NONE      ctermbg=4    ctermfg=NONE
 hi DiffChange                                      gui=NONE      guibg=#8B008B guifg=NONE    term=bold      cterm=NONE      ctermbg=5    ctermfg=NONE
 hi DiffDelete                                      gui=bold      guibg=#008B8B guifg=#0000FF term=bold      cterm=bold      ctermbg=6    ctermfg=4
 hi DiffText                                        gui=bold      guibg=#B80000 guifg=NONE    term=reverse   cterm=bold      ctermbg=1    ctermfg=NONE
+hi MatchParen                                      gui=NONE      guibg=#008888 guifg=NONE    term=reverse                   ctermbg=30   ctermfg=NONE
+hi NonText                                                       guibg=#4D4D4D
 hi Normal                                          gui=NONE      guibg=#333333 guifg=#FFFFFF term=NONE      cterm=NONE      ctermbg=236  ctermfg=231
+hi Search                                          gui=NONE      guibg=#FF0000 guifg=#000000 term=reverse                   ctermbg=196  ctermfg=16
 hi Visual                                                        guibg=#079486 guifg=#FFFFFF term=reverse   cterm=reverse   ctermbg=231  ctermfg=30
 hi VisualNOS                                       gui=underline guibg=NONE    guifg=NONE    term=underline cterm=underline ctermbg=NONE ctermfg=NONE
+
 hi whitespace                                                    guibg=#1F1F1F                                              ctermbg=234
 hi a_small_price_to_pay_for_salvation              gui=NONE      guibg=#00CF00 guifg=#000000
 hi perfectly_balanced_as_all_things_should_be      gui=NONE      guibg=#0000FF guifg=#FFFFFF
@@ -80,13 +81,13 @@ se ul=1000                 " Number of undo operations allowed.
 
 if has('win32') || has('win64')
     au GUIEnter * sim ~x
-    nn <silent> <C-S> :so ~/_gvimrc<CR>
+    nn <silent> <F8> :so ~/_gvimrc<CR>
     se gfn=Cascadia\ Code:h13           " GUI font.
     se rop=                             " `type:directx` enables ligatures, but makes text bold. I don't like that.
     se scf                              " Scroll focus follows mouse pointer.
 elseif has('unix')
     au GUIEnter * call system('wmctrl -b add,maximized_horz,maximized_vert -i -r ' . v:windowid)
-    nn <silent> <C-S> :so ~/.gvimrc<CR>
+    nn <silent> <F8> :so ~/.gvimrc<CR>
     se gfn=Cascadia\ Code\ 13
 endif
 
