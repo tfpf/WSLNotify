@@ -6,8 +6,7 @@ cp -rT . $HOME
 will do just that. I am not responsible if this borks your system.
 
 # Notes
-* `.xsessionrc` is a feature of Linux distributions based on Debian. For
-  others, consider using `.xsession`. (Even better: set the locale using
-  `localectl`, or modify one of `/etc/default/locale` and `/etc/locale.conf`.)
+* `.bashrc` is included here only for completeness. It shouldn't be necessary
+  to replace the one which comes with your Linux distribution.
 * An hourglass is printed by the command timer in `.bash_aliases`; if it is not
   rendered properly, `sudo apt install fonts-noto` should fix the problem.
