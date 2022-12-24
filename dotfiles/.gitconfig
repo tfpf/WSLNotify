@@ -24,7 +24,7 @@
 [core]
 	compression = 9
 [init]
-    defaultBranch = main
+	defaultBranch = main
 [log]
 	date = iso
 [pull]
