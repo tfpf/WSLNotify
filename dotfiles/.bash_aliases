@@ -94,8 +94,8 @@ fi
 
 # Terminal prompt.
 export PS1='
-╭[\[\033[1;32m\]\u\[\033[0m\]@\[\033[1;32m\]\h\[\033[0m\] \[\033[1;96m\]\w\[\033[0m\]]
-╰─\$ '
+┌[\[\033[1;32m\]\u\[\033[0m\]@\[\033[1;3;32m\]\h\[\033[0m\] \[\033[1;96m\]\w\[\033[0m\]]
+└─\$ '
 
 # History settings.
 export HISTCONTROL=ignoreboth
