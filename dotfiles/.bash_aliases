@@ -344,11 +344,11 @@ def _xtBzBMfnpdQGhwINyACP():
     text.pack(expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
     cdg = _IFAYgQKFNUDWRMDyOcfZ.ColorDelegator()
-    cdg.tagdefs['COMMENT']    = {'foreground': '#007FFF', 'background': '#333333'}
-    cdg.tagdefs['KEYWORD']    = {'foreground': '#00FF00', 'background': '#333333'}
-    cdg.tagdefs['BUILTIN']    = {'foreground': '#FFFF00', 'background': '#333333'}
-    cdg.tagdefs['STRING']     = {'foreground': '#FF7F00', 'background': '#333333'}
-    cdg.tagdefs['DEFINITION'] = {'foreground': '#00FFFF', 'background': '#333333'}
+    cdg.tagdefs['COMMENT']    = {'foreground': '#889999', 'background': '#333333'}
+    cdg.tagdefs['KEYWORD']    = {'foreground': '#F0E68C', 'background': '#333333'}
+    cdg.tagdefs['BUILTIN']    = {'foreground': '#98FB98', 'background': '#333333'}
+    cdg.tagdefs['STRING']     = {'foreground': '#FFA0A0', 'background': '#333333'}
+    cdg.tagdefs['DEFINITION'] = {'foreground': '#98FB98', 'background': '#333333'}
     cdg.tagdefs['ERROR']      = {'foreground': '#000000', 'background': '#333333'}
     cdg.tagdefs['HIT']        = {'foreground': '#000000', 'background': '#333333'}
     _kiZxwOhpBzEnmVHOeiaz.Percolator(text).insertfilter(cdg)
