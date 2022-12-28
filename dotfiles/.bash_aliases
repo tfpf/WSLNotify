@@ -141,10 +141,13 @@ alias ls='ls -C --color=auto'
 alias lt='ls -hlNrt --color=auto --group-directories-first --time-style=long-iso'
 
 alias grep='grep --binary-files=without-match --color=auto'
-
 alias pgrep='pgrep -il'
-
 alias ps='ps a -c'
+
+if [[ -n $(command -v batcat) ]]
+then
+    alias cat='batcat'
+fi
 
 alias p='/usr/bin/python3 -B'
 alias t='/usr/bin/python3 -m timeit'
