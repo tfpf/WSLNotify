@@ -339,7 +339,7 @@ def _xtBzBMfnpdQGhwINyACP():
     else:
         root.attributes('-zoomed', True)
 
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', selectbackground='#079486', selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('Cascadia Code', 13))
     text.insert('1.0', open('$1').read())
     text.focus_set()
     text.mark_set('insert', '1.0')
@@ -454,7 +454,7 @@ def _xtBzBMfnpdQGhwINyACP():
     nav_tb = _hNzVCYEPlZTSmIqqKOhB.NavigationToolbar2Tk(canvas, nav_tb_frame)
 
     hashes = [None, None]
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', selectbackground='#079486', selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('Cascadia Code', 13))
     greek_symbols = r'\$\\Alpha\\Beta\\Gamma\\Digamma\\Delta\\Epsilon\\Zeta\\Eta\\Theta\\Iota\\Kappa\\Lambda\\Mu\\Nu\\Xi\\Omicron\\Pi\\Rho\\Sigma\\Stigma\\Tau\\Upsilon\\Phi\\Chi\\Psi\\Omega\$ \$\\mathrm{\\alpha\\beta\\gamma\\digamma\\delta\\epsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\varkappa\\lambda\\mu\\nu\\xi\\omicron\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\stigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega}\$'
     text.insert('1.0', f'{greek_symbols}\\n')
     root.after(1000, text.focus_set)
