@@ -144,9 +144,14 @@ alias grep='grep --binary-files=without-match --color=auto'
 alias pgrep='pgrep -il'
 alias ps='ps a -c'
 
+# Bat must be invoked as `batcat` on Debian and Linux Mint, and as `bat` on
+# Manjaro.
 if [[ -n $(command -v batcat) ]]
 then
     alias cat='batcat'
+elif [[ -n $(command -v bat) ]]
+then
+    alias cat='bat'
 fi
 
 alias p='/usr/bin/python3 -B'
