@@ -3,6 +3,12 @@
 grab it from the
 [latest release](https://github.com/tfpf/WSLNotify/releases/latest).
 
+## Legal Notice
+'WSL' stands for 'Windows Subsystem for Linux'. This project is not developed
+or endorsed by Microsoft. It is mainly inspired by
+[stuartleeks/wsl-notify-send](https://github.com/stuartleeks/wsl-notify-send).
+
+## Usage
 The following commands were run in Bash on Windows Terminal after navigating to
 the directory containing `WSLNotify.exe`. (If you use Windows Command Prompt,
 type `WSLNotify` instead of `./WSLNotify.exe` while entering these commands.)
