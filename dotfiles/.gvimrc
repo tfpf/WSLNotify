@@ -16,6 +16,7 @@ hi DiffAdd                                         gui=NONE      guibg=#00008B g
 hi DiffChange                                      gui=NONE      guibg=#8B008B guifg=NONE    term=bold      cterm=NONE      ctermbg=5    ctermfg=NONE
 hi DiffDelete                                      gui=bold      guibg=#008B8B guifg=#0000FF term=bold      cterm=bold      ctermbg=6    ctermfg=4
 hi DiffText                                        gui=bold      guibg=#B80000 guifg=NONE    term=reverse   cterm=bold      ctermbg=1    ctermfg=NONE
+hi IncSearch                                       gui=NONE      guibg=#808080 guifg=#D7D75F                cterm=NONE      ctermbg=244  ctermfg=185
 hi LineNr                                          gui=NONE      guibg=NONE    guifg=#808000 term=underline cterm=NONE      ctermbg=NONE ctermfg=3
 hi MatchParen                                      gui=NONE      guibg=#008888 guifg=NONE    term=reverse                   ctermbg=30   ctermfg=NONE
 hi NonText                                                       guibg=#4D4D4D                                              ctermbg=239
