@@ -22,6 +22,9 @@ hi MatchParen                                      gui=NONE      guibg=#008888 g
 hi NonText                                                       guibg=#4D4D4D                                              ctermbg=239
 hi Normal                                          gui=NONE      guibg=#333333 guifg=#FFFFFF term=NONE      cterm=NONE      ctermbg=236  ctermfg=231
 hi Search                                          gui=NONE      guibg=#FF0000 guifg=#000000 term=reverse                   ctermbg=196  ctermfg=16
+hi StatusLine                                      gui=NONE      guibg=#AFAF87 guifg=#303030                cterm=NONE      ctermbg=144  ctermfg=236
+hi StatusLineNC                                    gui=NONE      guibg=#AFAF87 guifg=#808080                cterm=NONE      ctermbg=144  ctermfg=244
+hi VertSplit                                       gui=NONE      guibg=#AFAF87 guifg=#808080                cterm=NONE      ctermbg=144  ctermfg=244
 hi Visual                                                        guibg=#079486 guifg=#FFFFFF term=reverse   cterm=reverse   ctermbg=231  ctermfg=30
 hi VisualNOS                                       gui=underline guibg=NONE    guifg=NONE    term=underline cterm=underline ctermbg=NONE ctermfg=NONE
 
@@ -78,6 +81,7 @@ se sr                      " When using '>>' or '<<', only jump to columns which
 se sta                     " Tab inserts an `sw`-size character at the start of a line, and `ts`-size elsewhere.
 se sts=0                   " Do not insert spaces when pressing Tab.
 se sw=4                    " Shift width. See `sta`.
+se tgc                     " Use 24-bit colours, so that VIM and GVIM look the same.
 se ts=4                    " Tab stop. See `sta`.
 se tw=0                    " Do not break lines automatically.
 se ul=1000                 " Number of undo operations allowed.
