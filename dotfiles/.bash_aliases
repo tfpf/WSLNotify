@@ -83,6 +83,7 @@ then
 else
     alias g='gvim'
     alias getactivewindow='xdotool getactivewindow'
+    alias x='xdg-open'
 
     # Control CPU frequency scaling.
     alias cfs='sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor <<< '
