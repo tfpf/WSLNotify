@@ -52,6 +52,7 @@ se ai                      " New line is automatically indented.
 se ar                      " Automatically read file when changed from elsewhere.
 se bs=indent,eol,start     " Backspace freely.
 se cc=80,120               " Columns to be coloured with `ColorColumn`.
+se ch=1                    " Number of lines to use to display commands.
 se ci                      " Indentation for a new line is identical to the previous line.
 se cink=                   " Don't change the indentation of the being typed.
 se cul                     " Highlight current line.
