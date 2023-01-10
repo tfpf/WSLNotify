@@ -25,7 +25,7 @@ hi Search                                          gui=NONE      guibg=#FF0000 g
 hi StatusLine                                      gui=NONE      guibg=#AFAF87 guifg=#303030                cterm=NONE      ctermbg=144  ctermfg=236
 hi StatusLineNC                                    gui=NONE      guibg=#AFAF87 guifg=#808080                cterm=NONE      ctermbg=144  ctermfg=244
 hi VertSplit                                       gui=NONE      guibg=#AFAF87 guifg=#808080                cterm=NONE      ctermbg=144  ctermfg=244
-hi Visual                                                        guibg=#079486 guifg=#FFFFFF term=reverse   cterm=reverse   ctermbg=231  ctermfg=30
+hi Visual                                                        guibg=#079486 guifg=#FFFFFF term=reverse   cterm=NONE      ctermbg=231  ctermfg=30
 hi VisualNOS                                       gui=underline guibg=NONE    guifg=NONE    term=underline cterm=underline ctermbg=NONE ctermfg=NONE
 
 hi whitespace                                                    guibg=#1F1F1F                                              ctermbg=234
