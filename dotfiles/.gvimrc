@@ -103,3 +103,12 @@ endif
 if exists("c_comment_strings")
     unlet c_comment_strings
 endif
+if exists("java_comment_strings")
+    unlet java_comment_strings
+endif
+
+" Better syntax highlighting for Java.
+let java_highlight_all = 1
+let java_highlight_functions = 1
+hi link javaScopeDecl Statement
+hi link javaType Type
