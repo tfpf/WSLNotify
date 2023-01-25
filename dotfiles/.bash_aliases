@@ -345,7 +345,7 @@ def _xtBzBMfnpdQGhwINyACP():
     else:
         root.attributes('-zoomed', True)
 
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', selectbackground='#079486', selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('Cascadia Code', 13))
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#FFFFFF', insertbackground='#F0EC8C', selectbackground='#079486', selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('Cascadia Code', 13))
     text.insert('1.0', open('$1').read())
     text.focus_set()
     text.mark_set('insert', '1.0')
@@ -376,7 +376,7 @@ L ()
     if [[ $# -eq 0 ]]
     then
         local bgcolour='#333333'
-        local fgcolour='#CCCCCC'
+        local fgcolour='#FFFFFF'
     else
         local bgcolour='#FFFFFF'
         local fgcolour='#000000'
@@ -460,7 +460,7 @@ def _xtBzBMfnpdQGhwINyACP():
     nav_tb = _hNzVCYEPlZTSmIqqKOhB.NavigationToolbar2Tk(canvas, nav_tb_frame)
 
     hashes = [None, None]
-    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', selectbackground='#079486', selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('Cascadia Code', 13))
+    text = _ArFfEXZloCCjFNnmSwdw.Text(root, bg='#333333', fg='#FFFFFF', insertbackground='#FFFFFF', selectbackground='#079486', selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('Cascadia Code', 13))
     greek_symbols = r'\$\\Alpha\\Beta\\Gamma\\Digamma\\Delta\\Epsilon\\Zeta\\Eta\\Theta\\Iota\\Kappa\\Lambda\\Mu\\Nu\\Xi\\Omicron\\Pi\\Rho\\Sigma\\Stigma\\Tau\\Upsilon\\Phi\\Chi\\Psi\\Omega\$ \$\\mathrm{\\alpha\\beta\\gamma\\digamma\\delta\\epsilon\\zeta\\eta\\theta\\vartheta\\iota\\kappa\\varkappa\\lambda\\mu\\nu\\xi\\omicron\\pi\\varpi\\rho\\varrho\\sigma\\varsigma\\stigma\\tau\\upsilon\\phi\\varphi\\chi\\psi\\omega}\$'
     text.insert('1.0', f'{greek_symbols}\\n')
     root.after(1000, text.focus_set)
@@ -472,7 +472,7 @@ def _xtBzBMfnpdQGhwINyACP():
     text.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry, wrap_variable))
     text.pack(side=_ArFfEXZloCCjFNnmSwdw.TOP, anchor=_ArFfEXZloCCjFNnmSwdw.NE, expand=True, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
 
-    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, bg='#333333', fg='#CCCCCC', insertbackground='#CCCCCC', font=('Cascadia Code', 13))
+    entry = _ArFfEXZloCCjFNnmSwdw.Entry(root, bg='#333333', fg='#FFFFFF', insertbackground='#FFFFFF', font=('Cascadia Code', 13))
     entry.insert(0, '50')
     entry.bind('<Escape>', lambda event: _sQIvYlfwvgZJnQNmxRyF(fig, text, entry, wrap_variable))
     entry.pack(side=_ArFfEXZloCCjFNnmSwdw.BOTTOM, anchor=_ArFfEXZloCCjFNnmSwdw.SE, expand=False, fill=_ArFfEXZloCCjFNnmSwdw.BOTH)
