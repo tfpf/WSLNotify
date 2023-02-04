@@ -85,12 +85,22 @@ else
     alias getactivewindow='xdotool getactivewindow'
     alias x='xdg-open'
 
-    # Control CPU frequency scaling.
-    alias cfs='sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor <<< '
-
     # Enable the Ctrl-Shift-D (or Ctrl-Shift-I) keyboard shortcut to start GTK
     # Inspector.
     alias egi='gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true'
+
+    # Control CPU frequency scaling.
+    cfs ()
+    {
+        local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
+        if [[ $# -lt 1 ]]
+        then
+            cat ${files[*]}
+            return 1
+        fi
+
+        sudo tee ${files[*]} <<< $1
+    }
 fi
 
 # Terminal prompt.
@@ -112,7 +122,7 @@ export error_line=254
 export half_error_line=238
 
 # To ensure that Ipe can render LaTeX (if it is installed).
-export IPELATEXPATH=~/.ipe/latexrun/
+export IPELATEXPATH=$HOME/.ipe/latexrun/
 export IPELATEXDIR=$IPELATEXPATH
 
 export GIT_EDITOR=vim
