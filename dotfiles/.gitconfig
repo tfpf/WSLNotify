@@ -23,6 +23,9 @@
 	ui = auto,column,nodense
 [core]
 	compression = 9
+[fetch]
+	prune = true
+	pruneTags = true
 [init]
 	defaultBranch = main
 [log]
