@@ -22,21 +22,19 @@ hi MatchParen                                      gui=NONE      guibg=#008888 g
 hi NonText                                                       guibg=#4D4D4D                                              ctermbg=239
 hi Normal                                          gui=NONE      guibg=#333333 guifg=#FFFFFF term=NONE      cterm=NONE      ctermbg=236  ctermfg=231
 hi Search                                          gui=NONE      guibg=#FF0000 guifg=#000000 term=reverse                   ctermbg=196  ctermfg=16
+hi SpecialKey                                      gui=NONE      guibg=NONE    guifg=#626262 term=NONE      cterm=NONE      ctermbg=NONE ctermfg=241
 hi StatusLine                                      gui=NONE      guibg=#AFAF87 guifg=#303030                cterm=NONE      ctermbg=144  ctermfg=236
 hi StatusLineNC                                    gui=NONE      guibg=#AFAF87 guifg=#808080                cterm=NONE      ctermbg=144  ctermfg=244
 hi VertSplit                                       gui=NONE      guibg=#AFAF87 guifg=#808080                cterm=NONE      ctermbg=144  ctermfg=244
 hi Visual                                                        guibg=#079486 guifg=#FFFFFF term=reverse   cterm=NONE      ctermbg=231  ctermfg=30
 hi VisualNOS                                       gui=underline guibg=NONE    guifg=NONE    term=underline cterm=underline ctermbg=NONE ctermfg=NONE
 
-hi whitespace                                                    guibg=#1F1F1F                                              ctermbg=234
 hi a_small_price_to_pay_for_salvation              gui=NONE      guibg=#00CF00 guifg=#000000
 hi perfectly_balanced_as_all_things_should_be      gui=NONE      guibg=#0000FF guifg=#FFFFFF
 hi this_universe_is_finite_its_resources_finite    gui=NONE      guibg=#CFCF00 guifg=#000000
 hi dread_it_run_from_it_destiny_still_arrives      gui=NONE      guibg=#00CFCF guifg=#000000
 hi reality_is_often_dissapointing                  gui=NONE      guibg=#CF00CF guifg=#FFFFFF
 hi the_hardest_choices_require_the_strongest_wills gui=NONE      guibg=#CFCFCF guifg=#000000
-
-cal matchadd('whitespace', '\s\+$')
 
 nn <silent> <M-1> :silent! cal matchdelete(alt_1)<CR>:let alt_1 = matchadd('a_small_price_to_pay_for_salvation',              '\<<C-R><C-W>\>')<CR>
 nn <silent> <M-2> :silent! cal matchdelete(alt_2)<CR>:let alt_2 = matchadd('perfectly_balanced_as_all_things_should_be',      '\<<C-R><C-W>\>')<CR>
@@ -67,6 +65,8 @@ se hls                     " Searching highlights all matches.
 se inde=                   " Don't calculate the proper indentation.
 se indk=                   " Don't change the indentation of the being typed.
 se is                      " Incremental search.
+se lcs=tab:▸·,trail:·      " How to display certain characters. They will be coloured with `SpecialKey`.
+se list                    " Display certain characters more prominently. See `lcs`.
 se lsp=0                   " Line spacing.
 se mh                      " Hide mouse pointer while typing.
 se nosi                    " Don't try to be oversmart while indenting.
