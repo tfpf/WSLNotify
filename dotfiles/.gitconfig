@@ -1,6 +1,8 @@
 [blame]
 	coloring = repeatedLines
 	date = iso
+[clean]
+	requireForce = true
 [color]
 	advice = auto
 	branch = auto
@@ -22,7 +24,9 @@
 [column]
 	ui = auto,column,nodense
 [core]
+	commentChar = "#"
 	compression = 9
+	hideDotFiles = true
 [fetch]
 	prune = true
 	pruneTags = true

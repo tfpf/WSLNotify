@@ -36,23 +36,30 @@ then
     {
         local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
         local vcxsrvname=$(basename "$vcxsrvpath")
-        ("$vcxsrvpath" -ac -clipboard -multiwindow -wgl & sleep 1 && pkill "$vcxsrvname") &> /dev/null
+        (
+            "$vcxsrvpath" -ac -clipboard -multiwindow -wgl &
+            sleep 1
+            pkill "$vcxsrvname"
+        ) &> /dev/null
     }
 
     # Windows Explorer can open WSL folders, but the command must be invoked
     # after navigating to the target folder. Doing so directly will change the
     # environment variable `OLDPWD`, which is undesirable. Hence, this is done
     # in a subshell.
-    e ()
+    x ()
     {
         if [[ $# -lt 1 || ! -d "$1" ]]
         then
             printf "Usage:\n"
-            printf "\t${FUNCNAME[0]} <directory>\n"
+            printf "  ${FUNCNAME[0]} <directory>\n"
             return 1
         fi
 
-        (cd "$1" && explorer.exe .)
+        (
+            cd "$1"
+            explorer.exe .
+        )
     }
 
     # GVIM for Windows can open WSL files, but (like Windows Explorer), the
@@ -62,7 +69,7 @@ then
         if [[ $# -lt 1 || ! -f "$1" ]]
         then
             printf "Usage:\n"
-            printf "\t${FUNCNAME[0]} <file>\n"
+            printf "  ${FUNCNAME[0]} <file>\n"
             return 1
         fi
 
@@ -78,7 +85,12 @@ then
         # results in the termination of `bash` without affecting GVIM (probably
         # because it is a Windows application, which WSL does not have the
         # ability to close). That's what is done here.
-        (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname") &> /dev/null
+        (
+            cd "$filedir"
+            "$gvimpath" "$filename" &
+            sleep 1
+            pkill "$gvimname"
+        ) &> /dev/null
     }
 else
     alias g='gvim'
@@ -260,7 +272,7 @@ push ()
     if [[ $# -lt 2 ]]
     then
         printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} 'commit message' file1 [file2] [file3] [...]\n"
+        printf "  ${FUNCNAME[0]} 'commit message' file1 [file2] [file3] [...]\n"
         return 1
     fi
 
@@ -278,7 +290,7 @@ pdfopt ()
     if [[ $# -lt 2 ]]
     then
         printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n"
+        printf "  ${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n"
         return 1
     fi
 
@@ -328,7 +340,7 @@ P ()
     if [[ $# -lt 1 ]]
     then
         printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <file>\n"
+        printf "  ${FUNCNAME[0]} <file>\n"
         return 1
     fi
 
@@ -506,7 +518,7 @@ T ()
     if [[ $# -lt 6 ]]
     then
         printf "Usage:\n"
-        printf "\t${FUNCNAME[0]} <file> <R> <G> <B> <threshold1> <threshold2>\n"
+        printf "  ${FUNCNAME[0]} <file> <R> <G> <B> <threshold1> <threshold2>\n"
         return 1
     fi
 
@@ -540,12 +552,12 @@ def _xtBzBMfnpdQGhwINyACP():
 
     print('Type the name of the file to save the image to, and press Enter.')
     print('Pressing Enter without typing anything will cancel the operation.')
-    out = input('> ')
-    if not out or out.isspace():
+    fname = input('> ').strip()
+    if not fname:
         print('Cancelled.')
         return
 
-    _qWonDbVEFZquydrdRtVd.fromarray(_YNbCrBdBmvMfWxWTPFeq.uint8(dst * 255)).save(out)
+    _qWonDbVEFZquydrdRtVd.fromarray(_YNbCrBdBmvMfWxWTPFeq.uint8(dst * 255)).save(fname)
 
 _gKEFgMRsGkTgLsQsBojH.close(_gKEFgMRsGkTgLsQsBojH.figure())
 _xtBzBMfnpdQGhwINyACP()
