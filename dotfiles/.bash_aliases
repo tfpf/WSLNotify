@@ -1,6 +1,6 @@
 # This block is executed only if Bash is running on WSL (Windows Subsystem for
 # Linux).
-if [[ -n $(grep -il microsoft /proc/version) ]]
+if grep -iq microsoft /proc/version
 then
 
     # Setup for a virtual display using VcXsrv to run GUI apps. You may want to
