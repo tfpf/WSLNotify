@@ -27,6 +27,8 @@
 	commentChar = "#"
 	compression = 9
 	hideDotFiles = true
+[diff]
+	algorithm = minimal
 [fetch]
 	prune = true
 	pruneTags = true
