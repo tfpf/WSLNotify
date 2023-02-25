@@ -6,7 +6,7 @@ then
     # Setup for a virtual display using VcXsrv to run GUI apps. You may want to
     # install `x11-xserver-utils`, `dconf-editor` and `dbus-x11`, and create
     # the file `~/.config/dconf/user`.
-    if [[ -n $(grep -l WSL2 /proc/version) ]]
+    if grep -q WSL2 /proc/version
     then
         export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
     else
