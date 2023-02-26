@@ -139,6 +139,12 @@ export IPELATEXDIR=$IPELATEXPATH
 
 export GIT_EDITOR=vim
 
+# If this environment variable is empty, `man` works as expected. But if it is
+# set to something not containing `/usr/share/man`, `man` stops working! (I
+# have observed this on Mint and Manjaro). Hence, add said path to it. This
+# will allow other paths to be added to it as well.
+MANPATH=${MANPATH:+$MANPATH:}/usr/share/man
+
 # I have accidentally quit the shell by pressing <CTRL-D> enough times that I'd
 # consider doing this.
 set -o ignoreeof
