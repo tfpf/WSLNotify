@@ -17,7 +17,7 @@ then
     export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
 
     # Inkscape doesn't work on WSL Ubuntu using GLIBC.
-    export _INKSCAPE_GC="disable"
+    export _INKSCAPE_GC=disable
 
     # Run a PowerShell script without changing the global execution policy.
     alias psh='powershell.exe -ExecutionPolicy Bypass'
@@ -97,10 +97,6 @@ else
     alias getactivewindow='xdotool getactivewindow'
     alias x='xdg-open'
 
-    # Enable the Ctrl-Shift-D (or Ctrl-Shift-I) keyboard shortcut to start GTK
-    # Inspector.
-    alias egi='gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true'
-
     # Control CPU frequency scaling.
     cfs ()
     {
@@ -134,16 +130,11 @@ export error_line=254
 export half_error_line=238
 
 # To ensure that Ipe can render LaTeX (if it is installed).
-export IPELATEXPATH=$HOME/.ipe/latexrun/
+export IPELATEXPATH=$HOME/.ipe/latexrun
 export IPELATEXDIR=$IPELATEXPATH
 
+export EDITOR=vim
 export GIT_EDITOR=vim
-
-# If this environment variable is empty, `man` works as expected. But if it is
-# set to something not containing `/usr/share/man`, `man` stops working! (I
-# have observed this on Mint and Manjaro). Hence, add said path to it. This
-# will allow other paths to be added to it as well.
-MANPATH=${MANPATH:+$MANPATH:}/usr/share/man
 
 # I have accidentally quit the shell by pressing <CTRL-D> enough times that I'd
 # consider doing this.
@@ -152,10 +143,6 @@ set -o ignoreeof
 # Some terminals exit only if the previous command was successful. This can be
 # used to exit unconditionally.
 alias bye='clear && exit'
-
-# Some Linux distributions use swap space even when there is sufficient RAM
-# available. This will reuce the swap affinity.
-alias rs='cat /proc/sys/vm/swappiness && sudo sysctl vm.swappiness=10'
 
 # Some sort of a system monitor.
 alias F='watch -n 1 "grep MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr"'
@@ -183,9 +170,9 @@ then
     alias cat='bat'
 fi
 
-alias p='/usr/bin/python3 -B'
-alias t='/usr/bin/python3 -m timeit'
-alias pip='/usr/bin/python3 -m pip'
+alias p='python3 -B'
+alias t='python3 -m timeit'
+alias pip='python3 -m pip'
 
 alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
 
@@ -290,7 +277,7 @@ push ()
     git push
 }
 
-# PDF optimiser. This requires that `ghostscript` be installed.
+# PDF optimiser. This requires that Ghostscript be installed.
 pdfopt ()
 {
     if [[ $# -lt 2 ]]
@@ -309,11 +296,11 @@ pdfopt ()
 
     gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress     \
        -dNOPAUSE -dQUIET -dBATCH                                              \
-       -sOutputFile=$2                                                        \
+       -sOutputFile="$2"                                                      \
        -dDownsampleColorImages=true -dColorImageResolution=$opt_level         \
        -dDownsampleGrayImages=true  -dGrayImageResolution=$opt_level          \
        -dDownsampleMonoImages=true  -dMonoImageResolution=$opt_level          \
-       $1
+       "$1"
 }
 
 # Random string generator.
@@ -321,7 +308,7 @@ rr ()
 {
     if [[ "$1" =~ ^[0-9]+$ ]]
     then
-        local length="$1"
+        local length=$1
     else
         local length=20
     fi

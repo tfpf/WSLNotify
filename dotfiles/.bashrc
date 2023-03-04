@@ -84,3 +84,41 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Automatic completion for pip can be enabled using the output of
+# `pip completion --bash`, which should look something like this.
+_pip_completion()
+{
+    COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
+                   COMP_CWORD=$COMP_CWORD \
+                   PIP_AUTO_COMPLETE=1 $1 2>/dev/null ) )
+}
+complete -o default -F _pip_completion /usr/bin/python3 -m pip
+
+# Append to a `PATH`-like environment variable without duplication. Arguments
+# must not contain spaces.
+envappend ()
+{
+    if [[ $# -lt 2 ]]
+    then
+        printf "Usage:\n"
+        printf "  ${FUNCNAME[0]} <variable name> <value>\n"
+        return 1
+    fi
+
+    local name=$1
+    local value=$2
+    if [[ -d $value && :${!name}: != *:$value:* ]]
+    then
+        eval "export $name=\${$name:+\$$name:}$value"
+    fi
+}
+
+envappend INFOPATH /usr/local/texlive/2022/texmf-dist/doc/info
+
+# `MANPATH` must contain `/usr/share/man` if it is non-empty. Otherwise, `man`
+# is unable to find any manual pages. I have observed this on Mint and Manjaro.
+envappend MANPATH /usr/share/man
+envappend MANPATH /usr/local/texlive/2022/texmf-dist/doc/man
+
+envappend PATH /usr/local/texlive/2022/bin/x86_64-linux
