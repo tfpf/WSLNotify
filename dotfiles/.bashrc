@@ -114,11 +114,16 @@ envappend ()
     fi
 }
 
-envappend INFOPATH /usr/local/texlive/2022/texmf-dist/doc/info
+# Gurobi Optimizer.
+envappend GUROBI_HOME /opt/gurobi952/linux64
+envappend LD_LIBRARY_PATH $GUROBI_HOME/lib
+envappend PATH $GUROBI_HOME/bin
 
-# `MANPATH` must contain `/usr/share/man` if it is non-empty. Otherwise, `man`
+# TeX Live.
+envappend INFOPATH /usr/local/texlive/2022/texmf-dist/doc/info
+envappend MANPATH /usr/local/texlive/2022/texmf-dist/doc/man
+envappend PATH /usr/local/texlive/2022/bin/x86_64-linux
+
+# If `MANPATH` is non-empty, it must contain `/usr/share/man`. Otherwise, `man`
 # is unable to find any manual pages. I have observed this on Mint and Manjaro.
 envappend MANPATH /usr/share/man
-envappend MANPATH /usr/local/texlive/2022/texmf-dist/doc/man
-
-envappend PATH /usr/local/texlive/2022/bin/x86_64-linux
