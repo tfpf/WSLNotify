@@ -94,7 +94,6 @@ then
     }
 else
     alias g='gvim'
-    alias getactivewindow='xdotool getactivewindow'
     alias x='xdg-open'
 
     # Control CPU frequency scaling.
@@ -108,6 +107,17 @@ else
         fi
 
         sudo tee ${files[*]} <<< $1
+    }
+
+    # Obtain the ID of the active window.
+    getactivewindow ()
+    {
+        if [[ -z $DISPLAY ]]
+        then
+            printf "0\n"
+        else
+            xdotool getactivewindow
+        fi
     }
 fi
 
