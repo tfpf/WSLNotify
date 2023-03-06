@@ -201,7 +201,7 @@ before_command ()
         return
     fi
 
-    terminal_window_ID=$(getactivewindow)
+    terminal_window_ID=${WINDOWID:-$(getactivewindow)}
     CLI_ready=""
     start_time=$(date +%s%3N)
 }
