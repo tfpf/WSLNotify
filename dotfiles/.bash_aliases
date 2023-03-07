@@ -145,6 +145,7 @@ export IPELATEXDIR=$IPELATEXPATH
 
 export EDITOR=vim
 export GIT_EDITOR=vim
+export BAT_PAGER='less -iRF'
 
 # I have accidentally quit the shell by pressing <CTRL-D> enough times that I'd
 # consider doing this.
@@ -153,6 +154,9 @@ set -o ignoreeof
 # Some terminals exit only if the previous command was successful. This can be
 # used to exit unconditionally.
 alias bye='clear && exit'
+
+# Case-insensitive searching in the pager.
+alias less='less -i'
 
 # Some sort of a system monitor.
 alias F='watch -n 1 "grep MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr"'
