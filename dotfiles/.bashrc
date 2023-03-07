@@ -99,16 +99,9 @@ complete -o default -F _pip_completion /usr/bin/python3 -m pip
 # must not contain spaces.
 envappend ()
 {
-    if [[ $# -lt 2 ]]
-    then
-        printf "Usage:\n"
-        printf "  ${FUNCNAME[0]} <variable name> <value>\n"
-        return 1
-    fi
-
     local name=$1
     local value=$2
-    if [[ -d $value && :${!name}: != *:$value:* ]]
+    if [[ -n $name && -d $value && :${!name}: != *:$value:* ]]
     then
         eval "export $name=\${$name:+\$$name:}$value"
     fi
