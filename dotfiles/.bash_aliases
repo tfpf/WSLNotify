@@ -121,10 +121,13 @@ else
     }
 fi
 
-# Terminal prompt.
+# Terminal prompts.
 export PS1='
-┌[\[\033[1;32m\]\u\[\033[0m\] \[\033[1;3;93m\]\h\[\033[0m\] \[\033[1;96m\]\w\[\033[0m\]]
+┌[\[\e[1;32m\]\u\[\e[0m\] \[\e[1;3;93m\]\h\[\e[0m\] \[\e[1;96m\]\w\[\e[0m\]]
 └─\$ '
+export PS2='──▸ '
+export PS3='#? '
+export PS4='▸ '
 
 # History settings.
 export HISTCONTROL=ignoreboth
