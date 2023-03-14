@@ -120,3 +120,5 @@ envappend PATH /usr/local/texlive/2022/bin/x86_64-linux
 # If `MANPATH` is non-empty, it must contain `/usr/share/man`. Otherwise, `man`
 # is unable to find any manual pages. I have observed this on Mint and Manjaro.
 envappend MANPATH /usr/share/man
+
+envappend PATH $HOME/.local/bin
