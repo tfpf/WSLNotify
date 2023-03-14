@@ -107,6 +107,9 @@ envappend ()
     fi
 }
 
+# Cargo (package manager for Rust).
+envappend PATH $HOME/.cargo/bin
+
 # Gurobi Optimizer.
 envappend GUROBI_HOME /opt/gurobi952/linux64
 envappend LD_LIBRARY_PATH $GUROBI_HOME/lib
