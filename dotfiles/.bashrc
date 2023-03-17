@@ -125,3 +125,4 @@ envappend PATH /usr/local/texlive/2022/bin/x86_64-linux
 envappend MANPATH /usr/share/man
 
 envappend PATH $HOME/.local/bin
+envappend PATH $HOME/bin
