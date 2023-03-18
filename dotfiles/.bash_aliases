@@ -173,6 +173,8 @@ alias la='ls -AhlNX --color=auto --group-directories-first --time-style=long-iso
 alias ls='ls -C --color=auto'
 alias lt='ls -hlNrt --color=auto --group-directories-first --time-style=long-iso'
 
+alias egrep='grep -E --binary-files=without-match --color=auto'
+alias fgrep='grep -F --binary-files=without-match --color=auto'
 alias grep='grep --binary-files=without-match --color=auto'
 alias pgrep='pgrep -il'
 alias ps='ps a -c'
