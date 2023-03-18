@@ -49,7 +49,7 @@ then
     # in a subshell.
     x ()
     {
-        if [[ $# -lt 1 || ! -d "$1" ]]
+        if [ $# -lt 1 -o ! -d "$1" ]
         then
             printf "Usage:\n"
             printf "  ${FUNCNAME[0]} <directory>\n"
@@ -66,7 +66,7 @@ then
     # command must be invoked after navigating to the containing folder.
     g ()
     {
-        if [[ $# -lt 1 || ! -f "$1" ]]
+        if [ $# -lt 1 -o ! -f "$1" ]
         then
             printf "Usage:\n"
             printf "  ${FUNCNAME[0]} <file>\n"
@@ -100,7 +100,7 @@ else
     cfs ()
     {
         local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
-        if [[ $# -lt 1 ]]
+        if [ $# -lt 1 ]
         then
             cat ${files[*]}
             return 1
@@ -112,7 +112,7 @@ else
     # Obtain the ID of the active window.
     getactivewindow ()
     {
-        if [[ -z $DISPLAY ]]
+        if [ -z "$DISPLAY" ]
         then
             printf "0\n"
         else
@@ -179,12 +179,11 @@ alias grep='grep --binary-files=without-match --color=auto'
 alias pgrep='pgrep -il'
 alias ps='ps a -c'
 
-# Bat must be invoked as `batcat` on Debian and Linux Mint, and as `bat` on
-# Manjaro.
-if [[ -n $(command -v batcat) ]]
+# Bat must be invoked as `batcat` on Debian and Mint, and as `bat` on Manjaro.
+if command -v batcat &>/dev/null
 then
     alias cat='batcat'
-elif [[ -n $(command -v bat) ]]
+elif command -v bat &>/dev/null
 then
     alias cat='bat'
 fi
@@ -215,14 +214,13 @@ timefmt ()
 # executed.
 before_command ()
 {
-    if [[ -z $CLI_ready ]]
+    if [ -z "$__ready" ]
     then
         return
     fi
-
-    terminal_window_ID=${WINDOWID:-$(getactivewindow)}
-    CLI_ready=""
-    start_time=$(date +%s%3N)
+    __ready=""
+    __window=${WINDOWID:-$(getactivewindow)}
+    __begin=$(date +%s%3N)
 }
 
 # Post-command for command timing. It will be called just before the prompt is
@@ -230,17 +228,15 @@ before_command ()
 after_command ()
 {
     local exit_status=$?
-    if [[ -n $CLI_ready ]]
+    if [ -n "$__ready" ]
     then
         return
     fi
-
-    local finish_time=$(date +%s%3N)
-    local delay=$((finish_time-start_time))
-    unset start_time
-    CLI_ready=1
-
-    if [[ $delay -le 5000 ]]
+    local __end=$(date +%s%3N)
+    local delay=$((__end-__begin))
+    unset __begin
+    __ready=1
+    if [ $delay -le 5000 ]
     then
         return
     fi
@@ -249,14 +245,12 @@ after_command ()
     local seconds=$((delay/1000%60))
     local minutes=$((delay/60000%60))
     local hours=$((delay/3600000))
-    local last_command=$(history 1 | sed 's/^[^]]*\] //')
-
     local breakup=""
-    [[ $hours -gt 0 ]] && breakup="$hours h "
-    [[ $hours -gt 0 || $minutes -gt 0 ]] && breakup="${breakup}$minutes m "
+    [ $hours -gt 0 ] && breakup="$hours h "
+    [ $hours -gt 0 -o $minutes -gt 0 ] && breakup="${breakup}$minutes m "
     breakup="${breakup}$seconds s $milliseconds ms"
 
-    if [[ $exit_status -eq 0 ]]
+    if [ $exit_status -eq 0 ]
     then
         local exit_symbol="[1;32m✓[0m"
         local icon=dialog-information
@@ -264,24 +258,25 @@ after_command ()
         local exit_symbol="[1;31m✗[0m"
         local icon=dialog-error
     fi
+    local last_command=$(history 1 | sed 's/^[^]]*\] //')
 
     # Non-ASCII symbols may have to be treated as multi-byte characters,
     # depending on the shell.
     printf "\r%*s\n" $((COLUMNS+14)) "$exit_symbol $last_command ⏳ $breakup"
-    if [[ delay -ge 10000 && $terminal_window_ID -ne $(getactivewindow) ]]
+    if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
     then
         notify-send -i $icon "CLI Ready" "$last_command ⏳ $breakup"
     fi
 }
 
-CLI_ready=1
+__ready=1
 trap before_command DEBUG
 PROMPT_COMMAND=after_command
 
 # Commit and push changes to the current branch of a GitHub repository.
 push ()
 {
-    if [[ $# -lt 2 ]]
+    if [ $# -lt 2 ]
     then
         printf "Usage:\n"
         printf "  ${FUNCNAME[0]} 'commit message' file1 [file2] [file3] [...]\n"
@@ -299,14 +294,14 @@ push ()
 # PDF optimiser. This requires that Ghostscript be installed.
 pdfopt ()
 {
-    if [[ $# -lt 2 ]]
+    if [ $# -lt 2 ]
     then
         printf "Usage:\n"
         printf "  ${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n"
         return 1
     fi
 
-    if [[ $# -ge 3 ]]
+    if [ $# -ge 3 ]
     then
         opt_level=$3
     else
@@ -325,13 +320,10 @@ pdfopt ()
 # Random string generator.
 rr ()
 {
-    if [[ "$1" =~ ^[0-9]+$ ]]
-    then
-        local length=$1
-    else
-        local length=20
-    fi
-
+    case "$1" in
+        "" | *[^0-9]*) local length=20;;
+        *) local length=$1;;
+    esac
     printf "$(tr -cd '0-9' < /dev/urandom | head -c $length)\n"
     printf "$(tr -cd 'A-Za-z' < /dev/urandom | head -c $length)\n"
     printf "$(tr -cd 'A-Za-z0-9' < /dev/urandom | head -c $length)\n"
@@ -349,7 +341,7 @@ icon_data='\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 \x08\x06
 # create any Tkinter widgets. The random names should prevent name collisions.
 P ()
 {
-    if [[ $# -lt 1 ]]
+    if [ $# -lt 1 ]
     then
         printf "Usage:\n"
         printf "  ${FUNCNAME[0]} <file>\n"
@@ -407,7 +399,7 @@ _xtBzBMfnpdQGhwINyACP()
 # creating a new file. Uses the parser that comes with Matplotlib.
 L ()
 {
-    if [[ $# -eq 0 ]]
+    if [ $# -eq 0 ]
     then
         local bgcolour='#333333'
         local fgcolour='#FFFFFF'
@@ -527,7 +519,7 @@ _xtBzBMfnpdQGhwINyACP()
 # gradually change from 0 to 1.
 T ()
 {
-    if [[ $# -lt 6 ]]
+    if [ $# -lt 6 ]
     then
         printf "Usage:\n"
         printf "  ${FUNCNAME[0]} <file> <R> <G> <B> <threshold1> <threshold2>\n"
