@@ -218,11 +218,11 @@ timefmt ()
 # executed.
 before_command ()
 {
-    if [ -z "$__ready" ]
+    if [ -n "${__busy+.}" ]
     then
         return
     fi
-    __ready=""
+    __busy=1
     __window=${WINDOWID:-$(getactivewindow)}
     __begin=$(date +%s%3N)
 }
@@ -232,16 +232,16 @@ before_command ()
 after_command ()
 {
     local exit_status=$?
-    if [ -n "$__ready" ]
+    if [ -z "${__busy+.}" ]
     then
         return
     fi
     local __end=$(date +%s%3N)
     local delay=$((__end-__begin))
-    unset __begin
-    __ready=1
+    unset __busy __begin
     if [ $delay -le 5000 ]
     then
+        unset __window
         return
     fi
 
@@ -271,9 +271,9 @@ after_command ()
     then
         notify-send -i $icon "CLI Ready" "$last_command ⏳ $breakup"
     fi
+    unset __window
 }
 
-__ready=1
 trap before_command DEBUG
 PROMPT_COMMAND=after_command
 
