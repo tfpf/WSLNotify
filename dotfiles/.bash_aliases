@@ -277,24 +277,6 @@ __ready=1
 trap before_command DEBUG
 PROMPT_COMMAND=after_command
 
-# Commit and push changes to the current branch of a GitHub repository.
-push ()
-{
-    if [ $# -lt 2 ]
-    then
-        printf "Usage:\n"
-        printf "  ${FUNCNAME[0]} 'commit message' file1 [file2] [file3] [...]\n"
-        return 1
-    fi
-
-    local args=("$@")
-    local files=("${args[@]:1}")
-
-    git add ${files[*]}
-    git commit -m "$1"
-    git push
-}
-
 # PDF optimiser. This requires that Ghostscript be installed.
 pdfopt ()
 {
