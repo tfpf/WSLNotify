@@ -320,7 +320,7 @@ pdfopt ()
 # Random string generator.
 rr ()
 {
-    case "$1" in
+    case $1 in
         "" | *[^0-9]*) local length=20;;
         *) local length=$1;;
     esac

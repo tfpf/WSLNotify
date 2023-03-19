@@ -95,15 +95,14 @@ _pip_completion()
 }
 complete -o default -F _pip_completion /usr/bin/python3 -m pip
 
-# Append to a `PATH`-like environment variable without duplication. Arguments
-# must not contain spaces.
+# Append to a `PATH`-like environment variable without duplication.
 envappend ()
 {
     local name=$1
     local value=$2
     if [[ -n $name && -d $value && :${!name}: != *:$value:* ]]
     then
-        eval "export $name=\${$name:+\$$name:}$value"
+        eval "export $name=\${$name:+\$$name:}\"$value\""
     fi
 }
 
@@ -119,6 +118,8 @@ envappend PATH $GUROBI_HOME/bin
 envappend INFOPATH /usr/local/texlive/2022/texmf-dist/doc/info
 envappend MANPATH /usr/local/texlive/2022/texmf-dist/doc/man
 envappend PATH /usr/local/texlive/2022/bin/x86_64-linux
+
+envappend LD_LIBRARY_PATH /lib
 
 # If `MANPATH` is non-empty, it must contain `/usr/share/man`. Otherwise, `man`
 # is unable to find any manual pages. I have observed this on Mint and Manjaro.
