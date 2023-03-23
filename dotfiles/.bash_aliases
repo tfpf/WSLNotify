@@ -25,9 +25,11 @@ then
     # Compile programs written in C#.
     alias csc='/mnt/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe'
 
-    # For notifications, since `notify-send` does not work.
-    alias notify-send='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLNotify.exe'
-    alias getactivewindow='/mnt/c/Users/vpaij/Documents/projects/WSLNotify/WSLNotify/WSLGetActiveWindow.exe'
+    # Put `WSLNotify.exe` and `WSLGetActiveWindow.exe` in a folder which is in
+    # `PATH` (e.g. `C:\Windows`). Alternatively, specify the full path to the
+    # EXE files.
+    alias notify-send='WSLNotify.exe'
+    alias getactivewindow='WSLGetActiveWindow.exe'
 
     alias wp='/mnt/c/Users/vpaij/AppData/Local/Programs/Python/Python310/python.exe'
 
