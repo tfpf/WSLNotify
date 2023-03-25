@@ -96,7 +96,7 @@ _pip_completion()
 complete -o default -F _pip_completion /usr/bin/python3 -m pip
 
 # Append to a `PATH`-like environment variable without duplication.
-envappend ()
+envarmunge ()
 {
     local name=$1
     local value=$2
@@ -107,23 +107,23 @@ envappend ()
 }
 
 # Cargo (package manager for Rust).
-envappend PATH $HOME/.cargo/bin
+envarmunge PATH $HOME/.cargo/bin
 
 # Gurobi Optimizer.
-envappend GUROBI_HOME /opt/gurobi952/linux64
-envappend LD_LIBRARY_PATH $GUROBI_HOME/lib
-envappend PATH $GUROBI_HOME/bin
+envarmunge GUROBI_HOME /opt/gurobi952/linux64
+envarmunge LD_LIBRARY_PATH $GUROBI_HOME/lib
+envarmunge PATH $GUROBI_HOME/bin
 
 # TeX Live.
-envappend INFOPATH /usr/local/texlive/2022/texmf-dist/doc/info
-envappend MANPATH /usr/local/texlive/2022/texmf-dist/doc/man
-envappend PATH /usr/local/texlive/2022/bin/x86_64-linux
+envarmunge INFOPATH /usr/local/texlive/2022/texmf-dist/doc/info
+envarmunge MANPATH /usr/local/texlive/2022/texmf-dist/doc/man
+envarmunge PATH /usr/local/texlive/2022/bin/x86_64-linux
 
-envappend LD_LIBRARY_PATH /lib
+envarmunge LD_LIBRARY_PATH /lib
 
 # If `MANPATH` is non-empty, it must contain `/usr/share/man`. Otherwise, `man`
 # is unable to find any manual pages. I have observed this on Mint and Manjaro.
-envappend MANPATH /usr/share/man
+envarmunge MANPATH /usr/share/man
 
-envappend PATH $HOME/.local/bin
-envappend PATH $HOME/bin
+envarmunge PATH $HOME/.local/bin
+envarmunge PATH $HOME/bin
