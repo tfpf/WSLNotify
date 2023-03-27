@@ -4,25 +4,29 @@ case $- in
     *) return;;
 esac
 
-# Append to the history file; don't overwrite it.
-shopt -s histappend
-
 # Check the window size after each command and, if necessary, update `LINES`
-# and `COLUMNS`.
+# and `COLUMNS`, because Bash won't get `SIGWINCH` if another process is in the
+# foreground.
 shopt -s checkwinsize
+
+# Expand aliases, since Bash is running interactively.
+shopt -s expand_aliases
 
 # Match `**` in a pathname expansion context with all files and zero or more
 # directories and subdirectories.
 shopt -s globstar
 
+# Append to the history file; don't overwrite it.
+shopt -s histappend
+
 # Make `less` more friendly for non-text input files.
-if [ -x /usr/bin/lesspipe ]
+if command -v lesspipe &>/dev/null
 then
     eval "$(SHELL=/bin/sh lesspipe)"
 fi
 
 # Colours for `ls`.
-if [ -x /usr/bin/dircolors ]
+if command -v dircolors &>/dev/null
 then
     if [ -r $HOME/.dircolors ]
     then
