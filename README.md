@@ -50,21 +50,18 @@ GNU/Linux, if you add the following to `~/.bashrc` (or perhaps
 ```bash
 before_command ()
 {
-    if [[ -z $CLI_ready ]]
+    if [ -z "${__busy+.}" ]
     then
-        return
+        __busy=1
     fi
-
-    CLI_ready=""
 }
 
 after_command ()
 {
-    CLI_ready=1
+    unset __busy
     notify-send "Command Complete"
 }
 
-CLI_ready=1
 trap before_command DEBUG
 PROMPT_COMMAND=after_command
 ```
@@ -83,6 +80,7 @@ seamlessly on GNU/Linux and WSL both.
 * Hovering the mouse over the system tray icon after the application has
 returned makes the notification disappear.
 * Multiple notifications fill up the system tray with the application icon.
+* The `-i` option does not work on Windows 11.
 
 # Environment-Agnostic Configuration Files
 I am also using this repository to store my dotfiles; the ones for Bash, Zsh
