@@ -50,10 +50,7 @@ GNU/Linux, if you add the following to `~/.bashrc` (or perhaps
 ```bash
 before_command ()
 {
-    if [ -z "${__busy+.}" ]
-    then
-        __busy=1
-    fi
+    [ -z "${__busy+.}" ] && __busy=1
 }
 
 after_command ()
