@@ -137,6 +137,7 @@ export PS4='▸ '
 
 # History settings.
 export HISTCONTROL=ignoreboth
+export HISTFILE=$HOME/.bash_history
 export HISTFILESIZE=2000
 export HISTSIZE=1000
 export HISTTIMEFORMAT="[%F %T] "

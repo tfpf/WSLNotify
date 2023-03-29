@@ -4,6 +4,9 @@ case $- in
     *) return;;
 esac
 
+# Check for running and stopped jobs before exiting.
+shopt -s checkjobs
+
 # Check the window size after each command and, if necessary, update `LINES`
 # and `COLUMNS`, because Bash won't get `SIGWINCH` if another process is in the
 # foreground.
