@@ -322,7 +322,7 @@ rr ()
 # This is a representation of the icon used for Python Executor and LaTeX
 # Renderer. I obtained it by saving a PNG image and then reading it using
 # Python.
-icon_data='\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 \x08\x06\x00\x00\x00szz\xf4\x00\x00\x00bIDATx\x9c\xed\xd6\xb1\r\xc00\x08D\xd1X e\x12\xc6`=O\x90\x99X+\xd9\x00\xaa\x93\xa5\xe8\xd3R\xdc\x93\x8b3\xeb~\xf6%\x9e\xb7[\xba:\xdd\xcc\xda=\x00\x00\x00\x00\xfc\x1f\xe0\xdeGxD\xb4]\xad\x1e\x9f\x9e\x08\x00\x00\x00r@U-e@f\x9e\xbd\t\xc7&T\x03\x8e\xff\x05\x00\x00\x00\x0005\xe1\x07 \xde\t#axmy\x00\x00\x00\x00IEND\xaeB`\x82'
+__data='\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 \x08\x06\x00\x00\x00szz\xf4\x00\x00\x00bIDATx\x9c\xed\xd6\xb1\r\xc00\x08D\xd1X e\x12\xc6`=O\x90\x99X+\xd9\x00\xaa\x93\xa5\xe8\xd3R\xdc\x93\x8b3\xeb~\xf6%\x9e\xb7[\xba:\xdd\xcc\xda=\x00\x00\x00\x00\xfc\x1f\xe0\xdeGxD\xb4]\xad\x1e\x9f\x9e\x08\x00\x00\x00r@U-e@f\x9e\xbd\t\xc7&T\x03\x8e\xff\x05\x00\x00\x00\x0005\xe1\x07 \xde\t#axmy\x00\x00\x00\x00IEND\xaeB`\x82'
 
 # A little hack to run Python programs without writing to a file. Open a
 # Tkinter window and read the file. Execute the program when the Escape key is
@@ -353,7 +353,7 @@ def _sQIvYlfwvgZJnQNmxRyF(event):
 
 def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
-    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
+    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$__data'))
     root.title('Python Executor')
     if _kcvGDoKwwVmzVFPNNBzH.system() in {'Darwin', 'Windows'}:
         root.state('zoomed')
@@ -452,7 +452,7 @@ def _tovFFPjGPBAdfDHOlVTr(fig, e):
 
 def _xtBzBMfnpdQGhwINyACP():
     root = _ArFfEXZloCCjFNnmSwdw.Tk()
-    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$icon_data'))
+    root.iconphoto(True, _ArFfEXZloCCjFNnmSwdw.PhotoImage(data=b'$__data'))
     root.title('LaTeX Renderer')
     if _kcvGDoKwwVmzVFPNNBzH.system() in {'Darwin', 'Windows'}:
         root.state('zoomed')
