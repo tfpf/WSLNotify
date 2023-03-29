@@ -252,7 +252,7 @@ after_command ()
     local seconds=$((delay/1000%60))
     local minutes=$((delay/60000%60))
     local hours=$((delay/3600000))
-    local breakup=""
+    local breakup
     [ $hours -gt 0 ] && breakup="$hours h "
     [ $hours -gt 0 -o $minutes -gt 0 ] && breakup="${breakup}$minutes m "
     breakup="${breakup}$seconds s $milliseconds ms"
