@@ -4,6 +4,9 @@ case $- in
     *) return;;
 esac
 
+# Prevent accidentally exiting the shell by pressing <CTRL-D>.
+set -o ignoreeof
+
 # Check for running and stopped jobs before exiting.
 shopt -s checkjobs
 

@@ -157,10 +157,6 @@ export EDITOR=vim
 export GIT_EDITOR=vim
 export BAT_PAGER='less -iRF'
 
-# I have accidentally quit the shell by pressing <CTRL-D> enough times that I'd
-# consider doing this.
-set -o ignoreeof
-
 # Some terminals exit only if the previous command was successful. This can be
 # used to exit unconditionally.
 alias bye='true && exit'
@@ -204,7 +200,7 @@ alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
 # `time` may be a shell keyword. I prefer GNU's `time` to Bash's.
 alias time='/usr/bin/time -f "$(timefmt)" '
 
-alias vg='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
+alias valgrind='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
 alias S='perf stat -e instructions,branches,branch-misses,cache-references,cache-misses '
 
