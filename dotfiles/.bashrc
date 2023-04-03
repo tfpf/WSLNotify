@@ -83,8 +83,9 @@ envarmunge ()
     fi
 }
 
-# Cargo and Rust.
-envarmunge PATH $HOME/.cargo/bin
+# Cargo and Rust (local installation).
+envarmunge CARGO_HOME $HOME/.cargo
+envarmunge PATH $CARGO_HOME/bin
 
 # Gurobi Optimizer.
 envarmunge GUROBI_HOME /opt/gurobi952/linux64

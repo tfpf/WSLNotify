@@ -5,7 +5,7 @@ then
 
     # Setup for a virtual display using VcXsrv to run GUI apps. You may want to
     # install `x11-xserver-utils`, `dconf-editor` and `dbus-x11`, and create
-    # the file `~/.config/dconf/user`.
+    # the file `$HOME/.config/dconf/user` to avoid getting warnings.
     if grep -q WSL2 /proc/version
     then
         export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
@@ -26,8 +26,8 @@ then
     alias csc='/mnt/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe'
 
     # Put `WSLNotify.exe` and `WSLGetActiveWindow.exe` in a folder which is in
-    # `PATH` (e.g. `C:\Windows`). Alternatively, specify the full path to the
-    # EXE files.
+    # `PATH` (e.g. `C:\Windows`) to make these aliases work. Alternatively,
+    # specify the full path to the EXE files below.
     alias notify-send='WSLNotify.exe'
     alias getactivewindow='WSLGetActiveWindow.exe'
 
@@ -38,61 +38,60 @@ then
     {
         local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
         local vcxsrvname=$(basename "$vcxsrvpath")
+
+        # If VcXsrv is started in the background, it writes messages to
+        # standard error, and an entry corresponding to it remains in the Linux
+        # process list though it is actually a Windows process. Hence, start it
+        # in a subshell, suppress its output, and terminate the Linux process.
+        # (This does not affect the Windows process.) This pattern may be used
+        # in a few more functions below.
         (
             "$vcxsrvpath" -ac -clipboard -multiwindow -wgl &
             sleep 1
             pkill "$vcxsrvname"
-        ) &> /dev/null
+        ) &>/dev/null
     }
 
-    # Windows Explorer can open WSL folders, but the command must be invoked
-    # after navigating to the target folder. Doing so directly will change the
-    # environment variable `OLDPWD`, which is undesirable. Hence, this is done
-    # in a subshell.
-    x ()
-    {
-        if [ $# -lt 1 -o ! -d "$1" ]
-        then
-            printf "Usage:\n"
-            printf "  ${FUNCNAME[0]} <directory>\n"
-            return 1
-        fi
-
-        (
-            cd "$1"
-            explorer.exe .
-        )
-    }
-
-    # GVIM for Windows can open WSL files, but (like Windows Explorer), the
-    # command must be invoked after navigating to the containing folder.
+    # GVIM for Windows.
     g ()
     {
-        if [ $# -lt 1 -o ! -f "$1" ]
+        if [ ! -f "$1" ]
         then
             printf "Usage:\n"
             printf "  ${FUNCNAME[0]} <file>\n"
             return 1
         fi
 
-        # https://tuxproject.de/projects/vim/ (64-bit Windows binaries)
+        # See https://tuxproject.de/projects/vim/ for 64-bit Windows binaries.
         local gvimpath='/mnt/c/Program Files (x86)/Vim/vim90/gvim.exe'
         local gvimname=$(basename "$gvimpath")
         local filedir=$(dirname "$1")
         local filename=$(basename "$1")
-
-        # Running the commands in a subshell causes two new processes (`bash`
-        # and `gvim.exe`, as the `ps` command tells me) to remain running for
-        # as long as GVIM is kept open. Killing `gvim.exe` automatically
-        # results in the termination of `bash` without affecting GVIM (probably
-        # because it is a Windows application, which WSL does not have the
-        # ability to close). That's what is done here.
         (
             cd "$filedir"
             "$gvimpath" "$filename" &
             sleep 1
             pkill "$gvimname"
-        ) &> /dev/null
+        ) &>/dev/null
+    }
+
+    # Open a file or link.
+    x ()
+    {
+        # Windows Explorer can open WSL directories, but the command must be
+        # invoked after navigating to the target directory to avoid problems
+        # like a tilde getting interpreted as the Windows home folder instead
+        # of the Linux home directory. To avoid changing `OLDPWD`, do this in a
+        # subshell.
+        if [ -d "$1" ]
+        then
+            (
+                cd "$1"
+                explorer.exe .
+            )
+        else
+            xdg-open "$1"
+        fi
     }
 else
     alias g='gvim'
@@ -105,10 +104,9 @@ else
         if [ $# -lt 1 ]
         then
             cat ${files[*]}
-            return 1
+        else
+            sudo tee ${files[*]} <<< $1
         fi
-
-        sudo tee ${files[*]} <<< $1
     }
 
     # Obtain the ID of the active window.
@@ -213,14 +211,21 @@ timefmt ()
     printf "ICS: %%c.  VCS: %%w.\n"
 }
 
+# View object files.
+o ()
+{
+    [ ! -f "$1" ] && return
+    (
+        objdump -Cd "$1"
+        readelf -p .rodata -x .data "$1"
+    ) | cat -l asm --file-name "$1"
+}
+
 # Pre-command for command timing. It will be called just before any command is
 # executed.
 before_command ()
 {
-    if [ -n "${__busy+.}" ]
-    then
-        return
-    fi
+    [ -n "${__busy+.}" ] && return
     __busy=1
     __window=${WINDOWID:-$(getactivewindow)}
     __begin=$(date +%s%3N)
@@ -231,10 +236,7 @@ before_command ()
 after_command ()
 {
     local exit_status=$?
-    if [ -z "${__busy+.}" ]
-    then
-        return
-    fi
+    [ -z "${__busy+.}" ] && return
     local __end=$(date +%s%3N)
     local delay=$((__end-__begin))
     unset __busy __begin
@@ -309,10 +311,11 @@ rr ()
         "" | *[^0-9]*) local length=20;;
         *) local length=$1;;
     esac
-    printf "$(tr -cd '0-9' < /dev/urandom | head -c $length)\n"
-    printf "$(tr -cd 'A-Za-z' < /dev/urandom | head -c $length)\n"
-    printf "$(tr -cd 'A-Za-z0-9' < /dev/urandom | head -c $length)\n"
-    printf "$(tr -cd 'A-Za-z0-9!@#$*()' < /dev/urandom | head -c $length)\n"
+    for pattern in '0-9' 'A-Za-z' 'A-Za-z0-9' 'A-Za-z0-9!@#$*()'
+    do
+        tr -cd $pattern </dev/urandom | head -c $length
+        printf "\n"
+    done
 }
 
 # This is a representation of the icon used for Python Executor and LaTeX
