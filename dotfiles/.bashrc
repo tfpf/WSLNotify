@@ -4,25 +4,12 @@ case $- in
     *) return;;
 esac
 
-# Prevent accidentally exiting the shell by pressing <CTRL-D>.
 set -o ignoreeof
 
-# Check for running and stopped jobs before exiting.
 shopt -s checkjobs
-
-# Check the window size after each command and, if necessary, update `LINES`
-# and `COLUMNS`, because Bash won't get `SIGWINCH` if another process is in the
-# foreground.
 shopt -s checkwinsize
-
-# Expand aliases, since Bash is running interactively.
 shopt -s expand_aliases
-
-# Match `**` in a pathname expansion context with all files and zero or more
-# directories and subdirectories.
 shopt -s globstar
-
-# Append to the history file; don't overwrite it.
 shopt -s histappend
 
 # Make `less` more friendly for non-text input files.
@@ -42,7 +29,6 @@ then
     fi
 fi
 
-# Alias definitions.
 if [ -f $HOME/.bash_aliases ]
 then
     . $HOME/.bash_aliases
