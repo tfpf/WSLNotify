@@ -57,8 +57,8 @@ then
     {
         if [ ! -f "$1" ]
         then
-            printf "Usage:\n"
-            printf "  ${FUNCNAME[0]} <file>\n"
+            printf "Usage:\n" >&2
+            printf "  ${FUNCNAME[0]} <file>\n" >&2
             return 1
         fi
 
@@ -279,8 +279,8 @@ pdfopt ()
 {
     if [ $# -lt 2 ]
     then
-        printf "Usage:\n"
-        printf "  ${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n"
+        printf "Usage:\n" >&2
+        printf "  ${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n" >&2
         return 1
     fi
 
@@ -327,8 +327,8 @@ P ()
 {
     if [ $# -lt 1 ]
     then
-        printf "Usage:\n"
-        printf "  ${FUNCNAME[0]} <file>\n"
+        printf "Usage:\n" >&2
+        printf "  ${FUNCNAME[0]} <file>\n" >&2
         return 1
     fi
 
@@ -505,8 +505,8 @@ T ()
 {
     if [ $# -lt 6 ]
     then
-        printf "Usage:\n"
-        printf "  ${FUNCNAME[0]} <file> <R> <G> <B> <threshold1> <threshold2>\n"
+        printf "Usage:\n" >&2
+        printf "  ${FUNCNAME[0]} <file> <R> <G> <B> <threshold1> <threshold2>\n" >&2
         return 1
     fi
 
