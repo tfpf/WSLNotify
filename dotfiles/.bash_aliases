@@ -158,8 +158,6 @@ export BAT_PAGER='less -iRF'
 # used to exit unconditionally.
 alias bye='true && exit'
 
-alias less='less -i'
-
 alias F='watch -n 1 "grep MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr"'
 alias M='watch -n 1 free -ht'
 alias s='watch -n 1 sensors'
@@ -190,14 +188,15 @@ alias p='python3 -B'
 alias t='python3 -m timeit'
 alias pip='python3 -m pip'
 
-alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
-
-# `time` may be a shell keyword. I prefer GNU's `time` to Bash's.
+# Performance analysis. Use GNU's `time` command rather than Bash's `time`
+# shell keyword.
+alias S='perf stat -e instructions,branches,branch-misses,cache-references,cache-misses '
 alias time='/usr/bin/time -f "$(timefmt)" '
 
+alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
+alias e='exec bash'
+alias less='less -i'
 alias valgrind='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
-
-alias S='perf stat -e instructions,branches,branch-misses,cache-references,cache-misses '
 
 # Format string for the `time` command.
 timefmt ()
