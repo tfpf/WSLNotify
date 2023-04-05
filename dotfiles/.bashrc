@@ -24,6 +24,9 @@ then
     if [ -r $HOME/.dircolors ]
     then
         eval "$(dircolors -b $HOME/.dircolors)"
+    elif [ -r $HOME/.dir_colors ]
+    then
+        eval "$(dircolors -b $HOME/.dir_colors)"
     else
         eval "$(dircolors -b)"
     fi
@@ -79,9 +82,9 @@ envarmunge LD_LIBRARY_PATH $GUROBI_HOME/lib
 envarmunge PATH $GUROBI_HOME/bin
 
 # TeX Live.
-envarmunge INFOPATH /usr/local/texlive/2022/texmf-dist/doc/info
-envarmunge MANPATH /usr/local/texlive/2022/texmf-dist/doc/man
-envarmunge PATH /usr/local/texlive/2022/bin/x86_64-linux
+envarmunge INFOPATH /usr/local/texlive/2023/texmf-dist/doc/info
+envarmunge MANPATH /usr/local/texlive/2023/texmf-dist/doc/man
+envarmunge PATH /usr/local/texlive/2023/bin/x86_64-linux
 
 envarmunge LD_LIBRARY_PATH /lib
 
