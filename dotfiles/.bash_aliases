@@ -207,14 +207,14 @@ timefmt ()
     printf "ICS: %%c.  VCS: %%w.\n"
 }
 
-# View object files.
+# View object files. This depends on `cat` being aliased above.
 o ()
 {
     [ ! -f "$1" ] && return
     (
-        objdump -Cd "$1"
+        objdump -Cd "$1" | cat -f -l asm --file-name "$1"
         readelf -p .rodata -x .data "$1"
-    ) | cat -l asm --file-name "$1"
+    ) | $BAT_PAGER
 }
 
 # Pre-command for command timing. It will be called just before any command is
