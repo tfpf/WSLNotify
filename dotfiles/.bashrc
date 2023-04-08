@@ -21,10 +21,10 @@ fi
 # Colours for `ls`.
 if command -v dircolors &>/dev/null
 then
-    if [ -r $HOME/.dircolors ]
+    if [ -f $HOME/.dircolors ]
     then
         eval "$(dircolors -b $HOME/.dircolors)"
-    elif [ -r $HOME/.dir_colors ]
+    elif [ -f $HOME/.dir_colors ]
     then
         eval "$(dircolors -b $HOME/.dir_colors)"
     else
