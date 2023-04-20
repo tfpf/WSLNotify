@@ -18,7 +18,14 @@ then
     eval "$(SHELL=/bin/sh lesspipe)"
 fi
 
-# Colours for `ls`.
+# Enable colours for `ls` and make the superuser's terminal prompts more
+# conspicuous (if possible). Note that the environment variable may not always
+# reflect the correct user name. Also, `PS3` doesn't seem to like ANSI colour
+# codes.
+export PS1='\n┌[\u@\h \w]\n└─\$ '
+export PS2='──▸ '
+export PS3='#? '
+export PS4='▸ '
 if command -v dircolors &>/dev/null
 then
     if [ -f $HOME/.dircolors ]
@@ -29,6 +36,14 @@ then
         eval "$(dircolors -b $HOME/.dir_colors)"
     else
         eval "$(dircolors -b)"
+    fi
+    if [ "$USER" = root -o "$(id -nu)" = root ]
+    then
+        export PS1='\n\[\e[1;31m\]┌[\u@\h\[\e[0m\] \[\e[1;96m\]\w\[\e[1;31m\]]\n└─# \[\e[0m\]'
+        export PS2='\[\e[1;31m\]'$PS2'\[\e[0m\]'
+        export PS4='\[\e[1;31m\]'$PS4'\[\e[0m\]'
+    else
+        export PS1='\n┌[\[\e[1;32m\]\u\[\e[0m\] \[\e[1;3;93m\]\h\[\e[0m\] \[\e[1;96m\]\w\[\e[0m\]]\n└─\$ '
     fi
 fi
 
