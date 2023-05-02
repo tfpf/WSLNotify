@@ -90,7 +90,7 @@ envarmunge ()
     fi
 }
 
-# Cargo and Rust (local installation).
+# Cargo and Rust: local installation.
 envarmunge CARGO_HOME $HOME/.cargo
 envarmunge PATH $HOME/.cargo/bin
 
@@ -99,12 +99,22 @@ envarmunge GUROBI_HOME /opt/gurobi952/linux64
 envarmunge LD_LIBRARY_PATH /opt/gurobi952/linux64/lib
 envarmunge PATH /opt/gurobi952/linux64/bin
 
+# Ipe: allow LaTeX rendering.
+envarmunge IPELATEXDIR $HOME/.ipe/latexrun
+envarmunge IPELATEXPATH $HOME/.ipe/latexrun
+
 # TeX Live.
 envarmunge INFOPATH /usr/local/texlive/2023/texmf-dist/doc/info
 envarmunge MANPATH /usr/local/texlive/2023/texmf-dist/doc/man
 envarmunge PATH /usr/local/texlive/2023/bin/x86_64-linux
 
+envarmunge C_INCLUDE_PATH /usr/include
+envarmunge C_INCLUDE_PATH /usr/local/include
+
+envarmunge CPLUS_INCLUDE_PATH /usr/include/c++/*
+
 envarmunge LD_LIBRARY_PATH /usr/lib
+envarmunge LD_LIBRARY_PATH /usr/local/lib
 
 # If non-empty, this must contain `/usr/share/man`. Otherwise, `man` is unable
 # to find any manual pages. I have observed this on Mint and Manjaro.

@@ -134,10 +134,6 @@ export max_print_line=1048576
 export error_line=254
 export half_error_line=238
 
-# To ensure that Ipe can render LaTeX (if it is installed).
-export IPELATEXPATH=$HOME/.ipe/latexrun
-export IPELATEXDIR=$IPELATEXPATH
-
 export EDITOR=vim
 export GIT_EDITOR=vim
 export BAT_PAGER='less -iRF'
