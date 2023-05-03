@@ -104,9 +104,9 @@ envarmunge IPELATEXDIR $HOME/.ipe/latexrun
 envarmunge IPELATEXPATH $HOME/.ipe/latexrun
 
 # TeX Live.
-envarmunge INFOPATH /usr/local/texlive/2023/texmf-dist/doc/info
-envarmunge MANPATH /usr/local/texlive/2023/texmf-dist/doc/man
-envarmunge PATH /usr/local/texlive/2023/bin/x86_64-linux
+envarmunge INFOPATH /usr/local/texlive/*/texmf-dist/doc/info
+envarmunge MANPATH /usr/local/texlive/*/texmf-dist/doc/man
+envarmunge PATH /usr/local/texlive/*/bin/x86_64-linux
 
 envarmunge C_INCLUDE_PATH /usr/include
 envarmunge C_INCLUDE_PATH /usr/local/include
