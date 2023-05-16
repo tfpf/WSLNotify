@@ -19,7 +19,7 @@
 	newMoved = brightgreen
 [color "status"]
 	added = brightgreen
-	changed = brightred
+	changed = brightyellow
 	untracked = brightred
 [column]
 	ui = auto,column,nodense
