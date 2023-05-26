@@ -1,14 +1,14 @@
 # This block is executed only if Bash is running on WSL (Windows Subsystem for
 # Linux).
-if grep -iq microsoft /proc/version
+if \grep -iq microsoft /proc/version
 then
 
     # Setup for a virtual display using VcXsrv to run GUI apps. You may want to
     # install `x11-xserver-utils`, `dconf-editor` and `dbus-x11`, and create
     # the file `$HOME/.config/dconf/user` to avoid getting warnings.
-    if grep -q WSL2 /proc/version
+    if \grep -q WSL2 /proc/version
     then
-        export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
+        export DISPLAY=$(\grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
     else
         export DISPLAY=localhost:0.0
     fi
@@ -103,7 +103,7 @@ else
         local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
         if [ $# -lt 1 ]
         then
-            cat ${files[*]}
+            \cat ${files[*]}
         else
             sudo tee ${files[*]} <<< $1
         fi
@@ -144,26 +144,27 @@ export BAT_PAGER='less -iRF'
 # used to exit unconditionally.
 alias bye='true && exit'
 
-alias F='watch -n 1 "grep MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr"'
+alias F='watch -n 1 "\grep MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr"'
 alias M='watch -n 1 free -ht'
 alias s='watch -n 1 sensors'
-alias top='top -d 1 -H -u $USER'
-alias htop='htop -d 10 -t -u $USER'
+alias top='\top -d 1 -H -u $USER'
+alias htop='\htop -d 10 -t -u $USER'
 
-alias l='ls -lNX --color=auto --group-directories-first --time-style=long-iso'
-alias la='ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
-alias ls='ls -C --color=auto'
-alias lt='ls -hlNrt --color=auto --group-directories-first --time-style=long-iso'
+alias l='\ls -lNX --color=auto --group-directories-first --time-style=long-iso'
+alias la='\ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
+alias ls='\ls -C --color=auto'
+alias lt='\ls -hlNrt --color=auto --group-directories-first --time-style=long-iso'
 
-alias egrep='grep -E --binary-files=without-match --color=auto'
-alias fgrep='grep -F --binary-files=without-match --color=auto'
-alias grep='grep --binary-files=without-match --color=auto'
-alias pgrep='pgrep -il'
-alias ps='ps a -c'
+alias egrep='\grep -E --binary-files=without-match --color=auto'
+alias fgrep='\grep -F --binary-files=without-match --color=auto'
+alias grep='\grep --binary-files=without-match --color=auto'
+alias pgrep='\pgrep -il'
+alias ps='\ps a -c'
 
 # Bat must be invoked as `batcat` on Debian and Mint, and as `bat` on Manjaro.
 if command -v batcat &>/dev/null
 then
+    alias bat='batcat'
     alias cat='batcat'
 elif command -v bat &>/dev/null
 then
@@ -181,8 +182,8 @@ alias time='/usr/bin/time -f "$(timefmt)" '
 
 alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
 alias e='exec bash'
-alias less='less -i'
-alias valgrind='valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
+alias less='\less -i'
+alias valgrind='\valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
 # Format string for the `time` command.
 timefmt ()
@@ -193,14 +194,21 @@ timefmt ()
     printf "ICS: %%c.  VCS: %%w.\n"
 }
 
-# View object files. This depends on `cat` being aliased above.
+# View object files.
 o ()
 {
     [ ! -f "$1" ] && return
     (
-        objdump -Cd "$1" | cat -f -l asm --file-name "$1"
+        objdump -Cd "$1" | bat -f -l asm --file-name "$1"
         readelf -p .rodata -x .data "$1"
     ) | $BAT_PAGER
+}
+
+# Preprocess C or C++ source code.
+c ()
+{
+    [ ! -f "$1" ] && return
+    gcc -E "$1" | \grep -v '#' | bat -l c --file-name "$1"
 }
 
 # Pre-command for command timing. It will be called just before any command is
