@@ -108,6 +108,7 @@ else
             sudo tee ${files[*]} <<< $1
         fi
     }
+    complete -W "$(</sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)" cfs
 
     # Obtain the ID of the active window.
     getactivewindow ()
