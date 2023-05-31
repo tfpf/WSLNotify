@@ -178,7 +178,7 @@ alias pip='python3 -m pip'
 
 # Performance analysis. Use GNU's `time` command rather than Bash's `time`
 # shell keyword.
-alias S='perf stat -e instructions,branches,branch-misses,cache-references,cache-misses '
+alias S='perf stat -e task-clock,cycles,instructions,branches,branch-misses,cache-references,cache-misses '
 alias time='/usr/bin/time -f "$(timefmt)" '
 
 alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
