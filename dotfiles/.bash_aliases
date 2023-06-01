@@ -209,7 +209,8 @@ o ()
 c ()
 {
     [ ! -f "$1" ] && return
-    gcc -E "$1" | \grep -v '#' | bat -l c --file-name "$1"
+    [ "$2" = C++ ] && local c=g++ || local c=gcc
+    $c -E "$1" | \grep -v '#' | bat -l c --file-name "$1"
 }
 
 # Pre-command for command timing. It will be called just before any command is
