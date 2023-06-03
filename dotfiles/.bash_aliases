@@ -103,7 +103,7 @@ else
         local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
         if [ $# -lt 1 ]
         then
-            \cat ${files[*]}
+            column ${files[*]}
         else
             sudo tee ${files[*]} <<< $1
         fi
