@@ -196,7 +196,7 @@ o ()
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
     (
         objdump -Cd "$1" | bat -f -l asm --file-name "$1"
-        readelf -p .rodata -x .data "$1"
+        readelf -p .rodata -x .rodata -x .data "$1"
     ) | $BAT_PAGER
 }
 
