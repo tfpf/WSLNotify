@@ -55,12 +55,7 @@ then
     # GVIM for Windows.
     g ()
     {
-        if [ ! -f "$1" ]
-        then
-            printf "Usage:\n" >&2
-            printf "  ${FUNCNAME[0]} <file>\n" >&2
-            return 1
-        fi
+        [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
 
         # See https://tuxproject.de/projects/vim/ for 64-bit Windows binaries.
         local gvimpath='/mnt/c/Program Files (x86)/Vim/vim90/gvim.exe'
@@ -96,19 +91,6 @@ then
 else
     alias g='gvim'
     alias x='xdg-open'
-
-    # Control CPU frequency scaling.
-    cfs ()
-    {
-        local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
-        if [ $# -lt 1 ]
-        then
-            column ${files[*]}
-        else
-            sudo tee ${files[*]} <<< $1
-        fi
-    }
-    complete -W "$(</sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)" cfs
 
     # Obtain the ID of the active window.
     getactivewindow ()
@@ -162,7 +144,6 @@ alias grep='\grep -n --binary-files=without-match --color=auto'
 alias pgrep='\pgrep -il'
 alias ps='\ps a -c'
 
-# Bat must be invoked as `batcat` on Debian and Mint, and as `bat` on Manjaro.
 if command -v batcat &>/dev/null
 then
     alias bat='batcat'
@@ -195,10 +176,24 @@ timefmt ()
     printf "ICS: %%c.  VCS: %%w.\n"
 }
 
+# Control CPU frequency scaling.
+cfs ()
+{
+    [ ! -d /sys/devices/system/cpu/cpu0/cpufreq ] && return 1
+    local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
+    if [ $# -lt 1 ]
+    then
+        column ${files[*]}
+    else
+        sudo tee ${files[*]} <<< $1
+    fi
+}
+cfs && complete -W "$(</sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)" cfs
+
 # View object files.
 o ()
 {
-    [ ! -f "$1" ] && return
+    [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
     (
         objdump -Cd "$1" | bat -f -l asm --file-name "$1"
         readelf -p .rodata -x .data "$1"
@@ -208,7 +203,7 @@ o ()
 # Preprocess C or C++ source code.
 c ()
 {
-    [ ! -f "$1" ] && return
+    [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
     [ "$2" = C++ ] && local c=g++ || local c=gcc
     $c -E "$1" | \grep -v '#' | bat -l c++ --file-name "$1"
 }
@@ -232,11 +227,7 @@ after_command ()
     local __end=$(date +%s%3N)
     local delay=$((__end-__begin))
     unset __busy __begin
-    if [ $delay -le 5000 ]
-    then
-        unset __window
-        return
-    fi
+    [ $delay -le 5000 ] && unset __window && return
 
     local milliseconds=$((delay%1000))
     local seconds=$((delay/1000%60))
@@ -273,20 +264,8 @@ PROMPT_COMMAND=after_command
 # PDF optimiser. This requires that Ghostscript be installed.
 pdfopt ()
 {
-    if [ $# -lt 2 ]
-    then
-        printf "Usage:\n" >&2
-        printf "  ${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n" >&2
-        return 1
-    fi
-
-    if [ $# -ge 3 ]
-    then
-        opt_level=$3
-    else
-        opt_level=72
-    fi
-
+    [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n" >&2 && return 1
+    [ $# -ge 3 ] && local opt_level=$3 || local opt_level=72
     gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress     \
        -dNOPAUSE -dQUIET -dBATCH                                              \
        -sOutputFile="$2"                                                      \
