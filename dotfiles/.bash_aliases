@@ -188,7 +188,10 @@ cfs ()
         sudo tee ${files[*]} <<< $1
     fi
 }
-cfs && complete -W "$(</sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)" cfs
+if [ -d /sys/devices/system/cpu/cpu0/cpufreq ]
+then
+    complete -W "$(</sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)" cfs
+fi
 
 # View object files.
 o ()
