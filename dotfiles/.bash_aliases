@@ -207,7 +207,7 @@ o ()
 c ()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
-    [ "$2" = C++ ] && local c=g++ || local c=gcc
+    [ "$2" = ++ ] && local c=g++ || local c=gcc
     $c -E "$1" | \grep -v '#' | bat -l c++ --file-name "$1"
 }
 
