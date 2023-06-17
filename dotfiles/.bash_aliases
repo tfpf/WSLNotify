@@ -177,19 +177,18 @@ timefmt ()
 }
 
 # Control CPU frequency scaling.
-cfs ()
-{
-    [ ! -d /sys/devices/system/cpu/cpu0/cpufreq ] && return 1
-    local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
-    if [ $# -lt 1 ]
-    then
-        column ${files[*]}
-    else
-        sudo tee ${files[*]} <<< $1
-    fi
-}
 if [ -d /sys/devices/system/cpu/cpu0/cpufreq ]
 then
+    cfs ()
+    {
+        local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
+        if [ $# -lt 1 ]
+        then
+            column ${files[*]}
+        else
+            sudo tee ${files[*]} <<< $1
+        fi
+    }
     complete -W "$(</sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)" cfs
 fi
 
