@@ -214,8 +214,7 @@ c ()
 # executed.
 before_command ()
 {
-    [ -n "${__busy+.}" ] && return
-    __busy=1
+    [ -n "${__begin+.}" ] && return
     __window=${WINDOWID:-$(getactivewindow)}
     __begin=$(date +%s%3N)
 }
@@ -225,10 +224,10 @@ before_command ()
 after_command ()
 {
     local exit_status=$?
-    [ -z "${__busy+.}" ] && return
     local __end=$(date +%s%3N)
+    [ -z "${__begin+.}" ] && return
     local delay=$((__end-__begin))
-    unset __busy __begin
+    unset __begin
     [ $delay -le 5000 ] && unset __window && return
 
     local milliseconds=$((delay%1000))
