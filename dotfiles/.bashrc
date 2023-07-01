@@ -67,9 +67,6 @@ then
     fi
 fi
 
-# Allow the superuser to connect to the X server.
-xhost +SI:localuser:root &>/dev/null
-
 # Enable programmable completion for pip. This is actually the output of
 # `pip completion --bash`.
 _pip_completion()
