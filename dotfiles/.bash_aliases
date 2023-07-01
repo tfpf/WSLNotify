@@ -127,7 +127,7 @@ export BAT_PAGER='less -iRF'
 # used to exit unconditionally.
 alias bye='true && exit'
 
-alias F='watch -n 1 "\grep MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr"'
+alias F='watch -n 1 "\grep MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr | sed s/^0/\ /g"'
 alias M='watch -n 1 free -ht'
 alias s='watch -n 1 sensors'
 alias top='\top -d 1 -H -u $USER'
