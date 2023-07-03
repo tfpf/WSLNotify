@@ -202,6 +202,13 @@ o ()
     ) | $BAT_PAGER
 }
 
+# View raw data.
+h ()
+{
+    [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
+    hexdump -e '"%07.7_Ax\n"' -e '"%07.7_ax " 32/1 " %02x" "\n"' "$1" | $BAT_PAGER
+}
+
 # Preprocess C or C++ source code.
 c ()
 {
