@@ -48,28 +48,6 @@ then
     fi
 fi
 
-# Enable programmable completion for common commands. You don't need to enable
-# this if it's already enabled in `/etc/bash.bashrc` and `/etc/profile` sources
-# `/etc/bash.bashrc`.
-if ! shopt -oq posix
-then
-    if [ -f /usr/share/bash-completion/bash_completion ]
-    then
-        . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]
-    then
-        . /etc/bash_completion
-    fi
-fi
-
-# Enable programmable completion for pip. This is actually the output of
-# `pip completion --bash`.
-_pip_completion()
-{
-    COMPREPLY=($(COMP_WORDS="${COMP_WORDS[*]}" COMP_CWORD=$COMP_CWORD PIP_AUTO_COMPLETE=1 $1 2>/dev/null))
-}
-complete -o default -F _pip_completion /usr/bin/python3 -m pip
-
 # Append to a `PATH`-like environment variable without duplication.
 envarmunge ()
 {
@@ -118,4 +96,29 @@ envarmunge PATH $HOME/bin
 if [ -f $HOME/.bash_aliases ]
 then
     . $HOME/.bash_aliases
+fi
+
+# Enable programmable completion for common commands. You don't need to enable
+# this if it's already enabled in `/etc/bash.bashrc` and `/etc/profile` sources
+# `/etc/bash.bashrc`.
+if ! shopt -oq posix
+then
+    if [ -f /usr/share/bash-completion/bash_completion ]
+    then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]
+    then
+        . /etc/bash_completion
+    fi
+fi
+
+# More programmable completion.
+if command -v pip &>/dev/null
+then
+    . <( pip completion --bash )
+fi
+if command -v rustup &>/dev/null
+then
+    . <( rustup completions bash )
+    . <( rustup completions bash cargo )
 fi
