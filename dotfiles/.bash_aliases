@@ -163,7 +163,6 @@ alias S='perf stat -e task-clock,cycles,instructions,branches,branch-misses,cach
 alias time='/usr/bin/time -f "$(timefmt)" '
 
 alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
-alias e='exec bash'
 alias less='\less -i'
 alias valgrind='\valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
@@ -191,6 +190,16 @@ then
     }
     complete -W "$(</sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)" cfs
 fi
+
+# Restart the shell. Exit from any Python virtual environments before doing so.
+e ()
+{
+    while [ -n "$VIRTUAL_ENV" ]
+    do
+        deactivate
+    done
+    exec bash
+}
 
 # View object files.
 o ()
