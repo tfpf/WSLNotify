@@ -48,11 +48,6 @@ then
     fi
 fi
 
-if [ -f $HOME/.bash_aliases ]
-then
-    . $HOME/.bash_aliases
-fi
-
 # Enable programmable completion for common commands. You don't need to enable
 # this if it's already enabled in `/etc/bash.bashrc` and `/etc/profile` sources
 # `/etc/bash.bashrc`.
@@ -118,3 +113,9 @@ envarmunge MANPATH /usr/share/man
 
 envarmunge PATH $HOME/.local/bin
 envarmunge PATH $HOME/bin
+
+# Must be at the end, because it may depend on things set above.
+if [ -f $HOME/.bash_aliases ]
+then
+    . $HOME/.bash_aliases
+fi
