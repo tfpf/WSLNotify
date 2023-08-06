@@ -114,6 +114,9 @@ export HISTTIMEFORMAT="[%F %T] "
 
 export QT_LOGGING_RULES="qt5ct.debug=false"
 
+# Don't let Python virtual environments mess up the terminal prompt.
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
 # Maximum line length of LaTeX output.
 export max_print_line=1048576
 export error_line=254
