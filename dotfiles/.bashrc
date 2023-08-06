@@ -50,7 +50,7 @@ then
     then
         export PS1='\n\[\e[1;91m\]┌[\u \h '"($(uname))"'\[\e[0m\] \[\e[1;96m\]\w\[\e[1;91m\]]\n└─#\[\e[0m\] '
     else
-        export PS1='\n┌['"\$(_venv_info)"'\[\e[1;92m\]\u\[\e[0m\] \[\e[1;3;93m\]\h '"($(uname))"'\[\e[0m\] \[\e[1;96m\]\w\[\e[0m\]]\n└─\$ '
+        export PS1='\n┌[$(_venv_info)\[\e[1;92m\]\u\[\e[0m\] \[\e[1;3;93m\]\h '"($(uname))"'\[\e[0m\] \[\e[1;96m\]\w\[\e[0m\]]\n└─\$ '
     fi
 fi
 
