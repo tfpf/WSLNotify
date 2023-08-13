@@ -60,9 +60,11 @@ envarmunge CARGO_HOME $HOME/.cargo
 envarmunge PATH $HOME/.cargo/bin
 
 # Gurobi Optimizer.
-envarmunge GUROBI_HOME /opt/gurobi952/linux64
-envarmunge LD_LIBRARY_PATH /opt/gurobi952/linux64/lib
-envarmunge PATH /opt/gurobi952/linux64/bin
+envarmunge GUROBI_HOME /opt/gurobi*/linux64
+envarmunge C_INCLUDE_PATH /opt/gurobi*/linux64/include
+envarmunge CPLUS_INCLUDE_PATH /opt/gurobi*/linux64/include
+envarmunge LD_LIBRARY_PATH /opt/gurobi*/linux64/lib
+envarmunge PATH /opt/gurobi*/linux64/bin
 
 # Ipe: allow LaTeX rendering.
 envarmunge IPELATEXDIR $HOME/.ipe/latexrun
