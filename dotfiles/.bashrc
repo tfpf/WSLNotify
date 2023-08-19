@@ -38,9 +38,9 @@ then
     fi
     if [ "$USER" = root -o "$(id -nu)" = root ]
     then
-        export PS1='\n\[\e[1;91m\]┌[\u \h '"($(uname))"'\[\e[0m\] \[\e[1;96m\]\w\[\e[1;91m\]]\n└─#\[\e[0m\] '
+        export PS1='\n\[\e[1;91m\]┌[\u \h • '"$(uname)"'\[\e[0m\] \[\e[1;96m\]\w\[\e[1;91m\]]\n└─#\[\e[0m\] '
     else
-        export PS1='\n┌[\[\e[1;95m\]${VIRTUAL_ENV##*/}\[\e[0m\]${VIRTUAL_ENV:+ }\[\e[1;92m\]\u\[\e[0m\] \[\e[1;3;93m\]\h ('"$(uname)"')\[\e[0m\] \[\e[1;96m\]\w\[\e[0m\]]\n└─\$ '
+        export PS1='\n┌[\[\e[1;95m\]${VIRTUAL_ENV##*/}\[\e[0m\]${VIRTUAL_ENV:+ }\[\e[1;92m\]\u\[\e[0m\] \[\e[1;3;93m\]\h • '"$(uname)"'\[\e[0m\] \[\e[1;96m\]\w\[\e[0m\]]\n└─\$ '
     fi
 fi
 
