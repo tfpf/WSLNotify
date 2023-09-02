@@ -36,6 +36,11 @@
 	defaultBranch = main
 [log]
 	date = iso
+[pager]
+	branch = false
+	diff = less -iRF
+	log = less -iRFX
+	show = less -iRFX
 [pull]
 	rebase = false
 [user]

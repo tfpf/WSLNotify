@@ -125,6 +125,8 @@ export half_error_line=238
 export EDITOR=vim
 export GIT_EDITOR=vim
 export BAT_PAGER='less -iRF'
+export MANPAGER='less -i'
+export PAGER='less -i'
 
 # Some terminals exit only if the previous command was successful. This can be
 # used to exit unconditionally.
