@@ -128,6 +128,14 @@ export BAT_PAGER='less -iRF'
 export MANPAGER='less -i'
 export PAGER='less -i'
 
+# Do not prompt for the page number when multiple manual pages match the query.
+export MAN_POSIXLY_CORRECT=1
+
+# Tell Git to prompt for the PAT on the terminal rather than through a GUI
+# program.
+unset GIT_ASKPASS
+unset SSH_ASKPASS
+
 # Some terminals exit only if the previous command was successful. This can be
 # used to exit unconditionally.
 alias bye='true && exit'
@@ -207,6 +215,7 @@ e ()
 }
 
 # View object files.
+unalias o
 o ()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
