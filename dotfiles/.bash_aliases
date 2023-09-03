@@ -215,7 +215,7 @@ e ()
 }
 
 # View object files.
-unalias o
+unalias o &>/dev/null
 o ()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
