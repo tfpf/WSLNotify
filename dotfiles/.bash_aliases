@@ -310,8 +310,8 @@ pdfopt ()
 rr ()
 {
     case $1 in
-        "" | *[^0-9]*) local length=20;;
-        *) local length=$1;;
+        ("" | *[^0-9]*) local length=20;;
+        (*) local length=$1;;
     esac
     for pattern in '0-9' 'A-Za-z' 'A-Za-z0-9' 'A-Za-z0-9!@#$*()'
     do
