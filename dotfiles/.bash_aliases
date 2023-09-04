@@ -112,6 +112,7 @@ export HISTFILESIZE=2000
 export HISTSIZE=1000
 export HISTTIMEFORMAT="[%F %T] "
 
+export NO_AT_BRIDGE=1
 export QT_LOGGING_RULES="qt5ct.debug=false"
 
 # Don't let Python virtual environments mess up the terminal prompt.
