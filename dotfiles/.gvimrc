@@ -83,6 +83,9 @@ se sta                     " Tab inserts an `sw`-size character at the start of 
 se sts=0                   " Do not insert spaces when pressing Tab.
 se sw=4                    " Shift width. See `sta`.
 se tgc                     " Use 24-bit colours, so that VIM and GVIM look the same.
+se timeout                 " Time out on mappings and key codes.
+se timeoutlen=0            " Time to wait until a mapping sequence is completely entered.
+se ttimeoutlen=-1          " Wait for `timeoutlen` until a key code sequence is completely entered.
 se ts=4                    " Tab stop. See `sta`.
 se tw=0                    " Do not break lines automatically.
 se ul=1000                 " Number of undo operations allowed.
