@@ -34,7 +34,7 @@ then
     alias wp='/mnt/c/Users/vpaij/AppData/Local/Programs/Python/Python310/python.exe'
 
     # Create the virtual display. VcXsrv should be installed.
-    vcx ()
+    vcx()
     {
         local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
         local vcxsrvname=$(basename "$vcxsrvpath")
@@ -53,7 +53,7 @@ then
     }
 
     # GVIM for Windows.
-    g ()
+    g()
     {
         [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
 
@@ -71,7 +71,7 @@ then
     }
 
     # Open a file or link.
-    x ()
+    x()
     {
         # Windows Explorer can open WSL directories, but the command must be
         # invoked after navigating to the target directory to avoid problems
@@ -93,7 +93,7 @@ else
     alias x='xdg-open'
 
     # Obtain the ID of the active window.
-    getactivewindow ()
+    getactivewindow()
     {
         if [ -z "$DISPLAY" ]
         then
@@ -181,7 +181,7 @@ alias less='\less -i'
 alias valgrind='\valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
 # Format string for the `time` command.
-timefmt ()
+timefmt()
 {
     printf "%*s\n" $COLUMNS " " | sed "s/ /─/g"
     printf "Real: %%e s.  User: %%U s.  Kernel: %%S s.  "
@@ -192,7 +192,7 @@ timefmt ()
 # Control CPU frequency scaling.
 if [ -d /sys/devices/system/cpu/cpu0/cpufreq ]
 then
-    cfs ()
+    cfs()
     {
         local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
         if [ $# -lt 1 ]
@@ -206,7 +206,7 @@ then
 fi
 
 # Restart the shell. Exit from any Python virtual environments before doing so.
-e ()
+e()
 {
     while [ -n "$VIRTUAL_ENV" ]
     do
@@ -217,7 +217,7 @@ e ()
 
 # View object files.
 unalias o &>/dev/null
-o ()
+o()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
     (
@@ -227,14 +227,14 @@ o ()
 }
 
 # View raw data.
-h ()
+h()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
     hexdump -e '"%07.7_Ax\n"' -e '"%07.7_ax " 32/1 " %02x" "\n"' "$1" | $BAT_PAGER
 }
 
 # Preprocess C or C++ source code.
-c ()
+c()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
     [ "$2" = ++ ] && local c=g++ || local c=gcc
@@ -243,7 +243,7 @@ c ()
 
 # Pre-command for command timing. It will be called just before any command is
 # executed.
-before_command ()
+before_command()
 {
     [ -n "${__begin+.}" ] && return
     __window=${WINDOWID:-$(getactivewindow)}
@@ -252,7 +252,7 @@ before_command ()
 
 # Post-command for command timing. It will be called just before the prompt is
 # displayed (i.e. just after any command is executed).
-after_command ()
+after_command()
 {
     local exit_status=$?
     local __end=$(date +%s%3N)
@@ -294,7 +294,7 @@ trap before_command DEBUG
 PROMPT_COMMAND=after_command
 
 # PDF optimiser. This requires that Ghostscript be installed.
-pdfopt ()
+pdfopt()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n" >&2 && return 1
     [ $# -ge 3 ] && local opt_level=$3 || local opt_level=72
@@ -308,7 +308,7 @@ pdfopt ()
 }
 
 # Random string generator.
-rr ()
+rr()
 {
     case $1 in
         ("" | *[^0-9]*) local length=20;;

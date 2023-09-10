@@ -7,7 +7,7 @@ __data='\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00 \x00\x00\x00 \x08\x06\x0
 # Tkinter window and read the file. Execute the program when the Escape key is
 # pressed. This should work on all single-threaded Python programs which do not
 # create any Tkinter widgets. The random names should prevent name collisions.
-P ()
+P()
 {
     if [ $# -lt 1 ]
     then
@@ -65,7 +65,7 @@ _xtBzBMfnpdQGhwINyACP()
 
 # Just like the last one, this is a hack to render LaTeX expressions without
 # creating a new file. Uses the parser that comes with Matplotlib.
-L ()
+L()
 {
     if [ $# -eq 0 ]
     then
@@ -185,7 +185,7 @@ _xtBzBMfnpdQGhwINyACP()
 # `threshold1` or less, but don't touch colours differing from it by
 # `threshold2` or more. The alpha (opacity) for colours in between will
 # gradually change from 0 to 1.
-T ()
+T()
 {
     if [ $# -lt 6 ]
     then

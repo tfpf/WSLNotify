@@ -45,7 +45,7 @@ then
 fi
 
 # Append to a `PATH`-like environment variable without duplication.
-envarmunge ()
+envarmunge()
 {
     local name=$1
     local value=$2
@@ -109,12 +109,12 @@ fi
 # More programmable completion.
 if command -v pip &>/dev/null
 then
-    . <( python3 -m pip completion --bash )
+    . <(python3 -m pip completion --bash)
 fi
 if command -v rustup &>/dev/null
 then
-    . <( rustup completions bash )
-    . <( rustup completions bash cargo )
+    . <(rustup completions bash)
+    . <(rustup completions bash cargo)
 fi
 
 # Must be at the end, because it may depend on things set above.
