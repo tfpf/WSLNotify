@@ -109,9 +109,7 @@ fi
 # More programmable completion.
 if command -v pip &>/dev/null
 then
-    # If this fails, its executable may not be in `PATH`. Create a symlink to
-    # `pip3`, which usually is in `PATH`.
-    . <( pip completion --bash )
+    . <( python3 -m pip completion --bash )
 fi
 if command -v rustup &>/dev/null
 then
