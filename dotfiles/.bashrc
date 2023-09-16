@@ -90,12 +90,10 @@ envarmunge MANPATH /usr/share/man
 envarmunge PATH $HOME/.local/bin
 envarmunge PATH $HOME/bin
 
-# Enable programmable completion for common commands. You don't need to enable
-# this if it's already enabled in `/etc/bash.bashrc` and `/etc/profile` sources
-# `/etc/bash.bashrc`. This must be done before any aliases are set in order to
-# prevent the programmable completion functions from misbehaving because of
-# unexpected outputs due to the aliases.
-if ! shopt -oq posix
+# Enable programmable completion for common commands. This must be done before
+# any aliases are set in order to prevent the programmable completion functions
+# from misbehaving because of unexpected outputs due to the aliases.
+if [ -z "${BASH_COMPLETION_VERSINFO+.}" ]
 then
     if [ -f /usr/share/bash-completion/bash_completion ]
     then
