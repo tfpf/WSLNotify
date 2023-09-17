@@ -70,6 +70,7 @@ se list                    " Display certain characters more prominently. See `l
 se lsp=0                   " Line spacing.
 se mh                      " Hide mouse pointer while typing.
 se nosi                    " Don't try to be oversmart while indenting.
+se nosm                    " Do not jump to the matching bracket one is inserted.
 se noswapfile              " Do not create swap files.
 se nowrap                  " Do not wrap lines.
 se nu                      " Line numbers.
