@@ -105,13 +105,10 @@ then
 fi
 
 # More programmable completion.
-if command -v pip &>/dev/null
-then
-    . <(python3 -m pip completion --bash)
-fi
+. <(python3 -m pip completion --bash)
 if command -v rustup &>/dev/null
 then
-    . <(rustup completions bash)
+    . <(rustup completions bash rustup)
     . <(rustup completions bash cargo)
 fi
 
