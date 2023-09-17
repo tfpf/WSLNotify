@@ -174,20 +174,11 @@ alias pip='python3 -m pip'
 # Performance analysis. Use GNU's `time` command rather than Bash's `time`
 # shell keyword.
 alias S='perf stat -e task-clock,cycles,instructions,branches,branch-misses,cache-references,cache-misses '
-alias time='/usr/bin/time -f "$(timefmt)" '
+alias time='/usr/bin/time -f "\n[3mReal %e s    User %U s    Kernel %S s    MRSS %M KiB    %P CPU    %c ICS    %w VCS[0m" '
 
 alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
 alias less='\less -i'
 alias valgrind='\valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
-
-# Format string for the `time` command.
-timefmt()
-{
-    printf "%*s\n" $COLUMNS " " | sed "s/ /─/g"
-    printf "Real: %%e s.  User: %%U s.  Kernel: %%S s.  "
-    printf "MRSS: %%M KiB.  CPU: %%P.  "
-    printf "ICS: %%c.  VCS: %%w.\n"
-}
 
 # Control CPU frequency scaling.
 if [ -d /sys/devices/system/cpu/cpu0/cpufreq ]
