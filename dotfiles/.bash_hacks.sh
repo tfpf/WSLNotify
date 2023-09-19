@@ -121,7 +121,7 @@ def _sQIvYlfwvgZJnQNmxRyF(fig, text, entry, wrap_variable):
         _tovFFPjGPBAdfDHOlVTr(fig, e)
     else:
         fig.texts = []
-        fig.text(0.02, size / 700, text.get('2.0', _ArFfEXZloCCjFNnmSwdw.END).strip(), size=size, color='$fgcolour', wrap=wrap)
+        fig.text(0, 0, text.get('2.0', _ArFfEXZloCCjFNnmSwdw.END).strip(), size=size, color='$fgcolour', wrap=wrap, va='bottom')
         fig.canvas.draw()
 
 def _tovFFPjGPBAdfDHOlVTr(fig, e):
