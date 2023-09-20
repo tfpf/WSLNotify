@@ -1,3 +1,5 @@
+command unalias -a
+
 # This block is executed only if Bash is running on WSL (Windows Subsystem for
 # Linux).
 if \grep -iq microsoft /proc/version
@@ -174,7 +176,7 @@ alias pip='python3 -m pip'
 # Performance analysis. Use GNU's `time` command rather than Bash's `time`
 # shell keyword.
 alias S='perf stat -e task-clock,cycles,instructions,branches,branch-misses,cache-references,cache-misses '
-alias time='/usr/bin/time -f "\n[3mReal %e s    User %U s    Kernel %S s    MRSS %M KiB    %P CPU    %c ICS    %w VCS[0m" '
+alias time='/usr/bin/time -f "\n[3mReal %e s · User %U s · Kernel %S s · MRSS %M KiB · %P CPU · %c ICS · %w VCS[0m" '
 
 alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
 alias less='\less -i'
@@ -207,7 +209,6 @@ e()
 }
 
 # View object files.
-unalias o &>/dev/null
 o()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
