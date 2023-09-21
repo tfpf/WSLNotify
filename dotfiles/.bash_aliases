@@ -182,6 +182,10 @@ alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
 alias less='\less -i'
 alias valgrind='\valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
+alias L="$HOME/.bash_hacks.py L"
+alias P="$HOME/.bash_hacks.py P"
+alias T="$HOME/.bash_hacks.py T"
+
 # Control CPU frequency scaling.
 if [ -d /sys/devices/system/cpu/cpu0/cpufreq ]
 then

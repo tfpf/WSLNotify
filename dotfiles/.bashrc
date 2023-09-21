@@ -117,7 +117,3 @@ if [ -f $HOME/.bash_aliases ]
 then
     . $HOME/.bash_aliases
 fi
-if [ -f $HOME/.bash_hacks.sh ]
-then
-    . $HOME/.bash_hacks.sh
-fi
