@@ -1,0 +1,4 @@
+set bell-style audible
+set enable-bracketed-paste on
+set show-all-if-unmodified off
+set show-all-if-ambiguous off
