@@ -11,6 +11,7 @@ import pathlib
 import PIL.Image as Image
 import platform
 import tkinter as tk
+import tkinter.ttk as ttk
 import sys
 import time
 import traceback
@@ -71,6 +72,7 @@ with Matplotlib.
         canvas = mbtkagg.FigureCanvasTkAgg(self.fig, self)
         canvas.draw()
         canvas.get_tk_widget().pack(side=tk.LEFT, anchor=tk.W, expand=True, fill=tk.BOTH)
+        canvas.get_default_filename = lambda *args: 'lr_' + time.strftime('%Y-%m-%d_%H-%M-%S')
 
         # Navigation toolbar.
         nav_tb_frame = tk.Frame(self)
@@ -79,7 +81,7 @@ with Matplotlib.
 
         # Space to enter LaTeX source.
         self.code = tk.Text(
-            self, bg='#333333', fg='#FFFFFF', insertbackground='#FFFFFF', selectbackground='#079486',
+            self, bg='#333333', fg='#FFFFFF', insertbackground='#F0EC8C', selectbackground='#079486',
             selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('Cascadia Code', 13)
         )
         self.code.insert('1.0', greek + '\n')
@@ -93,7 +95,10 @@ with Matplotlib.
         self.code.pack(side=tk.TOP, anchor=tk.NE, expand=True, fill=tk.BOTH)
 
         # Space to enter the font size.
-        self.size = tk.Entry(self, bg='#333333', fg='#FFFFFF', insertbackground='#FFFFFF', font=('Cascadia Code', 13))
+        self.size = tk.Entry(
+            self, bg='#333333', fg='#FFFFFF', insertbackground='#F0EC8C', selectbackground='#079486',
+            selectforeground='#FFFFFF', font=('Cascadia Code', 13)
+        )
         self.size.insert(0, '50')
         self.size.bind('<Escape>', self.render)
         self.size.pack(side=tk.BOTTOM, anchor=tk.SE, expand=False, fill=tk.BOTH)
@@ -105,6 +110,16 @@ with Matplotlib.
             command=self.render
         )
         wrapbtn.pack(side=tk.BOTTOM, anchor=tk.SE, expand=False, fill=tk.X)
+
+        self.typeface = tk.StringVar(self)
+        typefacecbox = ttk.Combobox(
+            self, font=('Cascadia Code', 13), state='readonly', textvariable=self.typeface,
+            values=('Cochineal', 'Cascadia Code', 'Angelic')
+        )
+        self.option_add('*TCombobox*Listbox.font', ('Cascadia Code', 13))
+        typefacecbox.current(0)
+        typefacecbox.bind('<<ComboboxSelected>>', self.render)
+        typefacecbox.pack(side=tk.BOTTOM, anchor=tk.SE, expand=False, fill=tk.X)
 
         self.mainloop()
 
@@ -158,6 +173,7 @@ Render LaTeX expressions in the figure.
             size = int(self.size.get())
         except ValueError:
             size = 50
+        plt.rc('font', family=self.typeface.get())
         wrap = self.wrap.get()
         text = self.code.get('2.0', tk.END).strip()
         self.fig.text(0, 0, text, size=size, wrap=wrap, color=self.fg, va='bottom')
