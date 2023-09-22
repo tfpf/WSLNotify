@@ -33,7 +33,7 @@ set menu-complete-display-prefix off
 set meta-flag on
 set output-meta on
 set page-completions on
-set prefer-visible-bell on
+set prefer-visible-bell off
 set print-completions-horizontally off
 set revert-all-at-newline off
 set show-all-if-ambiguous off
