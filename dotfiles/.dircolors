@@ -71,7 +71,7 @@ STICKY 01;96  # Sticky (T) directory.
 LINK 04;94  # Symbolic link. Set to `target` to use colour of target file.
 MULTIHARDLINK 00  # Regular file with more than one link.
 FIFO 40;33  # Pipe.
-SOCK 01;35  # Socket.
+SOCK 01;90  # Socket and the matched part of programmable completion.
 DOOR 01;35  # Door.
 BLK 40;33;01  # Block device driver.
 CHR 40;33;01  # Character device driver.
