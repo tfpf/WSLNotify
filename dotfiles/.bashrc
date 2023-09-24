@@ -90,6 +90,11 @@ envarmunge MANPATH /usr/share/man
 envarmunge PATH $HOME/.local/bin
 envarmunge PATH $HOME/bin
 
+envarmunge PKG_CONFIG_PATH /usr/lib/pkgconfig
+envarmunge PKG_CONFIG_PATH /usr/share/pkgconfig
+envarmunge PKG_CONFIG_PATH /usr/local/share/pkgconfig
+envarmunge PKG_CONFIG_PATH /usr/local/lib/pkgconfig
+
 # Enable programmable completion for common commands. This must be done before
 # any aliases are set in order to prevent the programmable completion functions
 # from misbehaving because of unexpected outputs due to the aliases.
