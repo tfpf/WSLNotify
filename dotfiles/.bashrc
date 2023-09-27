@@ -44,14 +44,14 @@ then
     fi
 fi
 
-# Append to a `PATH`-like environment variable without duplication.
+# Prepend to a `PATH`-like environment variable without duplication.
 envarmunge()
 {
     local name=$1
     local value=$2
     if [[ -n $name && -d $value && :${!name}: != *:$value:* ]]
     then
-        eval "export $name=\${$name:+\$$name:}\"$value\""
+        eval "export $name=\"$value\"\${$name:+:\$$name}"
     fi
 }
 
@@ -75,25 +75,20 @@ envarmunge INFOPATH /usr/local/texlive/*/texmf-dist/doc/info
 envarmunge MANPATH /usr/local/texlive/*/texmf-dist/doc/man
 envarmunge PATH /usr/local/texlive/*/bin/x86_64-linux
 
-envarmunge C_INCLUDE_PATH /usr/include
 envarmunge C_INCLUDE_PATH /usr/local/include
 
-envarmunge CPLUS_INCLUDE_PATH /usr/include/c++/*
-
-envarmunge LD_LIBRARY_PATH /usr/lib
 envarmunge LD_LIBRARY_PATH /usr/local/lib
 
-# If non-empty, this must contain `/usr/share/man`. Otherwise, `man` is unable
-# to find any manual pages. I have observed this on Mint and Manjaro.
 envarmunge MANPATH /usr/share/man
+envarmunge MANPATH /usr/local/man
+envarmunge MANPATH /usr/local/share/man
+envarmunge MANPATH $HOME/.local/share/man
 
 envarmunge PATH $HOME/.local/bin
 envarmunge PATH $HOME/bin
 
-envarmunge PKG_CONFIG_PATH /usr/lib/pkgconfig
-envarmunge PKG_CONFIG_PATH /usr/share/pkgconfig
-envarmunge PKG_CONFIG_PATH /usr/local/share/pkgconfig
 envarmunge PKG_CONFIG_PATH /usr/local/lib/pkgconfig
+envarmunge PKG_CONFIG_PATH /usr/local/share/pkgconfig
 
 # Enable programmable completion for common commands. This must be done before
 # any aliases are set in order to prevent the programmable completion functions
