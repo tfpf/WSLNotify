@@ -239,7 +239,7 @@ c()
 
 # Pre-command for command timing. It will be called just before any command is
 # executed.
-before_command()
+_before_command()
 {
     [ -n "${__begin+.}" ] && return
     __window=${WINDOWID:-$(getactivewindow)}
@@ -248,7 +248,7 @@ before_command()
 
 # Post-command for command timing. It will be called just before the prompt is
 # displayed (i.e. just after any command is executed).
-after_command()
+_after_command()
 {
     local exit_status=$?
     local __end=$(date +%s%3N)
@@ -286,8 +286,8 @@ after_command()
     unset __window
 }
 
-trap before_command DEBUG
-PROMPT_COMMAND=after_command
+trap _before_command DEBUG
+PROMPT_COMMAND=_after_command
 
 # PDF optimiser. This requires that Ghostscript be installed.
 pdfopt()
