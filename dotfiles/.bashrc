@@ -54,6 +54,17 @@ envarmunge()
         eval "export $name=\"$value\"\${$name:+:\$$name}"
     fi
 }
+_envarmunge()
+{
+    if [ $COMP_CWORD -eq 1 ]
+    then
+        local wordlist=$(env | awk -F= '{print $1}')
+        COMPREPLY=($(compgen -W "$wordlist" $2))
+    else
+        compopt -o default
+    fi
+}
+complete -F _envarmunge envarmunge
 
 # Cargo and Rust: local installation.
 envarmunge CARGO_HOME $HOME/.cargo
