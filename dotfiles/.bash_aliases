@@ -2,15 +2,15 @@ command unalias -a
 
 # This block is executed only if Bash is running on WSL (Windows Subsystem for
 # Linux).
-if \grep -iq microsoft /proc/version
+if command grep -Fiq microsoft /proc/version
 then
 
     # Setup for a virtual display using VcXsrv to run GUI apps. You may want to
     # install `x11-xserver-utils`, `dconf-editor` and `dbus-x11`, and create
     # the file `$HOME/.config/dconf/user` to avoid getting warnings.
-    if \grep -q WSL2 /proc/version
+    if command grep -Fq WSL2 /proc/version
     then
-        export DISPLAY=$(\grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
+        export DISPLAY=$(command grep -F -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
     else
         export DISPLAY=localhost:0.0
     fi
@@ -32,8 +32,6 @@ then
     # specify the full path to the EXE files below.
     alias notify-send='WSLNotify.exe'
     alias getactivewindow='WSLGetActiveWindow.exe'
-
-    alias wp='/mnt/c/Users/vpaij/AppData/Local/Programs/Python/Python310/python.exe'
 
     # Create the virtual display. VcXsrv should be installed.
     vcx()
@@ -139,26 +137,24 @@ export MAN_POSIXLY_CORRECT=1
 unset GIT_ASKPASS
 unset SSH_ASKPASS
 
-# Some terminals exit only if the previous command was successful. This can be
-# used to exit unconditionally.
 alias bye='true && exit'
 
-alias F='watch -n 1 "\grep MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr | sed s/^0/\ /g"'
+alias F='watch -n 1 "command grep -F MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr | sed s/^0/\ /g"'
 alias M='watch -n 1 free -ht'
 alias s='watch -n 1 sensors'
-alias top='\top -d 1 -H -u $USER'
-alias htop='\htop -d 10 -t -u $USER'
+alias top='command top -d 1 -H -u $USER'
+alias htop='command htop -d 10 -t -u $USER'
 
-alias l='\ls -lNX --color=auto --group-directories-first --time-style=long-iso'
-alias la='\ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
-alias ls='\ls -C --color=auto'
-alias lt='\ls -hlNrt --color=auto --group-directories-first --time-style=long-iso'
+alias l='command ls -lNX --color=auto --group-directories-first --time-style=long-iso'
+alias la='command ls -AhlNX --color=auto --group-directories-first --time-style=long-iso'
+alias ls='command ls -C --color=auto'
+alias lt='command ls -hlNrt --color=auto --group-directories-first --time-style=long-iso'
 
-alias egrep='\grep -En --binary-files=without-match --color=auto'
-alias fgrep='\grep -Fn --binary-files=without-match --color=auto'
-alias grep='\grep -n --binary-files=without-match --color=auto'
-alias pgrep='\pgrep -il'
-alias ps='\ps a -c'
+alias egrep='command grep -En --binary-files=without-match --color=auto'
+alias fgrep='command grep -Fn --binary-files=without-match --color=auto'
+alias grep='command grep -n --binary-files=without-match --color=auto'
+alias pgrep='command pgrep -il'
+alias ps='command ps a -c'
 
 if command -v batcat &>/dev/null
 then
@@ -179,8 +175,8 @@ alias S='perf stat -e task-clock,cycles,instructions,branches,branch-misses,cach
 alias time='/usr/bin/time -f "\n[3mReal %e s · User %U s · Kernel %S s · MRSS %M KiB · %P CPU · %c ICS · %w VCS[0m" '
 
 alias d='diff -a -d -W $COLUMNS -y --suppress-common-lines'
-alias less='\less -i'
-alias valgrind='\valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
+alias less='command less -i'
+alias valgrind='command valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
 alias L="$HOME/.bash_hacks.py L"
 alias P="$HOME/.bash_hacks.py P"
@@ -234,7 +230,7 @@ c()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
     [ "$2" = ++ ] && local c=g++ || local c=gcc
-    $c -E "$1" | \grep -v '#' | bat -l c++ --file-name "$1"
+    $c -E "$1" | command grep -Fv '#' | bat -l c++ --file-name "$1"
 }
 
 # Pre-command for command timing. It will be called just before any command is
