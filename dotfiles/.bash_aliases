@@ -126,8 +126,8 @@ export half_error_line=238
 export EDITOR=vim
 export GIT_EDITOR=vim
 export BAT_PAGER='command less -iRF'
-export MANPAGER='command less -i'
-export PAGER='command less -i'
+export MANPAGER='less -i'
+export PAGER='less -i'
 
 # Do not prompt for the page number when multiple manual pages match the query.
 export MAN_POSIXLY_CORRECT=1
