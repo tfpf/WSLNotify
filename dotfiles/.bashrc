@@ -12,6 +12,61 @@ shopt -s expand_aliases
 shopt -s globstar
 shopt -s histappend
 
+# Prepend to an environment variable containing colon-separated paths without
+# duplication.
+envarmunge()
+{
+    local name=$1
+    local value=$2
+    if [[ -n $name && -d $value && :${!name}: != *:$value:* ]]
+    then
+        eval "export $name=\"$value\"\${$name:+:\$$name}"
+    fi
+}
+_envarmunge()
+{
+    if [ $COMP_CWORD -eq 1 ]
+    then
+        local wordlist=$(env | command grep -F = | awk -F = '{print $1}')
+        COMPREPLY=($(compgen -W "$wordlist" $2))
+    else
+        compopt -o default
+    fi
+}
+complete -F _envarmunge envarmunge
+
+envarmunge C_INCLUDE_PATH /usr/local/include
+envarmunge CPLUS_INCLUDE_PATH /usr/local/include
+envarmunge LD_LIBRARY_PATH /usr/local/lib
+envarmunge MANPATH /usr/share/man
+envarmunge MANPATH /usr/local/man
+envarmunge MANPATH /usr/local/share/man
+envarmunge MANPATH $HOME/.local/share/man
+envarmunge PATH $HOME/.local/bin
+envarmunge PATH $HOME/bin
+envarmunge PKG_CONFIG_PATH /usr/local/lib/pkgconfig
+envarmunge PKG_CONFIG_PATH /usr/local/share/pkgconfig
+
+# Rust (local installation).
+envarmunge CARGO_HOME $HOME/.cargo
+envarmunge PATH $HOME/.cargo/bin
+
+# Gurobi Optimizer.
+envarmunge GUROBI_HOME /opt/gurobi*/linux64
+envarmunge C_INCLUDE_PATH /opt/gurobi*/linux64/include
+envarmunge CPLUS_INCLUDE_PATH /opt/gurobi*/linux64/include
+envarmunge LD_LIBRARY_PATH /opt/gurobi*/linux64/lib
+envarmunge PATH /opt/gurobi*/linux64/bin
+
+# Ipe. Allow LaTeX rendering.
+envarmunge IPELATEXDIR $HOME/.ipe/latexrun
+envarmunge IPELATEXPATH $HOME/.ipe/latexrun
+
+# TeX Live.
+envarmunge INFOPATH /usr/local/texlive/*/texmf-dist/doc/info
+envarmunge MANPATH /usr/local/texlive/*/texmf-dist/doc/man
+envarmunge PATH /usr/local/texlive/*/bin/x86_64-linux
+
 # Make `less` more friendly for non-text input files.
 if command -v lesspipe &>/dev/null
 then
@@ -44,66 +99,7 @@ then
     fi
 fi
 
-# Prepend to a `PATH`-like environment variable without duplication.
-envarmunge()
-{
-    local name=$1
-    local value=$2
-    if [[ -n $name && -d $value && :${!name}: != *:$value:* ]]
-    then
-        eval "export $name=\"$value\"\${$name:+:\$$name}"
-    fi
-}
-_envarmunge()
-{
-    if [ $COMP_CWORD -eq 1 ]
-    then
-        local wordlist=$(env | awk -F= '{print $1}')
-        COMPREPLY=($(compgen -W "$wordlist" $2))
-    else
-        compopt -o default
-    fi
-}
-complete -F _envarmunge envarmunge
-
-# Cargo and Rust: local installation.
-envarmunge CARGO_HOME $HOME/.cargo
-envarmunge PATH $HOME/.cargo/bin
-
-# Gurobi Optimizer.
-envarmunge GUROBI_HOME /opt/gurobi*/linux64
-envarmunge C_INCLUDE_PATH /opt/gurobi*/linux64/include
-envarmunge CPLUS_INCLUDE_PATH /opt/gurobi*/linux64/include
-envarmunge LD_LIBRARY_PATH /opt/gurobi*/linux64/lib
-envarmunge PATH /opt/gurobi*/linux64/bin
-
-# Ipe: allow LaTeX rendering.
-envarmunge IPELATEXDIR $HOME/.ipe/latexrun
-envarmunge IPELATEXPATH $HOME/.ipe/latexrun
-
-# TeX Live.
-envarmunge INFOPATH /usr/local/texlive/*/texmf-dist/doc/info
-envarmunge MANPATH /usr/local/texlive/*/texmf-dist/doc/man
-envarmunge PATH /usr/local/texlive/*/bin/x86_64-linux
-
-envarmunge C_INCLUDE_PATH /usr/local/include
-
-envarmunge LD_LIBRARY_PATH /usr/local/lib
-
-envarmunge MANPATH /usr/share/man
-envarmunge MANPATH /usr/local/man
-envarmunge MANPATH /usr/local/share/man
-envarmunge MANPATH $HOME/.local/share/man
-
-envarmunge PATH $HOME/.local/bin
-envarmunge PATH $HOME/bin
-
-envarmunge PKG_CONFIG_PATH /usr/local/lib/pkgconfig
-envarmunge PKG_CONFIG_PATH /usr/local/share/pkgconfig
-
-# Enable programmable completion for common commands. This must be done before
-# any aliases are set in order to prevent the programmable completion functions
-# from misbehaving because of unexpected outputs due to the aliases.
+# Enable programmable completion for common commands.
 if [ -z "${BASH_COMPLETION_VERSINFO+.}" ]
 then
     if [ -f /usr/share/bash-completion/bash_completion ]
