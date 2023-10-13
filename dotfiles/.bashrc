@@ -99,6 +99,11 @@ then
     fi
 fi
 
+if [ -f $HOME/.bash_aliases ]
+then
+    . $HOME/.bash_aliases
+fi
+
 # Enable programmable completion for common commands.
 if [ -z "${BASH_COMPLETION_VERSINFO+.}" ]
 then
@@ -112,15 +117,9 @@ then
 fi
 
 # More programmable completion.
-. <(python3 -m pip completion --bash)
+. <(pip completion --bash)
 if command -v rustup &>/dev/null
 then
     . <(rustup completions bash rustup)
     . <(rustup completions bash cargo)
-fi
-
-# Must be at the end, because it may depend on things set above.
-if [ -f $HOME/.bash_aliases ]
-then
-    . $HOME/.bash_aliases
 fi
