@@ -67,15 +67,34 @@ envarmunge INFOPATH /usr/local/texlive/*/texmf-dist/doc/info
 envarmunge MANPATH /usr/local/texlive/*/texmf-dist/doc/man
 envarmunge PATH /usr/local/texlive/*/bin/x86_64-linux
 
-# Make `less` more friendly for non-text input files.
-if command -v lesspipe &>/dev/null
-then
-    eval "$(SHELL=/bin/sh lesspipe)"
-fi
+export BAT_PAGER='less -iRF'
+export EDITOR=vim
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01:range1=32:range2=34:fixit-insert=32:fixit-delete=31:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:type-diff=01;32'
+export GDK_SCALE=1
+export GIT_EDITOR=vim
+export _INKSCAPE_GC=disable  # Inkscape does not work with GLIBC on some Linux distributions.
+export MANPAGER='less -i'
+export MAN_POSIXLY_CORRECT=1  # Open the first matching manual page instead of prompting.
+export NO_AT_BRIDGE=1  # Disable accessibility bus error messages when using some GTK programs.
+export PAGER='less -i'
+export QT_LOGGING_RULES='qt5ct.debug=false'
+export VIRTUAL_ENV_DISABLE_PROMPT=1  # Do not change the terminal prompt when in a Python virtual environment.
+export XDG_RUNTIME_DIR=/run/user/1000
 
-# Enable colours for `ls` and make the superuser's terminal prompt more
-# conspicuous (if possible). Note that the environment variable may not always
-# reflect the correct user name.
+export HISTCONTROL=ignoreboth
+export HISTFILE=$HOME/.bash_history
+export HISTFILESIZE=2000
+export HISTSIZE=1000
+export HISTTIMEFORMAT='[%F %T] '
+
+# Maximum line length of LaTeX output.
+export max_print_line=1048576
+export error_line=254
+export half_error_line=238
+
+# Enable colours for `ls`. Make the superuser's terminal prompt more
+# conspicuous. Note that the environment variable may not always reflect the
+# correct user name.
 export PS1='\n┌[\u@\h \w]\n└─\$ '
 export PS2='──▸ '
 export PS3='#? '
@@ -98,6 +117,17 @@ then
         export PS1='\n┌[\[\e[1;95m\]${VIRTUAL_ENV##*/}\[\e[0m\]${VIRTUAL_ENV:+ }\[\e[1;92m\]\u\[\e[0m\] \[\e[1;3;93m\]\h • '"$(uname)"'\[\e[0m\] \[\e[1;96m\]\w\[\e[0m\]]\n└─\$ '
     fi
 fi
+
+# Make `less` more friendly for non-text input files.
+if command -v lesspipe &>/dev/null
+then
+    eval "$(SHELL=/bin/sh lesspipe)"
+fi
+
+# Tell Git to prompt for the PAT on the terminal rather than through a GUI
+# program.
+unset GIT_ASKPASS
+unset SSH_ASKPASS
 
 if [ -f $HOME/.bash_aliases ]
 then
