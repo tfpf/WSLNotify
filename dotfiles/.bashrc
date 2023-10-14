@@ -119,15 +119,17 @@ then
     fi
 fi
 
-# Make `less` more friendly for non-text input files.
+# Allow viewing non-text files using less.
 if command -v lesspipe &>/dev/null
 then
     eval "$(SHELL=/bin/sh lesspipe)"
 fi
 
-# Tell Git to prompt for the PAT on the terminal rather than through a GUI
-# program.
+# Don't install libraries in 64-bit directories while building CPython.
+unset CONFIG_SITE
+# Don't ask for the Git PAT in a GUI window. Use the TUI.
 unset GIT_ASKPASS
+# Don't ask for the SSH password in a GUI window. Use the TUI.
 unset SSH_ASKPASS
 
 if [ -f $HOME/.bash_aliases ]
