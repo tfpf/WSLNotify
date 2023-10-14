@@ -14,12 +14,7 @@ then
     else
         export DISPLAY=localhost:0.0
     fi
-    export GDK_SCALE=1
     export LIBGL_ALWAYS_INDIRECT=1
-    export XDG_RUNTIME_DIR=/tmp/runtime-tfpf
-
-    # Inkscape doesn't work on WSL Ubuntu using GLIBC.
-    export _INKSCAPE_GC=disable
 
     # Run a PowerShell script without changing the global execution policy.
     alias psh='powershell.exe -ExecutionPolicy Bypass'
@@ -103,39 +98,6 @@ else
         fi
     }
 fi
-
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01:range1=32:range2=34:fixit-insert=32:fixit-delete=31:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:type-diff=01;32'
-
-export HISTCONTROL=ignoreboth
-export HISTFILE=$HOME/.bash_history
-export HISTFILESIZE=2000
-export HISTSIZE=1000
-export HISTTIMEFORMAT="[%F %T] "
-
-export NO_AT_BRIDGE=1
-export QT_LOGGING_RULES="qt5ct.debug=false"
-
-# Don't let Python virtual environments mess up the terminal prompt.
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-
-# Maximum line length of LaTeX output.
-export max_print_line=1048576
-export error_line=254
-export half_error_line=238
-
-export EDITOR=vim
-export GIT_EDITOR=vim
-export BAT_PAGER='less -iRF'
-export MANPAGER='less -i'
-export PAGER='less -i'
-
-# Do not prompt for the page number when multiple manual pages match the query.
-export MAN_POSIXLY_CORRECT=1
-
-# Tell Git to prompt for the PAT on the terminal rather than through a GUI
-# program.
-unset GIT_ASKPASS
-unset SSH_ASKPASS
 
 alias bye='true && exit'
 

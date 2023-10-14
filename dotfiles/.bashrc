@@ -67,15 +67,35 @@ envarmunge INFOPATH /usr/local/texlive/*/texmf-dist/doc/info
 envarmunge MANPATH /usr/local/texlive/*/texmf-dist/doc/man
 envarmunge PATH /usr/local/texlive/*/bin/x86_64-linux
 
-# Make `less` more friendly for non-text input files.
-if command -v lesspipe &>/dev/null
-then
-    eval "$(SHELL=/bin/sh lesspipe)"
-fi
+export BAT_PAGER='less -iRF'
+export EDITOR=vim
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01:range1=32:range2=34:fixit-insert=32:fixit-delete=31:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:type-diff=01;32'
+export GDK_SCALE=1
+export GIT_EDITOR=vim
+# Inkscape does not work with GLIBC on some Linux distributions.
+export _INKSCAPE_GC=disable
+export MANPAGER='less -i'
+# Open the first matching manual page instead of prompting.
+export MAN_POSIXLY_CORRECT=1
+# Disable accessibility bus error messages when using some GTK programs.
+export NO_AT_BRIDGE=1
+export PAGER='less -i'
+export QT_LOGGING_RULES='qt5ct.debug=false'
+# Do not change the terminal prompt when in a Python virtual environment.
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+export XDG_RUNTIME_DIR=/run/user/1000
 
-# Enable colours for `ls` and make the superuser's terminal prompt more
-# conspicuous (if possible). Note that the environment variable may not always
-# reflect the correct user name.
+export HISTCONTROL=ignoreboth
+export HISTFILE=$HOME/.bash_history
+export HISTFILESIZE=2000
+export HISTSIZE=1000
+export HISTTIMEFORMAT='[%F %T] '
+
+# Maximum line length of LaTeX output.
+export max_print_line=1048576
+export error_line=254
+export half_error_line=238
+
 export PS1='\n┌[\u@\h \w]\n└─\$ '
 export PS2='──▸ '
 export PS3='#? '
@@ -98,6 +118,19 @@ then
         export PS1='\n┌[\[\e[1;95m\]${VIRTUAL_ENV##*/}\[\e[0m\]${VIRTUAL_ENV:+ }\[\e[1;92m\]\u\[\e[0m\] \[\e[1;3;93m\]\h • '"$(uname)"'\[\e[0m\] \[\e[1;96m\]\w\[\e[0m\]]\n└─\$ '
     fi
 fi
+
+# Allow viewing non-text files using less.
+if command -v lesspipe &>/dev/null
+then
+    eval "$(SHELL=/bin/sh lesspipe)"
+fi
+
+# Don't install libraries in 64-bit directories while building CPython.
+unset CONFIG_SITE
+# Don't ask for the Git PAT in a GUI window. Use the TUI.
+unset GIT_ASKPASS
+# Don't ask for the SSH password in a GUI window. Use the TUI.
+unset SSH_ASKPASS
 
 if [ -f $HOME/.bash_aliases ]
 then
