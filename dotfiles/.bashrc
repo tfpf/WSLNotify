@@ -72,13 +72,17 @@ export EDITOR=vim
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01:range1=32:range2=34:fixit-insert=32:fixit-delete=31:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:type-diff=01;32'
 export GDK_SCALE=1
 export GIT_EDITOR=vim
-export _INKSCAPE_GC=disable  # Inkscape does not work with GLIBC on some Linux distributions.
+# Inkscape does not work with GLIBC on some Linux distributions.
+export _INKSCAPE_GC=disable
 export MANPAGER='less -i'
-export MAN_POSIXLY_CORRECT=1  # Open the first matching manual page instead of prompting.
-export NO_AT_BRIDGE=1  # Disable accessibility bus error messages when using some GTK programs.
+# Open the first matching manual page instead of prompting.
+export MAN_POSIXLY_CORRECT=1
+# Disable accessibility bus error messages when using some GTK programs.
+export NO_AT_BRIDGE=1
 export PAGER='less -i'
 export QT_LOGGING_RULES='qt5ct.debug=false'
-export VIRTUAL_ENV_DISABLE_PROMPT=1  # Do not change the terminal prompt when in a Python virtual environment.
+# Do not change the terminal prompt when in a Python virtual environment.
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 export XDG_RUNTIME_DIR=/run/user/1000
 
 export HISTCONTROL=ignoreboth
@@ -92,9 +96,6 @@ export max_print_line=1048576
 export error_line=254
 export half_error_line=238
 
-# Enable colours for `ls`. Make the superuser's terminal prompt more
-# conspicuous. Note that the environment variable may not always reflect the
-# correct user name.
 export PS1='\n┌[\u@\h \w]\n└─\$ '
 export PS2='──▸ '
 export PS3='#? '
