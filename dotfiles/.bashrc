@@ -81,6 +81,8 @@ export MAN_POSIXLY_CORRECT=1
 export NO_AT_BRIDGE=1
 export PAGER='less -i'
 export QT_LOGGING_RULES='qt5ct.debug=false'
+# Time format in directory listing.
+export TIME_STYLE=long-iso
 # Do not change the terminal prompt when in a Python virtual environment.
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export XDG_RUNTIME_DIR=/run/user/1000
