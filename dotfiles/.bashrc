@@ -45,6 +45,7 @@ envarmunge MANPATH /usr/local/share/man
 envarmunge MANPATH $HOME/.local/share/man
 envarmunge PATH $HOME/.local/bin
 envarmunge PATH $HOME/bin
+envarmunge PATH /usr/sbin
 envarmunge PKG_CONFIG_PATH /usr/local/lib/pkgconfig
 envarmunge PKG_CONFIG_PATH /usr/local/share/pkgconfig
 
