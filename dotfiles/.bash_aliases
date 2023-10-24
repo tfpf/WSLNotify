@@ -92,6 +92,17 @@ c()
     $c -E "$1" | command grep -Fv '#' | bat -l c++ --file-name "$1"
 }
 
+# Obtain the ID of the active window.
+getactivewindow()
+{
+    if [ -z "$DISPLAY" ]
+    then
+        printf "0\n"
+    else
+        xdotool getactivewindow
+    fi
+}
+
 # Pre-command for command timing. It will be called just before any command is
 # executed.
 _before_command()
@@ -197,8 +208,9 @@ then
     # Put `WSLNotify.exe` and `WSLGetActiveWindow.exe` in a folder which is in
     # `PATH` (e.g. `C:\Windows`) to make these aliases work. Alternatively,
     # specify the full path to the EXE files below.
-    alias notify-send='WSLNotify.exe'
+    unset -f getactivewindow
     alias getactivewindow='WSLGetActiveWindow.exe'
+    alias notify-send='WSLNotify.exe'
 
     # Create the virtual display. VcXsrv should be installed.
     vcx()
@@ -258,15 +270,4 @@ then
 else
     alias g='gvim'
     alias x='xdg-open'
-
-    # Obtain the ID of the active window.
-    getactivewindow()
-    {
-        if [ -z "$DISPLAY" ]
-        then
-            printf "0\n"
-        else
-            xdotool getactivewindow
-        fi
-    }
 fi
