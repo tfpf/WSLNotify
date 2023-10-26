@@ -8,5 +8,3 @@ will do just that. I am not responsible if this borks your system. (It is better
 # Notes
 * `.bashrc` is included here to show off the `envarmunge` function. It shouldn't be necessary to replace the `.bashrc`
   which comes with your Linux distribution.
-* An hourglass is printed by the command timer in `.bash_aliases`; if it is not rendered properly,
-  `sudo apt install fonts-noto` should fix the problem.

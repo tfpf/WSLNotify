@@ -229,14 +229,14 @@ _after_command()
         local exit_symbol="[1;31m✗[0m"
         local icon=dialog-error
     fi
-    local last_command=$(history 1 | sed 's/^[^]]*\] //')
+    local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
 
     # Non-ASCII symbols may have to be treated as multi-byte characters,
     # depending on the shell.
-    printf "\r%*s\n" $((COLUMNS+14)) "$exit_symbol $last_command ⏳ $breakup"
+    printf "\r%*s\n" $((COLUMNS+15)) "$exit_symbol $last_command • $breakup"
     if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
     then
-        notify-send -i $icon "CLI Ready" "$last_command ⏳ $breakup"
+        notify-send -i $icon "CLI Ready" "$last_command • $breakup"
     fi
     unset __window
 }
