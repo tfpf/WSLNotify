@@ -103,86 +103,6 @@ getactivewindow()
     fi
 }
 
-# Pre-command for command timing. It will be called just before any command is
-# executed.
-_before_command()
-{
-    [ -n "${__begin+.}" ] && return
-    __window=${WINDOWID:-$(getactivewindow)}
-    __begin=$(date +%s%3N)
-}
-
-# Post-command for command timing. It will be called just before the prompt is
-# displayed (i.e. just after any command is executed).
-_after_command()
-{
-    local exit_status=$?
-    local __end=$(date +%s%3N)
-    [ -z "${__begin+.}" ] && return
-    local delay=$((__end-__begin))
-    unset __begin
-    [ $delay -le 5000 ] && unset __window && return
-
-    local milliseconds=$((delay%1000))
-    local seconds=$((delay/1000%60))
-    local minutes=$((delay/60000%60))
-    local hours=$((delay/3600000))
-    local breakup
-    [ $hours -gt 0 ] && breakup="$hours h "
-    [ $hours -gt 0 -o $minutes -gt 0 ] && breakup="${breakup}$minutes m "
-    breakup="${breakup}$seconds s $milliseconds ms"
-
-    if [ $exit_status -eq 0 ]
-    then
-        local exit_symbol="[1;32m✓[0m"
-        local icon=dialog-information
-    else
-        local exit_symbol="[1;31m✗[0m"
-        local icon=dialog-error
-    fi
-    local last_command=$(history 1 | sed 's/^[^]]*\] //')
-
-    # Non-ASCII symbols may have to be treated as multi-byte characters,
-    # depending on the shell.
-    printf "\r%*s\n" $((COLUMNS+14)) "$exit_symbol $last_command ⏳ $breakup"
-    if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
-    then
-        notify-send -i $icon "CLI Ready" "$last_command ⏳ $breakup"
-    fi
-    unset __window
-}
-
-trap _before_command DEBUG
-PROMPT_COMMAND=_after_command
-
-# PDF optimiser. This requires that Ghostscript be installed.
-pdfopt()
-{
-    [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n" >&2 && return 1
-    [ $# -ge 3 ] && local opt_level=$3 || local opt_level=72
-    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress     \
-       -dNOPAUSE -dQUIET -dBATCH                                              \
-       -sOutputFile="$2"                                                      \
-       -dDownsampleColorImages=true -dColorImageResolution=$opt_level         \
-       -dDownsampleGrayImages=true  -dGrayImageResolution=$opt_level          \
-       -dDownsampleMonoImages=true  -dMonoImageResolution=$opt_level          \
-       "$1"
-}
-
-# Random string generator.
-rr()
-{
-    case $1 in
-        ("" | *[^0-9]*) local length=20;;
-        (*) local length=$1;;
-    esac
-    for pattern in '0-9' 'A-Za-z' 'A-Za-z0-9' 'A-Za-z0-9!@#$*()'
-    do
-        tr -cd $pattern </dev/urandom | head -c $length
-        printf "\n"
-    done
-}
-
 # This block is executed only if Bash is running on WSL (Windows Subsystem for
 # Linux).
 if command grep -Fiq microsoft /proc/version
@@ -271,3 +191,83 @@ else
     alias g='gvim'
     alias x='xdg-open'
 fi
+
+# Pre-command for command timing. It will be called just before any command is
+# executed.
+_before_command()
+{
+    [ -n "${__begin+.}" ] && return
+    __window=${WINDOWID:-$(getactivewindow)}
+    __begin=$(date +%s%3N)
+}
+
+# Post-command for command timing. It will be called just before the prompt is
+# displayed (i.e. just after any command is executed).
+_after_command()
+{
+    local exit_status=$?
+    local __end=$(date +%s%3N)
+    [ -z "${__begin+.}" ] && return
+    local delay=$((__end-__begin))
+    unset __begin
+    [ $delay -le 5000 ] && unset __window && return
+
+    local milliseconds=$((delay%1000))
+    local seconds=$((delay/1000%60))
+    local minutes=$((delay/60000%60))
+    local hours=$((delay/3600000))
+    local breakup
+    [ $hours -gt 0 ] && breakup="$hours h "
+    [ $hours -gt 0 -o $minutes -gt 0 ] && breakup="${breakup}$minutes m "
+    breakup="${breakup}$seconds s $milliseconds ms"
+
+    if [ $exit_status -eq 0 ]
+    then
+        local exit_symbol="[1;32m✓[0m"
+        local icon=dialog-information
+    else
+        local exit_symbol="[1;31m✗[0m"
+        local icon=dialog-error
+    fi
+    local last_command=$(history 1 | sed 's/^[^]]*\] //')
+
+    # Non-ASCII symbols may have to be treated as multi-byte characters,
+    # depending on the shell.
+    printf "\r%*s\n" $((COLUMNS+14)) "$exit_symbol $last_command ⏳ $breakup"
+    if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
+    then
+        notify-send -i $icon "CLI Ready" "$last_command ⏳ $breakup"
+    fi
+    unset __window
+}
+
+trap _before_command DEBUG
+PROMPT_COMMAND=_after_command
+
+# PDF optimiser. This requires that Ghostscript be installed.
+pdfopt()
+{
+    [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} input_file.pdf output_file.pdf [resolution]\n" >&2 && return 1
+    [ $# -ge 3 ] && local opt_level=$3 || local opt_level=72
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress     \
+       -dNOPAUSE -dQUIET -dBATCH                                              \
+       -sOutputFile="$2"                                                      \
+       -dDownsampleColorImages=true -dColorImageResolution=$opt_level         \
+       -dDownsampleGrayImages=true  -dGrayImageResolution=$opt_level          \
+       -dDownsampleMonoImages=true  -dMonoImageResolution=$opt_level          \
+       "$1"
+}
+
+# Random string generator.
+rr()
+{
+    case $1 in
+        ("" | *[^0-9]*) local length=20;;
+        (*) local length=$1;;
+    esac
+    for pattern in '0-9' 'A-Za-z' 'A-Za-z0-9' 'A-Za-z0-9!@#$*()'
+    do
+        tr -cd $pattern </dev/urandom | head -c $length
+        printf "\n"
+    done
+}
