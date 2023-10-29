@@ -125,8 +125,8 @@ then
         fi
         local host='\[\e[1;3;93m\]\h • '$(uname)'\[\e[m\]'
         local directory='\[\e[1;96m\]\w\[\e[m\]'
-        local virtual_environment='${VIRTUAL_ENV:+ ▸\[\e[95m\]${VIRTUAL_ENV##*/}\[\e[m\]}'
-        local git_branch='${__git_branch:+ ▸\[\e[95m\]$__git_branch\[\e[m\]}'
+        local virtual_environment='${VIRTUAL_ENV:+ ϟ \[\e[95m\]${VIRTUAL_ENV##*/}\[\e[m\]}'
+        local git_branch='${__git_branch:+ γ \[\e[95m\]$__git_branch\[\e[m\]}'
         printf '\n┌[%s %s %s]%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment"
     }
     export PS1=$(_PS1)
