@@ -208,7 +208,6 @@ _after_command()
 {
     local exit_status=$?
     local __end=$(date +%s%3N)
-    __git_branch=$(git branch --show-current 2>/dev/null)
     [ -z "${__begin+.}" ] && return
     local delay=$((__end-__begin))
     unset __begin

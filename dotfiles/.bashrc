@@ -100,38 +100,6 @@ export max_print_line=1048576
 export error_line=254
 export half_error_line=238
 
-export PS1='\n┌[\u@\h \w]\n└─\$ '
-export PS2='──▸ '
-export PS3='#? '
-export PS4='▸ '
-if command -v dircolors &>/dev/null
-then
-    if [ -f $HOME/.dircolors ]
-    then
-        eval "$(dircolors -b $HOME/.dircolors)"
-    elif [ -f $HOME/.dir_colors ]
-    then
-        eval "$(dircolors -b $HOME/.dir_colors)"
-    else
-        eval "$(dircolors -b)"
-    fi
-    _PS1()
-    {
-        if [ "$USER" = root -o "$(id -nu)" = root ]
-        then
-            local user='\[\e[1;91m\]\u\[\e[m\]'
-        else
-            local user='\[\e[1;92m\]\u\[\e[m\]'
-        fi
-        local host='\[\e[1;3;93m\]\h • '$(uname)'\[\e[m\]'
-        local directory='\[\e[1;96m\]\w\[\e[m\]'
-        local git_branch='${__git_branch:+ γ \[\e[95m\]$__git_branch\[\e[m\]}'
-        local virtual_environment='${VIRTUAL_ENV:+ Ϟ \[\e[95m\]${VIRTUAL_ENV##*/}\[\e[m\]}'
-        printf '\n┌[%s %s %s]%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment"
-    }
-    export PS1=$(_PS1)
-fi
-
 # Allow viewing non-text files using less.
 if command -v lesspipe &>/dev/null
 then
@@ -168,4 +136,38 @@ if command -v rustup &>/dev/null
 then
     . <(rustup completions bash rustup)
     . <(rustup completions bash cargo)
+fi
+
+# The primary prompt depends upon programmable completion for Git being
+# enabled.
+export PS1='\n┌[\u@\h \w]\n└─\$ '
+export PS2='──▸ '
+export PS3='#? '
+export PS4='▸ '
+if command -v dircolors &>/dev/null
+then
+    if [ -f $HOME/.dircolors ]
+    then
+        eval "$(dircolors -b $HOME/.dircolors)"
+    elif [ -f $HOME/.dir_colors ]
+    then
+        eval "$(dircolors -b $HOME/.dir_colors)"
+    else
+        eval "$(dircolors -b)"
+    fi
+    _PS1()
+    {
+        if [ "$USER" = root -o "$(id -nu)" = root ]
+        then
+            local user='\[\e[1;91m\]\u\[\e[m\]'
+        else
+            local user='\[\e[1;92m\]\u\[\e[m\]'
+        fi
+        local host='\[\e[1;3;93m\]\h • '$(uname)'\[\e[m\]'
+        local directory='\[\e[1;96m\]\w\[\e[m\]'
+        local git_branch='$(__git_ps1 " γ \[\e[95m\]%s\[\e[m\]")'
+        local virtual_environment='${VIRTUAL_ENV:+ Ϟ \[\e[95m\]${VIRTUAL_ENV##*/}\[\e[m\]}'
+        printf '\n┌[%s %s %s]%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment"
+    }
+    export PS1=$(_PS1)
 fi
