@@ -140,10 +140,16 @@ fi
 
 # Showing the Git branch in the primary prompt depends upon a script which must
 # be sourced separately on some Linux distributions.
-if [ -f /usr/share/git/completion/git-prompt.sh ]
-then
-    . /usr/share/git/completion/git-prompt.sh
-fi
+for script in /usr/share/git/completion/git-prompt.sh /usr/share/git-core/contrib/completion/git-prompt.sh
+do
+    if [ -f $script ]
+    then
+        . $script
+        break
+    fi
+done
+unset script
+
 export PS1='\n┌[\u@\h \w]\n└─\$ '
 export PS2='──▸ '
 export PS3='#? '
