@@ -138,8 +138,12 @@ then
     . <(rustup completions bash cargo)
 fi
 
-# The primary prompt depends upon programmable completion for Git being
-# enabled.
+# Showing the Git branch in the primary prompt depends upon a script which must
+# be sourced separately on some Linux distributions.
+if [ -f /usr/share/git/completion/git-prompt.sh ]
+then
+    . /usr/share/git/completion/git-prompt.sh
+fi
 export PS1='\n┌[\u@\h \w]\n└─\$ '
 export PS2='──▸ '
 export PS3='#? '
