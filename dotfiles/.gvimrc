@@ -65,7 +65,7 @@ se hls                     " Searching highlights all matches.
 se inde=                   " Don't calculate the proper indentation.
 se indk=                   " Don't change the indentation of the being typed.
 se is                      " Incremental search.
-se lcs=tab:▸·,trail:·      " How to display certain characters. They will be coloured with `SpecialKey`.
+se lcs=tab:▶·,trail:·      " How to display certain characters. They will be coloured with `SpecialKey`.
 se list                    " Display certain characters more prominently. See `lcs`.
 se lsp=0                   " Line spacing.
 se mh                      " Hide mouse pointer while typing.

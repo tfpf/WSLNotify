@@ -151,9 +151,9 @@ done
 unset script
 
 export PS1='\n┌[\u@\h \w]\n└─\$ '
-export PS2='──▸ '
+export PS2='──▶ '
 export PS3='#? '
-export PS4='▸ '
+export PS4='▶ '
 if command -v dircolors &>/dev/null
 then
     if [ -f $HOME/.dircolors ]
