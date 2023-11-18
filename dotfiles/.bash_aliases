@@ -60,10 +60,7 @@ fi
 # Restart the shell. Exit from any Python virtual environments before doing so.
 e()
 {
-    if [ -n "$VIRTUAL_ENV" ]
-    then
-        deactivate
-    fi
+    [ -n "$VIRTUAL_ENV" ] && deactivate
     exec bash
 }
 
