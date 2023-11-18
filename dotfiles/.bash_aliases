@@ -60,10 +60,10 @@ fi
 # Restart the shell. Exit from any Python virtual environments before doing so.
 e()
 {
-    while [ -n "$VIRTUAL_ENV" ]
-    do
+    if [ -n "$VIRTUAL_ENV" ]
+    then
         deactivate
-    done
+    fi
     exec bash
 }
 
