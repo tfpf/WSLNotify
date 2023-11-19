@@ -42,20 +42,18 @@ alias P="$HOME/.bash_hacks.py P"
 alias T="$HOME/.bash_hacks.py T"
 
 # Control CPU frequency scaling.
-if [ -d /sys/devices/system/cpu/cpu0/cpufreq ]
-then
-    cfs()
-    {
-        local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
-        if [ $# -lt 1 ]
-        then
-            column ${files[*]}
-        else
-            sudo tee ${files[*]} <<< $1
-        fi
-    }
-    complete -W "$(</sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors)" cfs
-fi
+cfs()
+{
+    local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
+    [ ! -f ${files[0]} ] && printf "CPU frequency files not found.\n" >&2 && return 1
+    if [ $# -lt 1 ]
+    then
+        column ${files[@]}
+    else
+        sudo tee ${files[@]} <<< $1
+    fi
+}
+complete -W "conservative ondemand performance powersave schedutil userspace" cfs
 
 # Restart the shell. Exit from any Python virtual environments before doing so.
 e()
