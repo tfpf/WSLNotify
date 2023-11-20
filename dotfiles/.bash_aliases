@@ -229,7 +229,10 @@ _after_command()
 
     # Non-ASCII symbols may have to be treated as multi-byte characters,
     # depending on the shell.
-    printf "\r%*s\n" $((COLUMNS+14)) "$exit_symbol $last_command ◀ $breakup"
+    local report="$exit_symbol $last_command ◀ $breakup"
+    local width=${#report}
+    width=$((COLUMNS-width%COLUMNS+width+14))
+    printf "\r%*s\n" $width "$report"
     if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
     then
         notify-send -i $icon "CLI Ready" "$last_command • $breakup"
