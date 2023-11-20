@@ -6,7 +6,7 @@ alias less='command less -i'
 alias perfstat='perf stat -e task-clock,cycles,instructions,branches,branch-misses,cache-references,cache-misses '
 alias pgrep='command pgrep -il'
 alias ps='command ps a -c'
-alias time='/usr/bin/time -f "\n[3mReal %e s · User %U s · Kernel %S s · MRSS %M KiB · %P CPU · %c ICS · %w VCS[0m" '
+alias time=$'/usr/bin/time -f "\n\e[3mReal %e s · User %U s · Kernel %S s · MRSS %M KiB · %P CPU · %c ICS · %w VCS\e[m" '
 alias valgrind='command valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
 
 alias f='watch -n 1 "command grep -F MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr | sed s/^0/\ /g"'
