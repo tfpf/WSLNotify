@@ -219,17 +219,17 @@ _after_command()
 
     if [ $exit_status -eq 0 ]
     then
-        local exit_symbol="[1;32m✓[0m"
+        local exit_symbol=$'\e[1;32m✓\e[m'
         local icon=dialog-information
     else
-        local exit_symbol="[1;31m✗[0m"
+        local exit_symbol=$'\e[1;31m✗\e[m'
         local icon=dialog-error
     fi
     local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
 
     # Non-ASCII symbols may have to be treated as multi-byte characters,
     # depending on the shell.
-    printf "\r%*s\n" $((COLUMNS+15)) "$exit_symbol $last_command ◀ $breakup"
+    printf "\r%*s\n" $((COLUMNS+14)) "$exit_symbol $last_command ◀ $breakup"
     if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
     then
         notify-send -i $icon "CLI Ready" "$last_command • $breakup"
