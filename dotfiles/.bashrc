@@ -89,6 +89,10 @@ export TIME_STYLE=long-iso
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export XDG_RUNTIME_DIR=/run/user/1000
 
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+
 export HISTCONTROL=ignoreboth
 export HISTFILE=$HOME/.bash_history
 export HISTFILESIZE=2000
@@ -175,7 +179,7 @@ then
         fi
         local host='\[\e[1;3;93m\]\h • '$(uname)'\[\e[m\]'
         local directory='\[\e[1;96m\]\w\[\e[m\]'
-        local git_branch='$(__git_ps1 " γ \[\e[95m\]%s\[\e[m\]")'
+        local git_branch='$(__git_ps1 " γ %s")'
         local virtual_environment='${VIRTUAL_ENV:+ Ϟ \[\e[95m\]${VIRTUAL_ENV##*/}\[\e[m\]}'
         printf '\n┌[%s %s %s]%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment"
     }
