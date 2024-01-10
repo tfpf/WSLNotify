@@ -136,11 +136,9 @@ fi
 
 # More programmable completion.
 . <(pip completion --bash)
-if command -v rustup &>/dev/null
-then
-    . <(rustup completions bash rustup)
-    . <(rustup completions bash cargo)
-fi
+command -v hatch &>/dev/null && . <(_HATCH_COMPLETE=bash_source hatch)
+command -v pipenv &>/dev/null && . <(_PIPENV_COMPLETE=bash_source pipenv)
+command -v rustup &>/dev/null && . <(rustup completions bash rustup) && . <(rustup completions bash cargo)
 
 # Showing the Git branch in the primary prompt depends upon a script which must
 # be sourced separately on some Linux distributions.
