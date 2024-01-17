@@ -82,7 +82,7 @@ with Matplotlib.
         # Space to enter LaTeX source.
         self.code = tk.Text(
             self, bg='#333333', fg='#FFFFFF', insertbackground='#F0EC8C', selectbackground='#079486',
-            selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('Cascadia Code', 13)
+            selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('CaskaydiaCove Nerd Font', 13)
         )
         self.code.insert('1.0', greek + '\n')
         self.after(0, self.code.focus_set)
@@ -97,7 +97,7 @@ with Matplotlib.
         # Space to enter the font size.
         self.size = tk.Entry(
             self, bg='#333333', fg='#FFFFFF', insertbackground='#F0EC8C', selectbackground='#079486',
-            selectforeground='#FFFFFF', font=('Cascadia Code', 13)
+            selectforeground='#FFFFFF', font=('CaskaydiaCove Nerd Font', 13)
         )
         self.size.insert(0, '50')
         self.size.bind('<Escape>', self.render)
@@ -105,7 +105,7 @@ with Matplotlib.
 
         self.wrap = tk.BooleanVar(self)
         wrapbtn = tk.Checkbutton(
-            self, font=('Cascadia Code', 13), text=' Wrap Text', activebackground='#333333',
+            self, font=('CaskaydiaCove Nerd Font', 13), text=' Wrap Text', activebackground='#333333',
             activeforeground='#CCCCCC', bg='#333333', fg='#CCCCCC', selectcolor='#555555', variable=self.wrap,
             command=self.render
         )
@@ -113,10 +113,10 @@ with Matplotlib.
 
         self.typeface = tk.StringVar(self)
         typefacecbox = ttk.Combobox(
-            self, font=('Cascadia Code', 13), state='readonly', textvariable=self.typeface,
-            values=('Cochineal', 'Cascadia Code', 'Angelic')
+            self, font=('CaskaydiaCove Nerd Font', 13), state='readonly', textvariable=self.typeface,
+            values=('Cochineal', 'CaskaydiaCove Nerd Font', 'Angelic')
         )
-        self.option_add('*TCombobox*Listbox.font', ('Cascadia Code', 13))
+        self.option_add('*TCombobox*Listbox.font', ('CaskaydiaCove Nerd Font', 13))
         typefacecbox.current(0)
         typefacecbox.bind('<<ComboboxSelected>>', self.render)
         typefacecbox.pack(side=tk.BOTTOM, anchor=tk.SE, expand=False, fill=tk.X)
@@ -210,7 +210,7 @@ create any Tkinter widgets, this should work well.
         # Space to enter Python source.
         self.code = tk.Text(
             self, bg='#333333', fg='#FFFFFF', insertbackground='#F0EC8C', selectbackground='#079486',
-            selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('Cascadia Code', 13)
+            selectforeground='#FFFFFF', inactiveselectbackground='#079486', font=('CaskaydiaCove Nerd Font', 13)
         )
         self.code.insert('1.0', content)
         self.code.focus_set()

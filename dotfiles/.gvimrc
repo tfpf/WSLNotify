@@ -94,13 +94,13 @@ se ul=1000                 " Number of undo operations allowed.
 if has('win32') || has('win64')
     au GUIEnter * sim ~x
     nn <silent> <F2> :so ~/_gvimrc<CR>
-    se gfn=Cascadia\ Code:h13           " GUI font.
+    se gfn=CaskaydiaCove\ Nerd\ Font:h13
     se rop=                             " `type:directx` enables ligatures, but makes text bold. I don't like that.
     se scf                              " Scroll focus follows mouse pointer.
 elseif has('unix')
     au GUIEnter * call system('wmctrl -b add,maximized_horz,maximized_vert -i -r ' . v:windowid)
     nn <silent> <F2> :so ~/.gvimrc<CR>
-    se gfn=Cascadia\ Code\ 13
+    se gfn=CaskaydiaCove\ Nerd\ Font\ 13
 endif
 
 " No syntax highlighting in comment strings.
