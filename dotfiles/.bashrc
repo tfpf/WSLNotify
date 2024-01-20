@@ -179,7 +179,7 @@ then
         local directory='\[\e[1;96m\]\w\[\e[m\]'
         local git_branch='$(__git_ps1 "   %s")'
         local virtual_environment='${VIRTUAL_ENV:+  \[\e[95m\]${VIRTUAL_ENV##*/}\[\e[m\]}'
-        printf '\n┌[%s %s %s]%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment"
+        printf '\n┌[%s %s %s]%s%s\n└─▶ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment"
     }
     export PS1=$(_PS1)
 fi
