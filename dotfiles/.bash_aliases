@@ -219,10 +219,10 @@ _after_command()
 
     if [ $exit_status -eq 0 ]
     then
-        local exit_symbol=$'\e[1;32m✓\e[m'
+        local exit_symbol=$'\e[1;32m󰄬\e[m'
         local icon=dialog-information
     else
-        local exit_symbol=$'\e[1;31m✗\e[m'
+        local exit_symbol=$'\e[1;31m\e[m'
         local icon=dialog-error
     fi
     local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
