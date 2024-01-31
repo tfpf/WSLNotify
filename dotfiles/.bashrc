@@ -69,6 +69,7 @@ envarmunge INFOPATH /usr/local/texlive/*/texmf-dist/doc/info
 envarmunge MANPATH /usr/local/texlive/*/texmf-dist/doc/man
 envarmunge PATH /usr/local/texlive/*/bin/x86_64-linux
 
+export BASH_COMPLETION_USER_DIR=$HOME/.local/share/bash-completion
 export BAT_PAGER='less -iRF'
 export EDITOR=vim
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01:range1=32:range2=34:fixit-insert=32:fixit-delete=31:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:type-diff=01;32'
@@ -133,12 +134,6 @@ then
         . /etc/bash_completion
     fi
 fi
-
-# More programmable completion.
-. <(pip completion --bash)
-command -v hatch &>/dev/null && . <(_HATCH_COMPLETE=bash_source hatch)
-command -v pipenv &>/dev/null && . <(_PIPENV_COMPLETE=bash_source pipenv)
-command -v rustup &>/dev/null && . <(rustup completions bash rustup) && . <(rustup completions bash cargo)
 
 # Showing the Git branch in the primary prompt depends upon a script which must
 # be sourced separately on some Linux distributions.
