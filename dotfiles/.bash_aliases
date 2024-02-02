@@ -270,3 +270,11 @@ rr()
         printf "\n"
     done
 }
+
+# This program (part of the ImageMagick suite) is just schmuck bait. I've
+# entered this at the Bash REPL instead of the Python REPL several times, and
+# got scared because the computer seemed to freeze. No more.
+import()
+{
+    printf "This is Bash. Did you mean to type this in Python?\n" >&2 && return 1
+}
