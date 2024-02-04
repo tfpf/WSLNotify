@@ -46,50 +46,50 @@ nn <silent> <M-6> :silent! cal matchdelete(alt_6)<CR>:let alt_6 = matchadd('the_
 nn <C-Down> 15<Down>
 nn <C-Up>   15<Up>
 
-se ai                      " New line is automatically indented.
-se ar                      " Automatically read file when changed from elsewhere.
-se bs=indent,eol,start     " Backspace freely.
-se cc=80,120               " Columns to be coloured with `ColorColumn`.
-se ch=1                    " Number of lines to use to display commands.
-se ci                      " Indentation for a new line is identical to the previous line.
-se cink=                   " Don't change the indentation of the being typed.
-se cul                     " Highlight current line.
-se dy=lastline             " If the last line cannot be shown in its entirety, show a part of it.
-se enc=utf-8               " Internal representation.
-se et                      " Expand tabs to spaces.
-se fenc=utf-8              " Representation of current buffer.
-se fixeol                  " Add an end-of-line character at the end of a file.
-se fo=                     " Do not insert the comment marker when starting a new line.
-se gcr=n:blinkwait0        " Disable cursor blink in normal mode.
-se hls                     " Searching highlights all matches.
-se inde=                   " Don't calculate the proper indentation.
-se indk=                   " Don't change the indentation of the being typed.
-se is                      " Incremental search.
-se lcs=tab:▶·,trail:·      " How to display certain characters. They will be coloured with `SpecialKey`.
-se list                    " Display certain characters more prominently. See `lcs`.
-se lsp=0                   " Line spacing.
-se mh                      " Hide mouse pointer while typing.
-se nosi                    " Don't try to be oversmart while indenting.
-se nosm                    " Do not jump to the matching bracket one is inserted.
-se noswapfile              " Do not create swap files.
-se nowrap                  " Do not wrap lines.
-se nu                      " Line numbers.
-se pi                      " Preserve as much of the existing indentation as possible when changing said indentation.
-se report=0                " Threshold for reporting number of changed lines.
-se ru                      " Ruler showing current cursor position.
-se sc                      " Show partial command information.
-se so=3                    " Number of lines visible above and below cursor.
-se sr                      " When using '>>' or '<<', only jump to columns which are multiples of `sw`.
-se sta                     " Tab inserts an `sw`-size character at the start of a line, and `ts`-size elsewhere.
-se sts=0                   " Do not insert spaces when pressing Tab.
-se sw=4                    " Shift width. See `sta`.
-se tgc                     " Use 24-bit colours, so that VIM and GVIM look the same.
-se timeout                 " Time out on mappings and key codes.
-se timeoutlen=0            " Time to wait until a mapping sequence is completely entered.
-se ttimeoutlen=-1          " Wait for `timeoutlen` until a key code sequence is completely entered.
-se ts=4                    " Tab stop. See `sta`.
-se tw=0                    " Do not break lines automatically.
-se ul=1000                 " Number of undo operations allowed.
+se ai                        " New line is automatically indented.
+se ar                        " Automatically read file when changed from elsewhere.
+se bs=indent,eol,start       " Backspace freely.
+se cc=80,120                 " Columns to be coloured with `ColorColumn`.
+se ch=1                      " Number of lines to use to display commands.
+se ci                        " Indentation for a new line is identical to the previous line.
+se cink=                     " Don't change the indentation of the being typed.
+se cul                       " Highlight current line.
+se dy=lastline               " If the last line cannot be shown in its entirety, show a part of it.
+se enc=utf-8                 " Internal representation.
+se et                        " Expand tabs to spaces.
+se fenc=utf-8                " Representation of current buffer.
+se fixeol                    " Add an end-of-line character at the end of a file.
+se fo=                       " Do not insert the comment marker when starting a new line.
+se gcr=n:blinkwait0          " Disable cursor blink in normal mode.
+se hls                       " Searching highlights all matches.
+se inde=                     " Don't calculate the proper indentation.
+se indk=                     " Don't change the indentation of the being typed.
+se is                        " Incremental search.
+se lcs=nbsp:␣,tab:▶·,trail:· " How to display certain characters. They will be coloured with `SpecialKey`.
+se list                      " Display certain characters more prominently. See `lcs`.
+se lsp=0                     " Line spacing.
+se mh                        " Hide mouse pointer while typing.
+se nosi                      " Don't try to be oversmart while indenting.
+se nosm                      " Do not jump to the matching bracket one is inserted.
+se noswapfile                " Do not create swap files.
+se nowrap                    " Do not wrap lines.
+se nu                        " Line numbers.
+se pi                        " Preserve as much of the existing indentation as possible when changing said indentation.
+se report=0                  " Threshold for reporting number of changed lines.
+se ru                        " Ruler showing current cursor position.
+se sc                        " Show partial command information.
+se so=3                      " Number of lines visible above and below cursor.
+se sr                        " When using '>>' or '<<', only jump to columns which are multiples of `sw`.
+se sta                       " Tab inserts an `sw`-size character at the start of a line, and `ts`-size elsewhere.
+se sts=0                     " Do not insert spaces when pressing Tab.
+se sw=4                      " Shift width. See `sta`.
+se tgc                       " Use 24-bit colours, so that VIM and GVIM look the same.
+se timeout                   " Time out on mappings and key codes.
+se timeoutlen=0              " Time to wait until a mapping sequence is completely entered.
+se ttimeoutlen=-1            " Wait for `timeoutlen` until a key code sequence is completely entered.
+se ts=4                      " Tab stop. See `sta`.
+se tw=0                      " Do not break lines automatically.
+se ul=1000                   " Number of undo operations allowed.
 
 if has('win32') || has('win64')
     au GUIEnter * sim ~x
