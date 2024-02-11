@@ -88,7 +88,6 @@ export QT_LOGGING_RULES='qt5ct.debug=false'
 export TIME_STYLE=long-iso
 # Do not change the terminal prompt when in a Python virtual environment.
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export XDG_RUNTIME_DIR=/run/user/1000
 
 export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_SHOWDIRTYSTATE=1
