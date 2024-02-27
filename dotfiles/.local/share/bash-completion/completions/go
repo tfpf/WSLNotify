@@ -1,2 +1,2 @@
 # https://github.com/posener/complete
-complete -C gocomplete go
+command -v gocomplete 2>/dev/null && complete -C gocomplete go
