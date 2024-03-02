@@ -10,7 +10,7 @@ _go_bug_completer()
 # themselves, allowing default completion to take over if there are no matches.
 _go_build_completer()
 {
-    local options="-a -n -p -race -msan -asan -v -work -x -asmflags -buildmode -buildvcs -compiler -gccgoflags -gcflags -installsuffix -ldflags -linkshared -mod -modcacherw -modfile -overlay -pkgdir -tags -trimpath -toolexec"
+    local options="-a -asan -asmflags -buildmode -buildvcs -compiler -gccgoflags -gcflags -installsuffix -ldflags -linkshared -mod -modcacherw -modfile -msan -n -overlay -p -pkgdir -race -tags -toolexec -trimpath -v -work -x"
     case $_GO_COMPLETER_PREVIOUS in
         (-buildmode) COMPREPLY=($(compgen -W "archive c-archive c-shared default exe pie plugin shared" -- $_GO_COMPLETER_CURRENT));;
         (-compiler) COMPREPLY=($(compgen -W "gc gccgo" -- $_GO_COMPLETER_CURRENT));;
