@@ -47,34 +47,17 @@ _go_doc_completer()
     esac
 }
 
-# Takes multiple arguments: options.
+# Takes multiple arguments: one option and zero or more values. The option
+# should be specified immediately after `go env` for correct results, but the
+# command does not check this, so I won't enforce it.
 _go_env_completer()
 {
     local options="-json -u -w"
     local variables=$(go env | awk -F = '{print $1}')
-    local complete_with_variables=0
-    if [ $_GO_COMPLETER_PREVIOUS = -u -o $_GO_COMPLETER_PREVIOUS = -w ]
-    then
-        # `-u` and `-w` must be completed with Go environment variables.
-        complete_with_variables=1
-    elif [[ $_GO_COMPLETER_CURRENT != -* ]]
-    then
-        # `-u` and `-w` can accept multiple arguments. Scan backwards to find
-        # the most recent option argument to see if it was one of them.
-        for ((i = ${#COMP_WORDS[@]} - 2; i >= 2; --i))
-        do
-            case ${COMP_WORDS[i]} in
-                (-u | -w) complete_with_variables=1; break;;
-                (-*) break;;
-            esac
-        done
-    fi
-    if [ $complete_with_variables -eq 1 ]
-    then
-        COMPREPLY=($(compgen -W "$variables" -- $_GO_COMPLETER_CURRENT))
-    else
-        COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT))
-    fi
+    case $_GO_COMPLETER_CURRENT in
+        (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+        (*) COMPREPLY=($(compgen -W "$variables" -- $_GO_COMPLETER_CURRENT));;
+    esac
 }
 
 # Takes only one more argument, which should one of the Go subcommands other
@@ -92,6 +75,7 @@ _go_help_completer()
     fi
 }
 
+# Programmable completion script for Go 1.18.1.
 _go_completer()
 {
     _GO_COMPLETER_CURRENT=$2
