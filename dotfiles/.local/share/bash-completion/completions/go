@@ -124,6 +124,13 @@ _go_help_completer()
     fi
 }
 
+# Takes the same arguments as `go build`. Ignore the `go build` options for
+# now.
+_go_install_completer()
+{
+    compopt -o default
+}
+
 # Takes options. Each option requires a value; values may be present without
 # options.
 _go_version_completer()
@@ -162,6 +169,7 @@ _go_completer()
         (generate) _go_generate_completer;;
         (get) _go_get_completer;;
         (help) _go_help_completer;;
+        (install) _go_install_completer;;
         (version) _go_version_completer;;
         (*) COMPREPLY=();;
     esac
