@@ -111,7 +111,7 @@ _go_get_completer()
 
 # Takes only one more argument (which should one of the Go subcommands other
 # than `help`, or one of the Go help topics) or two if the first of those two
-# is `mod`.
+# is `mod` or `work`.
 _go_help_completer()
 {
     if [ $COMP_CWORD -eq 2 ]
