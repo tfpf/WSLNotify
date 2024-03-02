@@ -101,6 +101,14 @@ _go_generate_completer()
     esac
 }
 
+# Takes the same options as `go build`, and some other options, and package
+# names. Ignore the `go build` options for now.
+_go_get_completer()
+{
+    local options="-t -u -x"
+    COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT))
+}
+
 # Takes only one more argument, which should one of the Go subcommands other
 # than `help`, or one of the Go help topics.
 _go_help_completer()
@@ -152,6 +160,7 @@ _go_completer()
         (fix) _go_fix_completer;;
         (fmt) _go_fmt_completer;;
         (generate) _go_generate_completer;;
+        (get) _go_get_completer;;
         (help) _go_help_completer;;
         (version) _go_version_completer;;
         (*) COMPREPLY=();;
