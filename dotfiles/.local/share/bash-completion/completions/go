@@ -1,4 +1,4 @@
-# Does not take any more arguments.
+# Does not take any arguments.
 _go_bug_completer()
 {
     COMPREPLY=()
