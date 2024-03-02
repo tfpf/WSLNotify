@@ -37,6 +37,16 @@ _go_clean_completer()
     esac
 }
 
+# Just like `go clean`.
+_go_doc_completer()
+{
+    local options="-all -c -cmd -short -src -u"
+    case $_GO_COMPLETER_CURRENT in
+        (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+        (*) compopt -o default;;
+    esac
+}
+
 # Takes only one more argument, which should one of the Go subcommands other
 # than `help`, or one of the Go help topics.
 _go_help_completer()
@@ -72,6 +82,7 @@ _go_completer()
         (build) _go_build_completer;;
         (help) _go_help_completer;;
         (clean) _go_clean_completer;;
+        (doc) _go_doc_completer;;
         (*) COMPREPLY=();;
     esac
     unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
