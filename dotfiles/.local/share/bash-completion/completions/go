@@ -1,4 +1,4 @@
-# Does not take any arguments.
+# Takes no arguments.
 _go_bug_completer()
 {
     COMPREPLY=()
@@ -73,6 +73,19 @@ _go_fix_completer()
     esac
 }
 
+# Takes options and package names. Similar to `go build`.
+_go_fmt_completer()
+{
+    local options="-mod -n -x"
+    case $_GO_COMPLETER_PREVIOUS in
+        (-mod) COMPREPLY=($(compgen -W "readonly vendor" -- $_GO_COMPLETER_CURRENT));;
+        (*) case $_GO_COMPLETER_CURRENT in
+                (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+                (*) compopt -o default;;
+            esac;;
+    esac
+}
+
 # Takes only one more argument, which should one of the Go subcommands other
 # than `help`, or one of the Go help topics.
 _go_help_completer()
@@ -112,6 +125,7 @@ _go_completer()
         (doc) _go_doc_completer;;
         (env) _go_env_completer;;
         (fix) _go_fix_completer;;
+        (fmt) _go_fmt_completer;;
         (*) COMPREPLY=();;
     esac
     unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
