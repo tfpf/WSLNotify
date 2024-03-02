@@ -1,2 +1,12 @@
-# https://github.com/posener/complete
-command -v gocomplete 2>/dev/null && complete -C gocomplete go
+_go_completer()
+{
+    if [ $COMP_CWORD -eq 1 ]
+    then
+        local wordlist="bug build clean doc env fix fmt generate get install list mod work run test tool version vet"
+        COMPREPLY=($(compgen -W "$wordlist" $2))
+        return
+    fi
+    compopt -o default
+}
+
+complete -F _go_completer go

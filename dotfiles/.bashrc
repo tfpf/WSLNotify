@@ -23,7 +23,7 @@ envarmunge()
         eval "export $name=\"$value\"\${$name:+:\$$name}"
     fi
 }
-_envarmunge()
+_envarmunge_completer()
 {
     if [ $COMP_CWORD -eq 1 ]
     then
@@ -33,7 +33,7 @@ _envarmunge()
         compopt -o default
     fi
 }
-complete -F _envarmunge envarmunge
+complete -F _envarmunge_completer envarmunge
 
 envarmunge C_INCLUDE_PATH /usr/local/include
 envarmunge CPLUS_INCLUDE_PATH /usr/local/include
