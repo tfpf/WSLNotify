@@ -31,7 +31,10 @@ _go_build_completer()
 _go_clean_completer()
 {
     local options="-cache -fuzzcache -i -modcache -n -r -testcache -x"
-    COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT))
+    case $_GO_COMPLETER_CURRENT in
+        (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+        (*) compopt -o default;;
+    esac
 }
 
 # Takes only one more argument, which should one of the Go subcommands other
