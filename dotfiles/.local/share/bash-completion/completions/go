@@ -7,7 +7,8 @@ _go_bug_completer()
 # Takes options and package names. If an option requires a value, try to
 # complete the value if possible (otherwise, do not complete it). If it does
 # not require a value, complete with options if the current word starts with a
-# hyphen, else fall back to normal completion.
+# hyphen, else fall back to normal completion. This pattern will be used in
+# several functions.
 _go_build_completer()
 {
     local options="-a -asan -asmflags -buildmode -buildvcs -compiler -gccgoflags -gcflags -installsuffix -ldflags -linkshared -mod -modcacherw -modfile -msan -n -overlay -p -pkgdir -race -tags -toolexec -trimpath -v -work -x"
@@ -25,9 +26,8 @@ _go_build_completer()
     esac
 }
 
-# Takes the same arguments as `go build`, and some other options. I'll ignore
-# the `go build` options for now, since I don't see a use case for cleaning
-# specific builds.
+# Takes the same arguments as `go build`, and some other options. Ignore the
+# `go build` options for now.
 _go_clean_completer()
 {
     local options="-cache -fuzzcache -i -modcache -n -r -testcache -x"
@@ -37,7 +37,7 @@ _go_clean_completer()
     esac
 }
 
-# Just like `go clean`.
+# Takes options and package/symbol/field names.
 _go_doc_completer()
 {
     local options="-all -c -cmd -short -src -u"
@@ -47,16 +47,17 @@ _go_doc_completer()
     esac
 }
 
-# Takes options. Each option may have multiple values. The option should be
-# specified immediately after `go env` for correct results, but the command
-# does not check this, so I won't enforce it.
+# Takes options. Each option may have multiple values; values may be present
+# without options. The option should be specified immediately after `go env`
+# for correct results, but the command does not check this, so I won't enforce
+# it.
 _go_env_completer()
 {
     local options="-json -u -w"
-    local variables=$(go env | awk -F = '{print $1}')
+    local values=$(go env | awk -F = '{print $1}')
     case $_GO_COMPLETER_CURRENT in
         (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
-        (*) COMPREPLY=($(compgen -W "$variables" -- $_GO_COMPLETER_CURRENT));;
+        (*) COMPREPLY=($(compgen -W "$values" -- $_GO_COMPLETER_CURRENT));;
     esac
 }
 
@@ -73,12 +74,26 @@ _go_fix_completer()
     esac
 }
 
-# Takes options and package names. Similar to `go build`.
+# Takes options and package names.
 _go_fmt_completer()
 {
     local options="-mod -n -x"
     case $_GO_COMPLETER_PREVIOUS in
         (-mod) COMPREPLY=($(compgen -W "readonly vendor" -- $_GO_COMPLETER_CURRENT));;
+        (*) case $_GO_COMPLETER_CURRENT in
+                (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+                (*) compopt -o default;;
+            esac;;
+    esac
+}
+
+# Takes the same arguments as `go build`, and some other options. Ignore the
+# `go build` options for now.
+_go_generate_completer()
+{
+    local options="-n -run -v -x"
+    case $_GO_COMPLETER_PREVIOUS in
+        (-run) COMPREPLY=();;
         (*) case $_GO_COMPLETER_CURRENT in
                 (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
                 (*) compopt -o default;;
@@ -120,12 +135,13 @@ _go_completer()
     case $cmd in
         (bug) _go_bug_completer;;
         (build) _go_build_completer;;
-        (help) _go_help_completer;;
         (clean) _go_clean_completer;;
         (doc) _go_doc_completer;;
         (env) _go_env_completer;;
         (fix) _go_fix_completer;;
         (fmt) _go_fmt_completer;;
+        (generate) _go_generate_completer;;
+        (help) _go_help_completer;;
         (*) COMPREPLY=();;
     esac
     unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
