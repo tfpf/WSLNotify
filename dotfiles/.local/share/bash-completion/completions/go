@@ -1,9 +1,3 @@
-# Takes no arguments.
-_go_bug_completer()
-{
-    COMPREPLY=()
-}
-
 # Takes options and package names. If an option requires a value, try to
 # complete the value if possible (otherwise, do not complete it). If it does
 # not require a value, complete with options if the current word starts with a
@@ -18,7 +12,7 @@ _go_build_completer()
         (-mod) COMPREPLY=($(compgen -W "mod readonly vendor" -- $_GO_COMPLETER_CURRENT));;
         (-overlay) compopt -o default;;
         (-pkgdir) compopt -o dirnames;;
-        (-asmflags | -gccgoflags | -gcflags | -installsuffix | -ldflags | -modfile | -p | -tags | -toolexec) COMPREPLY=();;
+        (-asmflags | -gccgoflags | -gcflags | -installsuffix | -ldflags | -modfile | -p | -tags | -toolexec) ;;
         (*) case $_GO_COMPLETER_CURRENT in
                 (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
                 (*) compopt -o default;;
@@ -26,8 +20,8 @@ _go_build_completer()
     esac
 }
 
-# Takes the same arguments as `go build`, and some other options. Ignore the
-# `go build` options for now.
+# Takes options and package names. TODO Complete `go build` options which are
+# supported.
 _go_clean_completer()
 {
     local options="-cache -fuzzcache -i -modcache -n -r -testcache -x"
@@ -66,7 +60,7 @@ _go_fix_completer()
 {
     local options="-fix"
     case $_GO_COMPLETER_PREVIOUS in
-        (-fix) COMPREPLY=();;
+        (-fix) ;;
         (*) case $_GO_COMPLETER_CURRENT in
                 (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
                 (*) compopt -o default;;
@@ -87,13 +81,13 @@ _go_fmt_completer()
     esac
 }
 
-# Takes the same arguments as `go build`, and some other options. Ignore the
-# `go build` options for now.
+# Takes options and file/package names. TODO Complete `go build` options which
+# are supported.
 _go_generate_completer()
 {
     local options="-n -run -v -x"
     case $_GO_COMPLETER_PREVIOUS in
-        (-run) COMPREPLY=();;
+        (-run) ;;
         (*) case $_GO_COMPLETER_CURRENT in
                 (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
                 (*) compopt -o default;;
@@ -101,8 +95,9 @@ _go_generate_completer()
     esac
 }
 
-# Takes the same options as `go build`, and some other options, and package
-# names. Ignore the `go build` options for now.
+# Takes options and package names. The packages are downloaded, so do not fall
+# back to normal completion. TODO Complete `go build` options which are
+# supported.
 _go_get_completer()
 {
     local options="-t -u -x"
@@ -125,18 +120,24 @@ _go_help_completer()
         case ${COMP_WORDS[2]} in
             (mod) COMPREPLY=($(compgen -W "download edit graph init tidy vendor verify why" -- $_GO_COMPLETER_CURRENT));;
             (work) COMPREPLY=($(compgen -W "edit init sync use" -- $_GO_COMPLETER_CURRENT));;
-            (*) COMPREPLY=();;
         esac
-    else
-        COMPREPLY=()
     fi
 }
 
-# Takes the same arguments as `go build`. Ignore the `go build` options for
-# now.
+# Takes options and package names. TODO Complete `go build` options which are
+# supported.
 _go_install_completer()
 {
     compopt -o default
+}
+
+# Takes subsubcommands, which take options. TODO Complete their options.
+_go_mod_completer()
+{
+    if [ $COMP_CWORD -eq 2 ]
+    then
+        COMPREPLY=($(compgen -W "download edit graph init tidy vendor verify why" $_GO_COMPLETER_CURRENT))
+    fi
 }
 
 # Takes options. Each option requires a value; values may be present without
@@ -167,7 +168,7 @@ _go_completer()
     fi
 
     case $cmd in
-        (bug) _go_bug_completer;;
+        (bug) ;;
         (build) _go_build_completer;;
         (clean) _go_clean_completer;;
         (doc) _go_doc_completer;;
@@ -178,8 +179,8 @@ _go_completer()
         (get) _go_get_completer;;
         (help) _go_help_completer;;
         (install) _go_install_completer;;
+        (mod) _go_mod_completer;;
         (version) _go_version_completer;;
-        (*) COMPREPLY=();;
     esac
     unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
 }
