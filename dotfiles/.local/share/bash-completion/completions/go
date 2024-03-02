@@ -4,9 +4,22 @@ _go_bug_completer()
     COMPREPLY=()
 }
 
+# Takes multiple arguments, which are either options or a package name. If an
+# option requires a value, try to complete the value if possible (otherwise, do
+# not complete it). If it does not require a value, complete with options
+# themselves, allowing default completion to take over if there are no matches.
 _go_build_completer()
 {
-    COMPREPLY=()
+    local options="-a -n -p -race -msan -asan -v -work -x -asmflags -buildmode -buildvcs -compiler -gccgoflags -gcflags -installsuffix -ldflags -linkshared -mod -modcacherw -modfile -overlay -pkgdir -tags -trimpath -toolexec"
+    case $_GO_COMPLETER_PREVIOUS in
+        (-buildmode) COMPREPLY=($(compgen -W "archive c-archive c-shared default exe pie plugin shared" -- $_GO_COMPLETER_CURRENT));;
+        (-compiler) COMPREPLY=($(compgen -W "gc gccgo" -- $_GO_COMPLETER_CURRENT));;
+        (-mod) COMPREPLY=($(compgen -W "mod readonly vendor" -- $_GO_COMPLETER_CURRENT));;
+        (-overlay) compopt -o default;;
+        (-pkgdir) compopt -o dirnames;;
+        (-asmflags | -gccgoflags | -gcflags | -installsuffix | -ldflags | -modfile | -p | -tags | -toolexec) COMPREPLY=();;
+        (*) COMPREPLY=($(compgen -o default -W "$options" -- $_GO_COMPLETER_CURRENT))
+    esac
 }
 
 # Takes only one more argument, which should one of the Go subcommands other
@@ -18,7 +31,7 @@ _go_help_completer()
         local subcommands="bug build clean doc env fix fmt generate get install list mod work run test tool version vet"
         local topics="buildconstraint buildmode c cache environment filetype go.mod gopath gopath-get goproxy importpath modules module-get module-auth packages private testflag testfunc vcs"
         local wordlist=$subcommands+$topics
-        COMPREPLY=($(compgen -W "$wordlist" $_GO_COMPLETER_CURRENT))
+        COMPREPLY=($(compgen -W "$wordlist" -- $_GO_COMPLETER_CURRENT))
     else
         COMPREPLY=()
     fi
@@ -34,7 +47,7 @@ _go_completer()
     if [ $COMP_CWORD -eq 1 ]
     then
         local subcommands="bug build clean doc env fix fmt generate get help install list mod work run test tool version vet"
-        COMPREPLY=($(compgen -W "$subcommands" $_GO_COMPLETER_CURRENT))
+        COMPREPLY=($(compgen -W "$subcommands" -- $_GO_COMPLETER_CURRENT))
         unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
         return
     fi
