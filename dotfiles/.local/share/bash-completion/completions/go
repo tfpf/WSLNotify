@@ -25,6 +25,15 @@ _go_build_completer()
     esac
 }
 
+# Takes the same arguments as `go build`, and some other options. I'll ignore
+# the `go build` options for now, since I don't see a use case for cleaning
+# specific builds.
+_go_clean_completer()
+{
+    local options="-cache -fuzzcache -i -modcache -n -r -testcache -x"
+    COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT))
+}
+
 # Takes only one more argument, which should one of the Go subcommands other
 # than `help`, or one of the Go help topics.
 _go_help_completer()
@@ -59,6 +68,7 @@ _go_completer()
         (bug) _go_bug_completer;;
         (build) _go_build_completer;;
         (help) _go_help_completer;;
+        (clean) _go_clean_completer;;
         (*) COMPREPLY=();;
     esac
     unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
