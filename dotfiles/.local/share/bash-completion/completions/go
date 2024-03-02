@@ -109,8 +109,9 @@ _go_get_completer()
     COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT))
 }
 
-# Takes only one more argument, which should one of the Go subcommands other
-# than `help`, or one of the Go help topics.
+# Takes only one more argument (which should one of the Go subcommands other
+# than `help`, or one of the Go help topics) or two if the first of those two
+# is `mod`.
 _go_help_completer()
 {
     if [ $COMP_CWORD -eq 2 ]
@@ -119,6 +120,10 @@ _go_help_completer()
         local topics="buildconstraint buildmode c cache environment filetype go.mod gopath gopath-get goproxy importpath modules module-get module-auth packages private testflag testfunc vcs"
         local wordlist="$subcommands $topics"
         COMPREPLY=($(compgen -W "$wordlist" -- $_GO_COMPLETER_CURRENT))
+    elif [ ${COMP_WORDS[2]} = mod -a $COMP_CWORD -eq 3 ]
+    then
+        local subsubcommands="download edit graph init tidy vendor verify why"
+        COMPREPLY=($(compgen -W "$subsubcommands" -- $_GO_COMPLETER_CURRENT))
     else
         COMPREPLY=()
     fi
