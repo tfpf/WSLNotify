@@ -6,8 +6,8 @@ _go_bug_completer()
 
 # Takes multiple arguments, which are either options or a package name. If an
 # option requires a value, try to complete the value if possible (otherwise, do
-# not complete it). If it does not require a value, complete with options
-# themselves, allowing default completion to take over if there are no matches.
+# not complete it). If it does not require a value, complete with options if
+# the previous word started with a hyphen, else fall back to normal completion.
 _go_build_completer()
 {
     local options="-a -asan -asmflags -buildmode -buildvcs -compiler -gccgoflags -gcflags -installsuffix -ldflags -linkshared -mod -modcacherw -modfile -msan -n -overlay -p -pkgdir -race -tags -toolexec -trimpath -v -work -x"
@@ -18,7 +18,10 @@ _go_build_completer()
         (-overlay) compopt -o default;;
         (-pkgdir) compopt -o dirnames;;
         (-asmflags | -gccgoflags | -gcflags | -installsuffix | -ldflags | -modfile | -p | -tags | -toolexec) COMPREPLY=();;
-        (*) COMPREPLY=($(compgen -o default -W "$options" -- $_GO_COMPLETER_CURRENT))
+        (*) case $_GO_COMPLETER_CURRENT in
+                (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+                (*) compopt -o default;;
+            esac;;
     esac
 }
 
