@@ -120,10 +120,13 @@ _go_help_completer()
         local topics="buildconstraint buildmode c cache environment filetype go.mod gopath gopath-get goproxy importpath modules module-get module-auth packages private testflag testfunc vcs"
         local wordlist="$subcommands $topics"
         COMPREPLY=($(compgen -W "$wordlist" -- $_GO_COMPLETER_CURRENT))
-    elif [ ${COMP_WORDS[2]} = mod -a $COMP_CWORD -eq 3 ]
+    elif [ $COMP_CWORD -eq 3 ]
     then
-        local subsubcommands="download edit graph init tidy vendor verify why"
-        COMPREPLY=($(compgen -W "$subsubcommands" -- $_GO_COMPLETER_CURRENT))
+        case ${COMP_WORDS[2]} in
+            (mod) COMPREPLY=($(compgen -W "download edit graph init tidy vendor verify why" -- $_GO_COMPLETER_CURRENT));;
+            (work) COMPREPLY=($(compgen -W "edit init sync use" -- $_GO_COMPLETER_CURRENT));;
+            (*) COMPREPLY=();;
+        esac
     else
         COMPREPLY=()
     fi
