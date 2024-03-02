@@ -4,10 +4,10 @@ _go_bug_completer()
     COMPREPLY=()
 }
 
-# Takes multiple arguments: options and package names. If an option requires a
-# value, try to complete the value if possible (otherwise, do not complete it).
-# If it does not require a value, complete with options if the current word
-# starts with a hyphen, else fall back to normal completion.
+# Takes options and package names. If an option requires a value, try to
+# complete the value if possible (otherwise, do not complete it). If it does
+# not require a value, complete with options if the current word starts with a
+# hyphen, else fall back to normal completion.
 _go_build_completer()
 {
     local options="-a -asan -asmflags -buildmode -buildvcs -compiler -gccgoflags -gcflags -installsuffix -ldflags -linkshared -mod -modcacherw -modfile -msan -n -overlay -p -pkgdir -race -tags -toolexec -trimpath -v -work -x"
@@ -47,9 +47,9 @@ _go_doc_completer()
     esac
 }
 
-# Takes multiple arguments: one option and zero or more values. The option
-# should be specified immediately after `go env` for correct results, but the
-# command does not check this, so I won't enforce it.
+# Takes options. Each option may have multiple values. The option should be
+# specified immediately after `go env` for correct results, but the command
+# does not check this, so I won't enforce it.
 _go_env_completer()
 {
     local options="-json -u -w"
@@ -57,6 +57,19 @@ _go_env_completer()
     case $_GO_COMPLETER_CURRENT in
         (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
         (*) COMPREPLY=($(compgen -W "$variables" -- $_GO_COMPLETER_CURRENT));;
+    esac
+}
+
+# Takes one option and package names. The option requires a value.
+_go_fix_completer()
+{
+    local options="-fix"
+    case $_GO_COMPLETER_PREVIOUS in
+        (-fix) COMPREPLY=();;
+        (*) case $_GO_COMPLETER_CURRENT in
+                (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+                (*) compopt -o default;;
+            esac;;
     esac
 }
 
@@ -98,6 +111,7 @@ _go_completer()
         (clean) _go_clean_completer;;
         (doc) _go_doc_completer;;
         (env) _go_env_completer;;
+        (fix) _go_fix_completer;;
         (*) COMPREPLY=();;
     esac
     unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
