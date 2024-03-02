@@ -1,24 +1,48 @@
+# Does not take any more arguments.
+_go_bug_completer()
+{
+    COMPREPLY=()
+}
+
+_go_build_completer()
+{
+    COMPREPLY=()
+}
+
+# Takes only one more argument, which should not be `help`.
+_go_help_completer()
+{
+    if [ $COMP_CWORD -eq 2 ]
+    then
+        local wordlist="bug build clean doc env fix fmt generate get install list mod work run test tool version vet"
+        COMPREPLY=($(compgen -W "$wordlist" $_GO_COMPLETER_CURRENT))
+    else
+        COMPREPLY=()
+    fi
+}
+
 _go_completer()
 {
-    local current=$2
-    local previous=$3
-    echo "'$previous' '$current' '${COMP_WORDS[@]}'" >> f
+    _GO_COMPLETER_CURRENT=$2
+    _GO_COMPLETER_PREVIOUS=$3
+    local cmd=${COMP_WORDS[1]}
+    echo "'$_GO_COMPLETER_PREVIOUS' '$_GO_COMPLETER_CURRENT' '${COMP_WORDS[1]}'" >> f
 
     if [ $COMP_CWORD -eq 1 ]
     then
-        local wordlist="bug build clean doc env fix fmt generate get install list mod work run test tool version vet"
-        COMPREPLY=($(compgen -W "$wordlist" $current))
+        local wordlist="bug build clean doc env fix fmt generate get help install list mod work run test tool version vet"
+        COMPREPLY=($(compgen -W "$wordlist" $_GO_COMPLETER_CURRENT))
+        unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
         return
     fi
 
-    if [ ${COMP_WORDS[1]} = bug ]
-    then
-        COMPREPLY=()
-        return
-    fi
-
-
-    compopt -o default
+    case $cmd in
+        (bug) _go_bug_completer;;
+        (build) _go_build_completer;;
+        (help) _go_help_completer;;
+        (*) compopt -o default;;
+    esac
+    unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
 }
 
 complete -F _go_completer go
