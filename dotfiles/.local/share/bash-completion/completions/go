@@ -4,10 +4,10 @@ _go_bug_completer()
     COMPREPLY=()
 }
 
-# Takes multiple arguments, which are either options or a package name. If an
-# option requires a value, try to complete the value if possible (otherwise, do
-# not complete it). If it does not require a value, complete with options if
-# the previous word started with a hyphen, else fall back to normal completion.
+# Takes multiple arguments: options and package names. If an option requires a
+# value, try to complete the value if possible (otherwise, do not complete it).
+# If it does not require a value, complete with options if the current word
+# starts with a hyphen, else fall back to normal completion.
 _go_build_completer()
 {
     local options="-a -asan -asmflags -buildmode -buildvcs -compiler -gccgoflags -gcflags -installsuffix -ldflags -linkshared -mod -modcacherw -modfile -msan -n -overlay -p -pkgdir -race -tags -toolexec -trimpath -v -work -x"
@@ -47,6 +47,15 @@ _go_doc_completer()
     esac
 }
 
+# Takes multiple arguments: options and package names.
+_go_env_completer()
+{
+    local options="-json -u -w"
+    case $_GO_COMPLETER_PREVIOUS in
+        (-u)
+    esac
+}
+
 # Takes only one more argument, which should one of the Go subcommands other
 # than `help`, or one of the Go help topics.
 _go_help_completer()
@@ -83,6 +92,7 @@ _go_completer()
         (help) _go_help_completer;;
         (clean) _go_clean_completer;;
         (doc) _go_doc_completer;;
+        (env) _go_env_completer;;
         (*) COMPREPLY=();;
     esac
     unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
