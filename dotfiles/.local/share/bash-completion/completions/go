@@ -221,7 +221,7 @@ _go_mod_why_completer()
     COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT))
 }
 
-# Takes subsubcommands, which take options. TODO Complete their options.
+# Takes subsubcommands, which take options.
 _go_mod_completer()
 {
     if [ $COMP_CWORD -eq 2 ]
