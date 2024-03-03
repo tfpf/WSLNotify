@@ -194,6 +194,19 @@ _go_mod_tidy_completer()
     esac
 }
 
+# Takes options.
+_go_mod_vendor_completer()
+{
+    local options="-e -o -v"
+    case $_GO_COMPLETER_PREVIOUS in
+        (-o) compopt -o default;;
+        (*) case $_GO_COMPLETER_CURRENT in
+                (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+                (*) COMPREPLY=();;
+            esac;;
+    esac
+}
+
 # Takes subsubcommands, which take options. TODO Complete their options.
 _go_mod_completer()
 {
@@ -208,6 +221,7 @@ _go_mod_completer()
         (graph) _go_mod_graph_completer;;
         (init) _go_mod_init_completer;;
         (tidy) _go_mod_tidy_completer;;
+        (vendor) _go_mod_vendor_completer;;
         (*) COMPREPLY=();;
     esac
 }
