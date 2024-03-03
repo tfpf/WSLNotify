@@ -162,6 +162,19 @@ _go_mod_edit_completer()
     esac
 }
 
+# Takes one option. The option requires a value.
+_go_mod_graph_completer()
+{
+    local options="-go"
+    case $_GO_COMPLETER_PREVIOUS in
+        (-go) COMPREPLY=();;
+        (*) case $_GO_COMPLETER_CURRENT in
+                (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+                (*) COMPREPLY=();;
+            esac;;
+    esac
+}
+
 # Takes subsubcommands, which take options. TODO Complete their options.
 _go_mod_completer()
 {
@@ -173,6 +186,7 @@ _go_mod_completer()
     case ${COMP_WORDS[2]} in
         (download) _go_mod_download_completer;;
         (edit) _go_mod_edit_completer;;
+        (graph) _go_mod_graph_completer;;
         (*) COMPREPLY=();;
     esac
 }
