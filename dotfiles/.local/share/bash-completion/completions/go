@@ -140,10 +140,26 @@ _go_install_completer()
     compopt -o default
 }
 
+# Takes options and module names. The modules are downloaded, so do not fall
+# back to normal completion.
 _go_mod_download_completer()
 {
     local options="-json -x"
     COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT))
+}
+
+# Takes options and a file name (`go.mod`).
+_go_mod_edit_completer()
+{
+    local options="-dropexclude -dropreplace -droprequire -dropretract -exclude -fmt -go -json -module -print -replace -require -retract"
+    case $_GO_COMPLETER_PREVIOUS in
+        (-dropexclude | -dropreplace | -droprequire | -dropretract | -exclude | -go | -replace | -require | -retract) COMPREPLY=();;
+        (-module) compopt -o default;;
+        (*) case $_GO_COMPLETER_CURRENT in
+                (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+                (*) compopt -o default;;
+            esac;;
+    esac
 }
 
 # Takes subsubcommands, which take options. TODO Complete their options.
@@ -156,6 +172,7 @@ _go_mod_completer()
     fi
     case ${COMP_WORDS[2]} in
         (download) _go_mod_download_completer;;
+        (edit) _go_mod_edit_completer;;
         (*) COMPREPLY=();;
     esac
 }
