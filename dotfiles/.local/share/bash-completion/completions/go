@@ -140,13 +140,24 @@ _go_install_completer()
     compopt -o default
 }
 
+_go_mod_download_completer()
+{
+    local options="-json -x"
+    COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT))
+}
+
 # Takes subsubcommands, which take options. TODO Complete their options.
 _go_mod_completer()
 {
     if [ $COMP_CWORD -eq 2 ]
     then
         COMPREPLY=($(compgen -W "download edit graph init tidy vendor verify why" $_GO_COMPLETER_CURRENT))
+        return
     fi
+    case ${COMP_WORDS[2]} in
+        (download) _go_mod_download_completer;;
+        (*) COMPREPLY=();;
+    esac
 }
 
 # Takes options. Each option requires a value; values may be present without
