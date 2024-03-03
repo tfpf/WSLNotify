@@ -199,7 +199,7 @@ _go_mod_vendor_completer()
 {
     local options="-e -o -v"
     case $_GO_COMPLETER_PREVIOUS in
-        (-o) compopt -o default;;
+        (-o) compopt -o dirnames;;
         (*) case $_GO_COMPLETER_CURRENT in
                 (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
                 (*) COMPREPLY=();;
