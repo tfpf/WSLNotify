@@ -175,6 +175,12 @@ _go_mod_graph_completer()
     esac
 }
 
+# Takes a module path.
+_go_mod_init_completer()
+{
+    compopt -o default
+}
+
 # Takes subsubcommands, which take options. TODO Complete their options.
 _go_mod_completer()
 {
@@ -187,6 +193,7 @@ _go_mod_completer()
         (download) _go_mod_download_completer;;
         (edit) _go_mod_edit_completer;;
         (graph) _go_mod_graph_completer;;
+        (init) _go_mod_init_completer;;
         (*) COMPREPLY=();;
     esac
 }
