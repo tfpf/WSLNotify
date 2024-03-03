@@ -207,6 +207,20 @@ _go_mod_vendor_completer()
     esac
 }
 
+# Takes no arguments.
+_go_mod_verify_completer()
+{
+    COMPREPLY=()
+}
+
+# Takes options and package names. The packages are paths (similar to those
+# passed to `go mod download`, so do not fall back to normal completion.
+_go_mod_why_completer()
+{
+    local options="-m -vendor"
+    COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT))
+}
+
 # Takes subsubcommands, which take options. TODO Complete their options.
 _go_mod_completer()
 {
@@ -222,6 +236,8 @@ _go_mod_completer()
         (init) _go_mod_init_completer;;
         (tidy) _go_mod_tidy_completer;;
         (vendor) _go_mod_vendor_completer;;
+        (verify) _go_mod_verify_completer;;
+        (why) _go_mod_why_completer;;
         (*) COMPREPLY=();;
     esac
 }
