@@ -310,7 +310,6 @@ _go_completer()
     _GO_COMPLETER_CURRENT=$2
     _GO_COMPLETER_PREVIOUS=$3
     local cmd=${COMP_WORDS[1]}
-    echo "'$_GO_COMPLETER_PREVIOUS' '$_GO_COMPLETER_CURRENT' '${COMP_WORDS[1]}'" >> f
 
     if [ $COMP_CWORD -eq 1 ]
     then
