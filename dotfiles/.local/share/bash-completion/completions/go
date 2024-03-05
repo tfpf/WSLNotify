@@ -140,6 +140,21 @@ _go_install_completer()
     compopt -o default
 }
 
+# Takes options and package/module names. TODO Complete `go build` options
+# which are supported.
+_go_list_completer()
+{
+    local options="-compiled -deps -e -export -f -find -json -m -modfile -retracted -test -u -versions"
+    case $_GO_COMPLETER_PREVIOUS in
+        (-f) COMPREPLY=();;
+        (-modfile) compopt -o default;;
+        (*) case $_GO_COMPLETER_CURRENT in
+                (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+                (*) compopt -o default;;
+            esac;;
+    esac
+}
+
 # Takes options and module names. The modules are downloaded, so do not fall
 # back to normal completion.
 _go_mod_download_completer()
@@ -242,18 +257,20 @@ _go_mod_completer()
     esac
 }
 
-# Takes options and package/module names. TODO Complete `go build` options
-# which are supported.
-_go_list_completer()
+# Takes options and a package name. The options must come before the package
+# name (arguments specified after the latter are treated as those of the binary
+# to run). However, there is no way to know if the package name has already
+# been specified, so keep it simple. TODO Complete `go build` options which are
+# supported.
+_go_run_completer()
 {
-    local options="-compiled -deps -e -export -f -find -json -m -modfile -retracted -test -u -versions"
+    local options="-exec"
     case $_GO_COMPLETER_PREVIOUS in
-        (-f) COMPREPLY=();;
-        (-modfile) compopt -o default;;
+        (-exec) COMPREPLY=();;
         (*) case $_GO_COMPLETER_CURRENT in
                 (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
                 (*) compopt -o default;;
-            esac;;
+            esac
     esac
 }
 
@@ -296,8 +313,9 @@ _go_completer()
         (get) _go_get_completer;;
         (help) _go_help_completer;;
         (install) _go_install_completer;;
-        (mod) _go_mod_completer;;
         (list) _go_list_completer;;
+        (mod) _go_mod_completer;;
+        (run) _go_run_completer;;
         (version) _go_version_completer;;
         (*) COMPREPLY=();;
     esac
