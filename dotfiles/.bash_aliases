@@ -53,7 +53,6 @@ cfs()
         sudo tee ${files[@]} <<< $1
     fi
 }
-complete -W "conservative ondemand performance powersave schedutil userspace" cfs
 
 # Restart the shell. Exit from any Python virtual environments before doing so.
 e()
