@@ -12,8 +12,8 @@ shopt -s expand_aliases
 shopt -s globstar
 shopt -s histappend
 
-# Prepend to an environment variable containing colon-separated paths without
-# duplication.
+# Prepend directories to an environment variable containing colon-separated
+# paths without duplication.
 envarmunge()
 {
     local name=$1
@@ -23,17 +23,6 @@ envarmunge()
         eval "export $name=\"$value\"\${$name:+:\$$name}"
     fi
 }
-_envarmunge()
-{
-    if [ $COMP_CWORD -eq 1 ]
-    then
-        local wordlist=$(env | command grep -F = | awk -F = '{print $1}')
-        COMPREPLY=($(compgen -W "$wordlist" $2))
-    else
-        compopt -o default
-    fi
-}
-complete -F _envarmunge envarmunge
 
 envarmunge C_INCLUDE_PATH /usr/local/include
 envarmunge CPLUS_INCLUDE_PATH /usr/local/include
