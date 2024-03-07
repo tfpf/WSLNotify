@@ -5,7 +5,7 @@ _envarmunge_completer()
         local wordlist=$(env | command grep -F = | awk -F = '{print $1}')
         COMPREPLY=($(compgen -W "$wordlist" $2))
     else
-        compopt -o default
+        compopt -o dirnames
     fi
 }
 
