@@ -317,10 +317,26 @@ _go_work_edit_completer()
     esac
 }
 
-# Takes a module path.
+# Takes a module directory.
 _go_work_init_completer()
 {
     compopt -o dirnames
+}
+
+# Takes no arguments.
+_go_work_sync_completer()
+{
+    COMPREPLY=()
+}
+
+# Takes options and module directories.
+_go_work_use_completer()
+{
+    local options="-r"
+    case $_GO_COMPLETER_CURRENT in
+        (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+        (*) compopt -o dirnames;;
+    esac
 }
 
 # Takes subsubcommands, which take arguments.
@@ -334,8 +350,8 @@ _go_work_completer()
     case ${COMP_WORDS[2]} in
         (edit) _go_work_edit_completer;;
         (init) _go_work_init_completer;;
-        # (sync) _go_work_sync_completer;;
-        # (use) _go_work_use_completer;;
+        (sync) _go_work_sync_completer;;
+        (use) _go_work_use_completer;;
         (*) COMPREPLY=();;
     esac
 }
