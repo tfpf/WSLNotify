@@ -365,7 +365,7 @@ _go_completer()
 
     if [ $COMP_CWORD -eq 1 ]
     then
-        local subcommands="bug build clean doc env fix fmt generate get help install list mod work run test tool version vet"
+        local subcommands="bug build clean doc env fix fmt generate get help install list mod run test tool version vet work"
         COMPREPLY=($(compgen -W "$subcommands" -- $_GO_COMPLETER_CURRENT))
         unset _GO_COMPLETER_CURRENT _GO_COMPLETER_PREVIOUS
         return
