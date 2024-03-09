@@ -304,6 +304,20 @@ _go_version_completer()
     esac
 }
 
+# Takes options and package names. TODO Complete `go build` options which are
+# supported.
+_go_vet_completer()
+{
+    local options="-n -vettool -x"
+    case $_GO_COMPLETER_PREVIOUS in
+        (-vettool) COMPREPLY=();;
+        (*) case $_GO_COMPLETER_CURRENT in
+                (-*) COMPREPLY=($(compgen -W "$options" -- $_GO_COMPLETER_CURRENT));;
+                (*) compopt -o default;;
+            esac
+    esac
+}
+
 # Takes options and a file name (`go.work`).
 _go_work_edit_completer()
 {
@@ -388,6 +402,7 @@ _go_completer()
         (run) _go_run_completer;;
         (test) _go_test_completer;;
         (version) _go_version_completer;;
+        (vet) _go_vet_completer;;
         (work) _go_work_completer;;
         (*) COMPREPLY=();;
     esac
