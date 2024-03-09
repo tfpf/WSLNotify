@@ -317,6 +317,12 @@ _go_work_edit_completer()
     esac
 }
 
+# Takes a module path.
+_go_work_init_completer()
+{
+    compopt -o dirnames
+}
+
 # Takes subsubcommands, which take arguments.
 _go_work_completer()
 {
@@ -327,7 +333,7 @@ _go_work_completer()
     fi
     case ${COMP_WORDS[2]} in
         (edit) _go_work_edit_completer;;
-        # (init) _go_work_init_completer;;
+        (init) _go_work_init_completer;;
         # (sync) _go_work_sync_completer;;
         # (use) _go_work_use_completer;;
         (*) COMPREPLY=();;
