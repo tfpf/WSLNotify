@@ -11,8 +11,8 @@ alias valgrind='command valgrind --leak-check=full --show-leak-kinds=all --track
 
 alias f='watch -n 1 "command grep -F MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr | sed s/^0/\ /g"'
 alias htop='command htop -d 10 -t -u $USER'
-alias m='watch -n 1 free -ht'
-alias s='watch -n 1 sensors'
+alias m='watch -d -n 1 free -ht'
+alias s='watch -d -n 1 sensors'
 alias top='command top -d 1 -H -u $USER'
 
 alias l='command ls -lNX --color=auto --group-directories-first'
