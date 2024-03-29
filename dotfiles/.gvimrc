@@ -94,7 +94,7 @@ se ul=1000                   " Number of undo operations allowed.
 if has('win32') || has('win64')
     au GUIEnter * sim ~x
     nn <silent> <F2> :so ~/_gvimrc<CR>
-    se gfn=CaskaydiaCove\ Nerd\ Font:h13
+    se gfn=Cascadia\ Code:h13           " The patched version does not work.
     se rop=                             " `type:directx` enables ligatures, but makes text bold. I don't like that.
     se scf                              " Scroll focus follows mouse pointer.
 elseif has('unix')
