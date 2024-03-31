@@ -1,6 +1,4 @@
 {
-    "editor.fontFamily": "'CaskaydiaCove Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
-    "editor.renderWhitespace": "trailing",
     "editor.autoClosingBrackets": "never",
     "editor.autoClosingComments": "never",
     "editor.autoClosingDelete": "never",
@@ -10,27 +8,30 @@
     "editor.autoSurround": "never",
     "editor.cursorBlinking": "solid",
     "editor.cursorSurroundingLines": 3,
+    "editor.fontFamily": "'CaskaydiaCove Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
     "editor.fontLigatures": true,
     "editor.minimap.maxColumn": 79,
     "editor.minimap.renderCharacters": false,
+    "editor.occurrencesHighlight": "off",
+    "editor.renderWhitespace": "trailing",
+    "editor.rulers": [
+        79,
+        119
+    ],
     "files.eol": "\n",
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
-    "terminal.integrated.cursorStyle": "line",
     "telemetry.telemetryLevel": "off",
-    "editor.rulers": [
-        79, 119
-    ],
-    "vim.highlightedyank.enable": true,
-    "vim.highlightedyank.color": "rgba(39, 180, 166, 0.3)",
+    "terminal.integrated.cursorStyle": "line",
+    "vim.highlightedyank.color": "rgba(39, 180, 166, 0.24)",
     "vim.highlightedyank.duration": 300,
+    "vim.highlightedyank.enable": true,
     "vim.hlsearch": true,
     "vim.report": 1,
     "workbench.colorCustomizations": {
-        "editor.selectionBackground": "#27B4A64D",
-        "editor.selectionHighlightBackground": "#27B4A64D",
-        "editor.findMatchBackground": "#27B4A65D",
-        "editor.findMatchHighlightBackground": "#27B4A65D"
-    },
-    "editor.occurrencesHighlight": "off"
+        "editor.findMatchBackground": "#27B4A68D",
+        "editor.findMatchHighlightBackground": "#27B4A68D",
+        "editor.selectionBackground": "#27B4A63D",
+        "editor.selectionHighlightBackground": "#27B4A63D"
+    }
 }
