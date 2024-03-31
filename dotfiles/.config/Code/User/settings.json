@@ -29,7 +29,8 @@
     "workbench.colorCustomizations": {
         "editor.selectionBackground": "#27B4A64D",
         "editor.selectionHighlightBackground": "#27B4A64D",
-        "editor.findMatchBackground": "#27B4A6AA",
-        "editor.findMatchHighlightBackground": "#27B4A6AA"
-    }
+        "editor.findMatchBackground": "#27B4A65D",
+        "editor.findMatchHighlightBackground": "#27B4A65D"
+    },
+    "editor.occurrencesHighlight": "off"
 }
