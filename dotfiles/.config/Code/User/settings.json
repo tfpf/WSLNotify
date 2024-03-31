@@ -1,0 +1,35 @@
+{
+    "editor.fontFamily": "'CaskaydiaCove Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
+    "editor.renderWhitespace": "trailing",
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingComments": "never",
+    "editor.autoClosingDelete": "never",
+    "editor.autoClosingOvertype": "never",
+    "editor.autoClosingQuotes": "never",
+    "editor.autoIndent": "keep",
+    "editor.autoSurround": "never",
+    "editor.cursorBlinking": "solid",
+    "editor.cursorSurroundingLines": 3,
+    "editor.fontLigatures": true,
+    "editor.minimap.maxColumn": 79,
+    "editor.minimap.renderCharacters": false,
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "terminal.integrated.cursorStyle": "line",
+    "telemetry.telemetryLevel": "off",
+    "editor.rulers": [
+        79, 119
+    ],
+    "vim.highlightedyank.enable": true,
+    "vim.highlightedyank.color": "rgba(39, 180, 166, 0.3)",
+    "vim.highlightedyank.duration": 300,
+    "vim.hlsearch": true,
+    "vim.report": 1,
+    "workbench.colorCustomizations": {
+        "editor.selectionBackground": "#27B4A64D",
+        "editor.selectionHighlightBackground": "#27B4A64D",
+        "editor.findMatchBackground": "#27B4A6AA",
+        "editor.findMatchHighlightBackground": "#27B4A6AA"
+    }
+}
