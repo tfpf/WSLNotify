@@ -15,6 +15,7 @@
     "editor.minimap.maxColumn": 79,
     "editor.minimap.renderCharacters": false,
     "editor.occurrencesHighlight": "off",
+    "editor.renderFinalNewline": "dimmed",
     "editor.renderWhitespace": "trailing",
     "editor.rulers": [
         79,
@@ -26,13 +27,14 @@
     "telemetry.telemetryLevel": "off",
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.fontSize": 16,
-    "vim.highlightedyank.color": "rgba(39, 180, 166, 0.24)",
+    "vim.highlightedyank.color": "#27B4A63D",
     "vim.highlightedyank.duration": 300,
     "vim.highlightedyank.enable": true,
     "vim.hlsearch": true,
+    "vim.ignorecase": false,
     "vim.report": 1,
     "workbench.colorCustomizations": {
-        "editor.findMatchBackground": "#27B4A68D",
+        "editor.findMatchBackground": "#F2CC238D",
         "editor.findMatchHighlightBackground": "#27B4A68D",
         "editor.selectionBackground": "#27B4A63D",
         "editor.selectionHighlightBackground": "#27B4A63D"
