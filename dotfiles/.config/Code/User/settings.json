@@ -34,9 +34,9 @@
     "vim.ignorecase": false,
     "vim.report": 1,
     "workbench.colorCustomizations": {
-        "editor.findMatchBackground": "#F2CC238D",
+        "editor.findMatchBackground": "#B4A6278D",
         "editor.findMatchHighlightBackground": "#27B4A68D",
         "editor.selectionBackground": "#27B4A63D",
-        "editor.selectionHighlightBackground": "#27B4A63D"
+        "editor.selectionHighlightBackground": "#B4A6273D"
     }
 }
