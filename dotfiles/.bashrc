@@ -111,29 +111,28 @@ then
     . $HOME/.bash_aliases
 fi
 
+# Source the first existing file of the arguments.
+_source_one()
+{
+    local script
+    for script in "$@"
+    do
+        . "$script" &>/dev/null && break
+    done
+}
+
 # Enable programmable completion for common commands.
 if [ -z "${BASH_COMPLETION_VERSINFO+.}" ]
 then
-    if [ -f /usr/share/bash-completion/bash_completion ]
-    then
-        . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]
-    then
-        . /etc/bash_completion
-    fi
+    _source_one /usr/share/bash-completion/bash_completion /etc/bash_completion
 fi
 
 # Showing the Git branch in the primary prompt depends upon a script which must
 # be sourced separately on some Linux distributions.
-for script in /usr/share/git/completion/git-prompt.sh /usr/share/git-core/contrib/completion/git-prompt.sh
-do
-    if [ -f $script ]
-    then
-        . $script
-        break
-    fi
-done
-unset script
+if ! command -v __git_ps1 &>/dev/null
+then
+    _source_one /usr/share/git/completion/git-prompt.sh /usr/share/git-core/contrib/completion/git-prompt.sh
+fi
 
 export PS1='\n┌[\u@\h \w]\n└─\$ '
 export PS2='──▶ '
@@ -173,3 +172,5 @@ then
     }
     export PS1=$(_PS1)
 fi
+
+unset -f _PS1 _source_one
