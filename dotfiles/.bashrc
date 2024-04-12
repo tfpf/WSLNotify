@@ -89,7 +89,7 @@ export HISTSIZE=1000
 export HISTTIMEFORMAT='[%F %T] '
 
 # Maximum line length of LaTeX output.
-export max_print_line=1048576
+export max_print_line=19999
 export error_line=254
 export half_error_line=238
 
