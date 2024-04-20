@@ -62,7 +62,6 @@ export BASH_COMPLETION_USER_DIR=$HOME/.local/share/bash-completion
 export BAT_PAGER='less -iRF'
 export EDITOR=vim
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01:range1=32:range2=34:fixit-insert=32:fixit-delete=31:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:type-diff=01;32'
-export GDK_SCALE=1
 export GIT_EDITOR=vim
 # Inkscape does not work with GLIBC on some Linux distributions.
 export _INKSCAPE_GC=disable
@@ -72,7 +71,6 @@ export MAN_POSIXLY_CORRECT=1
 # Disable accessibility bus error messages when using some GTK programs.
 export NO_AT_BRIDGE=1
 export PAGER='less -i'
-export QT_LOGGING_RULES='qt5ct.debug=false'
 # Time format in directory listing.
 export TIME_STYLE=long-iso
 # Do not change the terminal prompt when in a Python virtual environment.
@@ -101,6 +99,8 @@ fi
 
 # Don't install libraries in 64-bit directories while building CPython.
 unset CONFIG_SITE
+# Don't scale GTK apps. (Scaling should be handled by the window manager.)
+unset GDK_SCALE
 # Don't ask for the Git PAT in a GUI window. Use the TUI.
 unset GIT_ASKPASS
 # Don't ask for the SSH password in a GUI window. Use the TUI.
