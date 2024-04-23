@@ -166,7 +166,10 @@ then
         esac
         host='\[\e[1;3;93m\]\h '"$host $os"'\[\e[m\]'
         local directory='\[\e[1;96m\]\w\[\e[m\]'
-        local git_branch='$(__git_ps1 "   %s")'
+        if command -v __git_ps1 &>/dev/null
+        then
+            local git_branch='$(__git_ps1 "   %s")'
+        fi
         local virtual_environment='${VIRTUAL_ENV_PROMPT:+  \[\e[94m\]$VIRTUAL_ENV_PROMPT\[\e[m\]}'
         printf '\n┌[%s %s %s]%s%s\n└─▶ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment"
     }
