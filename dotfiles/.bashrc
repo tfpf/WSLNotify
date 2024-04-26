@@ -158,11 +158,11 @@ then
             local user='\[\e[1;92m\]\u\[\e[m\]'
         fi
         local os=$(uname)
+        local host='•'
         case $os in
-            (Darwin) local host='';;
-            (Linux) local host='';;
-            (*NT*) local host='';;
-            (*) local host='•';;
+            (Darwin) host='';;
+            (Linux) host='';;
+            (*NT*) host='';;
         esac
         host='\[\e[1;3;93m\]\h '"$host $os"'\[\e[m\]'
         local directory='\[\e[1;96m\]\w\[\e[m\]'
