@@ -158,17 +158,18 @@ then
             local user='\[\e[1;92m\]\u\[\e[m\]'
         fi
         local os=$(uname)
+        local host='•'
         case $os in
-            (Darwin) local host='';;
-            (Linux) local host='';;
-            (*NT*) local host='';;
-            (*) local host='•';;
+            (Darwin) host='';;
+            (Linux) host='';;
+            (*NT*) host='';;
         esac
         host='\[\e[1;3;93m\]\h '"$host $os"'\[\e[m\]'
         local directory='\[\e[1;96m\]\w\[\e[m\]'
-        local git_branch='$(__git_ps1 "   %s")'
+        command -v __git_ps1 &>/dev/null && local git_branch='$(__git_ps1 "   %s")'
         local virtual_environment='${VIRTUAL_ENV_PROMPT:+  \[\e[94m\]$VIRTUAL_ENV_PROMPT\[\e[m\]}'
-        printf '\n┌[%s %s %s]%s%s\n└─▶ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment"
+        [ -f /.dockerenv ] && local docker_info=" 󰡨 \[\e[34m\]\h\[\e[m\]"
+        printf '\n┌[%s %s %s]%s%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment" "$docker_info"
     }
     export PS1=$(_PS1)
 fi
