@@ -168,10 +168,7 @@ then
         local directory='\[\e[1;96m\]\w\[\e[m\]'
         command -v __git_ps1 &>/dev/null && local git_branch='$(__git_ps1 "   %s")'
         local virtual_environment='${VIRTUAL_ENV_PROMPT:+  \[\e[94m\]$VIRTUAL_ENV_PROMPT\[\e[m\]}'
-        if [ -f /.dockerenv ]
-        then
-            local docker_info="󰡨 \[\e[96m\]$(hostname)\[\e[m\]"
-        fi
+        [ -f /.dockerenv ] && local docker_info="󰡨 \[\e[96m\]$(hostname)\[\e[m\]"
         printf '\n┌[%s %s %s]%s%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment" "$docker_info"
     }
     export PS1=$(_PS1)
