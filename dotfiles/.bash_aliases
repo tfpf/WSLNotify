@@ -226,11 +226,11 @@ _after_command()
     fi
     local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
 
-    # Non-ASCII symbols may have to be treated as multi-byte characters,
-    # depending on the shell.
-    local report="$exit_symbol $last_command ◀ $breakup"
+    # Bash doesn't calculate the length of a string containing ANSI colour
+    # codes correctly, so a correction is required.
+    local report="$last_command $exit_symbol $breakup"
     local width=${#report}
-    width=$((COLUMNS-width%COLUMNS+width+14))
+    width=$((COLUMNS-width%COLUMNS+width+12))
     printf "\r%*s\n" $width "$report"
     if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
     then

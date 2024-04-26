@@ -172,7 +172,7 @@ then
         then
             local docker_info="󰡨 \[\e[96m\]$(hostname)\[\e[m\]"
         fi
-        printf '\n┌[%s %s %s]%s%s%s\n└─▶ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment" "$docker_info"
+        printf '\n┌[%s %s %s]%s%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment" "$docker_info"
     }
     export PS1=$(_PS1)
 fi
