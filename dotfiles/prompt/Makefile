@@ -3,4 +3,9 @@ CFLAGS = -std=c11 -O2 -Wall -Wextra -flto
 LDFLAGS = $(shell pkg-config --libs-only-L libgit2)
 LDLIBS = $(shell pkg-config --libs-only-l libgit2)
 
-prompt:
+.PHONY: debug release
+
+debug: prompt
+
+release: CPPFLAGS += -DNDEBUG
+release: prompt
