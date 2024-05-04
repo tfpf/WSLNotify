@@ -82,8 +82,16 @@ h()
 c()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
-    [ "$2" = ++ ] && local c=g++ || local c=gcc
-    $c -E "$1" | command grep -Fv '#' | bat -l c++ --file-name "$1"
+    if [ "$2" == ++ ]
+    then
+        local c=g++
+        local l=c++
+    else
+        local c=gcc
+        local l=c
+    fi
+    # $c -E "$1" | command grep -Fv '#' | bat -l c++ --file-name "$1"
+    clang-format <($c -E "$1") | command grep -Fv '#' | bat -l $l --file-name "$1"
 }
 
 # Obtain the ID of the active window.
