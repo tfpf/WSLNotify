@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #ifndef NDEBUG
-#define LOG(s, ...) fprintf(stderr, s __VA_OPT__(,) __VA_ARGS__)
+#define LOG(s, ...) fprintf(stderr, "%s:%d: " s, __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__)
 #else
 #define LOG(s, ...)
 #endif
@@ -33,12 +33,11 @@ get_git_info(char git_info[])
     git_reference *ref;
     if (git_repository_head(&ref, repo) != 0)
     {
-        LOG("Could not get the HEAD of the repository.\n");
+        LOG("Could not get HEAD of repository.\n");
         return;
     }
     char const *branch = git_reference_shorthand(ref);
     LOG("Obtained short name %s.\n", branch);
-
 
     // git_status_options opts = GIT_STATUS_OPTIONS_INIT;
     // git_status_list *statuses;
@@ -46,7 +45,6 @@ get_git_info(char git_info[])
     // {
     //     /* code */
     // }
-
 }
 
 int
