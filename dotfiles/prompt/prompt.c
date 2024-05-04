@@ -12,7 +12,7 @@
         time_t now = time(NULL);                                                                                      \
         char buf[32];                                                                                                 \
         strftime(buf, sizeof buf, "%F %T", localtime(&now));                                                          \
-        fprintf(stderr, "[%s] %s:%d: " s, buf, __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__);                        \
+        fprintf(stderr, "\e[34m%s\e[m \e[94m%s:%d\e[m " s, buf, __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__);       \
     } while (false)
 #else
 #define LOG(s, ...)
@@ -38,6 +38,13 @@ get_git_info(char git_info[])
         return;
     }
     LOG("Opened repository %s.\n", git_repository_path(repo));
+
+    char const *bare = "";
+    if (git_repository_is_bare(repo) != 0)
+    {
+        bare = "BARE:";
+        LOG("Repository is bare.\n");
+    }
 
     git_reference *ref;
     if (git_repository_head(&ref, repo) != 0)
