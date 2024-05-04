@@ -172,6 +172,7 @@ then
         printf '\n┌[%s %s %s]%s%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment" "$docker_info"
     }
     export PS1=$(_PS1)
+    readonly PS1 PS2 PS3 PS4
 fi
 
 unset -f _PS1 _source_one
