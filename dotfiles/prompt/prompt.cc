@@ -77,7 +77,7 @@ get_git_info(void)
     git_reference_free(ref);
     git_repository_free(repo);
 
-    return std::format("   \\[\\e[32m\\]{}{}\\[\\e[m\\]", bare, shorthand);
+    return std::format("   \e[32m{}{}\e[m", bare, shorthand);
 }
 
 /******************************************************************************
@@ -95,7 +95,7 @@ get_venv_info(void)
         return "";
     }
     LOG("VIRTUAL_ENV_PROMPT is set to " << venv_prompt);
-    return std::format("  \\[\\e[94m\\]{}\\[\\e[m\\]", venv_prompt);
+    return std::format("  \e[94m{}\e[m", venv_prompt);
 }
 
 int
