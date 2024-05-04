@@ -1,5 +1,5 @@
 CPPFLAGS = $(shell pkg-config --cflags libgit2)
-CFLAGS = -Wall -Wextra
+CXXFLAGS = -std=c++20 -Wall -Wextra
 LDFLAGS = $(shell pkg-config --libs-only-L libgit2)
 LDLIBS = $(shell pkg-config --libs-only-l libgit2)
 
@@ -8,6 +8,6 @@ LDLIBS = $(shell pkg-config --libs-only-l libgit2)
 debug: CFLAGS += -ggdb
 debug: prompt
 
-release: CFLAGS += -flto -O2 -std=c11
+release: CFLAGS += -flto -O2
 release: CPPFLAGS += -DNDEBUG
 release: prompt
