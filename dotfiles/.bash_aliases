@@ -91,7 +91,7 @@ c()
         local l=c
     fi
     # $c -E "$1" | command grep -Fv '#' | bat -l c++ --file-name "$1"
-    clang-format <($c -E "$1") | command grep -Fv '#' | bat -l $l --file-name "$1"
+    clang-format <($c -E "$1" | command grep -Fv '#') | bat -l $l --file-name "$1"
 }
 
 # Obtain the ID of the active window.
