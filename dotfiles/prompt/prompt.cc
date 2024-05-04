@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <cstdlib>
 #include <format>
 #include <git2.h>
 #include <iomanip>
@@ -19,21 +20,19 @@
 #define LOG(s)
 #endif
 
-constexpr std::size_t MAX_INFO_LEN = 64;
-
 /******************************************************************************
  * Obtain the current state of the current Git repository.
  *
- * @param git_info String to write the state to.
+ * @return String describing state if in a Git repository, else empty string.
  *****************************************************************************/
-void
-get_git_info(char git_info[])
+std::string
+get_git_info(void)
 {
     git_repository* repo;
     if (git_repository_open_ext(&repo, ".", 0, NULL) != 0)
     {
         LOG(git_error_last()->message);
-        return;
+        return "";
     }
     char const* repo_path = git_repository_path(repo);
     LOG("opened repository " << repo_path);
@@ -50,7 +49,7 @@ get_git_info(char git_info[])
     {
         LOG(git_error_last()->message);
         git_repository_free(repo);
-        return;
+        return "";
     }
     char const* shorthand = git_reference_shorthand(ref);
     LOG("obtained HEAD name " << shorthand);
@@ -77,13 +76,38 @@ get_git_info(char git_info[])
 
     git_reference_free(ref);
     git_repository_free(repo);
+
+    return std::format("   \\[\\e[32m\\]{}{}\\[\\e[m\\]", bare, shorthand);
+}
+
+/******************************************************************************
+ * Obtain the current Python virtual environment.
+ *
+ * @return Name of the virtual environment if any, else empty string.
+ *****************************************************************************/
+std::string
+get_venv_info(void)
+{
+    char const* venv_prompt = std::getenv("VIRTUAL_ENV_PROMPT");
+    if (venv_prompt == NULL)
+    {
+        LOG("VIRTUAL_ENV_PROMPT is unset");
+        return "";
+    }
+    LOG("VIRTUAL_ENV_PROMPT is set to " << venv_prompt);
+    return std::format("  \\[\\e[94m\\]{}\\[\\e[m\\]", venv_prompt);
 }
 
 int
 main(void)
 {
     git_libgit2_init();
-    char git_info[MAX_INFO_LEN] = { '\0' };
-    get_git_info(git_info);
+    std::string git_info = get_git_info();
     git_libgit2_shutdown();
+    LOG("git_info = " << git_info);
+
+    std::string venv_info = get_venv_info();
+    LOG("venv_info = " << venv_info);
+
+    std::cout << git_info << venv_info << '\n';
 }
