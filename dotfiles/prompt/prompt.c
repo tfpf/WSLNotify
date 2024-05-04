@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifndef NDEBUG
 #include <time.h>
@@ -37,7 +38,8 @@ get_git_info(char git_info[])
         LOG("Could not open repository.\n");
         return;
     }
-    LOG("Opened repository %s.\n", git_repository_path(repo));
+    char const *repo_path = git_repository_path(repo);
+    LOG("Opened repository %s.\n", repo_path);
 
     char const *bare = "";
     if (git_repository_is_bare(repo) != 0)
@@ -50,17 +52,36 @@ get_git_info(char git_info[])
     if (git_repository_head(&ref, repo) != 0)
     {
         LOG("Could not get HEAD of repository.\n");
+        goto clean_repo;
         return;
     }
-    char const *branch = git_reference_shorthand(ref);
-    LOG("Obtained short name %s.\n", branch);
+    char const *shorthand = git_reference_shorthand(ref);
+    LOG("Obtained short name %s.\n", shorthand);
 
-    // git_status_options opts = GIT_STATUS_OPTIONS_INIT;
-    // git_status_list *statuses;
-    // if (git_status_list_new(&statuses, repo, &opts))
-    // {
-    //     /* code */
-    // }
+    char shorthand_buf[9];
+    if (strcmp(shorthand, "HEAD") == 0)
+    {
+        switch (git_reference_type(ref))
+        {
+        case GIT_REFERENCE_DIRECT:
+            git_oid const *target = git_reference_target(ref);
+            git_oid_tostr(shorthand_buf, sizeof shorthand_buf, target);
+            shorthand = shorthand_buf;
+            LOG("Repository HEAD directly points to %s.\n", shorthand);
+            break;
+        case GIT_REFERENCE_SYMBOLIC:
+            shorthand = git_reference_symbolic_target(ref);
+            LOG("Repository HEAD symbolically points to %s.\n", shorthand);
+            break;
+        default:
+            break;
+        }
+    }
+
+clean_ref:
+    git_reference_free(ref);
+clean_repo:
+    git_repository_free(repo);
 }
 
 int
