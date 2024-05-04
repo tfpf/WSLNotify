@@ -72,12 +72,14 @@ get_git_info(void)
         }
     }
 
-    // Interactive rebase is not supported. Get the details manually.
+    char const* shorthand_begin = "\e[32m";
+    char const* shorthand_end = "\e[m";
+    if (git_repository_head_detached(repo))
+    {
+        shorthand_begin = "\e[31m";
+    }
 
-    git_reference_free(ref);
-    git_repository_free(repo);
-
-    return std::format("   \e[32m{}{}\e[m", bare, shorthand);
+    return std::format("   {}{}{}{}", shorthand_begin, bare, shorthand, shorthand_end);
 }
 
 /******************************************************************************
