@@ -1,10 +1,19 @@
 #include <git2.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #ifndef NDEBUG
-#define LOG(s, ...) fprintf(stderr, "%s:%d: " s, __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__)
+#include <time.h>
+#define LOG(s, ...)                                                                                                   \
+    do                                                                                                                \
+    {                                                                                                                 \
+        time_t now = time(NULL);                                                                                      \
+        char buf[32];                                                                                                 \
+        strftime(buf, sizeof buf, "%F %T", localtime(&now));                                                          \
+        fprintf(stderr, "[%s] %s:%d: " s, buf, __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__);                        \
+    } while (false)
 #else
 #define LOG(s, ...)
 #endif
