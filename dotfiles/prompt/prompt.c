@@ -35,7 +35,7 @@ get_git_info(char git_info[])
     git_repository *repo;
     if (git_repository_open_ext(&repo, ".", 0, NULL) != 0)
     {
-        LOG("Could not open repository.\n");
+        LOG("%s\n", git_error_last()->message);
         return;
     }
     char const *repo_path = git_repository_path(repo);
@@ -51,7 +51,7 @@ get_git_info(char git_info[])
     git_reference *ref;
     if (git_repository_head(&ref, repo) != 0)
     {
-        LOG("Could not get HEAD of repository.\n");
+        LOG("%s\n", git_error_last()->message);
         goto clean_repo;
         return;
     }
@@ -76,6 +76,15 @@ get_git_info(char git_info[])
         default:
             break;
         }
+    }
+
+    // Interactive rebase is not supported. Get the details manually.
+    git_rebase_options rebase_opts;
+    git_rebase_options_init(&rebase_opts, GIT_REBASE_OPTIONS_VERSION);
+    git_rebase *rebase;
+    if (git_rebase_open(&rebase, repo, &rebase_opts) != 0)
+    {
+        LOG("%s\n", git_error_last()->message);
     }
 
 clean_ref:
