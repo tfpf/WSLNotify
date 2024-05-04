@@ -166,10 +166,8 @@ then
         esac
         host='\[\e[1;3;93m\]\h '"$host $os"'\[\e[m\]'
         local directory='\[\e[1;96m\]\w\[\e[m\]'
-        command -v __git_ps1 &>/dev/null && local git_branch='$(__git_ps1 "   %s")'
-        local virtual_environment='${VIRTUAL_ENV_PROMPT:+  \[\e[94m\]$VIRTUAL_ENV_PROMPT\[\e[m\]}'
-        [ -f /.dockerenv ] && local docker_info=" 󰡨 \[\e[34m\]\h\[\e[m\]"
-        printf '\n┌[%s %s %s]%s%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment" "$docker_info"
+        local extra='$(/home/tfpf/Documents/projects/WSLNotify/dotfiles/prompt/prompt)'
+        printf '\n┌[%s %s %s]%s\n└─\$ ' "$user" "$host" "$directory" "$extra"
     }
     export PS1=$(_PS1)
 fi
