@@ -242,7 +242,7 @@ _after_command()
     printf "\r%*s\n" $width "$report"
     if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
     then
-        notify-send -i $icon "CLI Ready" "$last_command • $breakup"
+        notify-send -i $icon "CLI Ready" "$last_command • $breakup" &
     fi
     unset __window
 }
