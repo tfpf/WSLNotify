@@ -35,6 +35,5 @@ MiscNewTabAdjacent=FALSE
 MiscSearchDialogOpacity=100
 MiscShowUnsafePasteDialog=FALSE
 ScrollingOnOutput=FALSE
-TitleInitial=Terminal [%#]
-TitleMode=TERMINAL_TITLE_HIDE
-
+TitleInitial=Terminal
+TitleMode=TERMINAL_TITLE_APPEND

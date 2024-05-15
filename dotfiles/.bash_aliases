@@ -210,6 +210,10 @@ _after_command()
 {
     local exit_status=$?
     local __end=$(date +%s%3N)
+
+    # Set the terminal window title to the short name of the working directory.
+    printf "\e]0;${PWD##*/}/\a"
+
     [ -z "${__begin+.}" ] && return
     local delay=$((__end-__begin))
     unset __begin
@@ -242,7 +246,7 @@ _after_command()
     printf "\r%*s\n" $width "$report"
     if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
     then
-        notify-send -i $icon "CLI Ready" "$last_command • $breakup" &
+        notify-send -i $icon "CLI Ready" "$last_command • $breakup"
     fi
     unset __window
 }
