@@ -16,7 +16,7 @@ enum
  *
  * @return Time in milliseconds.
  *****************************************************************************/
-long long get_millis(void)
+long long get_time_info(void)
 {
     struct timespec now;
     clock_gettime(CLOCK_MONOTONIC, &now);
@@ -27,7 +27,7 @@ int main(int const argc, char const *argv[])
 {
     if (strcmp(argv[1], "before") == 0)
     {
-        printf("%lld\n", get_millis());
+        printf("%lld\n", get_time_info());
         return EXIT_SUCCESS;
     }
 
