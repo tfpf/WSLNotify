@@ -16,16 +16,14 @@ enum
  *
  * @return Time in milliseconds.
  *****************************************************************************/
-long long
-get_millis(void)
+long long get_millis(void)
 {
     struct timespec now;
     clock_gettime(CLOCK_MONOTONIC, &now);
     return now.tv_sec * 1000LL + now.tv_nsec / 1000000LL;
 }
 
-int
-main(int const argc, char const *argv[])
+int main(int const argc, char const *argv[])
 {
     if (strcmp(argv[1], "before") == 0)
     {
