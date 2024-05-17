@@ -19,13 +19,13 @@ enum
 long long get_time_info(void)
 {
     struct timespec now;
-    clock_gettime(CLOCK_MONOTONIC, &now);
+    clock_gettime(CLOCK_REALTIME, &now);
     return now.tv_sec * 1000LL + now.tv_nsec / 1000000LL;
 }
 
 int main(int const argc, char const *argv[])
 {
-    if (argc > 1 && strcmp(argv[1], "before") == 0)
+    if (argc <= 1)
     {
         printf("%lld\n", get_time_info());
         return EXIT_SUCCESS;

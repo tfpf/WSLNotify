@@ -200,7 +200,7 @@ _before_command()
 {
     [ -n "${__begin+.}" ] && return
     __window=${WINDOWID:-$(getactivewindow)}
-    __begin=$(date +%s%3N)
+    __begin=$(bash_prompt)
 }
 
 # Post-command for command timing. It will be called just before the prompt is
@@ -209,7 +209,7 @@ _before_command()
 _after_command()
 {
     local exit_status=$?
-    local __end=$(date +%s%3N)
+    local __end=$(bash_prompt)
 
     # Set the terminal window title to the short name of the working directory.
     printf "\e]0;${PWD##*/}/\a"
