@@ -31,6 +31,9 @@ int main(int const argc, char const *argv[])
         return EXIT_SUCCESS;
     }
 
+    long long begin = atoll(argv[1]);
+    // If Linux, send notification from here as well!
+
     static char git_info[MAX_INFO_LEN] = "";
     // get_git_info(git_info);
 }
