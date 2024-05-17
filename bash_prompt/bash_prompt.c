@@ -25,7 +25,7 @@ long long get_time_info(void)
 
 int main(int const argc, char const *argv[])
 {
-    if (strcmp(argv[1], "before") == 0)
+    if (argc > 1 && strcmp(argv[1], "before") == 0)
     {
         printf("%lld\n", get_time_info());
         return EXIT_SUCCESS;
