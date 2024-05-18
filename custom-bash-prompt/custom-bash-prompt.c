@@ -11,6 +11,9 @@
 #define LEFT_SQUARE_BRACKET "\x5B"
 #define RIGHT_SQUARE_BRACKET "\x5D"
 
+// Bold, bright and italic.
+#define bbiyellow START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;3;93m" START_OF_TEXT
+
 // Bold and bright.
 #define bbcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;96m" START_OF_TEXT
 #define bbgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;92m" START_OF_TEXT
@@ -139,7 +142,7 @@ char const *get_git_info(void)
 void display_primary_prompt(char const *git_info, char const *venv)
 {
     LOG("Showing primary prompt.");
-    printf("\n┌[" bbgreen "\\u" rst " " bbyellow "\\h" rst " " bbcyan "\\w" rst "]");
+    printf("\n┌[" bbgreen "\\u" rst " " bbiyellow "\\h" rst " " bbcyan "\\w" rst "]");
     if (git_info != NULL)
     {
         printf("   %s", git_info);
