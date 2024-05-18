@@ -1,5 +1,6 @@
 #define _POSIX_C_SOURCE 199309L
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,32 +29,51 @@ long long get_time_info(void)
  *
  * @param begin Timestamp of the instant the command was started at.
  *****************************************************************************/
-void report_status(long long begin, char const*last_command, int exit_status)
+void report_status(int exit_status, char const *last_command, long long begin)
 {
-    long long end = get_time_info();
-    long long delay = end - begin;
-    int milliseconds = delay % 1000;
-    int seconds = (delay /= 1000) % 60;
-    int minutes = (delay /= 60) % 60;
-    int hours = delay / 60;
-    static char delay_info[MAX_INFO_LEN];
-    char *delay_info_ptr = delay_info;
-    if (hours > 0)
-    {
-        delay_info_ptr += sprintf(delay_info_ptr, "%d h ", hours);
-    }
-    if (hours > 0 || minutes > 0)
-    {
-        delay_info_ptr += sprintf(delay_info_ptr, "%d m ", minutes);
-    }
-    sprintf(delay_info_ptr, "%d.%03d s", seconds, milliseconds);
+    // Allocate enough space to write the command and some additional
+    // information.
+    char *report = malloc(strlen(last_command) + 32);
+    char *report_ptr = report;
 
-    char const *status_info = "YO";
-    if(exit_status != 0){
-        status_info = "NO";
+    last_command = strstr(last_command, "]") + 2;
+    report_ptr += sprintf(report_ptr, "%s ", last_command);
+
+    if (exit_status == 0)
+    {
+        report_ptr += sprintf(report_ptr, "✓ ");
+    }
+    else
+    {
+        report_ptr += sprintf(report_ptr, "✗ ");
     }
 
-    printf("%s %s %s\n", last_command, status_info, delay_info);
+    printf("%s\n", report);
+
+    // long long end = get_time_info();
+    // long long delay = end - begin;
+    // int milliseconds = delay % 1000;
+    // int seconds = (delay /= 1000) % 60;
+    // int minutes = (delay /= 60) % 60;
+    // int hours = delay / 60;
+    // static char delay_info[MAX_INFO_LEN];
+    // char *delay_info_ptr = delay_info;
+    // if (hours > 0)
+    // {
+    //     delay_info_ptr += sprintf(delay_info_ptr, "%d h ", hours);
+    // }
+    // if (hours > 0 || minutes > 0)
+    // {
+    //     delay_info_ptr += sprintf(delay_info_ptr, "%d m ", minutes);
+    // }
+    // sprintf(delay_info_ptr, "%d.%03d s", seconds, milliseconds);
+
+    // char const *status_info = "YO";
+    // if(exit_status != 0){
+    //     status_info = "NO";
+    // }
+
+    // printf("%s %s %s\n", last_command, status_info, delay_info);
 }
 
 int main(int const argc, char const *argv[])
@@ -64,7 +84,7 @@ int main(int const argc, char const *argv[])
         return EXIT_SUCCESS;
     }
 
-    report_status(atoll(argv[1]), argv[2], atoi(argv[3]));
+    report_status(atoi(argv[1]), argv[2], atoll(argv[3]));
 
     // If Linux, send notification from here as well!
 

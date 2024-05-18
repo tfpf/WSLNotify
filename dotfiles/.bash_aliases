@@ -208,7 +208,7 @@ _before_command()
 # is also set here; it is used in the primary prompt.
 _after_command()
 {
-    custom-bash-prompt $__begin "$(history 1)" $?
+    custom-bash-prompt $? "$(history 1)" $__begin
     local __end=$(custom-bash-prompt)
 
     # Set the terminal window title to the short name of the working directory.
