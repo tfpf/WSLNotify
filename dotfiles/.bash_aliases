@@ -215,8 +215,7 @@ _after_command()
     # shown.
     if PS1=$(custom-bash-prompt "$last_command" $exit_code $__begin $COLUMNS) && [ $__window -ne $(getactivewindow) ]
     then
-        local icon=$([ $exit_code -eq 0 ] && echo dialog-information || echo dialog-error)
-        notify-send -i $icon "CLI Ready" "$last_command"
+        notify-send -i dialog-information "CLI Ready" "$last_command"
     fi
     unset __begin __window
 }
