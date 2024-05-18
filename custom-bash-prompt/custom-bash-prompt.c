@@ -148,7 +148,7 @@ void display_primary_prompt(char const *git_info, char const *venv)
     {
         printf("  " bblue "%s" rst, venv);
     }
-    printf("\n└─\\$\n");
+    printf("\n└─\\$ \n");
 }
 
 int main(int const argc, char const *argv[])

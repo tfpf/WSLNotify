@@ -209,45 +209,10 @@ _before_command()
 _after_command()
 {
     local exit_code=$?
-    local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
-    custom-bash-prompt "$last_command" $exit_code $__begin $COLUMNS
-    local __end=$(custom-bash-prompt)
-
-
     [ -z "${__begin+.}" ] && return
-    local delay=$((__end-__begin))
-    unset __begin
-    [ $delay -le 5000 ] && unset __window && return
-
-    local milliseconds=$((delay%1000))
-    local seconds=$((delay/1000%60))
-    local minutes=$((delay/60000%60))
-    local hours=$((delay/3600000))
-    local breakup
-    [ $hours -gt 0 ] && breakup="$hours h "
-    [ $hours -gt 0 -o $minutes -gt 0 ] && breakup="${breakup}$minutes m "
-    breakup="${breakup}$seconds s $milliseconds ms"
-
-    if [ $exit_code -eq 0 ]
-    then
-        local exit_symbol=$'\e[1;32m✓\e[m'
-        local icon=dialog-information
-    else
-        local exit_symbol=$'\e[1;31m✗\e[m'
-        local icon=dialog-error
-    fi
     local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
-
-    # Bash doesn't calculate the length of a string containing ANSI colour
-    # codes correctly, so a correction is required.
-    local report="$last_command $exit_symbol $breakup"
-    local width=${#report}
-    width=$((COLUMNS-width%COLUMNS+width+12))
-    printf "\r%*s\n" $width "$report"
-    if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
-    then
-        notify-send -i $icon "CLI Ready" "$last_command • $breakup"
-    fi
+    PS1=$(custom-bash-prompt "$last_command" $exit_code $__begin $COLUMNS)
+    unset __begin
     unset __window
 }
 
