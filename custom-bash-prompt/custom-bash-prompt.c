@@ -61,7 +61,7 @@ void report_status(char const *last_command, int exit_code, long long begin, int
 
     // Allocate enough space to write the command and some additional
     // information.
-    char *report = malloc(strlen(last_command) + 32);
+    char *report = malloc((strlen(last_command) + 32) * sizeof *report);
     char *report_ptr = report;
 
     report_ptr += sprintf(report_ptr, "%s ", last_command);
