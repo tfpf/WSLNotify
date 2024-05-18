@@ -208,13 +208,11 @@ _before_command()
 # is also set here; it is used in the primary prompt.
 _after_command()
 {
-    local exit_status=$?
+    local exit_code=$?
     local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
-    custom-bash-prompt "$last_command" $exit_status $__begin $COLUMNS
+    custom-bash-prompt "$last_command" $exit_code $__begin $COLUMNS
     local __end=$(custom-bash-prompt)
 
-    # Set the terminal window title to the short name of the working directory.
-    printf "\e]0;${PWD##*/}/\a"
 
     [ -z "${__begin+.}" ] && return
     local delay=$((__end-__begin))
@@ -230,7 +228,7 @@ _after_command()
     [ $hours -gt 0 -o $minutes -gt 0 ] && breakup="${breakup}$minutes m "
     breakup="${breakup}$seconds s $milliseconds ms"
 
-    if [ $exit_status -eq 0 ]
+    if [ $exit_code -eq 0 ]
     then
         local exit_symbol=$'\e[1;32m✓\e[m'
         local icon=dialog-information
