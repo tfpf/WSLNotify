@@ -64,15 +64,18 @@ long long get_time_info(void)
  * @param exit_code Code with which the command exited.
  * @param begin Timestamp of the instant the command was started at.
  * @param columns Width of the terminal.
+ *
+ * @return Exit code to use for this program.
  *****************************************************************************/
-void report_command_status(char const *last_command, int exit_code, long long begin, int columns)
+int report_command_status(char const *last_command, int exit_code, long long begin, int columns)
 {
     long long end = get_time_info();
     long long delay = end - begin;
+    int this_exit_code = delay > 10000 ? EXIT_SUCCESS : EXIT_FAILURE;
     LOG("Command '%s' exited with code %d in %lld ms.", last_command, exit_code, delay);
     if (delay <= 5000)
     {
-        // return;
+        return this_exit_code;
     }
 
     // Allocate enough space to write the command and some additional
@@ -111,6 +114,8 @@ void report_command_status(char const *last_command, int exit_code, long long be
     columns = columns - report_len % columns + report_len + 14;
     LOG("Padding report of length %d to %d columns (adjusted).", report_len, columns);
     fprintf(stderr, "%*s\n", columns, report);
+
+    return this_exit_code;
 }
 
 /******************************************************************************
@@ -162,8 +167,6 @@ int main(int const argc, char const *argv[])
         return EXIT_SUCCESS;
     }
 
-    report_command_status(argv[1], atoi(argv[2]), atoll(argv[3]), atoi(argv[4]));
-
     char const *git_info = get_git_info();
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
     LOG("Current Python virtual environment is '%s'.", venv);
@@ -172,4 +175,6 @@ int main(int const argc, char const *argv[])
     char const *pwd = getenv("PWD");
     LOG("Current directory is '%s'.", pwd);
     update_terminal_title(pwd);
+
+    return report_command_status(argv[1], atoi(argv[2]), atoll(argv[3]), atoi(argv[4]));
 }

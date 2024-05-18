@@ -211,9 +211,15 @@ _after_command()
     local exit_code=$?
     [ -z "${__begin+.}" ] && return
     local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
-    PS1=$(custom-bash-prompt "$last_command" $exit_code $__begin $COLUMNS)
-    unset __begin
-    unset __window
+
+    # The below program will exit successfully if a notification is to be
+    # shown.
+    if PS1=$(custom-bash-prompt "$last_command" $exit_code $__begin $COLUMNS) && [ $__window -ne $(getactivewindow) ]
+    then
+        local icon=$([ $exit_code -eq 0 ] && echo dialog-information || echo dialog-error)
+        notify-send -i $icon "CLI Ready" "$last_command"
+    fi
+    unset __begin __window
 }
 
 trap _before_command DEBUG
