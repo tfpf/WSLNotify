@@ -204,8 +204,7 @@ _before_command()
 }
 
 # Post-command for command timing. It will be called just before the prompt is
-# displayed (i.e. just after any command is executed). The current Git branch
-# is also set here; it is used in the primary prompt.
+# displayed (i.e. just after any command is executed).
 _after_command()
 {
     local exit_code=$?
