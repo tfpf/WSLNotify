@@ -1,14 +1,8 @@
-#define _POSIX_C_SOURCE 199309L
-
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
-#define log(...)                                                                                                      \
-    fprintf(stderr, "%s:%d ", __FILE__, __LINE__);                                                                    \
-    fprintf(stderr, __VA_ARGS__)
 
 #define START_OF_HEADING "\x01"
 #define START_OF_TEXT "\x02"
@@ -16,9 +10,17 @@
 #define LEFT_SQUARE_BRACKET "\x5B"
 #define RIGHT_SQUARE_BRACKET "\x5D"
 
-char const *bright_red = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "91m" START_OF_TEXT;
-char const *bright_green = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "92m" START_OF_TEXT;
-char const *reset_colour = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "m" START_OF_TEXT;
+static char const *bred = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "91m" START_OF_TEXT;
+static char const *bgreen = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "92m" START_OF_TEXT;
+static char const *dcyan = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "36m" START_OF_TEXT;
+static char const *rst = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "m" START_OF_TEXT;
+
+#undef NDEBUG  // TODO Remove once this program is completed.
+#ifndef NDEBUG
+#define log(fmt, ...) fprintf(stderr, "%s%s:%d%s " fmt "\n", dcyan, __FILE__, __LINE__, rst __VA_OPT__(, ) __VA_ARGS__)
+#else
+#define log(fmt, ...)
+#endif
 
 enum
 {
@@ -60,11 +62,11 @@ void report_status(char const *last_command, int exit_status, long long begin, i
     report_ptr += sprintf(report_ptr, "%s ", last_command);
     if (exit_status == 0)
     {
-        report_ptr += sprintf(report_ptr, "%s✓%s ", bright_green, reset_colour);
+        report_ptr += sprintf(report_ptr, "%s✓%s ", bgreen, rst);
     }
     else
     {
-        report_ptr += sprintf(report_ptr, "%s✗%s ", bright_red, reset_colour);
+        report_ptr += sprintf(report_ptr, "%s✗%s ", bred, rst);
     }
     int milliseconds = delay % 1000;
     int seconds = (delay /= 1000) % 60;
@@ -100,10 +102,11 @@ int main(int const argc, char const *argv[])
 
     // Set the terminal tab/window title.
 
-    log("%s\n", getenv("COLUMNS"));
-    log("%s\n", getenv("USER"));
-    log("%s\n", getenv("PWD"));
-    log("%s\n", getenv("VIRTUAL_ENV_PROMPT"));
+    log("Showing some environment variables.");
+    log("%s", getenv("COLUMNS"));
+    log("%s", getenv("USER"));
+    log("%s", getenv("PWD"));
+    log("%s", getenv("VIRTUAL_ENV_PROMPT"));
 
     // If Linux, send notification from here as well!
 
