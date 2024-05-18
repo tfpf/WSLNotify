@@ -208,7 +208,9 @@ _before_command()
 # is also set here; it is used in the primary prompt.
 _after_command()
 {
-    custom-bash-prompt $? "$(history 1)" $__begin $COLUMNS
+    local exit_status=$?
+    local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
+    custom-bash-prompt "$last_command" $exit_status $__begin $COLUMNS
     local __end=$(custom-bash-prompt)
 
     # Set the terminal window title to the short name of the working directory.

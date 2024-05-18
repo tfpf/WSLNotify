@@ -43,13 +43,13 @@ long long get_time_info(void)
  *
  * @param begin Timestamp of the instant the command was started at.
  *****************************************************************************/
-void report_status(int exit_status, char const *last_command, long long begin, int columns)
+void report_status(char const *last_command, int exit_status, long long begin, int columns)
 {
     long long end = get_time_info();
     long long delay = end - begin;
     if (delay <= 5000)
     {
-        return;
+        // return;
     }
 
     // Allocate enough space to write the command and some additional
@@ -57,10 +57,6 @@ void report_status(int exit_status, char const *last_command, long long begin, i
     char *report = malloc(strlen(last_command) + 32);
     char *report_ptr = report;
 
-    // I have configured Bash to store the date and time in square brackets
-    // before the command in the history. To extract the command, skip to a
-    // closing square bracket.
-    last_command = strstr(last_command, RIGHT_SQUARE_BRACKET) + 2;
     report_ptr += sprintf(report_ptr, "%s ", last_command);
     if (exit_status == 0)
     {
@@ -100,7 +96,10 @@ int main(int const argc, char const *argv[])
         return EXIT_SUCCESS;
     }
 
-    report_status(atoi(argv[1]), argv[2], atoll(argv[3]), atoi(argv[4]));
+    report_status(argv[1], atoi(argv[2]), atoll(argv[3]), atoi(argv[4]));
+    log("%s\n", getenv("COLUMNS"));
+    log("%s\n", getenv("PWD"));
+    log("%s\n", getenv("VIRTUAL_ENV_PROMPT"));
 
     // If Linux, send notification from here as well!
 
