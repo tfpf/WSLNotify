@@ -11,9 +11,22 @@
 #define LEFT_SQUARE_BRACKET "\x5B"
 #define RIGHT_SQUARE_BRACKET "\x5D"
 
-#define bred START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "91m" START_OF_TEXT
+// Bold and bright.
+#define bbcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;96m" START_OF_TEXT
+#define bbgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;92m" START_OF_TEXT
+#define bbyellow START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;93m" START_OF_TEXT
+
+// Bright.
+#define bblue START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "94m" START_OF_TEXT
+#define bcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "96m" START_OF_TEXT
 #define bgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "92m" START_OF_TEXT
+#define bred START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "91m" START_OF_TEXT
+#define byellow START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "93m" START_OF_TEXT
+
+// Dark.
 #define dcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "36m" START_OF_TEXT
+
+// Reset.
 #define rst START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "m" START_OF_TEXT
 
 #undef NDEBUG  // TODO Remove once this program is completed.
@@ -110,15 +123,32 @@ void update_terminal_title(char const *pwd)
 }
 
 /******************************************************************************
- * Obtain information about the most recent commit in a Git repository.
+ * Obtain information about the status of the current Git repository.
  *****************************************************************************/
 char const *get_git_info(void)
 {
-    return "";
+    return "placeholder";
 }
 
-void show_primary_prompt(char const *user, char const *pwd, char const *git_info, char const *venv)
+/******************************************************************************
+ * Show the primary prompt for Bash.
+ *
+ * @param git_info Description of the status of the current Git repository.
+ * @param venv Name of the current Python virtual environment.
+ *****************************************************************************/
+void display_primary_prompt(char const *git_info, char const *venv)
 {
+    LOG("Showing primary prompt.");
+    printf("\n┌[" bbgreen "\\u" rst " " bbyellow "\\h" rst " " bbcyan "\\w" rst "]");
+    if (git_info != NULL)
+    {
+        printf("   %s", git_info);
+    }
+    if (venv != NULL)
+    {
+        printf("  " bblue "%s" rst, venv);
+    }
+    printf("\n└─\\$\n");
 }
 
 int main(int const argc, char const *argv[])
@@ -131,15 +161,12 @@ int main(int const argc, char const *argv[])
 
     report_command_status(argv[1], atoi(argv[2]), atoll(argv[3]), atoi(argv[4]));
 
-
-    char const *user = getenv("USER");
-    LOG("Current user is '%s'.", user);
-    char const *pwd = getenv("PWD");
-    LOG("Current directory is '%s'.", pwd);
     char const *git_info = get_git_info();
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
     LOG("Current Python virtual environment is '%s'.", venv);
-    show_primary_prompt(user, pwd, git_info, venv);
+    display_primary_prompt(git_info, venv);
 
+    char const *pwd = getenv("PWD");
+    LOG("Current directory is '%s'.", pwd);
     update_terminal_title(pwd);
 }
