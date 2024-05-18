@@ -85,7 +85,7 @@ void report_status(char const *last_command, int exit_status, long long begin, i
     // the width.
     int report_len = (int)strlen(report);
     columns = columns - report_len % columns + report_len + 14;
-    printf("%*s\n", columns, report);
+    fprintf(stderr, "%*s\n", columns, report);
 }
 
 int main(int const argc, char const *argv[])
@@ -97,7 +97,11 @@ int main(int const argc, char const *argv[])
     }
 
     report_status(argv[1], atoi(argv[2]), atoll(argv[3]), atoi(argv[4]));
+
+    // Set the terminal tab/window title.
+
     log("%s\n", getenv("COLUMNS"));
+    log("%s\n", getenv("USER"));
     log("%s\n", getenv("PWD"));
     log("%s\n", getenv("VIRTUAL_ENV_PROMPT"));
 
