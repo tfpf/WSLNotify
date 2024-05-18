@@ -105,9 +105,20 @@ void report_command_status(char const *last_command, int exit_code, long long be
  *****************************************************************************/
 void update_terminal_title(char const *pwd)
 {
-    LOG("Current directory is '%s'.", pwd);
     char const *short_pwd = strrchr(pwd, '/') + 1;
     fprintf(stderr, ESCAPE RIGHT_SQUARE_BRACKET "0;%s/" BELL, short_pwd);
+}
+
+/******************************************************************************
+ * Obtain information about the most recent commit in a Git repository.
+ *****************************************************************************/
+char const *get_git_info(void)
+{
+    return "";
+}
+
+void show_primary_prompt(char const *user, char const *pwd, char const *git_info, char const *venv)
+{
 }
 
 int main(int const argc, char const *argv[])
@@ -120,9 +131,15 @@ int main(int const argc, char const *argv[])
 
     report_command_status(argv[1], atoi(argv[2]), atoll(argv[3]), atoi(argv[4]));
 
-    char const *pwd = getenv("PWD");
-    update_terminal_title(pwd);
 
-    // static char git_info[MAX_INFO_LEN] = "";
-    // get_git_info(git_info);
+    char const *user = getenv("USER");
+    LOG("Current user is '%s'.", user);
+    char const *pwd = getenv("PWD");
+    LOG("Current directory is '%s'.", pwd);
+    char const *git_info = get_git_info();
+    char const *venv = getenv("VIRTUAL_ENV_PROMPT");
+    LOG("Current Python virtual environment is '%s'.", venv);
+    show_primary_prompt(user, pwd, git_info, venv);
+
+    update_terminal_title(pwd);
 }
