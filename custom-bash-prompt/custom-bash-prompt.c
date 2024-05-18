@@ -23,11 +23,12 @@ long long get_time_info(void)
 }
 
 /******************************************************************************
- * Show how long it has been since the given timestamp.
+ * Show how long it took to run a command, given the timestamp it was started
+ * at.
  *
- * @param begin Timestamp of some instant in the past.
+ * @param begin Timestamp of the instant the command was started at.
  *****************************************************************************/
-void report_status(long long begin)
+void report_status(long long begin, char const*last_command, int exit_status)
 {
     long long end = get_time_info();
     long long delay = end - begin;
@@ -35,7 +36,6 @@ void report_status(long long begin)
     int seconds = (delay /= 1000) % 60;
     int minutes = (delay /= 60) % 60;
     int hours = delay / 60;
-
     static char delay_info[MAX_INFO_LEN];
     char *delay_info_ptr = delay_info;
     if (hours > 0)
@@ -47,7 +47,13 @@ void report_status(long long begin)
         delay_info_ptr += sprintf(delay_info_ptr, "%d m ", minutes);
     }
     sprintf(delay_info_ptr, "%d.%03d s", seconds, milliseconds);
-    printf("%s\n", delay_info);
+
+    char const *status_info = "YO";
+    if(exit_status != 0){
+        status_info = "NO";
+    }
+
+    printf("%s %s %s\n", last_command, status_info, delay_info);
 }
 
 int main(int const argc, char const *argv[])
@@ -58,7 +64,7 @@ int main(int const argc, char const *argv[])
         return EXIT_SUCCESS;
     }
 
-    report_status(atoll(argv[1]));
+    report_status(atoll(argv[1]), argv[2], atoi(argv[3]));
 
     // If Linux, send notification from here as well!
 
