@@ -28,6 +28,7 @@
 
 // Dark.
 #define dcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "36m" START_OF_TEXT
+#define dgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "32m" START_OF_TEXT
 
 // Reset.
 #define rst START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "m" START_OF_TEXT
@@ -135,7 +136,7 @@ void update_terminal_title(char const *pwd)
  *****************************************************************************/
 char const *get_git_info(void)
 {
-    return "placeholder";
+    return dgreen "placeholder" rst;
 }
 
 /******************************************************************************
