@@ -10,14 +10,14 @@
 #define LEFT_SQUARE_BRACKET "\x5B"
 #define RIGHT_SQUARE_BRACKET "\x5D"
 
-static char const *bred = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "91m" START_OF_TEXT;
-static char const *bgreen = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "92m" START_OF_TEXT;
-static char const *dcyan = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "36m" START_OF_TEXT;
-static char const *rst = START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "m" START_OF_TEXT;
+#define bred START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "91m" START_OF_TEXT
+#define bgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "92m" START_OF_TEXT
+#define dcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "36m" START_OF_TEXT
+#define rst START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "m" START_OF_TEXT
 
 #undef NDEBUG  // TODO Remove once this program is completed.
 #ifndef NDEBUG
-#define log(fmt, ...) fprintf(stderr, "%s%s:%d%s " fmt "\n", dcyan, __FILE__, __LINE__, rst __VA_OPT__(, ) __VA_ARGS__)
+#define log(fmt, ...) fprintf(stderr, dcyan "%s:%d" rst " " fmt "\n", __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__)
 #else
 #define log(fmt, ...)
 #endif
@@ -62,11 +62,11 @@ void report_status(char const *last_command, int exit_status, long long begin, i
     report_ptr += sprintf(report_ptr, "%s ", last_command);
     if (exit_status == 0)
     {
-        report_ptr += sprintf(report_ptr, "%s✓%s ", bgreen, rst);
+        report_ptr += sprintf(report_ptr, bgreen "✓" rst " ");
     }
     else
     {
-        report_ptr += sprintf(report_ptr, "%s✗%s ", bred, rst);
+        report_ptr += sprintf(report_ptr, bred "✗" rst " ");
     }
     int milliseconds = delay % 1000;
     int seconds = (delay /= 1000) % 60;
