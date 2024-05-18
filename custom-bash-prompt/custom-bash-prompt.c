@@ -49,7 +49,7 @@ long long get_time_info(void)
  * @param begin Timestamp of the instant the command was started at.
  * @param columns Width of the terminal.
  *****************************************************************************/
-void report_status(char const *last_command, int exit_code, long long begin, int columns)
+void report_command_status(char const *last_command, int exit_code, long long begin, int columns)
 {
     long long end = get_time_info();
     long long delay = end - begin;
@@ -97,6 +97,19 @@ void report_status(char const *last_command, int exit_code, long long begin, int
     fprintf(stderr, "%*s\n", columns, report);
 }
 
+/******************************************************************************
+ * Update the title of the current terminal window. This should also
+ * automatically update the title of the current terminal tab.
+ *
+ * @param pwd Current working directory.
+ *****************************************************************************/
+void update_terminal_title(char const *pwd)
+{
+    LOG("Current directory is '%s'.", pwd);
+    char const *short_pwd = strrchr(pwd, '/') + 1;
+    fprintf(stderr, ESCAPE RIGHT_SQUARE_BRACKET "0;%s/" BELL, short_pwd);
+}
+
 int main(int const argc, char const *argv[])
 {
     if (argc <= 1)
@@ -105,13 +118,10 @@ int main(int const argc, char const *argv[])
         return EXIT_SUCCESS;
     }
 
-    report_status(argv[1], atoi(argv[2]), atoll(argv[3]), atoi(argv[4]));
+    report_command_status(argv[1], atoi(argv[2]), atoll(argv[3]), atoi(argv[4]));
 
-    // Set the terminal tab/window title.
     char const *pwd = getenv("PWD");
-    char const *short_pwd = strrchr(pwd, '/') + 1;
-    fprintf(stderr, ESCAPE RIGHT_SQUARE_BRACKET "0;%s/" BELL, short_pwd);
-
+    update_terminal_title(pwd);
 
     // static char git_info[MAX_INFO_LEN] = "";
     // get_git_info(git_info);
