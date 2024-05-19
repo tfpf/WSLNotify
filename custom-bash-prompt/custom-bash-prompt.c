@@ -50,7 +50,7 @@ enum
  *
  * @return Time in milliseconds since a fixed but unspecified reference point.
  *****************************************************************************/
-long long get_time_info(void)
+long long get_timestamp(void)
 {
     struct timespec now;
     timespec_get(&now, TIME_UTC);
@@ -64,13 +64,12 @@ long long get_time_info(void)
  * @param last_command Most-recently run command.
  * @param exit_code Code with which the command exited.
  * @param begin Timestamp of the instant the command was started at.
- * @param columns Width of the terminal.
  *
  * @return Exit code to use for this program.
  *****************************************************************************/
-int report_command_status(char const *last_command, int exit_code, long long begin, int columns)
+int report_command_status(char const *last_command, int exit_code, long long begin)
 {
-    long long end = get_time_info();
+    long long end = get_timestamp();
     long long delay = end - begin;
     int this_exit_code = delay > 10000 ? EXIT_SUCCESS : EXIT_FAILURE;
     LOG("Command '%s' exited with code %d in %lld ms.", last_command, exit_code, delay);
@@ -112,6 +111,7 @@ int report_command_status(char const *last_command, int exit_code, long long beg
     // Since there are non-printable characters in the string, compensate for
     // the width.
     int report_len = (int)strlen(report);
+    int columns = atoi(getenv("COLUMNS"));
     columns = columns - report_len % columns + report_len + 14;
     LOG("Padding report of length %d to %d columns (adjusted).", report_len, columns);
     fprintf(stderr, "%*s\n", columns, report);
@@ -148,6 +148,7 @@ char const *get_git_info(void)
 void display_primary_prompt(char const *git_info, char const *venv)
 {
     LOG("Showing primary prompt.");
+    // Use the OS icon here.
     printf("\n┌[" bbgreen "\\u" rst " " bbiyellow "\\h" rst " " bbcyan "\\w" rst "]");
     if (git_info != NULL)
     {
@@ -164,7 +165,7 @@ int main(int const argc, char const *argv[])
 {
     if (argc <= 1)
     {
-        printf("%lld\n", get_time_info());
+        printf("%lld\n", get_timestamp());
         return EXIT_SUCCESS;
     }
 
@@ -177,5 +178,5 @@ int main(int const argc, char const *argv[])
     LOG("Current directory is '%s'.", pwd);
     update_terminal_title(pwd);
 
-    return report_command_status(argv[1], atoi(argv[2]), atoll(argv[3]), atoi(argv[4]));
+    return report_command_status(argv[1], atoi(argv[2]), atoll(argv[3]));
 }
