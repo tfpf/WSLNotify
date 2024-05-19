@@ -4,6 +4,16 @@
 #include <string.h>
 #include <time.h>
 
+#if defined __APPLE__
+#define OPERATING_SYSTEM_ICON " "
+#elif defined __linux__
+#define OPERATING_SYSTEM_ICON " "
+#elif defined _WIN32
+#define OPERATING_SYSTEM_ICON " "
+#else
+#define OPERATING_SYSTEM_ICON ""
+#endif
+
 #define START_OF_HEADING "\x01"
 #define START_OF_TEXT "\x02"
 #define BELL "\x07"
@@ -148,8 +158,7 @@ char const *get_git_info(void)
 void display_primary_prompt(char const *git_info, char const *venv)
 {
     LOG("Showing primary prompt.");
-    // Use the OS icon here.
-    printf("\n┌[" bbgreen "\\u" rst " " bbiyellow "\\h" rst " " bbcyan "\\w" rst "]");
+    printf("\n┌[" bbgreen "\\u" rst " " bbiyellow OPERATING_SYSTEM_ICON "\\h" rst " " bbcyan "\\w" rst "]");
     if (git_info != NULL)
     {
         printf("   %s", git_info);
