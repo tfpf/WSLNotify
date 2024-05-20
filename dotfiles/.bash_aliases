@@ -209,7 +209,7 @@ _after_command()
 {
     local exit_code=$?
     [ -z "${__begin+.}" ] && return
-    local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
+    local last_command=$(history 1)
 
     # The below program will exit successfully if a notification is to be
     # shown.
