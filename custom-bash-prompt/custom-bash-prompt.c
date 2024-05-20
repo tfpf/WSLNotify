@@ -83,11 +83,12 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     // space to write it and some additional information.
     last_command = strchr(last_command, RIGHT_SQUARE_BRACKET[0]) + 2;
     size_t last_command_len = strlen(last_command);
-    while(isspace(last_command[last_command_len - 1]) != 0){
+    while (isspace(last_command[last_command_len - 1]) != 0)
+    {
         last_command[--last_command_len] = '\0';
     }
     char *report = malloc((last_command_len + 64) * sizeof *report);
-    if(report == NULL)
+    if (report == NULL)
     {
         return EXIT_FAILURE;
     }
@@ -173,7 +174,7 @@ int main(int const argc, char const *argv[])
     }
 
     // For better accuracy, do this first.
-    int this_exit_code = report_command_status((char*)argv[1], atoi(argv[2]), atoll(argv[3]));
+    int this_exit_code = report_command_status((char *)argv[1], atoi(argv[2]), atoll(argv[3]));
 
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
     LOG("Current Python virtual environment is '%s'.", venv);
