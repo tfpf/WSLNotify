@@ -80,7 +80,7 @@ int report_command_status(char const *last_command, int exit_code, long long beg
 
     // Remove the initial part (index and timestamp) of the command. Then
     // allocate enough space to write it and some additional information.
-    last_command = strstr(last_command, RIGHT_SQUARE_BRACKET) + 2;
+    last_command = strchr(last_command, RIGHT_SQUARE_BRACKET[0]) + 2;
     char *report = malloc((strlen(last_command) + 32) * sizeof *report);
     char *report_ptr = report;
 
