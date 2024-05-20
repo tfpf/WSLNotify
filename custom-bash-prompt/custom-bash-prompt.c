@@ -39,7 +39,6 @@
 // Reset.
 #define rst START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "m" START_OF_TEXT
 
-// #undef NDEBUG  // TODO Remove once this program is completed.
 #ifndef NDEBUG
 #define LOG(fmt, ...) fprintf(stderr, dcyan "%s:%d" rst " " fmt "\n", __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__)
 #else
