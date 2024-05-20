@@ -145,19 +145,16 @@ void update_terminal_title(char const *pwd)
  *****************************************************************************/
 void display_primary_prompt(char const *git_info, char const *venv)
 {
-    LOG("Showing first part of primary prompt.");
+    LOG("Showing primary prompt.");
     printf("\n┌[" bbgreen "\\u" rst " " bbiyellow OPERATING_SYSTEM_ICON "\\h" rst " " bbcyan "\\w" rst "]");
     if (git_info != NULL)
     {
-        LOG("Appending Git repository information.");
         printf("%s", git_info);
     }
     if (venv != NULL)
     {
-        LOG("Appending Python virtual environment information.");
         printf("  " bblue "%s" rst, venv);
     }
-    LOG("Showing last part of primary prompt.");
     printf("\n└─\\$ \n");
 }
 
