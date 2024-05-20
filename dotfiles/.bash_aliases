@@ -200,55 +200,25 @@ _before_command()
 {
     [ -n "${__begin+.}" ] && return
     __window=${WINDOWID:-$(getactivewindow)}
-    __begin=$(date +%s%3N)
+    __begin=$(custom-bash-prompt)
 }
 
 # Post-command for command timing. It will be called just before the prompt is
-# displayed (i.e. just after any command is executed). The current Git branch
-# is also set here; it is used in the primary prompt.
+# displayed (i.e. just after any command is executed).
 _after_command()
 {
-    local exit_status=$?
-    local __end=$(date +%s%3N)
-
-    # Set the terminal window title to the short name of the working directory.
-    printf "\e]0;${PWD##*/}/\a"
-
+    local exit_code=$?
     [ -z "${__begin+.}" ] && return
-    local delay=$((__end-__begin))
-    unset __begin
-    [ $delay -le 5000 ] && unset __window && return
+    local last_command=$(history 1)
 
-    local milliseconds=$((delay%1000))
-    local seconds=$((delay/1000%60))
-    local minutes=$((delay/60000%60))
-    local hours=$((delay/3600000))
-    local breakup
-    [ $hours -gt 0 ] && breakup="$hours h "
-    [ $hours -gt 0 -o $minutes -gt 0 ] && breakup="${breakup}$minutes m "
-    breakup="${breakup}$seconds s $milliseconds ms"
-
-    if [ $exit_status -eq 0 ]
+    # The below program will exit successfully if a notification is to be
+    # shown.
+    if PS1=$(custom-bash-prompt "$last_command" $exit_code $__begin "$(__git_ps1 '   %s')")  \
+    && [ $__window -ne $(getactivewindow) ]
     then
-        local exit_symbol=$'\e[1;32m✓\e[m'
-        local icon=dialog-information
-    else
-        local exit_symbol=$'\e[1;31m✗\e[m'
-        local icon=dialog-error
+        notify-send -i dialog-information "CLI Ready" "$last_command"
     fi
-    local last_command=$(history 1 | sed -e 's/^[^]]*\] //' -e 's/\s\+$//')
-
-    # Bash doesn't calculate the length of a string containing ANSI colour
-    # codes correctly, so a correction is required.
-    local report="$last_command $exit_symbol $breakup"
-    local width=${#report}
-    width=$((COLUMNS-width%COLUMNS+width+12))
-    printf "\r%*s\n" $width "$report"
-    if [ $delay -ge 10000 -a $__window -ne $(getactivewindow) ]
-    then
-        notify-send -i $icon "CLI Ready" "$last_command • $breakup"
-    fi
-    unset __window
+    unset __begin __window
 }
 
 trap _before_command DEBUG

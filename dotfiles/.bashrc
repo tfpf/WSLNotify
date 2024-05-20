@@ -60,6 +60,8 @@ envarmunge PATH /usr/local/texlive/*/bin/x86_64-linux
 
 export BASH_COMPLETION_USER_DIR=$HOME/.local/share/bash-completion
 export BAT_PAGER='less -iRF'
+# Make this available to the C program which reports command completion.
+export COLUMNS
 export EDITOR=vim
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01:range1=32:range2=34:fixit-insert=32:fixit-delete=31:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:type-diff=01;32'
 export GIT_EDITOR=vim
@@ -149,30 +151,6 @@ then
     else
         eval "$(dircolors -b)"
     fi
-    _PS1()
-    {
-        if [ "$USER" = root -o "$(id -nu)" = root ]
-        then
-            local user='\[\e[1;91m\]\u\[\e[m\]'
-        else
-            local user='\[\e[1;92m\]\u\[\e[m\]'
-        fi
-        local os=$(uname)
-        local host='•'
-        case $os in
-            (Darwin) host='';;
-            (Linux) host='';;
-            (*NT*) host='';;
-        esac
-        host='\[\e[1;3;93m\]\h '"$host $os"'\[\e[m\]'
-        local directory='\[\e[1;96m\]\w\[\e[m\]'
-        command -v __git_ps1 &>/dev/null && local git_branch='$(__git_ps1 "   %s")'
-        local virtual_environment='${VIRTUAL_ENV_PROMPT:+  \[\e[94m\]$VIRTUAL_ENV_PROMPT\[\e[m\]}'
-        [ -f /.dockerenv ] && local docker_info=" 󰡨 \[\e[34m\]\h\[\e[m\]"
-        printf '\n┌[%s %s %s]%s%s%s\n└─\$ ' "$user" "$host" "$directory" "$git_branch" "$virtual_environment" "$docker_info"
-    }
-    export PS1=$(_PS1)
-    readonly PS1 PS2 PS3 PS4
 fi
 
 unset -f _PS1 _source_one
