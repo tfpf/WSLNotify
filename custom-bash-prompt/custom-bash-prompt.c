@@ -71,11 +71,10 @@ int report_command_status(char const *last_command, int exit_code, long long beg
 {
     long long end = get_timestamp();
     long long delay = end - begin;
-    int this_exit_code = delay > 10000 ? EXIT_SUCCESS : EXIT_FAILURE;
     LOG("Command '%s' exited with code %d in %lld ms.", last_command, exit_code, delay);
     if (delay <= 5000)
     {
-        return this_exit_code;
+        return EXIT_FAILURE;
     }
 
     // Remove the initial part (index and timestamp) of the command. Then
@@ -93,6 +92,7 @@ int report_command_status(char const *last_command, int exit_code, long long beg
     {
         report_ptr += sprintf(report_ptr, bred "✗" rst " ");
     }
+    int this_exit_code = delay > 10000 ? EXIT_SUCCESS : EXIT_FAILURE;
     int milliseconds = delay % 1000;
     int seconds = (delay /= 1000) % 60;
     int minutes = (delay /= 60) % 60;
