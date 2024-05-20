@@ -117,12 +117,12 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     {
         report_ptr += sprintf(report_ptr, "%d m ", minutes);
     }
-    sprintf(report_ptr, "%d.%03d s", seconds, milliseconds);
+    report_ptr += sprintf(report_ptr, "%d.%03d s", seconds, milliseconds);
 
     // Ensure that the text is right-aligned even if it spans multiple lines.
     // Since there are non-printable characters in the string, compensate for
     // the width.
-    int report_len = (int)strlen(report);
+    int report_len = report_ptr - report;
     int columns = atoi(getenv("COLUMNS"));
     columns = columns - report_len % columns + report_len + 14;
     LOG("Padding report of length %d to %d columns (adjusted).", report_len, columns);
