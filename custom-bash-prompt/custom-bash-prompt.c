@@ -27,18 +27,14 @@
 // Bold and bright.
 #define bbcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;96m" START_OF_TEXT
 #define bbgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;92m" START_OF_TEXT
-#define bbyellow START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;93m" START_OF_TEXT
 
 // Bright.
 #define bblue START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "94m" START_OF_TEXT
-#define bcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "96m" START_OF_TEXT
 #define bgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "92m" START_OF_TEXT
 #define bred START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "91m" START_OF_TEXT
-#define byellow START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "93m" START_OF_TEXT
 
 // Dark.
 #define dcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "36m" START_OF_TEXT
-#define dgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "32m" START_OF_TEXT
 
 // Reset.
 #define rst START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "m" START_OF_TEXT
@@ -49,11 +45,6 @@
 #else
 #define LOG(fmt, ...)
 #endif
-
-enum
-{
-    MAX_INFO_LEN = 64
-};
 
 /******************************************************************************
  * Get the current timestamp.
@@ -75,7 +66,7 @@ long long get_timestamp(void)
  * @param exit_code Code with which the command exited.
  * @param begin Timestamp of the instant the command was started at.
  *
- * @return Exit code to use for this program.
+ * @return Success code if the command ran for a long time, else failure code.
  *****************************************************************************/
 int report_command_status(char const *last_command, int exit_code, long long begin)
 {
@@ -143,14 +134,6 @@ void update_terminal_title(char const *pwd)
 }
 
 /******************************************************************************
- * Obtain information about the status of the current Git repository.
- *****************************************************************************/
-char const *get_git_info(void)
-{
-    return dgreen "placeholder" rst;
-}
-
-/******************************************************************************
  * Show the primary prompt for Bash.
  *
  * @param git_info Description of the status of the current Git repository.
@@ -162,7 +145,7 @@ void display_primary_prompt(char const *git_info, char const *venv)
     printf("\n┌[" bbgreen "\\u" rst " " bbiyellow OPERATING_SYSTEM_ICON "\\h" rst " " bbcyan "\\w" rst "]");
     if (git_info != NULL)
     {
-        printf("   %s", git_info);
+        printf("%s", git_info);
     }
     if (venv != NULL)
     {
@@ -179,14 +162,16 @@ int main(int const argc, char const *argv[])
         return EXIT_SUCCESS;
     }
 
-    char const *git_info = get_git_info();
+    // For better accuracy, do this first.
+    int this_exit_code = report_command_status(argv[1], atoi(argv[2]), atoll(argv[3]));
+
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
     LOG("Current Python virtual environment is '%s'.", venv);
-    display_primary_prompt(git_info, venv);
+    display_primary_prompt(argv[4], venv);
 
     char const *pwd = getenv("PWD");
     LOG("Current directory is '%s'.", pwd);
     update_terminal_title(pwd);
 
-    return report_command_status(argv[1], atoi(argv[2]), atoll(argv[3]));
+    return this_exit_code;
 }
