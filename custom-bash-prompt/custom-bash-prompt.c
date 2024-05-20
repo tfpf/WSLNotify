@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -67,7 +68,7 @@ long long get_timestamp(void)
  *
  * @return Success code if the command ran for a long time, else failure code.
  *****************************************************************************/
-int report_command_status(char const *last_command, int exit_code, long long begin)
+int report_command_status(char *last_command, int exit_code, long long begin)
 {
     long long end = get_timestamp();
     long long delay = end - begin;
@@ -77,10 +78,15 @@ int report_command_status(char const *last_command, int exit_code, long long beg
         return EXIT_FAILURE;
     }
 
-    // Remove the initial part (index and timestamp) of the command. Then
-    // allocate enough space to write it and some additional information.
+    // Remove the initial part (index and timestamp) of the command. Also
+    // remove trailing whitespace characters, if any. Then allocate enough
+    // space to write it and some additional information.
     last_command = strchr(last_command, RIGHT_SQUARE_BRACKET[0]) + 2;
-    char *report = malloc((strlen(last_command) + 64) * sizeof *report);
+    size_t last_command_len = strlen(last_command);
+    while(isspace(last_command[last_command_len - 1]) != 0){
+        last_command[--last_command_len] = '\0';
+    }
+    char *report = malloc((last_command_len + 64) * sizeof *report);
     if(report == NULL)
     {
         return EXIT_FAILURE;
@@ -167,7 +173,7 @@ int main(int const argc, char const *argv[])
     }
 
     // For better accuracy, do this first.
-    int this_exit_code = report_command_status(argv[1], atoi(argv[2]), atoll(argv[3]));
+    int this_exit_code = report_command_status((char*)argv[1], atoi(argv[2]), atoll(argv[3]));
 
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
     LOG("Current Python virtual environment is '%s'.", venv);
