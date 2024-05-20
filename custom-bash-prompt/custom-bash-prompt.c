@@ -81,6 +81,10 @@ int report_command_status(char const *last_command, int exit_code, long long beg
     // allocate enough space to write it and some additional information.
     last_command = strchr(last_command, RIGHT_SQUARE_BRACKET[0]) + 2;
     char *report = malloc((strlen(last_command) + 32) * sizeof *report);
+    if(report == NULL)
+    {
+        return EXIT_FAILURE;
+    }
     char *report_ptr = report;
 
     report_ptr += sprintf(report_ptr, "%s ", last_command);
@@ -117,6 +121,7 @@ int report_command_status(char const *last_command, int exit_code, long long beg
     LOG("Padding report of length %d to %d columns (adjusted).", report_len, columns);
     fprintf(stderr, "%*s\n", columns, report);
 
+    free(report);
     return this_exit_code;
 }
 
