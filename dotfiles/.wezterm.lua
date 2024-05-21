@@ -21,7 +21,7 @@ config.cursor_thickness = 1
 
 config.default_cursor_style = 'SteadyBar'
 
-config.default_prog = {'C:/Windows/system32/wsl.exe', '-d', 'Debian'}
+config.default_prog = {'C:/Windows/system32/wsl.exe', '~', '-d', 'Debian'}
 
 config.font = wezterm.font 'CaskaydiaCove Nerd Font'
 
