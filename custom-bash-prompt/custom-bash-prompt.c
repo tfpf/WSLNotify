@@ -135,11 +135,11 @@ int report_command_status(char *last_command, int exit_code, long long begin)
 /******************************************************************************
  * Update the title of the current terminal window. This should also
  * automatically update the title of the current terminal tab.
- *
- * @param pwd Current working directory.
  *****************************************************************************/
-void update_terminal_title(char const *pwd)
+void update_terminal_title(void)
 {
+    char const *pwd = getenv("PWD");
+    LOG("Current directory is '%s'.", pwd);
     char const *short_pwd = strrchr(pwd, '/') + 1;
     fprintf(stderr, ESCAPE RIGHT_SQUARE_BRACKET "0;%s/" BELL, short_pwd);
 }
@@ -148,10 +148,11 @@ void update_terminal_title(char const *pwd)
  * Show the primary prompt for Bash.
  *
  * @param git_info Description of the status of the current Git repository.
- * @param venv Name of the current Python virtual environment.
  *****************************************************************************/
-void display_primary_prompt(char const *git_info, char const *venv)
+void display_primary_prompt(char const *git_info)
 {
+    char const *venv = getenv("VIRTUAL_ENV_PROMPT");
+    LOG("Current Python virtual environment is '%s'.", venv);
     LOG("Showing primary prompt.");
     printf("\n┌[" bbgreen "\\u" rst " " bbiyellow OPERATING_SYSTEM_ICON "\\h" rst " " bbcyan "\\w" rst "]");
     if (git_info != NULL)
@@ -173,16 +174,12 @@ int main(int const argc, char const *argv[])
         return EXIT_SUCCESS;
     }
 
-    // For better accuracy, do this first.
+    // For more accurate timing, run the timer function first. It is
+    // permissible to modify the command line arguments in C, so mark the first
+    // as mutable: this avoids copying the string in the function.
     int this_exit_code = report_command_status((char *)argv[1], atoi(argv[2]), atoll(argv[3]));
-
-    char const *venv = getenv("VIRTUAL_ENV_PROMPT");
-    LOG("Current Python virtual environment is '%s'.", venv);
-    display_primary_prompt(argv[4], venv);
-
-    char const *pwd = getenv("PWD");
-    LOG("Current directory is '%s'.", pwd);
-    update_terminal_title(pwd);
+    display_primary_prompt(argv[4]);
+    update_terminal_title();
 
     return this_exit_code;
 }
