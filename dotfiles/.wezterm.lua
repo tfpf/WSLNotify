@@ -13,8 +13,8 @@ config.colors = {
     selection_bg = '#EEEEEE',
     selection_fg = '#000000',
 
-    ansi = {'#000000', '#cc0000', '#4e9a06', '#c4a000', '#3465a4', '#b124c9', '#06989a', '#d3d7cf'},
-    brights = {'#5d5f5b', '#ef2929', '#8ae234', '#fce94f', '#739fcf', '#ff00e3', '#34e2e2', '#eeeeec'},
+    ansi = {'#000000', '#CC0000', '#4E9A06', '#C4A000', '#3465A4', '#B124C9', '#06989A', '#D3D7CF'},
+    brights = {'#5D5F5B', '#EF2929', '#8AE234', '#FCE94F', '#739FCF', '#FF00E3', '#34E2E2', '#EEEEEC'},
 }
 
 config.cursor_thickness = 1
