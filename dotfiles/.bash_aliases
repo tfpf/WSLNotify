@@ -2,12 +2,14 @@ unalias -a
 
 alias bye='true && exit'
 alias d='diff -ad -W $COLUMNS -y --suppress-common-lines'
+alias g='gvim'
 alias less='command less -i'
 alias perfstat='perf stat -e task-clock,cycles,instructions,branches,branch-misses,cache-references,cache-misses '
 alias pgrep='command pgrep -il'
 alias ps='command ps a -c'
 alias time=$'/usr/bin/time -f "\n\e[3mReal %e s · User %U s · Kernel %S s · MRSS %M KiB · %P CPU · %c ICS · %w VCS\e[m" '
 alias valgrind='command valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose '
+alias x='xdg-open'
 
 alias f='watch -n 1 "command grep -F MHz /proc/cpuinfo | nl -n rz -w 2 | sort -k 5 -gr | sed s/^0/\ /g"'
 alias htop='command htop -d 10 -t -u $USER'
@@ -104,95 +106,6 @@ getactivewindow()
         xdotool getactivewindow
     fi
 }
-
-# This block is executed only if Bash is running on WSL (Windows Subsystem for
-# Linux).
-if command grep -Fiq microsoft /proc/version
-then
-
-    # Setup for a virtual display using VcXsrv to run GUI apps. You may want to
-    # install `x11-xserver-utils`, `dconf-editor` and `dbus-x11`, and create
-    # the file `$HOME/.config/dconf/user` to avoid getting warnings.
-    if command grep -Fq WSL2 /proc/version
-    then
-        export DISPLAY=$(command grep -F -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
-    else
-        export DISPLAY=localhost:0.0
-    fi
-    export LIBGL_ALWAYS_INDIRECT=1
-
-    # Run a PowerShell script without changing the global execution policy.
-    alias psh='powershell.exe -ExecutionPolicy Bypass'
-
-    # Compile programs written in C#.
-    alias csc='/mnt/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe'
-
-    # Put `WSLNotify.exe` and `WSLGetActiveWindow.exe` in a folder which is in
-    # `PATH` (e.g. `C:\Windows`) to make these aliases work. Alternatively,
-    # specify the full path to the EXE files below.
-    unset -f getactivewindow
-    alias getactivewindow='WSLGetActiveWindow.exe'
-    alias notify-send='WSLNotify.exe'
-
-    # Create the virtual display. VcXsrv should be installed.
-    vcx()
-    {
-        local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
-        local vcxsrvname=$(basename "$vcxsrvpath")
-
-        # If VcXsrv is started in the background, it writes messages to
-        # standard error, and an entry corresponding to it remains in the Linux
-        # process list though it is actually a Windows process. Hence, start it
-        # in a subshell, suppress its output, and terminate the Linux process.
-        # (This does not affect the Windows process.) This pattern may be used
-        # in a few more functions below.
-        (
-            "$vcxsrvpath" -ac -clipboard -multiwindow -wgl &
-            sleep 1
-            pkill "$vcxsrvname"
-        ) &>/dev/null
-    }
-
-    # GVIM for Windows.
-    g()
-    {
-        [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
-
-        # See https://tuxproject.de/projects/vim/ for 64-bit Windows binaries.
-        local gvimpath='/mnt/c/Program Files (x86)/Vim/vim90/gvim.exe'
-        local gvimname=$(basename "$gvimpath")
-        local filedir=$(dirname "$1")
-        local filename=$(basename "$1")
-        (
-            cd "$filedir"
-            "$gvimpath" "$filename" &
-            sleep 1
-            pkill "$gvimname"
-        ) &>/dev/null
-    }
-
-    # Open a file or link.
-    x()
-    {
-        # Windows Explorer can open WSL directories, but the command must be
-        # invoked after navigating to the target directory to avoid problems
-        # like a tilde getting interpreted as the Windows home folder instead
-        # of the Linux home directory. To avoid changing `OLDPWD`, do this in a
-        # subshell.
-        if [ -d "$1" ]
-        then
-            (
-                cd "$1"
-                explorer.exe .
-            )
-        else
-            xdg-open "$1"
-        fi
-    }
-else
-    alias g='gvim'
-    alias x='xdg-open'
-fi
 
 # Pre-command for command timing. It will be called just before any command is
 # executed.

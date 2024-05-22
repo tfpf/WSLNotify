@@ -113,6 +113,13 @@ then
     . $HOME/.bash_aliases
 fi
 
+# This block is executed only if Bash is running on WSL (Windows Subsystem for
+# Linux).
+if command grep -Fiq microsoft /proc/version
+then
+    . $HOME/.bash_aliases_wsl
+fi
+
 # Source the first existing file of the arguments.
 _source_one()
 {
