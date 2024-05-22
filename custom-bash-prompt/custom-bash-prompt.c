@@ -88,10 +88,6 @@ int report_command_status(char *last_command, int exit_code, long long begin)
         last_command[--last_command_len] = '\0';
     }
     char *report = malloc((last_command_len + 64) * sizeof *report);
-    if (report == NULL)
-    {
-        return EXIT_FAILURE;
-    }
     char *report_ptr = report;
 
     report_ptr += sprintf(report_ptr, "%s ", last_command);
