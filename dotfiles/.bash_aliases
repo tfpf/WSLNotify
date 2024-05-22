@@ -111,7 +111,7 @@ getactivewindow()
 # Linux).
 if command grep -Fiq microsoft /proc/version
 then
-    . $HOME/.bash_aliases_wsl
+    . $HOME/.bash_aliases_wsl.bash
 fi
 
 # Pre-command for command timing. It will be called just before any command is
