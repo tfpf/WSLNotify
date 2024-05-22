@@ -39,8 +39,7 @@ vcx()
     # in a few more functions below.
     (
         "$vcxsrvpath" -ac -clipboard -multiwindow -wgl &
-        sleep 1
-        pkill "$vcxsrvname"
+        sleep 1 && pkill "$vcxsrvname" &
     ) &>/dev/null
 }
 
@@ -56,10 +55,8 @@ g()
     local filedir=$(dirname "$1")
     local filename=$(basename "$1")
     (
-        cd "$filedir"
-        "$gvimpath" "$filename" &
-        sleep 1
-        pkill "$gvimname"
+        cd "$filedir" && "$gvimpath" "$filename" &
+        sleep 1 && pkill "$gvimname" &
     ) &>/dev/null
 }
 
