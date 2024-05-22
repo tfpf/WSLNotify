@@ -107,6 +107,13 @@ getactivewindow()
     fi
 }
 
+# This block is executed only if Bash is running on WSL (Windows Subsystem for
+# Linux).
+if command grep -Fiq microsoft /proc/version
+then
+    . $HOME/.bash_aliases_wsl
+fi
+
 # Pre-command for command timing. It will be called just before any command is
 # executed.
 _before_command()
