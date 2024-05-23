@@ -26,12 +26,16 @@
 [core]
 	commentChar = "#"
 	compression = 9
+	fscache = true
 	hideDotFiles = true
+	preloadindex = true
 [diff]
 	algorithm = minimal
 [fetch]
 	prune = true
 	pruneTags = true
+[gc]
+	auto = 256
 [init]
 	defaultBranch = main
 [log]
