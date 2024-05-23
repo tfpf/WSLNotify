@@ -29,7 +29,7 @@ alias notify-send='WSLNotify.exe'
 vcx()
 {
     local vcxsrvpath='/mnt/c/Program Files/VcXsrv/vcxsrv.exe'
-    local vcxsrvname=$(basename "$vcxsrvpath")
+    local vcxsrvname=${vcxsrvpath##*/}
 
     # If VcXsrv is started in the background, it writes messages to
     # standard error, and an entry corresponding to it remains in the Linux
@@ -37,10 +37,7 @@ vcx()
     # in a subshell, suppress its output, and terminate the Linux process.
     # (This does not affect the Windows process.) This pattern may be used
     # in a few more functions below.
-    (
-        "$vcxsrvpath" -ac -clipboard -multiwindow -wgl &
-        sleep 1 && pkill "$vcxsrvname" &
-    ) &>/dev/null
+    ("$vcxsrvpath" -ac -clipboard -multiwindow -wgl & sleep 1 && pkill "$vcxsrvname" &) &>/dev/null
 }
 
 # GVIM for Windows.
@@ -51,13 +48,10 @@ g()
 
     # See https://tuxproject.de/projects/vim/ for 64-bit Windows binaries.
     local gvimpath='/mnt/c/Program Files (x86)/Vim/vim90/gvim.exe'
-    local gvimname=$(basename "$gvimpath")
+    local gvimname=${gvimpath##*/}
     local filedir=$(dirname "$1")
-    local filename=$(basename "$1")
-    (
-        cd "$filedir" && "$gvimpath" "$filename" &
-        sleep 1 && pkill "$gvimname" &
-    ) &>/dev/null
+    local filename=${1##*/}
+    (cd "$filedir" && "$gvimpath" "$filename" & sleep 1 && pkill "$gvimname" &) &>/dev/null
 }
 
 # Open a file or link.
