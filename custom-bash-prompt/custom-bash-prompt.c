@@ -90,14 +90,14 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     char *report = malloc((last_command_len + 64) * sizeof *report);
     char *report_ptr = report;
 
-    report_ptr += sprintf(report_ptr, "%s ", last_command);
+    report_ptr += sprintf(report_ptr, " %s ", last_command);
     if (exit_code == 0)
     {
-        report_ptr += sprintf(report_ptr, bgreen "✓" rst " ");
+        report_ptr += sprintf(report_ptr, bgreen "" rst " ");
     }
     else
     {
-        report_ptr += sprintf(report_ptr, bred "✗" rst " ");
+        report_ptr += sprintf(report_ptr, bred "" rst " ");
     }
     int this_exit_code = delay > 10000 ? EXIT_SUCCESS : EXIT_FAILURE;
     int milliseconds = delay % 1000;
@@ -120,7 +120,7 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     // the width.
     int report_len = report_ptr - report;
     int columns = atoi(getenv("COLUMNS"));
-    columns = columns - report_len % columns + report_len + 14;
+    columns = columns - report_len % columns + report_len + 16;
     LOG("Padding report of length %d to %d columns (adjusted).", report_len, columns);
     fprintf(stderr, "%*s\n", columns, report);
 
