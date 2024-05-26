@@ -21,6 +21,17 @@
         79,
         119
     ],
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "settings": {
+                    "fontStyle": "italic",
+                    "foreground": "#667777"
+                },
+                "scope": "comment"
+            },
+        ]
+    },
     "files.eol": "\n",
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
