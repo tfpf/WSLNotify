@@ -8,7 +8,7 @@ syn on
 au BufRead,BufNewFile *.sage setfiletype python
 
 hi ColorColumn                                     gui=NONE      guibg=#1F1F1F guifg=NONE    term=reverse   cterm=NONE      ctermbg=234  ctermfg=NONE
-hi Comment                                         gui=italic    guibg=NONE    guifg=#667777 term=bold      cterm=italic    ctermbg=NONE ctermfg=245
+hi Comment                                         gui=italic    guibg=NONE    guifg=#667777 term=bold      cterm=italic    ctermbg=NONE ctermfg=242
 hi Cursor                                          gui=NONE      guibg=#F0E68C guifg=#4D4D4D
 hi CursorLine                                      gui=NONE      guibg=#1F1F1F guifg=NONE    term=underline cterm=NONE      ctermbg=234  ctermfg=NONE
 hi CursorLineNr                                    gui=NONE      guibg=NONE    guifg=#EEEE00 term=underline cterm=NONE      ctermbg=NONE ctermfg=226
