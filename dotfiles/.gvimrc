@@ -22,6 +22,7 @@ hi MatchParen                                      gui=NONE      guibg=#008888 g
 hi NonText                                                       guibg=#4D4D4D                                              ctermbg=239
 hi Normal                                          gui=NONE      guibg=#333333 guifg=#FFFFFF term=NONE      cterm=NONE      ctermbg=236  ctermfg=231
 hi Search                                          gui=NONE      guibg=#FF0000 guifg=#000000 term=reverse                   ctermbg=196  ctermfg=16
+hi SpecialComment                                  gui=italic    guibg=NONE    guifg=#FFDE9B term=italic    cterm=italic    ctermbg=NONE ctermfg=222
 hi SpecialKey                                      gui=NONE      guibg=NONE    guifg=#626262 term=NONE      cterm=NONE      ctermbg=NONE ctermfg=241
 hi StatusLine                                      gui=NONE      guibg=#AFAF87 guifg=#303030                cterm=NONE      ctermbg=144  ctermfg=236
 hi StatusLineNC                                    gui=NONE      guibg=#AFAF87 guifg=#808080                cterm=NONE      ctermbg=144  ctermfg=244
