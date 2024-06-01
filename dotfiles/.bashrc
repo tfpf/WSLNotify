@@ -16,12 +16,10 @@ shopt -s histappend
 # paths without duplication.
 envarmunge()
 {
-    local name=$1
-    local value=$2
-    if [[ -n $name && -d $value && :${!name}: != *:$value:* ]]
-    then
-        eval "export $name=\"$value\"\${$name:+:\$$name}"
-    fi
+    [ -z "$1" -o ! -d "$2" ] && return
+    local name="$1"
+    local value=$(realpath "$2")
+    [[ :${!name}: != *:$value:* ]] && eval "export $name=\"$value\"\${$name:+:\$$name}"
 }
 
 envarmunge C_INCLUDE_PATH /usr/local/include
@@ -43,9 +41,9 @@ envarmunge CARGO_HOME $HOME/.cargo
 envarmunge PATH $HOME/.cargo/bin
 
 # Gurobi Optimizer.
-envarmunge GUROBI_HOME /opt/gurobi*/linux64
 envarmunge C_INCLUDE_PATH /opt/gurobi*/linux64/include
 envarmunge CPLUS_INCLUDE_PATH /opt/gurobi*/linux64/include
+envarmunge GUROBI_HOME /opt/gurobi*/linux64
 envarmunge LD_LIBRARY_PATH /opt/gurobi*/linux64/lib
 envarmunge PATH /opt/gurobi*/linux64/bin
 
@@ -94,10 +92,7 @@ export error_line=254
 export half_error_line=238
 
 # Allow viewing non-text files using less.
-if command -v lesspipe &>/dev/null
-then
-    eval "$(SHELL=/bin/sh lesspipe)"
-fi
+command -v lesspipe &>/dev/null && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Don't install libraries in 64-bit directories while building CPython.
 unset CONFIG_SITE
@@ -108,10 +103,7 @@ unset GIT_ASKPASS
 # Don't ask for the SSH password in a GUI window. Use the TUI.
 unset SSH_ASKPASS
 
-if [ -f $HOME/.bash_aliases ]
-then
-    . $HOME/.bash_aliases
-fi
+[ -f $HOME/.bash_aliases ] && . $HOME/.bash_aliases
 
 # Source the first existing file of the arguments.
 _source_one()
@@ -153,4 +145,4 @@ then
     fi
 fi
 
-unset -f _PS1 _source_one
+unset -f _source_one

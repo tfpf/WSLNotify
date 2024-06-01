@@ -92,7 +92,6 @@ c()
         local c=gcc
         local l=c
     fi
-    # $c -E "$1" | command grep -Fv '#' | bat -l c++ --file-name "$1"
     clang-format <($c -E "$1" | command grep -Fv '#') | bat -l $l --file-name "$1"
 }
 
@@ -107,12 +106,9 @@ getactivewindow()
     fi
 }
 
-# This block is executed only if Bash is running on WSL (Windows Subsystem for
+# This is executed only if Bash is running on WSL (Windows Subsystem for
 # Linux).
-if command grep -Fiq microsoft /proc/version
-then
-    . $HOME/.bash_aliases_wsl.bash
-fi
+command grep -Fiq microsoft /proc/version && . $HOME/.bash_aliases_wsl.bash
 
 # Pre-command for command timing. It will be called just before any command is
 # executed.
