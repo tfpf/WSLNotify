@@ -55,6 +55,7 @@ long long get_timestamp(void)
 {
     struct timespec now;
     timespec_get(&now, TIME_UTC);
+    LOG("Current time is %lld.%09ld.", (long long)now.tv_sec, now.tv_nsec);
     return now.tv_sec * 1000LL + now.tv_nsec / 1000000LL;
 }
 
