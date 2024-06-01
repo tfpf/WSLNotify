@@ -121,9 +121,10 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     // the width.
     int report_len = report_ptr - report;
     int columns = atoi(getenv("COLUMNS"));
-    columns = columns - report_len % columns + report_len + 16;
-    LOG("Padding report of length %d to %d columns (adjusted).", report_len, columns);
-    fprintf(stderr, "\r%*s\n", columns, report);
+    LOG("Terminal width is %d columns.", columns);
+    int width = columns - report_len % columns + report_len + 16;
+    LOG("Padding report of length %d to %d characters.", report_len, width);
+    fprintf(stderr, "\r%*s\n", width, report);
 
     free(report);
     return this_exit_code;
