@@ -7,7 +7,7 @@ syn on
 " Specify syntax for files GVIM does not know about.
 au BufRead,BufNewFile *.sage setfiletype python
 
-hi ColorColumn                                     gui=NONE      guibg=#1F1F1F guifg=NONE    term=reverse   cterm=NONE      ctermbg=234  ctermfg=NONE
+hi ColorColumn                                     gui=NONE      guibg=#333333 guifg=NONE    term=reverse   cterm=NONE      ctermbg=236  ctermfg=NONE
 hi Comment                                         gui=italic    guibg=NONE    guifg=#667777 term=bold      cterm=italic    ctermbg=NONE ctermfg=242
 hi Cursor                                          gui=NONE      guibg=#F0E68C guifg=#4D4D4D
 hi CursorLine                                      gui=NONE      guibg=#1F1F1F guifg=NONE    term=underline cterm=NONE      ctermbg=234  ctermfg=NONE
@@ -20,7 +20,7 @@ hi IncSearch                                       gui=NONE      guibg=#808080 g
 hi LineNr                                          gui=NONE      guibg=NONE    guifg=#808000 term=underline cterm=NONE      ctermbg=NONE ctermfg=3
 hi MatchParen                                      gui=NONE      guibg=#008888 guifg=NONE    term=reverse                   ctermbg=30   ctermfg=NONE
 hi NonText                                                       guibg=#4D4D4D                                              ctermbg=239
-hi Normal                                          gui=NONE      guibg=#333333 guifg=#FFFFFF term=NONE      cterm=NONE      ctermbg=236  ctermfg=231
+hi Normal                                          gui=NONE      guibg=#1F1F1F guifg=#FFFFFF term=NONE      cterm=NONE      ctermbg=234  ctermfg=231
 hi Search                                          gui=NONE      guibg=#FF0000 guifg=#000000 term=reverse                   ctermbg=196  ctermfg=16
 hi SpecialComment                                  gui=italic    guibg=NONE    guifg=#FFDE9B term=italic    cterm=italic    ctermbg=NONE ctermfg=222
 hi SpecialKey                                      gui=NONE      guibg=NONE    guifg=#626262 term=NONE      cterm=NONE      ctermbg=NONE ctermfg=241
