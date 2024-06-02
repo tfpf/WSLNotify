@@ -10,7 +10,7 @@ au BufRead,BufNewFile *.sage setfiletype python
 hi ColorColumn                                     gui=NONE      guibg=#333333 guifg=NONE    term=reverse   cterm=NONE      ctermbg=236  ctermfg=NONE
 hi Comment                                         gui=italic    guibg=NONE    guifg=#667777 term=bold      cterm=italic    ctermbg=NONE ctermfg=242
 hi Cursor                                          gui=NONE      guibg=#F0E68C guifg=#4D4D4D
-hi CursorLine                                      gui=NONE      guibg=#1F1F1F guifg=NONE    term=underline cterm=NONE      ctermbg=234  ctermfg=NONE
+hi CursorLine                                      gui=NONE      guibg=#333333 guifg=NONE    term=underline cterm=NONE      ctermbg=236  ctermfg=NONE
 hi CursorLineNr                                    gui=NONE      guibg=NONE    guifg=#EEEE00 term=underline cterm=NONE      ctermbg=NONE ctermfg=226
 hi DiffAdd                                         gui=NONE      guibg=#00008B guifg=NONE    term=bold      cterm=NONE      ctermbg=4    ctermfg=NONE
 hi DiffChange                                      gui=NONE      guibg=#8B008B guifg=NONE    term=bold      cterm=NONE      ctermbg=5    ctermfg=NONE
@@ -19,7 +19,7 @@ hi DiffText                                        gui=bold      guibg=#B80000 g
 hi IncSearch                                       gui=NONE      guibg=#808080 guifg=#D7D75F                cterm=NONE      ctermbg=244  ctermfg=185
 hi LineNr                                          gui=NONE      guibg=NONE    guifg=#808000 term=underline cterm=NONE      ctermbg=NONE ctermfg=3
 hi MatchParen                                      gui=NONE      guibg=#008888 guifg=NONE    term=reverse                   ctermbg=30   ctermfg=NONE
-hi NonText                                                       guibg=#4D4D4D                                              ctermbg=239
+hi NonText                                                       guibg=#121212                                              ctermbg=233
 hi Normal                                          gui=NONE      guibg=#1F1F1F guifg=#FFFFFF term=NONE      cterm=NONE      ctermbg=234  ctermfg=231
 hi Search                                          gui=NONE      guibg=#FF0000 guifg=#000000 term=reverse                   ctermbg=196  ctermfg=16
 hi SpecialComment                                  gui=italic    guibg=NONE    guifg=#FFDE9B term=italic    cterm=italic    ctermbg=NONE ctermfg=222
