@@ -88,10 +88,24 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     {
         last_command[--last_command_len] = '\0';
     }
+    LOG("Command is of length %zu.", last_command_len);
     char *report = malloc((last_command_len + 64) * sizeof *report);
     char *report_ptr = report;
 
-    report_ptr += sprintf(report_ptr, " %s ", last_command);
+    int columns = atoi(getenv("COLUMNS"));
+    LOG("Terminal width is %d columns.", columns);
+    int left_piece_len = columns * 3 / 8;
+    int right_piece_len = left_piece_len;
+    if (last_command_len <= (size_t)(left_piece_len + right_piece_len) + 5)
+    {
+        report_ptr += sprintf(report_ptr, " %s ", last_command);
+    }
+    else
+    {
+        LOG("Breaking the command into pieces of lengths %d and %d.", left_piece_len, right_piece_len);
+        report_ptr += sprintf(report_ptr, " %.*s ... ", left_piece_len, last_command);
+        report_ptr += sprintf(report_ptr, "%s ", last_command + last_command_len - right_piece_len);
+    }
     if (exit_code == 0)
     {
         report_ptr += sprintf(report_ptr, bgreen "" rst " ");
@@ -108,20 +122,13 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     LOG("Calculated delay is %d h %d m %d s %d ms.", hours, minutes, seconds, milliseconds);
     if (hours > 0)
     {
-        report_ptr += sprintf(report_ptr, "%d h ", hours);
+        report_ptr += sprintf(report_ptr, "%02d:", hours);
     }
-    if (hours > 0 || minutes > 0)
-    {
-        report_ptr += sprintf(report_ptr, "%d m ", minutes);
-    }
-    report_ptr += sprintf(report_ptr, "%d.%03d s", seconds, milliseconds);
+    report_ptr += sprintf(report_ptr, "%02d:%02d.%03d", minutes, seconds, milliseconds);
 
-    // Ensure that the text is right-aligned even if it spans multiple lines.
-    // Since there are non-printable characters in the string, compensate for
-    // the width.
+    // Ensure that the text is right-aligned. Since there are non-printable
+    // characters in the string, compensate for the width.
     int report_len = report_ptr - report;
-    int columns = atoi(getenv("COLUMNS"));
-    LOG("Terminal width is %d columns.", columns);
     int width = columns - report_len % columns + report_len + 16;
     LOG("Padding report of length %d to %d characters.", report_len, width);
     fprintf(stderr, "\r%*s\n", width, report);
