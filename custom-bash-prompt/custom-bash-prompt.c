@@ -96,7 +96,7 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     LOG("Terminal width is %d columns.", columns);
     int left_piece_len = columns * 3 / 8;
     int right_piece_len = left_piece_len;
-    if (last_command_len <= (size_t)(left_piece_len + right_piece_len))
+    if (last_command_len <= (size_t)(left_piece_len + right_piece_len) + 5)
     {
         report_ptr += sprintf(report_ptr, " %s ", last_command);
     }
