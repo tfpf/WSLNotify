@@ -129,7 +129,7 @@ _after_command()
 
     # The below program will exit successfully if a notification is to be
     # shown.
-    if PS1=$(custom-bash-prompt "$last_command" $exit_code $__begin "$(__git_ps1 '   %s')")
+    if PS1=$(COLUMNS=$COLUMNS custom-bash-prompt "$last_command" $exit_code $__begin "$(__git_ps1 '   %s')")
     then
         ([ $__window -ne $(getactivewindow) ] && notify-send -i dialog-information "CLI Ready" "$last_command" &)
     fi
