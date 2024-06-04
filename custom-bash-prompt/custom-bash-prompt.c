@@ -129,7 +129,7 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     // Ensure that the text is right-aligned. Since there are non-printable
     // characters in the string, compensate for the width.
     int report_len = report_ptr - report;
-    int width = columns - report_len % columns + report_len + 16;
+    int width = columns + 16;
     LOG("Padding report of length %d to %d characters.", report_len, width);
     fprintf(stderr, "\r%*s\n", width, report);
 
