@@ -108,13 +108,9 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     LOG("Calculated delay is %d h %d m %d s %d ms.", hours, minutes, seconds, milliseconds);
     if (hours > 0)
     {
-        report_ptr += sprintf(report_ptr, "%d h ", hours);
+        report_ptr += sprintf(report_ptr, "%02d:", hours);
     }
-    if (hours > 0 || minutes > 0)
-    {
-        report_ptr += sprintf(report_ptr, "%d m ", minutes);
-    }
-    report_ptr += sprintf(report_ptr, "%d.%03d s", seconds, milliseconds);
+    report_ptr += sprintf(report_ptr, "%02d:%02d.%03d", minutes, seconds, milliseconds);
 
     // Ensure that the text is right-aligned even if it spans multiple lines.
     // Since there are non-printable characters in the string, compensate for
