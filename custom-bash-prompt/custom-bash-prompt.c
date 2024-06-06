@@ -84,10 +84,10 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     // space to write it and some additional information.
     last_command = strchr(last_command, RIGHT_SQUARE_BRACKET[0]) + 2;
     size_t last_command_len = strlen(last_command);
-    while (isspace(last_command[last_command_len - 1]) != 0)
+    while (isspace(last_command[--last_command_len]) != 0)
     {
-        last_command[--last_command_len] = '\0';
     }
+    last_command[++last_command_len] = '\0';
     LOG("Command is of length %zu.", last_command_len);
     char *report = malloc((last_command_len + 64) * sizeof *report);
     char *report_ptr = report;
