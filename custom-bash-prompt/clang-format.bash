@@ -2,8 +2,6 @@
 
 shopt -s globstar
 
-# Switch to the directory containing the script so that relative paths may be
-# used.
 cd "${0%/*}"
 files=(**/*.c)
 if [ "$1" = check ]
