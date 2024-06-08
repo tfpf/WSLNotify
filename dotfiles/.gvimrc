@@ -102,7 +102,7 @@ elseif has('unix')
     au GUIEnter * call system('wmctrl -b add,maximized_horz,maximized_vert -i -r ' . v:windowid)
     nn <silent> <F2> :so ~/.gvimrc<CR>
     se gfn=CaskaydiaCove\ Nerd\ Font\ 13
-    # TODO Explore `guiligatures`.
+    " TODO Explore `guiligatures`.
 endif
 
 " No syntax highlighting in comment strings.
