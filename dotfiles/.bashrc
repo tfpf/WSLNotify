@@ -126,10 +126,10 @@ then
     _source_one /usr/share/git/completion/git-prompt.sh /usr/share/git-core/contrib/completion/git-prompt.sh
 fi
 
-export PS1='\n┌[\u@\h \w]\n└─\$ '
-export PS2='──▶ '
-export PS3='#? '
-export PS4='▶ '
+PS1='\n┌[\u@\h \w]\n└─\$ '
+PS2='──▶ '
+PS3='#? '
+PS4='▶ '
 if command -v dircolors &>/dev/null
 then
     if [ -f $HOME/.dircolors ]
