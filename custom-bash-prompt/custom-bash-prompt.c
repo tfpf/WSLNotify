@@ -49,14 +49,14 @@
 /******************************************************************************
  * Get the current timestamp.
  *
- * @return Time in milliseconds since a fixed but unspecified reference point.
+ * @return Time in nanoseconds since a fixed but unspecified reference point.
  *****************************************************************************/
 long long get_timestamp(void)
 {
     struct timespec now;
     timespec_get(&now, TIME_UTC);
     LOG("Current time is %lld.%09ld.", (long long)now.tv_sec, now.tv_nsec);
-    return now.tv_sec * 1000LL + now.tv_nsec / 1000000LL;
+    return now.tv_sec * 1000000000LL + now.tv_nsec;
 }
 
 /******************************************************************************
@@ -66,15 +66,15 @@ long long get_timestamp(void)
  * @param last_command Most-recently run command.
  * @param exit_code Code with which the command exited.
  * @param begin Timestamp of the instant the command was started at.
+ * @param end Timestamp of the instant the command exited at.
  *
  * @return Success code if the command ran for a long time, else failure code.
  *****************************************************************************/
-int report_command_status(char *last_command, int exit_code, long long begin)
+int report_command_status(char *last_command, int exit_code, long long begin, long long end)
 {
-    long long end = get_timestamp();
     long long delay = end - begin;
-    LOG("Command '%s' exited with code %d in %lld ms.", last_command, exit_code, delay);
-    if (delay <= 5000)
+    LOG("Command '%s' exited with code %d in %lld ns.", last_command, exit_code, delay);
+    if (delay <= 5000000000LL)
     {
         return EXIT_FAILURE;
     }
@@ -114,8 +114,8 @@ int report_command_status(char *last_command, int exit_code, long long begin)
     {
         report_ptr += sprintf(report_ptr, bred "" rst " ");
     }
-    int this_exit_code = delay > 10000 ? EXIT_SUCCESS : EXIT_FAILURE;
-    int milliseconds = delay % 1000;
+    int this_exit_code = delay > 10000000000LL ? EXIT_SUCCESS : EXIT_FAILURE;
+    int milliseconds = (delay /= 1000000LL) % 1000;
     int seconds = (delay /= 1000) % 60;
     int minutes = (delay /= 60) % 60;
     int hours = delay / 60;
@@ -172,16 +172,17 @@ void display_primary_prompt(char const *git_info)
 
 int main(int const argc, char const *argv[])
 {
+    long long ts = get_timestamp();
     if (argc <= 1)
     {
-        printf("%lld\n", get_timestamp());
+        printf("%lld\n", ts);
         return EXIT_SUCCESS;
     }
 
     // For more accurate timing, run the timer function first. It is
     // permissible to modify the command line arguments in C, so mark the first
     // as mutable: this avoids copying the string in the function.
-    int this_exit_code = report_command_status((char *)argv[1], atoi(argv[2]), atoll(argv[3]));
+    int this_exit_code = report_command_status((char *)argv[1], atoi(argv[2]), atoll(argv[3]), ts);
     display_primary_prompt(argv[4]);
     update_terminal_title();
 
