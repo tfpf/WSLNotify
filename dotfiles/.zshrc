@@ -40,9 +40,13 @@ venv_info()
 ###############################################################################
 # Environment variables.
 ###############################################################################
+export BAT_PAGER='less -iRF'
 HISTFILE=~/.zsh_history
 HISTSIZE=2000
 PROMPT_SUBST=1
+PS2='──▶ '
+PS3='#? '
+PS4='▶ '
 SAVEHIST=1000
 export TIME_STYLE=long-iso
 VIRTUAL_ENV_DISABLE_PROMPT=1
@@ -56,12 +60,35 @@ esac
 PS1=$'\n┌[%{\e[1;92m%}%n%{\e[m%} %{\e[1;3;93m%}'"$os"$' %m%{\e[m%} %{\e[1;96m%}%~%{\e[m%}]$vcs_info_msg_0_$venv_info_msg_0_\n└─%# '
 unset os
 
-PS2='──▶ '
-PS3='#? '
-PS4='▶ '
+envarmunge C_INCLUDE_PATH /usr/local/include
+envarmunge CPLUS_INCLUDE_PATH /usr/local/include
+envarmunge LD_LIBRARY_PATH /usr/local/lib
+envarmunge LD_LIBRARY_PATH /usr/local/lib64
+envarmunge MANPATH /usr/share/man
+envarmunge MANPATH /usr/local/man
+envarmunge MANPATH /usr/local/share/man
+envarmunge MANPATH ~/.local/share/man
+envarmunge PATH ~/.local/bin
+envarmunge PATH ~/bin
+envarmunge PATH /usr/sbin
+envarmunge PKG_CONFIG_PATH /usr/local/lib/pkgconfig
+envarmunge PKG_CONFIG_PATH /usr/local/share/pkgconfig
 
-envarmunge PATH /usr/local/bin/
-envarmunge PATH ~/.local/bin/
+envarmunge CARGO_HOME ~/.cargo
+envarmunge PATH ~/.cargo/bin
+
+envarmunge C_INCLUDE_PATH /opt/gurobi*/linux64/include
+envarmunge CPLUS_INCLUDE_PATH /opt/gurobi*/linux64/include
+envarmunge GUROBI_HOME /opt/gurobi*/linux64
+envarmunge LD_LIBRARY_PATH /opt/gurobi*/linux64/lib
+envarmunge PATH /opt/gurobi*/linux64/bin
+
+envarmunge IPELATEXDIR ~/.ipe/latexrun
+envarmunge IPELATEXPATH ~/.ipe/latexrun
+
+envarmunge INFOPATH /usr/local/texlive/*/texmf-dist/doc/info
+envarmunge MANPATH /usr/local/texlive/*/texmf-dist/doc/man
+envarmunge PATH /usr/local/texlive/*/bin/x86_64-linux
 
 . <(dircolors -b ~/.dircolors)
 
