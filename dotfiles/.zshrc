@@ -99,7 +99,7 @@ compinit
 zstyle ':completion:*' file-sort name
 zstyle ':completion:*' insert-tab false
 zstyle ':completion:*' menu false
-zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==90=0}:${(s.:.)LS_COLORS}")'
+zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==1;90=}:${(s.:.)LS_COLORS}")'
 
 ###############################################################################
 # User-defined aliases.
