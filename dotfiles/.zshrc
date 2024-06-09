@@ -20,6 +20,6 @@ esac
 
 e()
 {
-    [ -n $VIRTUAL_ENV ] && deactivate
+    [ -n "$VIRTUAL_ENV" ] && deactivate
     exec zsh
 }
