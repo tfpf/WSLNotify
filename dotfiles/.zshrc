@@ -17,6 +17,10 @@ esac
 PS1=$'\n┌[%{\e[1;92m%}%n%{\e[m%} %{\e[1;3;93m%}'"$os"$' %m%{\e[m%} %{\e[1;96m%}%~%{\e[m%}]$vcs_info_msg_0_$venv_info_msg_0_\n└─%# '
 unset os
 
+PS2='──▶ '
+PS3='#? '
+PS4='▶ '
+
 . <(dircolors -b ~/.dircolors)
 
 ###############################################################################
@@ -29,9 +33,11 @@ bindkey -e
 bindkey "^[[H" beginning-of-line
 bindkey "^[[1;3D" backward-word
 bindkey "^[[1;5D" backward-word
+bindkey "^[[B" down-history
 bindkey "^[[F" end-of-line
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;5C" forward-word
+bindkey "^[[A" up-history
 
 ###############################################################################
 # Built-in functions.
