@@ -38,11 +38,35 @@ venv_info()
 }
 
 ###############################################################################
+# Shell options.
+###############################################################################
+setopt bashautolist histignoredups histignorespace ignoreeof interactive monitor promptpercent promptsubst zle
+unsetopt alwayslastprompt autocd beep extendedglob nomatch notify
+
+bindkey -e
+bindkey "^[[H" beginning-of-line
+bindkey "^[[1;3D" backward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[[B" down-history
+bindkey "^[[F" end-of-line
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;5C" forward-word
+bindkey "^[[A" up-history
+
+###############################################################################
 # Environment variables.
 ###############################################################################
 export BAT_PAGER='less -iRF'
+export EDITOR=vim
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01:range1=32:range2=34:fixit-insert=32:fixit-delete=31:diff-filename=01:diff-hunk=32:diff-delete=31:diff-insert=32:type-diff=01;32'
+export GIT_EDITOR=vim
 HISTFILE=~/.zsh_history
 HISTSIZE=2000
+export _INKSCAPE_GC=disable
+export MANPAGER='less -i'
+export MAN_POSIXLY_CORRECT=1
+export NO_AT_BRIDGE=1
+export PAGER='less -i'
 PROMPT_SUBST=1
 PS2='──▶ '
 PS3='#? '
@@ -50,6 +74,10 @@ PS4='▶ '
 SAVEHIST=1000
 export TIME_STYLE=long-iso
 VIRTUAL_ENV_DISABLE_PROMPT=1
+
+export max_print_line=19999
+export error_line=254
+export half_error_line=238
 
 case $(uname) in
     (Darwin) os='';;
@@ -92,21 +120,12 @@ envarmunge PATH /usr/local/texlive/*/bin/x86_64-linux
 
 . <(dircolors -b ~/.dircolors)
 
-###############################################################################
-# Shell options.
-###############################################################################
-setopt bashautolist histignoredups histignorespace ignoreeof interactive monitor promptpercent promptsubst zle
-unsetopt alwayslastprompt autocd beep extendedglob nomatch notify
+command -v lesspipe &>/dev/null && . <(SHELL=/bin/sh lesspipe)
 
-bindkey -e
-bindkey "^[[H" beginning-of-line
-bindkey "^[[1;3D" backward-word
-bindkey "^[[1;5D" backward-word
-bindkey "^[[B" down-history
-bindkey "^[[F" end-of-line
-bindkey "^[[1;3C" forward-word
-bindkey "^[[1;5C" forward-word
-bindkey "^[[A" up-history
+unset CONFIG_SITE
+unset GDK_SCALE
+unset GIT_ASKPASS
+unset SSH_ASKPASS
 
 ###############################################################################
 # Built-in functions.
