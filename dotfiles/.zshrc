@@ -27,7 +27,7 @@ case $(uname) in
     (*NT*) os='';;
     (*) os='';;
 esac
-PS1=$'\n┌[%F{10}%B%n%b%f %{\e[1;3;93m%}'"$os"$' %m%{\e[m%} %F{14}%B%~%b%f]$vcs_info_msg_0_$venv_info_msg_0_\n└─%# '
+PS1=$'\n┌[%{\e[1;92m%}%n%{\e[m%} %{\e[1;3;93m%}'"$os"$' %m%{\e[m%} %{\e[1;96m%}%~%{\e[m%}]$vcs_info_msg_0_$venv_info_msg_0_\n└─%# '
 unset os
 
 VIRTUAL_ENV_DISABLE_PROMPT=1
