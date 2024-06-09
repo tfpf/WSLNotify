@@ -1,6 +1,18 @@
 ###############################################################################
 # User-defined functions.
 ###############################################################################
+cfs()
+{
+    local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
+    [ ! -f $files[1] ] && printf "CPU frequency files not found.\n" >&2 && return 1
+    if [ $# -lt 1 ]
+    then
+        column $files
+    else
+        sudo tee $files <<< $1
+    fi
+}
+
 e()
 {
     [ -n "$VIRTUAL_ENV" ] && deactivate
@@ -56,7 +68,7 @@ envarmunge PATH ~/.local/bin/
 ###############################################################################
 # Shell options.
 ###############################################################################
-setopt bashautolist histignoredups histignorespace interactive monitor promptpercent promptsubst zle
+setopt bashautolist histignoredups histignorespace ignoreeof interactive monitor promptpercent promptsubst zle
 unsetopt alwayslastprompt autocd beep extendedglob nomatch notify
 
 bindkey -e
