@@ -44,13 +44,17 @@ setopt bashautolist histignoredups histignorespace ignoreeof interactive monitor
 unsetopt alwayslastprompt autocd beep extendedglob nomatch notify
 
 bindkey -e
+bindkey "^?" backward-delete-char
+bindkey "^[^?" backward-kill-word
 bindkey "^[[H" beginning-of-line
 bindkey "^[[1;3D" backward-word
 bindkey "^[[1;5D" backward-word
+bindkey "^[[3~" delete-char
 bindkey "^[[B" down-history
 bindkey "^[[F" end-of-line
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;5C" forward-word
+bindkey "^[[3;5~" kill-word
 bindkey "^[[A" up-history
 
 ###############################################################################
@@ -130,7 +134,7 @@ unset SSH_ASKPASS
 ###############################################################################
 # Built-in functions.
 ###############################################################################
-autoload -Uz add-zsh-hook compinit vcs_info
+autoload -Uz add-zsh-hook compinit select-word-style vcs_info
 
 add-zsh-hook precmd vcs_info
 zstyle ':vcs_info:*' check-for-changes true
@@ -146,6 +150,8 @@ zstyle ':completion:*' file-sort name
 zstyle ':completion:*' insert-tab false
 zstyle ':completion:*' menu false
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==1;90=}:${(s.:.)LS_COLORS}")'
+
+select-word-style bash
 
 ###############################################################################
 # User-defined aliases.
