@@ -23,7 +23,7 @@ unset os
 # Shell options.
 ###############################################################################
 setopt bashautolist histignoredups histignorespace interactive monitor promptpercent promptsubst zle
-unsetopt autocd beep extendedglob nomatch notify
+unsetopt alwayslastprompt autocd beep extendedglob nomatch notify
 
 bindkey -e
 bindkey "^[[H" beginning-of-line
