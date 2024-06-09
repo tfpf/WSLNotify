@@ -1,4 +1,31 @@
 ###############################################################################
+# User-defined functions.
+###############################################################################
+e()
+{
+    [ -n "$VIRTUAL_ENV" ] && deactivate
+    exec zsh
+}
+
+envarmunge()
+{
+    [ -z "$1" -o ! -d "$2" ] && return
+    local name="$1"
+    local value=$(realpath "$2")
+    [[ :${(P)name}: != *:$value:* ]] && eval "export $name=\"$value\"\${$name:+:\$$name}"
+}
+
+venv_info()
+{
+    if [ -z "$VIRTUAL_ENV_PROMPT" ]
+    then
+        unset venv_info_msg_0_
+    else
+        venv_info_msg_0_="  %F{12}$VIRTUAL_ENV_PROMPT%f"
+    fi
+}
+
+###############################################################################
 # Environment variables.
 ###############################################################################
 HISTFILE=~/.zsh_history
@@ -20,6 +47,9 @@ unset os
 PS2='──▶ '
 PS3='#? '
 PS4='▶ '
+
+envarmunge PATH /usr/local/bin/
+envarmunge PATH ~/.local/bin/
 
 . <(dircolors -b ~/.dircolors)
 
@@ -101,22 +131,3 @@ fi
 alias p='python3 -B'
 alias t='python3 -m timeit'
 alias pip='python3 -m pip'
-
-###############################################################################
-# User-defined functions.
-###############################################################################
-e()
-{
-    [ -n "$VIRTUAL_ENV" ] && deactivate
-    exec zsh
-}
-
-venv_info()
-{
-    if [ -z "$VIRTUAL_ENV_PROMPT" ]
-    then
-        unset venv_info_msg_0_
-    else
-        venv_info_msg_0_="  %F{12}$VIRTUAL_ENV_PROMPT%f"
-    fi
-}
