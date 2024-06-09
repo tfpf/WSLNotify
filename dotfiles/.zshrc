@@ -1,6 +1,20 @@
 ###############################################################################
 # User-defined functions.
 ###############################################################################
+c()
+{
+    [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
+    if [ "$2" == ++ ]
+    then
+        local c=g++
+        local l=c++
+    else
+        local c=gcc
+        local l=c
+    fi
+    clang-format <($c -E "$1" | command grep -Fv '#') | bat -l $l --file-name "$1"
+}
+
 cfs()
 {
     local files=(/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor)
@@ -25,6 +39,49 @@ envarmunge()
     local name="$1"
     local value=$(realpath "$2")
     [[ :${(P)name}: != *:$value:* ]] && eval "export $name=\"$value\"\${$name:+:\$$name}"
+}
+
+getactivewindow()
+{
+    if [ -z "$DISPLAY" ]
+    then
+        printf "0\n"
+    else
+        xdotool getactivewindow
+    fi
+}
+
+h()
+{
+    [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
+    hexdump -e '"%07.7_Ax\n"' -e '"%07.7_ax " 32/1 " %02x" "\n"' "$1" | ${=BAT_PAGER}
+}
+
+import()
+{
+    printf "This is Zsh. Did you mean to type this in Python?\n" >&2 && return 1
+}
+
+o()
+{
+    [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
+    (
+        objdump -Cd "$1"
+        readelf -p .rodata -x .rodata -x .data "$1" 2>/dev/null
+    ) | ${=BAT_PAGER}
+}
+
+rr()
+{
+    case $1 in
+        ("" | *[^0-9]*) local length=20;;
+        (*) local length=$1;;
+    esac
+    for pattern in '0-9' 'A-Za-z' 'A-Za-z0-9' 'A-Za-z0-9!@#$*()'
+    do
+        tr -cd $pattern </dev/urandom | head -c $length
+        printf "\n"
+    done
 }
 
 venv_info()
