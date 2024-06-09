@@ -22,10 +22,16 @@ unset os
 ###############################################################################
 # Shell options.
 ###############################################################################
-setopt bashautolist promptpercent promptsubst
+setopt bashautolist histignoredups histignorespace interactive monitor promptpercent promptsubst zle
 unsetopt autocd beep extendedglob nomatch notify
 
 bindkey -e
+bindkey "^[[H" beginning-of-line
+bindkey "^[[1;3D" backward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[[F" end-of-line
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;5C" forward-word
 
 ###############################################################################
 # Built-in functions.
