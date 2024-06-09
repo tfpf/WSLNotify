@@ -17,6 +17,8 @@ zstyle ':vcs_info:*' unstagedstr '%F{1}*%f'
 zstyle ':vcs_info:git:*' actionformats '   %F{2}%b%f|%a %u%c'
 zstyle ':vcs_info:git:*' formats '   %F{2}%b%f %u%c'
 
+add-zsh-hook precmd venv_info
+
 compinit
 
 case $(uname) in
@@ -25,8 +27,10 @@ case $(uname) in
     (*NT*) os='';;
     (*) os='';;
 esac
-PS1=$'\n┌[%F{10}%B%n%b%f %{\e[1;3;93m%}'"$os"$' %m%{\e[m%} %F{14}%B%~%b%f]${vcs_info_msg_0_}\n└─%# '
+PS1=$'\n┌[%F{10}%B%n%b%f %{\e[1;3;93m%}'"$os"$' %m%{\e[m%} %F{14}%B%~%b%f]$vcs_info_msg_0_$venv_info_msg_0_\n└─%# '
 unset os
+
+VIRTUAL_ENV_DISABLE_PROMPT=1
 
 e()
 {
@@ -36,6 +40,10 @@ e()
 
 venv_info()
 {
-    [ -z "$VIRTUAL_ENV_PROMPT" ] && return
-    printf "  %%F{12}$VIRTUAL_ENV_PROMPT%%f\n"
+    if [ -z "$VIRTUAL_ENV_PROMPT" ]
+    then
+        unset venv_info_msg_0_
+    else
+        venv_info_msg_0_="  %F{12}$VIRTUAL_ENV_PROMPT%f"
+    fi
 }
