@@ -37,7 +37,7 @@ set prefer-visible-bell off
 set print-completions-horizontally off
 set revert-all-at-newline off
 set show-all-if-ambiguous off
-set show-all-if-unmodified off
+set show-all-if-unmodified on
 set show-mode-in-prompt off
 set skip-completed-text off
 set vi-cmd-mode-string (cmd)
