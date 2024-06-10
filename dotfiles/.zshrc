@@ -151,6 +151,7 @@ unset os
 
 envarmunge C_INCLUDE_PATH /usr/local/include
 envarmunge CPLUS_INCLUDE_PATH /usr/local/include
+envarmunge FPATH ~/.local/share/zsh-completions/completions
 envarmunge LD_LIBRARY_PATH /usr/local/lib
 envarmunge LD_LIBRARY_PATH /usr/local/lib64
 envarmunge MANPATH /usr/share/man
