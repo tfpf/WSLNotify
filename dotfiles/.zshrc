@@ -97,7 +97,7 @@ venv_info()
 ###############################################################################
 # Shell options.
 ###############################################################################
-setopt bashautolist histignoredups histignorespace ignoreeof interactive monitor promptpercent promptsubst zle
+setopt histignoredups histignorespace ignoreeof interactive monitor promptpercent promptsubst zle
 unsetopt alwayslastprompt autocd beep extendedglob nomatch notify
 
 bindkey -e
