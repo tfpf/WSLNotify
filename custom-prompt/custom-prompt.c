@@ -79,10 +79,12 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
         return EXIT_FAILURE;
     }
 
-    // Remove the initial part (index and timestamp) of the command. Also
-    // remove trailing whitespace characters, if any. Then allocate enough
-    // space to write it and some additional information.
+#ifdef BASH
+    // Remove the initial part (index and timestamp) of the command.
     last_command = strchr(last_command, RIGHT_SQUARE_BRACKET[0]) + 2;
+#endif
+    // Remove trailing whitespace characters, if any. Then allocate enough
+    // space to write what remains and some additional information.
     size_t last_command_len = strlen(last_command);
     while (isspace(last_command[--last_command_len]) != 0)
     {
@@ -149,7 +151,7 @@ void update_terminal_title(void)
 }
 
 /******************************************************************************
- * Show the primary prompt for Bash.
+ * Show the primary prompt.
  *
  * @param git_info Description of the status of the current Git repository.
  *****************************************************************************/
@@ -158,7 +160,11 @@ void display_primary_prompt(char const *git_info)
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
     LOG("Current Python virtual environment is '%s'.", venv);
     LOG("Showing primary prompt.");
+#if defined BASH
     printf("\n┌[" bbgreen "\\u" rst " " bbiyellow OPERATING_SYSTEM_ICON "\\h" rst " " bbcyan "\\w" rst "]");
+#elif defined ZSH
+    printf("\n┌[" bbgreen "%%n" rst " " bbiyellow OPERATING_SYSTEM_ICON "%%m" rst " " bbcyan "%%~" rst "]");
+#endif
     if (git_info != NULL)
     {
         printf("%s", git_info);
@@ -167,7 +173,11 @@ void display_primary_prompt(char const *git_info)
     {
         printf("  " bblue "%s" rst, venv);
     }
+#if defined BASH
     printf("\n└─\\$ \n");
+#elif defined ZSH
+    printf("\n└─%%# \n");
+#endif
 }
 
 int main(int const argc, char const *argv[])

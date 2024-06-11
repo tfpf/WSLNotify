@@ -1,6 +1,25 @@
 ###############################################################################
 # User-defined functions.
 ###############################################################################
+_after_command()
+{
+    local exit_code=$?
+    [ -z "${__begin+.}" ] && return
+    local last_command=$(history -n -1)
+    if PS1=$(COLUMNS=$COLUMNS custom-zsh-prompt "$last_command" $exit_code $__begin "$(__git_ps1 '   %s')")
+    then
+        ([ $__window -ne $(getactivewindow) ] && notify-send -i dialog-information "CLI Ready" "$last_command" &)
+    fi
+    unset __begin __window
+}
+
+_before_command()
+{
+    [ -n "${__begin+.}" ] && return
+    __window=${WINDOWID:-$(getactivewindow)}
+    __begin=$(custom-zsh-prompt)
+}
+
 c()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
@@ -136,6 +155,7 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export NO_AT_BRIDGE=1
 export PAGER='less -i'
+PS1='[%n@%m %~]%# '
 PS2='──▶ '
 PS3='#? '
 PS4='▶ '
@@ -146,15 +166,6 @@ VIRTUAL_ENV_DISABLE_PROMPT=1
 export max_print_line=19999
 export error_line=254
 export half_error_line=238
-
-case $(uname) in
-    (Darwin) os='';;
-    (Linux) os='';;
-    (*NT*) os='';;
-    (*) os='';;
-esac
-PS1=$'\n┌[%{\e[1;92m%}%n%{\e[m%} %{\e[1;3;93m%}'"$os"$' %m%{\e[m%} %{\e[1;96m%}%~%{\e[m%}]$vcs_info_msg_0_$venv_info_msg_0_\n└─%# '
-unset os
 
 envarmunge C_INCLUDE_PATH /usr/local/include
 envarmunge CPLUS_INCLUDE_PATH /usr/local/include
@@ -199,16 +210,11 @@ unset SSH_ASKPASS
 ###############################################################################
 # Built-in functions.
 ###############################################################################
-autoload -Uz add-zsh-hook compinit select-word-style vcs_info
+autoload -Uz add-zsh-hook compinit select-word-style
 
-add-zsh-hook precmd vcs_info
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr '%F{2}+%f'
-zstyle ':vcs_info:*' unstagedstr '%F{1}*%f'
-zstyle ':vcs_info:git:*' actionformats '   %F{2}%b%f|%a %u%c'
-zstyle ':vcs_info:git:*' formats '   %F{2}%b%f %u%c'
-
-add-zsh-hook precmd venv_info
+add-zsh-hook precmd _after_command
+add-zsh-hook preexec _before_command
+_before_command && _after_command
 
 compinit
 zstyle ':completion:*' file-sort name
