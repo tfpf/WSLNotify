@@ -126,7 +126,7 @@ then
     _source_one /usr/share/git/completion/git-prompt.sh /usr/share/git-core/contrib/completion/git-prompt.sh
 fi
 
-PS1='\n┌[\u@\h \w]\n└─\$ '
+PS1='[\u@\h \w]\$ '
 PS2='──▶ '
 PS3='#? '
 PS4='▶ '
