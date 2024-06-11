@@ -15,33 +15,41 @@
 #define OPERATING_SYSTEM_ICON ""
 #endif
 
-#define START_OF_HEADING "\x01"
-#define START_OF_TEXT "\x02"
+#if defined BASH
+#define BEGIN_INVISIBLE "\x01"
+#define END_INVISIBLE "\x02"
+#elif defined ZSH
+#define BEGIN_INVISIBLE "%%\x7B"
+#define END_INVISIBLE "%%\x7D"
+#endif
+
 #define BELL "\x07"
 #define ESCAPE "\x1B"
 #define LEFT_SQUARE_BRACKET "\x5B"
 #define RIGHT_SQUARE_BRACKET "\x5D"
 
 // Bold, bright and italic.
-#define bbiyellow START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;3;93m" START_OF_TEXT
+#define bbiyellow BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "1;3;93m" END_INVISIBLE
 
 // Bold and bright.
-#define bbcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;96m" START_OF_TEXT
-#define bbgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "1;92m" START_OF_TEXT
+#define bbcyan BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "1;96m" END_INVISIBLE
+#define bbgreen BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "1;92m" END_INVISIBLE
 
 // Bright.
-#define bblue START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "94m" START_OF_TEXT
-#define bgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "92m" START_OF_TEXT
-#define bred START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "91m" START_OF_TEXT
+#define bblue BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "94m" END_INVISIBLE
+#define bgreen_raw ESCAPE LEFT_SQUARE_BRACKET "92m"
+#define bred_raw ESCAPE LEFT_SQUARE_BRACKET "91m"
 
 // Dark.
-#define dcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "36m" START_OF_TEXT
+#define dcyan_raw ESCAPE LEFT_SQUARE_BRACKET "36m"
 
 // Reset.
-#define rst START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "m" START_OF_TEXT
+#define rst BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "m" END_INVISIBLE
+#define rst_raw ESCAPE LEFT_SQUARE_BRACKET "m"
 
 #ifndef NDEBUG
-#define LOG(fmt, ...) fprintf(stderr, dcyan "%s:%d" rst " " fmt "\n", __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__)
+#define LOG(fmt, ...)                                                                                                 \
+    fprintf(stderr, dcyan_raw "%s:%d" rst_raw " " fmt "\n", __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__)
 #else
 #define LOG(fmt, ...)
 #endif
@@ -79,10 +87,12 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
         return EXIT_FAILURE;
     }
 
-    // Remove the initial part (index and timestamp) of the command. Also
-    // remove trailing whitespace characters, if any. Then allocate enough
-    // space to write it and some additional information.
+#ifdef BASH
+    // Remove the initial part (index and timestamp) of the command.
     last_command = strchr(last_command, RIGHT_SQUARE_BRACKET[0]) + 2;
+#endif
+    // Remove trailing whitespace characters, if any. Then allocate enough
+    // space to write what remains and some additional information.
     size_t last_command_len = strlen(last_command);
     while (isspace(last_command[--last_command_len]) != 0)
     {
@@ -108,11 +118,11 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
     }
     if (exit_code == 0)
     {
-        report_ptr += sprintf(report_ptr, bgreen "" rst " ");
+        report_ptr += sprintf(report_ptr, bgreen_raw "" rst_raw " ");
     }
     else
     {
-        report_ptr += sprintf(report_ptr, bred "" rst " ");
+        report_ptr += sprintf(report_ptr, bred_raw "" rst_raw " ");
     }
     int this_exit_code = delay > 10000000000LL ? EXIT_SUCCESS : EXIT_FAILURE;
     int milliseconds = (delay /= 1000000LL) % 1000;
@@ -128,7 +138,7 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
 
     // Ensure that the text is right-aligned. Since there are non-printable
     // characters in the string, compensate for the width.
-    int width = columns + 16;
+    int width = columns + 12;
     LOG("Padding report of length %ld to %d characters.", report_ptr - report, width);
     fprintf(stderr, "\r%*s\n", width, report);
 
@@ -149,7 +159,7 @@ void update_terminal_title(void)
 }
 
 /******************************************************************************
- * Show the primary prompt for Bash.
+ * Show the primary prompt.
  *
  * @param git_info Description of the status of the current Git repository.
  *****************************************************************************/
@@ -158,7 +168,11 @@ void display_primary_prompt(char const *git_info)
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
     LOG("Current Python virtual environment is '%s'.", venv);
     LOG("Showing primary prompt.");
+#if defined BASH
     printf("\n┌[" bbgreen "\\u" rst " " bbiyellow OPERATING_SYSTEM_ICON "\\h" rst " " bbcyan "\\w" rst "]");
+#elif defined ZSH
+    printf("\n┌[" bbgreen "%%n" rst " " bbiyellow OPERATING_SYSTEM_ICON "%%m" rst " " bbcyan "%%~" rst "]");
+#endif
     if (git_info != NULL)
     {
         printf("%s", git_info);
@@ -167,7 +181,11 @@ void display_primary_prompt(char const *git_info)
     {
         printf("  " bblue "%s" rst, venv);
     }
+#if defined BASH
     printf("\n└─\\$ \n");
+#elif defined ZSH
+    printf("\n└─%%# \n");
+#endif
 }
 
 int main(int const argc, char const *argv[])
