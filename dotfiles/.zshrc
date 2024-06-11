@@ -103,16 +103,6 @@ rr()
     done
 }
 
-venv_info()
-{
-    if [ -z "$VIRTUAL_ENV_PROMPT" ]
-    then
-        unset venv_info_msg_0_
-    else
-        venv_info_msg_0_="  %F{12}$VIRTUAL_ENV_PROMPT%f"
-    fi
-}
-
 if ! command -v __git_ps1 &>/dev/null
 then
     . /usr/share/git/completion/git-prompt.sh || . /usr/share/git-core/contrib/completion/git-prompt.sh
