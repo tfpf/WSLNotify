@@ -37,17 +37,19 @@
 
 // Bright.
 #define bblue START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "94m" START_OF_TEXT
-#define bgreen START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "92m" START_OF_TEXT
-#define bred START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "91m" START_OF_TEXT
+#define bgreen_raw ESCAPE LEFT_SQUARE_BRACKET "92m"
+#define bred_raw ESCAPE LEFT_SQUARE_BRACKET "91m"
 
 // Dark.
-#define dcyan START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "36m" START_OF_TEXT
+#define dcyan_raw ESCAPE LEFT_SQUARE_BRACKET "36m"
 
 // Reset.
 #define rst START_OF_HEADING ESCAPE LEFT_SQUARE_BRACKET "m" START_OF_TEXT
+#define rst_raw ESCAPE LEFT_SQUARE_BRACKET "m"
 
 #ifndef NDEBUG
-#define LOG(fmt, ...) fprintf(stderr, dcyan "%s:%d" rst " " fmt "\n", __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__)
+#define LOG(fmt, ...)                                                                                                 \
+    fprintf(stderr, dcyan_raw "%s:%d" rst_raw " " fmt "\n", __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__)
 #else
 #define LOG(fmt, ...)
 #endif
@@ -116,11 +118,11 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
     }
     if (exit_code == 0)
     {
-        report_ptr += sprintf(report_ptr, bgreen "" rst " ");
+        report_ptr += sprintf(report_ptr, bgreen_raw "" rst_raw " ");
     }
     else
     {
-        report_ptr += sprintf(report_ptr, bred "" rst " ");
+        report_ptr += sprintf(report_ptr, bred_raw "" rst_raw " ");
     }
     int this_exit_code = delay > 10000000000LL ? EXIT_SUCCESS : EXIT_FAILURE;
     int milliseconds = (delay /= 1000000LL) % 1000;
@@ -136,7 +138,7 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
 
     // Ensure that the text is right-aligned. Since there are non-printable
     // characters in the string, compensate for the width.
-    int width = columns + 16;
+    int width = columns + 12;
     LOG("Padding report of length %ld to %d characters.", report_ptr - report, width);
     fprintf(stderr, "\r%*s\n", width, report);
 
