@@ -15,8 +15,14 @@
 #define OPERATING_SYSTEM_ICON ""
 #endif
 
+#if defined BASH
 #define START_OF_HEADING "\x01"
 #define START_OF_TEXT "\x02"
+#elif defined ZSH
+#define START_OF_HEADING "%%\x7B"
+#define START_OF_TEXT "%%\x7D"
+#endif
+
 #define BELL "\x07"
 #define ESCAPE "\x1B"
 #define LEFT_SQUARE_BRACKET "\x5B"
