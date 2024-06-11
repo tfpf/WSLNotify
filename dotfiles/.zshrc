@@ -94,6 +94,11 @@ venv_info()
     fi
 }
 
+if ! command -v __git_ps1 &>/dev/null
+then
+    . /usr/share/git/completion/git-prompt.sh || . /usr/share/git-core/contrib/completion/git-prompt.sh
+fi
+
 ###############################################################################
 # Shell options.
 ###############################################################################
@@ -126,9 +131,11 @@ HISTSIZE=2000
 export _INKSCAPE_GC=disable
 export MANPAGER='less -i'
 export MAN_POSIXLY_CORRECT=1
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
 export NO_AT_BRIDGE=1
 export PAGER='less -i'
-PROMPT_SUBST=1
 PS2='──▶ '
 PS3='#? '
 PS4='▶ '
