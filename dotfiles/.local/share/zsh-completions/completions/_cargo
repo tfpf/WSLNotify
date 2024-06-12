@@ -1,0 +1,3 @@
+#compdef cargo
+
+. <(rustup completions zsh cargo)
