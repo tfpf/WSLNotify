@@ -5,7 +5,7 @@ _after_command()
 {
     local exit_code=$?
     [ -z "${__begin+.}" ] && return
-    local last_command=$(history -n -1)
+    local last_command=$(history -n -1 2>/dev/null)
     if PS1=$(COLUMNS=$COLUMNS custom-zsh-prompt "$last_command" $exit_code $__begin "$(__git_ps1 '   %s')")
     then
         ([ $__window -ne $(getactivewindow) ] && notify-send -i dialog-information "CLI Ready" "$last_command" &)
@@ -205,10 +205,10 @@ unset SSH_ASKPASS
 autoload -Uz add-zsh-hook compinit select-word-style
 
 # Load these and immediately execute them (Zsh does not do so automatically)
-# because they help set the primary prompt. Suppress the expected error.
+# because they help set the primary prompt.
 add-zsh-hook precmd _after_command
 add-zsh-hook preexec _before_command
-_before_command && _after_command &>/dev/null
+_before_command && _after_command
 
 compinit
 zstyle ':completion:*' file-sort name
