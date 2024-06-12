@@ -3,7 +3,7 @@ set bind-tty-special-chars on
 set blink-matching-paren off
 set byte-oriented off
 set colored-completion-prefix on
-set colored-stats off
+set colored-stats on
 set comment-begin #
 set completion-display-width -1
 set completion-ignore-case off
@@ -27,7 +27,7 @@ set keymap emacs
 set keyseq-timeout 500
 set mark-directories on
 set mark-modified-lines off
-set mark-symlinked-directories off
+set mark-symlinked-directories on
 set match-hidden-files off
 set menu-complete-display-prefix off
 set meta-flag on
@@ -42,4 +42,4 @@ set show-mode-in-prompt off
 set skip-completed-text off
 set vi-cmd-mode-string (cmd)
 set vi-ins-mode-string (ins)
-set visible-stats off
+set visible-stats on

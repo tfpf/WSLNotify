@@ -215,7 +215,7 @@ zstyle ':completion:*' file-sort name
 zstyle ':completion:*' insert-tab false
 zstyle ':completion:*' menu false
 zstyle ':completion:*' special-dirs true
-zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==1;90=}:${(s.:.)LS_COLORS}")'
+zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==1;90=}:$LS_COLORS")'
 
 select-word-style bash
 
