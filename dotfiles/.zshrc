@@ -217,9 +217,12 @@ zstyle ':completion:*' file-sort name
 zstyle ':completion:*' insert-tab false
 zstyle ':completion:*' menu false
 zstyle ':completion:*' special-dirs true
-# zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==1;90=}:bd=0:ca=0:cd=0:di=0:do=0:ex=0:fi=0:ln=0:mh=0:mi=0:no=0:or=0:ow=0:pi=0:rs=0:sg=0:so=0:st=0:su=0:tw=0")'
-# `$PREFIX:t` is `$PREFIX` without the parent directory names. Show whatever matches `$PREFIX:t` in grey, and everything after it in white. Show whatever does not match `$PREFIX:t` in white.
-zstyle -e ':completion:*:default' list-colors 'echo $PREFIX $PREFIX:t >> debug; reply=("=(#bi)($PREFIX:t)(*)*=0=1;90=0")'
+# When displaying a completion word, show whatever matches the suffix of
+# `PREFIX` (i.e. the base name of `PREFIX` if it is a path, else `PREFIX`) in
+# grey, the rest of the word without any colour, and other words also without
+# any colour. Furthermore, if a completion word is a file (of any type, with
+# 'type' as specified in `LS_COLORS`), display it without any colour.
+zstyle -e ':completion:*:default' list-colors 'reply=("=(#b)($PREFIX:t)(*)=0=1;90=0:no=0:fi=0:di=0:ln=0:pi=0:so=0:bd=0:cd=0:or=0:mi=0:su=0:sg=0:tw=0:ow=0:sa=0:st=0:ex=0:tc=0:sp=0")'
 
 select-word-style bash
 

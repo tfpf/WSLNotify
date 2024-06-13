@@ -42,4 +42,4 @@ set show-mode-in-prompt off
 set skip-completed-text off
 set vi-cmd-mode-string (cmd)
 set vi-ins-mode-string (ins)
-set visible-stats off
+set visible-stats on
