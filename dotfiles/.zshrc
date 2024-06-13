@@ -154,6 +154,8 @@ PS4='▶ '
 SAVEHIST=1000
 export TIME_STYLE=long-iso
 VIRTUAL_ENV_DISABLE_PROMPT=1
+ZLE_REMOVE_SUFFIX_CHARS=
+ZLE_SPACE_SUFFIX_CHARS=
 
 export max_print_line=19999
 export error_line=254
