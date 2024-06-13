@@ -217,7 +217,9 @@ zstyle ':completion:*' file-sort name
 zstyle ':completion:*' insert-tab false
 zstyle ':completion:*' menu false
 zstyle ':completion:*' special-dirs true
-zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==1;90=}:$LS_COLORS")'
+# zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==1;90=}:bd=0:ca=0:cd=0:di=0:do=0:ex=0:fi=0:ln=0:mh=0:mi=0:no=0:or=0:ow=0:pi=0:rs=0:sg=0:so=0:st=0:su=0:tw=0")'
+# `$PREFIX:t` is `$PREFIX` without the parent directory names. Show whatever matches `$PREFIX:t` in grey, and everything after it in white. Show whatever does not match `$PREFIX:t` in white.
+zstyle -e ':completion:*:default' list-colors 'echo $PREFIX $PREFIX:t >> debug; reply=("=(#bi)($PREFIX:t)(*)*=0=1;90=0")'
 
 select-word-style bash
 
