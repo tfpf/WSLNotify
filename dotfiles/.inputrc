@@ -27,7 +27,7 @@ set keymap emacs
 set keyseq-timeout 500
 set mark-directories on
 set mark-modified-lines off
-set mark-symlinked-directories off
+set mark-symlinked-directories on
 set match-hidden-files off
 set menu-complete-display-prefix off
 set meta-flag on
