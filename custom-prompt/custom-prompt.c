@@ -6,11 +6,11 @@
 #include <time.h>
 
 #if defined __APPLE__
-#define OPERATING_SYSTEM_ICON " "
+#define OPERATING_SYSTEM_ICON ""
 #elif defined __linux__
-#define OPERATING_SYSTEM_ICON " "
+#define OPERATING_SYSTEM_ICON ""
 #elif defined _WIN32
-#define OPERATING_SYSTEM_ICON " "
+#define OPERATING_SYSTEM_ICON ""
 #else
 #error "unknown OS"
 #endif
@@ -20,14 +20,14 @@
 #define END_INVISIBLE "\x02"
 #define USER "\\u"
 #define HOST "\\h"
-#define WORKING_DIRECTORY "\\w"
+#define DIRECTORY "\\w"
 #define PROMPT_SYMBOL "\\$"
 #elif defined ZSH
 #define BEGIN_INVISIBLE "%%\x7B"
 #define END_INVISIBLE "%%\x7D"
 #define USER "%%n"
 #define HOST "%%m"
-#define WORKING_DIRECTORY "%%~"
+#define DIRECTORY "%%~"
 #define PROMPT_SYMBOL "%%#"
 #else
 #error "unknown shell"
@@ -178,7 +178,7 @@ void display_primary_prompt(char const *git_info)
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
     LOG("Current Python virtual environment is '%s'.", venv);
     LOG("Showing primary prompt.");
-    printf("\n┌[" bbgreen USER rst " " bbiyellow OPERATING_SYSTEM_ICON HOST rst " " bbcyan WORKING_DIRECTORY rst "]");
+    printf("\n┌[" bbgreen USER rst " " bbiyellow OPERATING_SYSTEM_ICON " " HOST rst " " bbcyan DIRECTORY rst "]");
     if (git_info != NULL)
     {
         printf("%s", git_info);
