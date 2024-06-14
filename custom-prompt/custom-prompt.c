@@ -11,6 +11,8 @@
 #define OPERATING_SYSTEM_ICON " "
 #elif defined _WIN32
 #define OPERATING_SYSTEM_ICON " "
+#else
+#error "unknown OS"
 #endif
 
 #if defined BASH
@@ -27,6 +29,8 @@
 #define HOST "%%m"
 #define WORKING_DIRECTORY "%%~"
 #define PROMPT_SYMBOL "%%#"
+#else
+#error "unknown shell"
 #endif
 
 #define BELL "\x07"
