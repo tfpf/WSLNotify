@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <stdarg.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,6 +49,7 @@
 // Bright.
 #define bblue BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "94m" END_INVISIBLE
 #define bgreen_raw ESCAPE LEFT_SQUARE_BRACKET "92m"
+#define bgrey_raw ESCAPE LEFT_SQUARE_BRACKET "90m"
 #define bred_raw ESCAPE LEFT_SQUARE_BRACKET "91m"
 
 // Dark.
@@ -58,11 +60,34 @@
 #define rst_raw ESCAPE LEFT_SQUARE_BRACKET "m"
 
 #ifndef NDEBUG
-#define LOG(fmt, ...)                                                                                                 \
-    fprintf(stderr, dcyan_raw "%s:%d" rst_raw " " fmt "\n", __FILE__, __LINE__ __VA_OPT__(, ) __VA_ARGS__)
+#define LOG_DEBUG(fmt, ...) log_debug(__FILE__, __func__, __LINE__, fmt __VA_OPT__(, ) __VA_ARGS__)
 #else
-#define LOG(fmt, ...)
+#define LOG_DEBUG(fmt, ...)
 #endif
+
+/******************************************************************************
+ * Write a debugging message.
+ *
+ * @param file_name
+ * @param function_name
+ * @param line_number
+ * @param fmt Format string. Arguments after it will be used to format it.
+ *****************************************************************************/
+void log_debug(char const *file_name, char const *function_name, int line_number, char const *fmt, ...)
+{
+    time_t now = time(NULL);
+    static char timebuf[64];
+    strftime(timebuf, sizeof timebuf / sizeof *timebuf, "%FT%T%z", localtime(&now));
+    fprintf(stderr, bgrey_raw "%s" rst_raw " ", timebuf);
+    fprintf(stderr, dcyan_raw "%s" rst_raw ":", file_name);
+    fprintf(stderr, dcyan_raw "%s" rst_raw ":", function_name);
+    fprintf(stderr, dcyan_raw "%d" rst_raw " ", line_number);
+    va_list ap;
+    va_start(ap, fmt);
+    vfprintf(stderr, fmt, ap);
+    va_end(ap);
+    fprintf(stderr, "\n");
+}
 
 /******************************************************************************
  * Get the current timestamp.
@@ -73,7 +98,7 @@ long long get_timestamp(void)
 {
     struct timespec now;
     timespec_get(&now, TIME_UTC);
-    LOG("Current time is %lld.%09ld.", (long long)now.tv_sec, now.tv_nsec);
+    LOG_DEBUG("Current time is %lld.%09ld.", (long long)now.tv_sec, now.tv_nsec);
     return now.tv_sec * 1000000000LL + now.tv_nsec;
 }
 
@@ -91,7 +116,7 @@ long long get_timestamp(void)
 int report_command_status(char *last_command, int exit_code, long long begin, long long end)
 {
     long long delay = end - begin;
-    LOG("Command '%s' exited with code %d in %lld ns.", last_command, exit_code, delay);
+    LOG_DEBUG("Command '%s' exited with code %d in %lld ns.", last_command, exit_code, delay);
     if (delay <= 5000000000LL)
     {
         return EXIT_FAILURE;
@@ -108,12 +133,12 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
     {
     }
     last_command[++last_command_len] = '\0';
-    LOG("Command is of length %zu.", last_command_len);
+    LOG_DEBUG("Command is of length %zu.", last_command_len);
     char *report = malloc((last_command_len + 64) * sizeof *report);
     char *report_ptr = report;
 
     int columns = atoi(getenv("COLUMNS"));
-    LOG("Terminal width is %d columns.", columns);
+    LOG_DEBUG("Terminal width is %d columns.", columns);
     int left_piece_len = columns * 3 / 8;
     int right_piece_len = left_piece_len;
     if (last_command_len <= (size_t)(left_piece_len + right_piece_len) + 5)
@@ -122,7 +147,7 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
     }
     else
     {
-        LOG("Breaking the command into pieces of lengths %d and %d.", left_piece_len, right_piece_len);
+        LOG_DEBUG("Breaking command into pieces of lengths %d and %d.", left_piece_len, right_piece_len);
         report_ptr += sprintf(report_ptr, " %.*s ... ", left_piece_len, last_command);
         report_ptr += sprintf(report_ptr, "%s ", last_command + last_command_len - right_piece_len);
     }
@@ -139,7 +164,7 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
     int seconds = (delay /= 1000) % 60;
     int minutes = (delay /= 60) % 60;
     int hours = delay / 60;
-    LOG("Calculated delay is %d h %d m %d s %d ms.", hours, minutes, seconds, milliseconds);
+    LOG_DEBUG("Calculated delay is %d h %d m %d s %d ms.", hours, minutes, seconds, milliseconds);
     if (hours > 0)
     {
         report_ptr += sprintf(report_ptr, "%02d:", hours);
@@ -149,7 +174,7 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
     // Ensure that the text is right-aligned. Since there are non-printable
     // characters in the string, compensate for the width.
     int width = columns + 12;
-    LOG("Padding report of length %ld to %d characters.", report_ptr - report, width);
+    LOG_DEBUG("Padding report of length %ld to %d characters.", report_ptr - report, width);
     fprintf(stderr, "\r%*s\n", width, report);
 
     free(report);
@@ -163,8 +188,9 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
 void update_terminal_title(void)
 {
     char const *pwd = getenv("PWD");
-    LOG("Current directory is '%s'.", pwd);
+    LOG_DEBUG("Current directory is '%s'.", pwd);
     char const *short_pwd = strrchr(pwd, '/') + 1;
+    LOG_DEBUG("Setting terminal window title to '%s/'.", short_pwd);
     fprintf(stderr, ESCAPE RIGHT_SQUARE_BRACKET "0;%s/" BELL, short_pwd);
 }
 
@@ -176,8 +202,8 @@ void update_terminal_title(void)
 void display_primary_prompt(char const *git_info)
 {
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
-    LOG("Current Python virtual environment is '%s'.", venv);
-    LOG("Showing primary prompt.");
+    LOG_DEBUG("Current Python virtual environment is '%s'.", venv);
+    LOG_DEBUG("Showing primary prompt.");
     printf("\n┌[" bbgreen USER rst " " bbiyellow OPERATING_SYSTEM_ICON " " HOST rst " " bbcyan DIRECTORY rst "]");
     if (git_info != NULL)
     {
