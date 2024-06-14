@@ -11,8 +11,6 @@
 #define OPERATING_SYSTEM_ICON " "
 #elif defined _WIN32
 #define OPERATING_SYSTEM_ICON " "
-#else
-#define OPERATING_SYSTEM_ICON ""
 #endif
 
 #if defined BASH
