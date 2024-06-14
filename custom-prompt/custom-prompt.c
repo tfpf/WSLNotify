@@ -6,21 +6,31 @@
 #include <time.h>
 
 #if defined __APPLE__
-#define OPERATING_SYSTEM_ICON " "
+#define OPERATING_SYSTEM_ICON ""
 #elif defined __linux__
-#define OPERATING_SYSTEM_ICON " "
+#define OPERATING_SYSTEM_ICON ""
 #elif defined _WIN32
-#define OPERATING_SYSTEM_ICON " "
+#define OPERATING_SYSTEM_ICON ""
 #else
-#define OPERATING_SYSTEM_ICON ""
+#error "unknown OS"
 #endif
 
 #if defined BASH
 #define BEGIN_INVISIBLE "\x01"
 #define END_INVISIBLE "\x02"
+#define USER "\\u"
+#define HOST "\\h"
+#define DIRECTORY "\\w"
+#define PROMPT_SYMBOL "\\$"
 #elif defined ZSH
 #define BEGIN_INVISIBLE "%%\x7B"
 #define END_INVISIBLE "%%\x7D"
+#define USER "%%n"
+#define HOST "%%m"
+#define DIRECTORY "%%~"
+#define PROMPT_SYMBOL "%%#"
+#else
+#error "unknown shell"
 #endif
 
 #define BELL "\x07"
@@ -168,11 +178,7 @@ void display_primary_prompt(char const *git_info)
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
     LOG("Current Python virtual environment is '%s'.", venv);
     LOG("Showing primary prompt.");
-#if defined BASH
-    printf("\n┌[" bbgreen "\\u" rst " " bbiyellow OPERATING_SYSTEM_ICON "\\h" rst " " bbcyan "\\w" rst "]");
-#elif defined ZSH
-    printf("\n┌[" bbgreen "%%n" rst " " bbiyellow OPERATING_SYSTEM_ICON "%%m" rst " " bbcyan "%%~" rst "]");
-#endif
+    printf("\n┌[" bbgreen USER rst " " bbiyellow OPERATING_SYSTEM_ICON " " HOST rst " " bbcyan DIRECTORY rst "]");
     if (git_info != NULL)
     {
         printf("%s", git_info);
@@ -181,11 +187,7 @@ void display_primary_prompt(char const *git_info)
     {
         printf("  " bblue "%s" rst, venv);
     }
-#if defined BASH
-    printf("\n└─\\$ \n");
-#elif defined ZSH
-    printf("\n└─%%# \n");
-#endif
+    printf("\n└─" PROMPT_SYMBOL " \n");
 }
 
 int main(int const argc, char const *argv[])
