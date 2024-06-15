@@ -175,6 +175,7 @@ fn display_primary_prompt(git_info: &str) {
     if let Ok(venv) = std::env::var("VIRTUAL_ENV_PROMPT") {
         print!("  {BBLUE}{venv}{RST}");
     };
+    println!("\n└─{PROMPT_SYMBOL} ");
 }
 
 fn main() {
@@ -195,8 +196,6 @@ fn main() {
 
     report_command_status(last_command, exit_code, begin_ts, end_ts);
     display_primary_prompt(git_info);
-
-    println!("> ");
 
     // notify_rust::Notification::new()
     //     .summary("Firefox News")
