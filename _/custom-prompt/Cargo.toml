@@ -3,9 +3,23 @@ name = "custom-prompt"
 version = "1.0.0"
 edition = "2021"
 
-[profile.release]
-strip = "debuginfo"
-
 [dependencies]
 active-win-pos-rs = "0.8"
 notify-rust = "4.11"
+
+[features]
+bash = []
+zsh = []
+
+[profile.release]
+strip = "debuginfo"
+
+[[bin]]
+name = "custom-bash-prompt"
+path = "src/main.rs"
+required-features = ["bash"]
+
+[[bin]]
+name = "custom-zsh-prompt"
+path = "src/main.rs"
+required-features = ["zsh"]
