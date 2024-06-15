@@ -95,17 +95,6 @@ c()
     clang-format <($c -E "$1" | command grep -Fv '#') | bat -l $l --file-name "$1"
 }
 
-# Obtain the ID of the active window.
-getactivewindow()
-{
-    if [ -z "$DISPLAY" ]
-    then
-        printf "0\n"
-    else
-        xdotool getactivewindow
-    fi
-}
-
 # This is executed only if Bash is running on WSL (Windows Subsystem for
 # Linux).
 command grep -Fiq microsoft /proc/version && . $HOME/.bash_aliases_wsl.bash
@@ -125,7 +114,7 @@ _after_command()
     local exit_code=$?
     [ -z "${__begin_window+.}" ] && return
     local last_command=$(history 1)
-    PS1=$(COLUMNS=$COLUMNS custom-bash-prompt "$last_command" $exit_code $__begin_window "$(__git_ps1 '   %s')")
+    PS1=$(COLUMNS=$COLUMNS PWD=$PWD custom-bash-prompt "$last_command" $exit_code $__begin_window "$(__git_ps1 '   %s')")
     unset __begin_window
 }
 

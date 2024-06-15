@@ -6,7 +6,7 @@ _after_command()
     local exit_code=$?
     [ -z "${__begin_window+.}" ] && return
     local last_command=$(history -n -1 2>/dev/null)
-    PS1=$(COLUMNS=$COLUMNS custom-zsh-prompt "$last_command" $exit_code $=__begin_window "$(__git_ps1 '   %s')")
+    PS1=$(COLUMNS=$COLUMNS PWD=$PWD custom-zsh-prompt "$last_command" $exit_code $=__begin_window "$(__git_ps1 '   %s')")
     unset __begin_window
 }
 
@@ -54,16 +54,6 @@ envarmunge()
     local name="$1"
     local value=$(realpath "$2")
     [[ :${(P)name}: != *:$value:* ]] && eval "export $name=\"$value\"\${$name:+:\$$name}"
-}
-
-getactivewindow()
-{
-    if [ -z "$DISPLAY" ]
-    then
-        printf "0\n"
-    else
-        xdotool getactivewindow
-    fi
 }
 
 h()

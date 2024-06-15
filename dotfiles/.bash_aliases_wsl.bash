@@ -15,16 +15,6 @@ alias psh='powershell.exe -ExecutionPolicy Bypass'
 # Compile programs written in C#.
 alias csc='/mnt/c/Windows/Microsoft.NET/Framework64/v4.0.30319/csc.exe'
 
-# Put `WSLNotify.exe` and `WSLGetActiveWindow.exe` in a folder which is in
-# `PATH` (e.g. `C:\Windows`) to make these work. Alternatively, specify the
-# full path to the EXE files below.
-unset -f getactivewindow
-getactivewindow()
-{
-    WSLGetActiveWindow.exe
-}
-alias notify-send='WSLNotify.exe'
-
 # Create the virtual display. VcXsrv should be installed.
 vcx()
 {
