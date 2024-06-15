@@ -116,16 +116,15 @@ fn notify(summary: &str, body: &str) {
     notify_rust::Notification::new().summary(summary).body(body).show().unwrap();
 }
 
-/// Show how long it took to run a command.
+/// Show how long it took to run a command in a pretty manner.
 ///
 /// * `last_command` - Most-recently run command.
 /// * `exit_code` - Code with which the command exited.
-/// * `begin_ts` - Timestamp of the instant the command was started at.
-/// * `end_ts` - Timestamp of the instant the command exited at.
-fn report_command_status(last_command: &str, exit_code: i32, begin_ts: u64, end_ts: u64) {
-    let delay = end_ts - begin_ts;
+/// * `delay` - Time the command ran for in nanoseconds.
+/// * `window_id` - ID of the window which had focus when the command started.
+fn report_command_status(last_command: &str, exit_code: i32, delay: u64, window_id: &str) {
     if delay <= 5000000000 {
-        // return false;
+        return;
     }
 
     // Remove the initial part (index and timestamp) of the command
@@ -165,7 +164,7 @@ fn report_command_status(last_command: &str, exit_code: i32, begin_ts: u64, end_
     let width = columns + 8;
     eprintln!("\r{report:>width$}");
 
-    if delay > 10000000000 {
+    if delay > 10000000000 && window_id != get_active_window_id() {
         notify("CLI Ready", last_command);
     }
 }
@@ -203,12 +202,11 @@ fn main() {
 
     let last_command = &args[1];
     let exit_code = args[2].parse().unwrap();
-    let begin_ts = args[3].parse().unwrap();
-    let end_ts = ts;
+    let delay = ts - args[3].parse::<u64>().unwrap();
     let window_id = &args[4];
     let git_info = &args[5];
 
-    report_command_status(last_command, exit_code, begin_ts, end_ts);
+    report_command_status(last_command, exit_code, delay, window_id);
     display_primary_prompt(git_info);
     update_terminal_title();
 }
