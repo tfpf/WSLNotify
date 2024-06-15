@@ -222,7 +222,7 @@ zstyle ':completion:*' special-dirs true
 # grey, the rest of the word without any colour, and other words also without
 # any colour. Furthermore, if a completion word is a file (of any type, with
 # 'type' as specified in `LS_COLORS`), display it without any colour.
-zstyle -e ':completion:*:default' list-colors 'reply=("=(#b)(${PREFIX##*/})(*)=0=1;90=0:no=0:fi=0:di=0:ln=0:pi=0:so=0:bd=0:cd=0:or=0:mi=0:su=0:sg=0:tw=0:ow=0:sa=0:st=0:ex=0:tc=0:sp=0")'
+zstyle -e ':completion:*:default' list-colors 'PREFIX=${PREFIX##*/} && reply=("${PREFIX:+=(#b)($PREFIX)(*)=0=1;90=0}:$LS_COLORS")'
 
 select-word-style bash
 
