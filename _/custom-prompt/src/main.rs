@@ -43,6 +43,7 @@ mod constants {
     pub const DIRECTORY: &str = "%~";
     pub const PROMPT_SYMBOL: &str = "%#";
 }
+pub use constants::*;
 
 macro_rules! BELL {
     () => {
@@ -147,22 +148,33 @@ fn report_command_status(last_command: &str, exit_code: i32, begin_ts: u64, end_
         report.push_str(&last_command[last_command_len - right_piece_len..]);
     }
     if exit_code == 0 {
-        write!(report, " {}{} ", BGREENRAW, RSTRAW).unwrap();
+        write!(report, " {BGREENRAW}{RSTRAW} ").unwrap();
     } else {
-        write!(report, " {}{} ", BREDRAW, RSTRAW).unwrap();
+        write!(report, " {BREDRAW}{RSTRAW} ").unwrap();
     }
     let (hours, minutes, seconds, milliseconds) = human_readable(delay);
     if hours > 0 {
-        write!(report, "{:02}", hours).unwrap();
+        write!(report, "{hours:02}").unwrap();
     }
-    write!(report, "{:02}:{:02}:{:03}", minutes, seconds, milliseconds).unwrap();
+    write!(report, "{minutes:02}:{seconds:02}:{milliseconds:03}").unwrap();
 
     // Ensure that the text is right-aligned. Since there are non-printable
     // characters in the string, compensate for the width.
     let width = columns + 8;
-    eprintln!("\r{:>width$}", report, width = width);
+    eprintln!("\r{report:>width$}", width = width);
 
     delay > 10000000000
+}
+
+/// Show the primary prompt.
+///
+/// * `git_info` Description of the status of the current Git repository.
+fn display_primary_prompt(git_info: &str) {
+    print!("\n┌[{BBGREEN}{USER}{RST} {BBIYELLOW}{OPERATING_SYSTEM_ICON} {HOST}{RST} {BBCYAN}{DIRECTORY}{RST}]");
+    print!("{git_info}");
+    if let Ok(venv) = std::env::var("VIRTUAL_ENV_PROMPT") {
+        print!("  {BBLUE}{venv}{RST}");
+    };
 }
 
 fn main() {
@@ -182,6 +194,7 @@ fn main() {
     let git_info = &args[5];
 
     report_command_status(last_command, exit_code, begin_ts, end_ts);
+    display_primary_prompt(git_info);
 
     println!("> ");
 
