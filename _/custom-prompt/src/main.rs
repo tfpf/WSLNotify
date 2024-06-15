@@ -93,7 +93,7 @@ fn get_timestamp() -> u64 {
 /// * `delay` - Interval of time measured in nanoseconds.
 ///
 /// Returns a tuple of numbers representing the interval in more traditional
-/// units.
+/// units: h, m, s and ms.
 fn human_readable(mut delay: u64) -> (u32, u32, u32, u32) {
     delay /= 1000000;
     let milliseconds = (delay % 1000) as u32;
@@ -125,6 +125,10 @@ fn report_command_status(last_command: &str, exit_code: i32, begin_ts: u64, end_
         // return false;
     }
 
+    // Remove the initial part (index and timestamp) of the command
+    // (if applicable). Remove trailing whitespace characters, if any. Then
+    // allocate enough space to write what remains and some additional
+    // information.
     #[cfg(feature = "bash")]
     let last_command = &last_command[last_command.find(RIGHT_SQUARE_BRACKET!()).unwrap() + 2..];
     let last_command = last_command.trim_end();
@@ -152,14 +156,13 @@ fn report_command_status(last_command: &str, exit_code: i32, begin_ts: u64, end_
         write!(report, "{:02}", hours).unwrap();
     }
     write!(report, "{:02}:{:02}:{:03}", minutes, seconds, milliseconds).unwrap();
+
+    // Ensure that the text is right-aligned. Since there are non-printable
+    // characters in the string, compensate for the width.
     let width = columns + 8;
     eprintln!("\r{:>width$}", report, width = width);
 
-    if delay > 10000000000 {
-        true
-    } else {
-        false
-    }
+    delay > 10000000000
 }
 
 fn main() {
