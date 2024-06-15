@@ -114,9 +114,8 @@ command grep -Fiq microsoft /proc/version && . $HOME/.bash_aliases_wsl.bash
 # executed.
 _before_command()
 {
-    [ -n "${__begin+.}" ] && return
-    __window=${WINDOWID:-$(getactivewindow)}
-    __begin=$(custom-bash-prompt)
+    [ -n "${__begin_window+.}" ] && return
+    __begin_window=$(custom-bash-prompt)
 }
 
 # Post-command for command timing. It will be called just before the prompt is
@@ -124,16 +123,10 @@ _before_command()
 _after_command()
 {
     local exit_code=$?
-    [ -z "${__begin+.}" ] && return
+    [ -z "${__begin_window+.}" ] && return
     local last_command=$(history 1)
-
-    # The below program will exit successfully if a notification is to be
-    # shown.
-    if PS1=$(COLUMNS=$COLUMNS custom-bash-prompt "$last_command" $exit_code $__begin "$(__git_ps1 '   %s')")
-    then
-        ([ $__window -ne $(getactivewindow) ] && notify-send -i dialog-information "CLI Ready" "$last_command" &)
-    fi
-    unset __begin __window
+    PS1=$(COLUMNS=$COLUMNS custom-bash-prompt "$last_command" $exit_code $__begin_window "$(__git_ps1 '   %s')")
+    unset __begin_window
 }
 
 trap _before_command DEBUG
