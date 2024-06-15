@@ -108,15 +108,21 @@ fn get_active_window_id() -> String {
     active_win_pos_rs::get_active_window().unwrap().window_id
 }
 
+/// Send a desktop notification.
+///
+/// * `summary` - Notification title.
+/// * `body` - Notification details.
+fn notify(summary: &str, body: &str) {
+    notify_rust::Notification::new().summary(summary).body(body).show().unwrap();
+}
+
 /// Show how long it took to run a command.
 ///
 /// * `last_command` - Most-recently run command.
 /// * `exit_code` - Code with which the command exited.
 /// * `begin_ts` - Timestamp of the instant the command was started at.
 /// * `end_ts` - Timestamp of the instant the command exited at.
-///
-/// Returns `true` if the command ran for long. Returns `false` otherwise.
-fn report_command_status(last_command: &str, exit_code: i32, begin_ts: u64, end_ts: u64) -> bool {
+fn report_command_status(last_command: &str, exit_code: i32, begin_ts: u64, end_ts: u64) {
     let delay = end_ts - begin_ts;
     if delay <= 5000000000 {
         // return false;
@@ -159,7 +165,9 @@ fn report_command_status(last_command: &str, exit_code: i32, begin_ts: u64, end_
     let width = columns + 8;
     eprintln!("\r{report:>width$}");
 
-    delay > 10000000000
+    if delay > 10000000000 {
+        notify("CLI Ready", last_command);
+    }
 }
 
 /// Show the primary prompt.
@@ -203,18 +211,4 @@ fn main() {
     report_command_status(last_command, exit_code, begin_ts, end_ts);
     display_primary_prompt(git_info);
     update_terminal_title();
-
-    // notify_rust::Notification::new()
-    //     .summary("Firefox News")
-    //     .body("This will almost look like a real firefox notification.")
-    //     .show()
-    //     .unwrap();
 }
-//#[cfg(feature = "bash")]
-//fn f() -> i32 {
-//    0
-//}
-//#[cfg(feature = "zsh")]
-//fn f() -> i32 {
-//    1
-//}
