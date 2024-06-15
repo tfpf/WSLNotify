@@ -3,7 +3,7 @@ set bind-tty-special-chars on
 set blink-matching-paren off
 set byte-oriented off
 set colored-completion-prefix on
-set colored-stats off
+set colored-stats on
 set comment-begin #
 set completion-display-width -1
 set completion-ignore-case off

@@ -76,7 +76,7 @@ DOOR 01;35  # Door.
 BLK 40;33;01  # Block device driver.
 CHR 40;33;01  # Character device driver.
 ORPHAN 40;31;01  # Symbolic link to non-existent or non-statable file.
-MISSING 01;05;37;41  # Whatever an `ORPHAN` file points to.
+MISSING 00  # Whatever an `ORPHAN` points to and programmable completion items.
 SETUID 37;41  # Setuid (U+S) file.
 SETGID 30;43  # Setgid (G+S) file.
 CAPABILITY 30;41  # File with capability.
