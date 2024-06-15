@@ -122,15 +122,15 @@ fn notify(summary: &str, body: &str) {
 /// * `exit_code` - Code with which the command exited.
 /// * `delay` - Time the command ran for in nanoseconds.
 /// * `window_id` - ID of the window which had focus when the command started.
-fn report_command_status(last_command: &str, exit_code: i32, delay: u64, window_id: &str) {
+/// * `columns` - Width of the terminal window.
+fn report_command_status(last_command: &str, exit_code: i32, delay: u64, window_id: &str, columns: usize) {
     if delay <= 5000000000 {
         return;
     }
 
-    // Remove the initial part (index and timestamp) of the command
-    // (if applicable). Remove trailing whitespace characters, if any. Then
-    // allocate enough space to write what remains and some additional
-    // information.
+    // Remove the initial part (index and timestamp) of the command, if
+    // applicable. Remove trailing whitespace characters, if any. Then allocate
+    // enough space to write what remains and some additional information.
     #[cfg(feature = "bash")]
     let last_command = &last_command[last_command.find(RIGHT_SQUARE_BRACKET!()).unwrap() + 2..];
     let last_command = last_command.trim_end();
@@ -138,7 +138,6 @@ fn report_command_status(last_command: &str, exit_code: i32, delay: u64, window_
     let mut report = String::with_capacity(last_command_len + 64);
 
     report.push_str(" ");
-    let columns = std::env::var("COLUMNS").unwrap().parse::<usize>().unwrap();
     let left_piece_len = columns * 3 / 8;
     let right_piece_len = left_piece_len;
     if last_command_len <= left_piece_len + 5 + right_piece_len {
@@ -183,8 +182,9 @@ fn display_primary_prompt(git_info: &str) {
 
 /// Update the title of the current terminal window. This should automatically
 /// update the title of the current terminal tab.
-fn update_terminal_title() {
-    let pwd = std::env::var("PWD").unwrap();
+///
+/// * `pwd` - Current directory.
+fn update_terminal_title(pwd: &str) {
     let short_pwd = match pwd.len() {
         1 => "",
         _ => &pwd[pwd.rfind("/").unwrap() + 1..],
@@ -204,9 +204,11 @@ fn main() {
     let exit_code = args[2].parse().unwrap();
     let delay = ts - args[3].parse::<u64>().unwrap();
     let window_id = &args[4];
-    let git_info = &args[5];
+    let columns = args[5].parse().unwrap();
+    let git_info = &args[6];
+    let pwd = &args[7];
 
-    report_command_status(last_command, exit_code, delay, window_id);
+    report_command_status(last_command, exit_code, delay, window_id, columns);
     display_primary_prompt(git_info);
-    update_terminal_title();
+    update_terminal_title(pwd);
 }

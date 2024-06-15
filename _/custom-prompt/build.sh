@@ -2,5 +2,5 @@
 
 set -e
 
-cargo --quiet build --release --features=bash
-cargo --quiet build --release --features=zsh
+cargo --quiet build --features=bash --release
+cargo --quiet build --features=zsh --release

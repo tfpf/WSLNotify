@@ -114,7 +114,7 @@ _after_command()
     local exit_code=$?
     [ -z "${__begin_window+.}" ] && return
     local last_command=$(history 1)
-    PS1=$(COLUMNS=$COLUMNS PWD=$PWD custom-bash-prompt "$last_command" $exit_code $__begin_window "$(__git_ps1 '   %s')")
+    PS1=$(custom-bash-prompt "$last_command" $exit_code $__begin_window $COLUMNS "$(__git_ps1 '   %s')" $PWD)
     unset __begin_window
 }
 
