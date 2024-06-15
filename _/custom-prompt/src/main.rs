@@ -45,11 +45,7 @@ mod constants {
 }
 pub use constants::*;
 
-macro_rules! BELL {
-    () => {
-        "\x07"
-    };
-}
+const BELL: &str = "\x07";
 macro_rules! ESCAPE {
     () => {
         "\x1B"
@@ -161,7 +157,7 @@ fn report_command_status(last_command: &str, exit_code: i32, begin_ts: u64, end_
     // Ensure that the text is right-aligned. Since there are non-printable
     // characters in the string, compensate for the width.
     let width = columns + 8;
-    eprintln!("\r{report:>width$}", width = width);
+    eprintln!("\r{report:>width$}");
 
     delay > 10000000000
 }
@@ -178,10 +174,20 @@ fn display_primary_prompt(git_info: &str) {
     println!("\n└─{PROMPT_SYMBOL} ");
 }
 
+/// Update the title of the current terminal window. This should automatically
+/// update the title of the current terminal tab.
+fn update_terminal_title() {
+    let pwd = std::env::var("PWD").unwrap();
+    let short_pwd = match pwd.len() {
+        1 => "",
+        _ => &pwd[pwd.rfind("/").unwrap() + 1..],
+    };
+    eprint!("{}{}0;{}/{}", ESCAPE!(), RIGHT_SQUARE_BRACKET!(), short_pwd, BELL);
+}
+
 fn main() {
     let ts = get_timestamp();
     let args = std::env::args().collect::<Vec<String>>();
-    eprintln!("Received {:?}.", args);
     if args.len() <= 1 {
         println!("{} {}", ts, get_active_window_id());
         return;
@@ -196,6 +202,7 @@ fn main() {
 
     report_command_status(last_command, exit_code, begin_ts, end_ts);
     display_primary_prompt(git_info);
+    update_terminal_title();
 
     // notify_rust::Notification::new()
     //     .summary("Firefox News")
