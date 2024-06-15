@@ -1,0 +1,11 @@
+[package]
+name = "custom-prompt"
+version = "1.0.0"
+edition = "2021"
+
+[profile.release]
+strip = "debuginfo"
+
+[dependencies]
+active-win-pos-rs = "0.8"
+notify-rust = "4.11"
