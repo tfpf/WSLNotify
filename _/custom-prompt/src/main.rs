@@ -66,59 +66,26 @@ macro_rules! RIGHT_SQUARE_BRACKET {
 }
 
 // Bold, bright and italic.
-const BBIYELLOW: &str = concat!(
-    BEGIN_INVISIBLE!(),
-    ESCAPE!(),
-    LEFT_SQUARE_BRACKET!(),
-    "1;3;93m",
-    END_INVISIBLE!()
-);
+const BBIYELLOW: &str = concat!(BEGIN_INVISIBLE!(), ESCAPE!(), LEFT_SQUARE_BRACKET!(), "1;3;93m", END_INVISIBLE!());
 
 // Bold and bright.
-const BBCYAN: &str = concat!(
-    BEGIN_INVISIBLE!(),
-    ESCAPE!(),
-    LEFT_SQUARE_BRACKET!(),
-    "1;96m",
-    END_INVISIBLE!()
-);
-const BBGREEN: &str = concat!(
-    BEGIN_INVISIBLE!(),
-    ESCAPE!(),
-    LEFT_SQUARE_BRACKET!(),
-    "1;92m",
-    END_INVISIBLE!()
-);
+const BBCYAN: &str = concat!(BEGIN_INVISIBLE!(), ESCAPE!(), LEFT_SQUARE_BRACKET!(), "1;96m", END_INVISIBLE!());
+const BBGREEN: &str = concat!(BEGIN_INVISIBLE!(), ESCAPE!(), LEFT_SQUARE_BRACKET!(), "1;92m", END_INVISIBLE!());
 
 // Bright.
-const BBLUE: &str = concat!(
-    BEGIN_INVISIBLE!(),
-    ESCAPE!(),
-    LEFT_SQUARE_BRACKET!(),
-    "94m",
-    END_INVISIBLE!()
-);
+const BBLUE: &str = concat!(BEGIN_INVISIBLE!(), ESCAPE!(), LEFT_SQUARE_BRACKET!(), "94m", END_INVISIBLE!());
 const BGREENRAW: &str = concat!(ESCAPE!(), LEFT_SQUARE_BRACKET!(), "92m");
 const BREDRAW: &str = concat!(ESCAPE!(), LEFT_SQUARE_BRACKET!(), "91m");
 
 // Reset.
-const RST: &str = concat!(
-    BEGIN_INVISIBLE!(),
-    ESCAPE!(),
-    LEFT_SQUARE_BRACKET!(),
-    "m",
-    END_INVISIBLE!()
-);
+const RST: &str = concat!(BEGIN_INVISIBLE!(), ESCAPE!(), LEFT_SQUARE_BRACKET!(), "m", END_INVISIBLE!());
 const RSTRAW: &str = concat!(ESCAPE!(), LEFT_SQUARE_BRACKET!(), "m");
 
 /// Get the current timestamp.
 ///
 /// Returns the time in nanoseconds since the Unix epoch.
 fn get_timestamp() -> u64 {
-    std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .unwrap()
-        .as_nanos() as u64
+    std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_nanos() as u64
 }
 
 /// Convert an interval into human-readable form.
