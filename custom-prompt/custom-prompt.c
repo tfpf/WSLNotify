@@ -1,3 +1,4 @@
+#undef NDEBUG
 #include <ctype.h>
 #include <stdarg.h>
 #include <stddef.h>
@@ -64,6 +65,8 @@
 #else
 #define LOG_DEBUG(fmt, ...)
 #endif
+
+long long unsigned get_active_window_id(void);
 
 /******************************************************************************
  * Write a debugging message.
