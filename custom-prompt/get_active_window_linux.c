@@ -1,7 +1,7 @@
 #ifdef __linux__
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
-#include <stdio.h>
+#include <stddef.h>
 
 long long unsigned get_active_window_id(void)
 {
