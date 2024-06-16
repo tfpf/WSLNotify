@@ -221,6 +221,7 @@ void display_primary_prompt(char const *git_info)
 
 int main(int const argc, char const *argv[])
 {
+    LOG_DEBUG("Active window ID is %llu.", get_active_window_id());
     long long ts = get_timestamp();
     if (argc <= 1)
     {
