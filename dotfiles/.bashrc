@@ -5,12 +5,7 @@ case $- in
 esac
 
 set -o ignoreeof
-
-shopt -s checkjobs
-shopt -s checkwinsize
-shopt -s expand_aliases
-shopt -s globstar
-shopt -s histappend
+shopt -s checkjobs checkwinsize direxpand expand_aliases globstar histappend
 
 # Prepend directories to an environment variable containing colon-separated
 # paths without duplication.
