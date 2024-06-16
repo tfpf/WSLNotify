@@ -2,7 +2,7 @@
 
 shopt -s globstar
 
-cd "${0%/*}"
+cd $(dirname "$0")
 files=(**/*.c)
 if [ "$1" = check ]
 then
