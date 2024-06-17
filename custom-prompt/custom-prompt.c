@@ -227,7 +227,7 @@ void display_primary_prompt(char const *git_info)
     {
         printf("  " bblue "%s" rst, venv);
     }
-    printf("\n└─" PROMPT_SYMBOL " \n");
+    printf("\n└─" PROMPT_SYMBOL " ");
 }
 
 int main(int const argc, char const *argv[])
