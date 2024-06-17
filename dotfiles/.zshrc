@@ -6,7 +6,7 @@ _after_command()
     local exit_code=$?
     [ -z "${__begin_window+.}" ] && return
     local last_command=$(history -n -1 2>/dev/null)
-    if PS1=$(custom-zsh-prompt "$last_command" $exit_code $=__begin_window $COLUMNS "$(__git_ps1 '%s')" $PWD)
+    if PS1=$(custom-zsh-prompt "$last_command" $exit_code $=__begin_window $COLUMNS "$(__git_ps1 %s)" $PWD)
     then
         (notify-send -i dialog-information "CLI Ready" "$last_command" &)
     fi
