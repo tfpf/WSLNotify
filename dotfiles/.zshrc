@@ -114,6 +114,7 @@ bindkey "^[[1;5D" backward-word
 bindkey "^[[3~" delete-char
 bindkey "^[[B" down-history
 bindkey "^[[F" end-of-line
+bindkey "^I" expand-or-complete-prefix
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;5C" forward-word
 bindkey "^[[3;5~" kill-word
