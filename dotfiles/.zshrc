@@ -4,20 +4,19 @@
 _after_command()
 {
     local exit_code=$?
-    [ -z "${__begin+.}" ] && return
+    [ -z "${__begin_window+.}" ] && return
     local last_command=$(history -n -1 2>/dev/null)
-    if PS1=$(COLUMNS=$COLUMNS custom-zsh-prompt "$last_command" $exit_code $__begin "$(__git_ps1 '   %s')")
+    if PS1=$(custom-zsh-prompt "$last_command" $exit_code $=__begin_window $COLUMNS "$(__git_ps1 '   %s')" $PWD)
     then
-        ([ $__window -ne $(getactivewindow) ] && notify-send -i dialog-information "CLI Ready" "$last_command" &)
+        (notify-send -i dialog-information "CLI Ready" "$last_command" &)
     fi
-    unset __begin __window
+    unset __begin_window
 }
 
 _before_command()
 {
-    [ -n "${__begin+.}" ] && return
-    __window=${WINDOWID:-$(getactivewindow)}
-    __begin=$(custom-zsh-prompt)
+    [ -n "${__begin_window+.}" ] && return
+    __begin_window=$(custom-zsh-prompt)
 }
 
 c()
