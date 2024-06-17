@@ -59,16 +59,6 @@ envarmunge()
     [[ :${(P)name}: != *:$value:* ]] && eval "export $name=\"$value\"\${$name:+:\$$name}"
 }
 
-getactivewindow()
-{
-    if [ -z "$DISPLAY" ]
-    then
-        printf "0\n"
-    else
-        xdotool getactivewindow
-    fi
-}
-
 h()
 {
     [ ! -f "$1" ] && printf "Usage:\n  ${FUNCNAME[0]} <file>\n" >&2 && return 1
