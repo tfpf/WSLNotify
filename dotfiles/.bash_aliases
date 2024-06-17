@@ -95,17 +95,6 @@ c()
     clang-format <($c -E "$1" | command grep -Fv '#') | bat -l $l --file-name "$1"
 }
 
-# Obtain the ID of the active window.
-getactivewindow()
-{
-    if [ -z "$DISPLAY" ]
-    then
-        printf "0\n"
-    else
-        xdotool getactivewindow
-    fi
-}
-
 # This is executed only if Bash is running on WSL (Windows Subsystem for
 # Linux).
 command grep -Fiq microsoft /proc/version && . $HOME/.bash_aliases_wsl.bash
@@ -114,9 +103,8 @@ command grep -Fiq microsoft /proc/version && . $HOME/.bash_aliases_wsl.bash
 # executed.
 _before_command()
 {
-    [ -n "${__begin+.}" ] && return
-    __window=${WINDOWID:-$(getactivewindow)}
-    __begin=$(custom-bash-prompt)
+    [ -n "${__begin_window+.}" ] && return
+    __begin_window=$(custom-bash-prompt)
 }
 
 # Post-command for command timing. It will be called just before the prompt is
@@ -124,16 +112,13 @@ _before_command()
 _after_command()
 {
     local exit_code=$?
-    [ -z "${__begin+.}" ] && return
+    [ -z "${__begin_window+.}" ] && return
     local last_command=$(history 1)
-
-    # The below program will exit successfully if a notification is to be
-    # shown.
-    if PS1=$(COLUMNS=$COLUMNS custom-bash-prompt "$last_command" $exit_code $__begin "$(__git_ps1 '   %s')")
+    if PS1=$(custom-bash-prompt "$last_command" $exit_code $__begin_window $COLUMNS "$(__git_ps1 %s)" "$PWD")
     then
-        ([ $__window -ne $(getactivewindow) ] && notify-send -i dialog-information "CLI Ready" "$last_command" &)
+        (notify-send -i dialog-information "CLI Ready" "$last_command" &)
     fi
-    unset __begin __window
+    unset __begin_window
 }
 
 trap _before_command DEBUG

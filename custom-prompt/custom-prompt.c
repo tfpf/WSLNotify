@@ -6,6 +6,8 @@
 #include <string.h>
 #include <time.h>
 
+long long unsigned get_active_window_id(void);
+
 #if defined __APPLE__
 #define OPERATING_SYSTEM_ICON ""
 #elif defined __linux__
@@ -94,12 +96,30 @@ void log_debug(char const *file_name, char const *function_name, int line_number
  *
  * @return Time in nanoseconds since a fixed but unspecified reference point.
  *****************************************************************************/
-long long get_timestamp(void)
+long long unsigned get_timestamp(void)
 {
     struct timespec now;
     timespec_get(&now, TIME_UTC);
     LOG_DEBUG("Current time is %lld.%09ld.", (long long)now.tv_sec, now.tv_nsec);
-    return now.tv_sec * 1000000000LL + now.tv_nsec;
+    return now.tv_sec * 1000000000ULL + now.tv_nsec;
+}
+
+/******************************************************************************
+ * Convert a time interval into human-readable form.
+ *
+ * @param delay Time interval measured in nanoseconds.
+ * @param hours
+ * @param minutes
+ * @param seconds
+ * @param milliseconds
+ *****************************************************************************/
+void human_readable(
+    long long unsigned delay, unsigned *hours, unsigned *minutes, unsigned *seconds, unsigned *milliseconds)
+{
+    *milliseconds = (delay /= 1000000ULL) % 1000;
+    *seconds = (delay /= 1000) % 60;
+    *minutes = (delay /= 60) % 60;
+    *hours = delay / 60;
 }
 
 /******************************************************************************
@@ -108,16 +128,17 @@ long long get_timestamp(void)
  *
  * @param last_command Most-recently run command.
  * @param exit_code Code with which the command exited.
- * @param begin Timestamp of the instant the command was started at.
- * @param end Timestamp of the instant the command exited at.
+ * @param delay Running time of the command in nanoseconds.
+ * @param active_window_id ID of the focused window when the command started.
+ * @param columns Width of the terminal window.
  *
- * @return Success code if the command ran for a long time, else failure code.
+ * @return Success code if a notification is to be shown, else failure code.
  *****************************************************************************/
-int report_command_status(char *last_command, int exit_code, long long begin, long long end)
+int report_command_status(
+    char *last_command, int exit_code, long long unsigned delay, long long unsigned active_window_id, int columns)
 {
-    long long delay = end - begin;
-    LOG_DEBUG("Command '%s' exited with code %d in %lld ns.", last_command, exit_code, delay);
-    if (delay <= 5000000000LL)
+    LOG_DEBUG("Command '%s' exited with code %d in %llu ns.", last_command, exit_code, delay);
+    if (delay <= 5000000000ULL)
     {
         return EXIT_FAILURE;
     }
@@ -137,7 +158,6 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
     char *report = malloc((last_command_len + 64) * sizeof *report);
     char *report_ptr = report;
 
-    int columns = atoi(getenv("COLUMNS"));
     LOG_DEBUG("Terminal width is %d columns.", columns);
     int left_piece_len = columns * 3 / 8;
     int right_piece_len = left_piece_len;
@@ -159,17 +179,14 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
     {
         report_ptr += sprintf(report_ptr, bred_raw "" rst_raw " ");
     }
-    int this_exit_code = delay > 10000000000LL ? EXIT_SUCCESS : EXIT_FAILURE;
-    int milliseconds = (delay /= 1000000LL) % 1000;
-    int seconds = (delay /= 1000) % 60;
-    int minutes = (delay /= 60) % 60;
-    int hours = delay / 60;
-    LOG_DEBUG("Calculated delay is %d h %d m %d s %d ms.", hours, minutes, seconds, milliseconds);
+    unsigned hours, minutes, seconds, milliseconds;
+    human_readable(delay, &hours, &minutes, &seconds, &milliseconds);
+    LOG_DEBUG("Calculated delay is %u h %u m %u s %u ms.", hours, minutes, seconds, milliseconds);
     if (hours > 0)
     {
-        report_ptr += sprintf(report_ptr, "%02d:", hours);
+        report_ptr += sprintf(report_ptr, "%02u:", hours);
     }
-    report_ptr += sprintf(report_ptr, "%02d:%02d.%03d", minutes, seconds, milliseconds);
+    report_ptr += sprintf(report_ptr, "%02u:%02u.%03u", minutes, seconds, milliseconds);
 
     // Ensure that the text is right-aligned. Since there are non-printable
     // characters in the string, compensate for the width.
@@ -178,16 +195,17 @@ int report_command_status(char *last_command, int exit_code, long long begin, lo
     fprintf(stderr, "\r%*s\n", width, report);
 
     free(report);
-    return this_exit_code;
+    return delay > 10000000000ULL && active_window_id != get_active_window_id() ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 /******************************************************************************
  * Update the title of the current terminal window. This should also
  * automatically update the title of the current terminal tab.
+ *
+ * @param pwd Current directory.
  *****************************************************************************/
-void update_terminal_title(void)
+void update_terminal_title(char const *pwd)
 {
-    char const *pwd = getenv("PWD");
     LOG_DEBUG("Current directory is '%s'.", pwd);
     char const *short_pwd = strrchr(pwd, '/') + 1;
     LOG_DEBUG("Setting terminal window title to '%s/'.", short_pwd);
@@ -205,32 +223,39 @@ void display_primary_prompt(char const *git_info)
     LOG_DEBUG("Current Python virtual environment is '%s'.", venv);
     LOG_DEBUG("Showing primary prompt.");
     printf("\n┌[" bbgreen USER rst " " bbiyellow OPERATING_SYSTEM_ICON " " HOST rst " " bbcyan DIRECTORY rst "]");
-    if (git_info != NULL)
+    if (git_info[0] != '\0')
     {
-        printf("%s", git_info);
+        printf("   %s", git_info);
     }
     if (venv != NULL)
     {
         printf("  " bblue "%s" rst, venv);
     }
-    printf("\n└─" PROMPT_SYMBOL " \n");
+    printf("\n└─" PROMPT_SYMBOL " ");
 }
 
 int main(int const argc, char const *argv[])
 {
-    long long ts = get_timestamp();
+    long long unsigned ts = get_timestamp();
     if (argc <= 1)
     {
-        printf("%lld\n", ts);
+        printf("%llu %llu\n", ts, get_active_window_id());
         return EXIT_SUCCESS;
     }
 
-    // For more accurate timing, run the timer function first. It is
-    // permissible to modify the command line arguments in C, so mark the first
-    // as mutable: this avoids copying the string in the function.
-    int this_exit_code = report_command_status((char *)argv[1], atoi(argv[2]), atoll(argv[3]), ts);
-    display_primary_prompt(argv[4]);
-    update_terminal_title();
+    // Allow the first argument to be modified (this is allowed in C) in order
+    // to avoid copying it in the function which receives it.
+    char *last_command = (char *)argv[1];
+    int exit_code = strtol(argv[2], NULL, 10);
+    long long unsigned delay = ts - strtoll(argv[3], NULL, 10);
+    long long unsigned active_window_id = strtoull(argv[4], NULL, 10);
+    int columns = strtol(argv[5], NULL, 10);
+    char const *git_info = argv[6];
+    char const *pwd = argv[7];
+
+    int this_exit_code = report_command_status(last_command, exit_code, delay, active_window_id, columns);
+    display_primary_prompt(git_info);
+    update_terminal_title(pwd);
 
     return this_exit_code;
 }
