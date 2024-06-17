@@ -1,4 +1,5 @@
 CFLAGS = -flto -O2 -std=c11 -Wall -Wextra
+LDFLAGS = -flto -O2
 
 ifneq "$(OS)" "Windows_NT"
     UNAME = $(shell uname)
@@ -7,19 +8,29 @@ ifneq "$(OS)" "Windows_NT"
     endif
 endif
 
-Sources = $(wildcard *.c)
+MainSource = custom-prompt.c
+MainBashObject = custom-bash-prompt.o
+MainBashExecutable = $(MainBashObject:.o=)
+MainZshObject = custom-zsh-prompt.o
+MainZshExecutable = $(MainZshObject:.o=)
+GetActiveWindowSources = get_active_window_linux.c get_active_window_macos.c get_active_window_windows.c
+GetActiveWindowObjects = $(GetActiveWindowSources:.c=.o)
 
 .PHONY: debug release
 
-debug: custom-bash-prompt custom-zsh-prompt
+debug: $(MainBashExecutable) $(MainZshExecutable)
 
 release: CPPFLAGS += -DNDEBUG
 release: debug
 
-custom-bash-prompt: CPPFLAGS += -DBASH
-custom-bash-prompt: $(Sources)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $^ $(LDLIBS) -o $@
+$(MainBashObject): CPPFLAGS += -DBASH
+$(MainBashObject): $(MainSource)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $^ -o $@
 
-custom-zsh-prompt: CPPFLAGS += -DZSH
-custom-zsh-prompt: $(Sources)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $^ $(LDLIBS) -o $@
+$(MainBashExecutable): $(MainBashObject) $(GetActiveWindowObjects)
+
+$(MainZshObject): CPPFLAGS += -DZSH
+$(MainZshObject): $(MainSource)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $^ -o $@
+
+$(MainZshExecutable): $(MainZshObject) $(GetActiveWindowObjects)
