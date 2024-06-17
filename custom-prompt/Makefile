@@ -21,6 +21,7 @@ GetActiveWindowObjects = $(GetActiveWindowSources:.c=.o)
 debug: $(MainBashExecutable) $(MainZshExecutable)
 
 release: CPPFLAGS += -DNDEBUG
+release: LDFLAGS += -s
 release: debug
 
 $(MainBashObject): CPPFLAGS += -DBASH
