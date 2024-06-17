@@ -36,9 +36,9 @@ long long unsigned get_active_window_id(void);
 #error "unknown shell"
 #endif
 
-#define BELL "\x07"
 #define ESCAPE "\x1B"
 #define LEFT_SQUARE_BRACKET "\x5B"
+#define BACKSLASH "\x5C"
 #define RIGHT_SQUARE_BRACKET "\x5D"
 
 // Bold, bright and italic.
@@ -209,7 +209,7 @@ void update_terminal_title(char const *pwd)
     LOG_DEBUG("Current directory is '%s'.", pwd);
     char const *short_pwd = strrchr(pwd, '/') + 1;
     LOG_DEBUG("Setting terminal window title to '%s/'.", short_pwd);
-    fprintf(stderr, ESCAPE RIGHT_SQUARE_BRACKET "0;%s/" BELL, short_pwd);
+    fprintf(stderr, ESCAPE RIGHT_SQUARE_BRACKET "0;%s/" ESCAPE BACKSLASH, short_pwd);
 }
 
 /******************************************************************************
