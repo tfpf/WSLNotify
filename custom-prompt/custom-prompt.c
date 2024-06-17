@@ -113,7 +113,8 @@ long long unsigned get_timestamp(void)
  * @param seconds
  * @param milliseconds
  *****************************************************************************/
-void human_readable(long long unsigned delay, unsigned *hours, unsigned *minutes, unsigned *seconds, unsigned *milliseconds)
+void human_readable(
+    long long unsigned delay, unsigned *hours, unsigned *minutes, unsigned *seconds, unsigned *milliseconds)
 {
     *milliseconds = (delay /= 1000000ULL) % 1000;
     *seconds = (delay /= 1000) % 60;
@@ -133,7 +134,8 @@ void human_readable(long long unsigned delay, unsigned *hours, unsigned *minutes
  *
  * @return Success code if a notification is to be shown, else failure code.
  *****************************************************************************/
-int report_command_status(char *last_command, int exit_code, long long unsigned delay, long long unsigned active_window_id, int columns)
+int report_command_status(
+    char *last_command, int exit_code, long long unsigned delay, long long unsigned active_window_id, int columns)
 {
     LOG_DEBUG("Command '%s' exited with code %d in %llu ns.", last_command, exit_code, delay);
     if (delay <= 5000000000ULL)
@@ -193,7 +195,7 @@ int report_command_status(char *last_command, int exit_code, long long unsigned 
     fprintf(stderr, "\r%*s\n", width, report);
 
     free(report);
-    return delay > 10000000000ULL && active_window_id != get_active_window_id() ? EXIT_SUCCESS:EXIT_FAILURE;
+    return delay > 10000000000ULL && active_window_id != get_active_window_id() ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 /******************************************************************************
@@ -221,7 +223,7 @@ void display_primary_prompt(char const *git_info)
     LOG_DEBUG("Current Python virtual environment is '%s'.", venv);
     LOG_DEBUG("Showing primary prompt.");
     printf("\n┌[" bbgreen USER rst " " bbiyellow OPERATING_SYSTEM_ICON " " HOST rst " " bbcyan DIRECTORY rst "]");
-    if(git_info[0] != '\0')
+    if (git_info[0] != '\0')
     {
         printf("   %s", git_info);
     }
