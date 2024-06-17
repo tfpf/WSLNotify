@@ -222,10 +222,7 @@ void display_primary_prompt(char const *git_info)
     LOG_DEBUG("Current Python virtual environment is '%s'.", venv);
     LOG_DEBUG("Showing primary prompt.");
     printf("\n┌[" bbgreen USER rst " " bbiyellow OPERATING_SYSTEM_ICON " " HOST rst " " bbcyan DIRECTORY rst "]");
-    if (git_info != NULL)
-    {
-        printf("%s", git_info);
-    }
+    printf("   %s", git_info);
     if (venv != NULL)
     {
         printf("  " bblue "%s" rst, venv);
