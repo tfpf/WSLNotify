@@ -7,6 +7,8 @@
 #include <string.h>
 #include <time.h>
 
+long long unsigned get_active_window_id(void);
+
 #if defined __APPLE__
 #define OPERATING_SYSTEM_ICON ""
 #elif defined __linux__
@@ -65,8 +67,6 @@
 #else
 #define LOG_DEBUG(fmt, ...)
 #endif
-
-long long unsigned get_active_window_id(void);
 
 /******************************************************************************
  * Write a debugging message.
