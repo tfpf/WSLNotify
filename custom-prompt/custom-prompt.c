@@ -9,11 +9,11 @@
 long long unsigned get_active_window_id(void);
 
 #if defined __APPLE__
-#define OPERATING_SYSTEM_ICON ""
+#define HOST_ICON ""
 #elif defined __linux__
-#define OPERATING_SYSTEM_ICON ""
+#define HOST_ICON ""
 #elif defined _WIN32
-#define OPERATING_SYSTEM_ICON ""
+#define HOST_ICON ""
 #else
 #error "unknown OS"
 #endif
@@ -42,24 +42,24 @@ long long unsigned get_active_window_id(void);
 #define RIGHT_SQUARE_BRACKET "\x5D"
 
 // Bold, bright and italic.
-#define bbiyellow BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "1;3;93m" END_INVISIBLE
+#define BBI_YELLOW BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "1;3;93m" END_INVISIBLE
 
 // Bold and bright.
-#define bbcyan BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "1;96m" END_INVISIBLE
-#define bbgreen BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "1;92m" END_INVISIBLE
+#define BB_CYAN BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "1;96m" END_INVISIBLE
+#define BB_GREEN BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "1;92m" END_INVISIBLE
 
 // Bright.
-#define bblue BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "94m" END_INVISIBLE
-#define bgreen_raw ESCAPE LEFT_SQUARE_BRACKET "92m"
-#define bgrey_raw ESCAPE LEFT_SQUARE_BRACKET "90m"
-#define bred_raw ESCAPE LEFT_SQUARE_BRACKET "91m"
+#define B_BLUE BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "94m" END_INVISIBLE
+#define B_GREEN_RAW ESCAPE LEFT_SQUARE_BRACKET "92m"
+#define B_GREY_RAW ESCAPE LEFT_SQUARE_BRACKET "90m"
+#define B_RED_RAW ESCAPE LEFT_SQUARE_BRACKET "91m"
 
 // Dark.
-#define dcyan_raw ESCAPE LEFT_SQUARE_BRACKET "36m"
+#define D_CYAN_RAW ESCAPE LEFT_SQUARE_BRACKET "36m"
 
-// Reset.
-#define rst BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "m" END_INVISIBLE
-#define rst_raw ESCAPE LEFT_SQUARE_BRACKET "m"
+// No formatting.
+#define RESET BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "m" END_INVISIBLE
+#define RESET_RAW ESCAPE LEFT_SQUARE_BRACKET "m"
 
 #ifndef NDEBUG
 #define LOG_DEBUG(fmt, ...) log_debug(__FILE__, __func__, __LINE__, fmt __VA_OPT__(, ) __VA_ARGS__)
@@ -80,10 +80,10 @@ void log_debug(char const *file_name, char const *function_name, int line_number
     time_t now = time(NULL);
     static char timebuf[64];
     strftime(timebuf, sizeof timebuf / sizeof *timebuf, "%FT%T%z", localtime(&now));
-    fprintf(stderr, bgrey_raw "%s" rst_raw " ", timebuf);
-    fprintf(stderr, dcyan_raw "%s" rst_raw ":", file_name);
-    fprintf(stderr, dcyan_raw "%s" rst_raw ":", function_name);
-    fprintf(stderr, dcyan_raw "%d" rst_raw " ", line_number);
+    fprintf(stderr, B_GREY_RAW "%s" RESET_RAW " ", timebuf);
+    fprintf(stderr, D_CYAN_RAW "%s" RESET_RAW ":", file_name);
+    fprintf(stderr, D_CYAN_RAW "%s" RESET_RAW ":", function_name);
+    fprintf(stderr, D_CYAN_RAW "%d" RESET_RAW " ", line_number);
     va_list ap;
     va_start(ap, fmt);
     vfprintf(stderr, fmt, ap);
@@ -173,11 +173,11 @@ int report_command_status(
     }
     if (exit_code == 0)
     {
-        report_ptr += sprintf(report_ptr, bgreen_raw "" rst_raw " ");
+        report_ptr += sprintf(report_ptr, B_GREEN_RAW "" RESET_RAW " ");
     }
     else
     {
-        report_ptr += sprintf(report_ptr, bred_raw "" rst_raw " ");
+        report_ptr += sprintf(report_ptr, B_RED_RAW "" RESET_RAW " ");
     }
     unsigned hours, minutes, seconds, milliseconds;
     human_readable(delay, &hours, &minutes, &seconds, &milliseconds);
@@ -222,14 +222,14 @@ void display_primary_prompt(char const *git_info)
     char const *venv = getenv("VIRTUAL_ENV_PROMPT");
     LOG_DEBUG("Current Python virtual environment is '%s'.", venv);
     LOG_DEBUG("Showing primary prompt.");
-    printf("\n┌[" bbgreen USER rst " " bbiyellow OPERATING_SYSTEM_ICON " " HOST rst " " bbcyan DIRECTORY rst "]");
+    printf("\n┌[" BB_GREEN USER RESET " " BBI_YELLOW HOST_ICON " " HOST RESET " " BB_CYAN DIRECTORY RESET "]");
     if (git_info[0] != '\0')
     {
         printf("   %s", git_info);
     }
     if (venv != NULL)
     {
-        printf("  " bblue "%s" rst, venv);
+        printf("  " B_BLUE "%s" RESET, venv);
     }
     printf("\n└─" PROMPT_SYMBOL " ");
 }
