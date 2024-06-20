@@ -6,6 +6,8 @@ ifneq "$(OS)" "Windows_NT"
     ifeq "$(UNAME)" "Linux"
         CPPFLAGS += $(shell pkg-config --cflags glib-2.0 libnotify x11)
         LDLIBS += $(shell pkg-config --libs glib-2.0 libnotify x11)
+    else
+        LDLIBS += -framework Cocoa -framework CoreGraphics
     endif
 endif
 
