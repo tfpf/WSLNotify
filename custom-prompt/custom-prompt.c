@@ -6,6 +6,10 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef __linux__
+#include <libnotify/notify.h>
+#endif
+
 struct Interval
 {
     unsigned hours;
@@ -15,7 +19,6 @@ struct Interval
 };
 
 long long unsigned get_active_window_id(void);
-void notify_desktop(char const *, struct Interval *);
 
 #if defined __APPLE__
 #define HOST_ICON ""
@@ -130,6 +133,28 @@ void delay_to_interval(long long unsigned delay, struct Interval *interval)
 }
 
 /******************************************************************************
+ * Show information about the running time of a command with a desktop
+ * notification.
+ *
+ * @param last_command Most-recently run command.
+ *****************************************************************************/
+void notify_desktop(char const *last_command)
+{
+#if defined __APPLE__ || defined _WIN32
+    // Use OSC 777, which is supported on the terminals I use on these systems:
+    // Kitty, iTerm2 and WezTerm.
+    fprintf(stderr, ESCAPE RIGHT_SQUARE_BRACKET "777;notify;CLI Ready;%s" ESCAPE BACKSLASH, last_command);
+#else
+    // Xfce Terminal (the best terminal) does not support OSC 777. Do it the
+    // hard way.
+    notify_init(__FILE__);
+    NotifyNotification *notification = notify_notification_new("CLI Ready", last_command, NULL);
+    notify_notification_show(notification, NULL);
+    // notify_uninit();
+#endif
+}
+
+/******************************************************************************
  * Show information about the running time of a command textually.
  *
  * @param last_command Most-recently run command.
@@ -179,7 +204,7 @@ void write_report(
     LOG_DEBUG("Padding report to %d characters.", width);
     fprintf(stderr, "\r%*s\n", width, report);
 
-    free(report);
+    // free(report);
 }
 
 /******************************************************************************
@@ -197,7 +222,7 @@ void report_command_status(
     LOG_DEBUG("Command '%s' exited with code %d in %llu ns.", last_command, exit_code, delay);
     if (delay <= 5000000000ULL)
     {
-        // return;
+        return;
     }
 
     struct Interval interval;
@@ -219,7 +244,7 @@ void report_command_status(
     write_report(last_command, last_command_len, exit_code, &interval, columns);
     if (delay > 10000000000ULL && active_window_id != get_active_window_id())
     {
-        notify_desktop(last_command, &interval);
+        notify_desktop(last_command);
     }
 }
 

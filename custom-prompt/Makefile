@@ -4,7 +4,8 @@ LDFLAGS = -flto -O2
 ifneq "$(OS)" "Windows_NT"
     UNAME = $(shell uname)
     ifeq "$(UNAME)" "Linux"
-        LDLIBS += $(shell pkg-config --libs x11)
+        CPPFLAGS += $(shell pkg-config --cflags glib-2.0 libnotify x11)
+        LDLIBS += $(shell pkg-config --libs glib-2.0 libnotify x11)
     endif
 endif
 
