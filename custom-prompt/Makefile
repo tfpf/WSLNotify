@@ -13,7 +13,7 @@ MainBashObject = custom-bash-prompt.o
 MainBashExecutable = $(MainBashObject:.o=)
 MainZshObject = custom-zsh-prompt.o
 MainZshExecutable = $(MainZshObject:.o=)
-GetActiveWindowSources = get_active_window_linux.c get_active_window_macos.c get_active_window_windows.c
+GetActiveWindowSources = get_active_window_id_linux.c get_active_window_id_macos.c get_active_window_id_windows.c
 GetActiveWindowObjects = $(GetActiveWindowSources:.c=.o)
 
 .PHONY: debug release
