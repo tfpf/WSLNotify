@@ -222,7 +222,9 @@ void report_command_status(
     LOG_DEBUG("Command '%s' exited with code %d in %llu ns.", last_command, exit_code, delay);
     if (delay <= 5000000000ULL)
     {
+#ifdef NDEBUG
         return;
+#endif
     }
 
     struct Interval interval;
