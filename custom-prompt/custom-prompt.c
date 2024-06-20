@@ -6,6 +6,18 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef __linux__
+#include <libnotify/notify.h>
+#endif
+
+struct Interval
+{
+    unsigned hours;
+    unsigned minutes;
+    unsigned seconds;
+    unsigned milliseconds;
+};
+
 long long unsigned get_active_window_id(void);
 
 #if defined __APPLE__
@@ -105,60 +117,59 @@ long long unsigned get_timestamp(void)
 }
 
 /******************************************************************************
- * Convert a time interval into human-readable form.
+ * Represent an amount of time in human-readable form.
  *
- * @param delay Time interval measured in nanoseconds.
- * @param hours
- * @param minutes
- * @param seconds
- * @param milliseconds
+ * @param delay Time measured in nanoseconds.
+ * @param interval Time measured in a easier-to-understand units.
  *****************************************************************************/
-void human_readable(
-    long long unsigned delay, unsigned *hours, unsigned *minutes, unsigned *seconds, unsigned *milliseconds)
+void delay_to_interval(long long unsigned delay, struct Interval *interval)
 {
-    *milliseconds = (delay /= 1000000ULL) % 1000;
-    *seconds = (delay /= 1000) % 60;
-    *minutes = (delay /= 60) % 60;
-    *hours = delay / 60;
+    interval->milliseconds = (delay /= 1000000ULL) % 1000;
+    interval->seconds = (delay /= 1000) % 60;
+    interval->minutes = (delay /= 60) % 60;
+    interval->hours = delay / 60;
+    LOG_DEBUG("Calculated interval is %u h %u m %u s %u ms.", interval->hours, interval->minutes, interval->seconds,
+        interval->milliseconds);
 }
 
 /******************************************************************************
- * Show how long it took to run a command, given the timestamp it was started
- * at.
+ * Show information about the running time of a command with a desktop
+ * notification.
  *
  * @param last_command Most-recently run command.
- * @param exit_code Code with which the command exited.
- * @param delay Running time of the command in nanoseconds.
- * @param active_window_id ID of the focused window when the command started.
- * @param columns Width of the terminal window.
- *
- * @return Success code if a notification is to be shown, else failure code.
  *****************************************************************************/
-int report_command_status(
-    char *last_command, int exit_code, long long unsigned delay, long long unsigned active_window_id, int columns)
+void notify_desktop(char const *last_command)
 {
-    LOG_DEBUG("Command '%s' exited with code %d in %llu ns.", last_command, exit_code, delay);
-    if (delay <= 5000000000ULL)
-    {
-        return EXIT_FAILURE;
-    }
-
-#ifdef BASH
-    // Remove the initial part (index and timestamp) of the command.
-    last_command = strchr(last_command, RIGHT_SQUARE_BRACKET[0]) + 2;
+#if defined __APPLE__ || defined _WIN32
+    // Use OSC 777, which is supported on the terminals I use on these systems:
+    // Kitty, iTerm2 and WezTerm.
+    fprintf(stderr, ESCAPE RIGHT_SQUARE_BRACKET "777;notify;CLI Ready;%s" ESCAPE BACKSLASH, last_command);
+#else
+    // Xfce Terminal (the best terminal) does not support OSC 777. Do it the
+    // hard way.
+    notify_init(__FILE__);
+    NotifyNotification *notification = notify_notification_new("CLI Ready", last_command, NULL);
+    notify_notification_show(notification, NULL);
+    // notify_uninit();
 #endif
-    // Remove trailing whitespace characters, if any. Then allocate enough
-    // space to write what remains and some additional information.
-    size_t last_command_len = strlen(last_command);
-    while (isspace(last_command[--last_command_len]) != 0)
-    {
-    }
-    last_command[++last_command_len] = '\0';
-    LOG_DEBUG("Command is of length %zu.", last_command_len);
+}
+
+/******************************************************************************
+ * Show information about the running time of a command textually.
+ *
+ * @param last_command Most-recently run command.
+ * @param last_command_len Length of the command.
+ * @param exit_code Code with which the command exited.
+ * @param interval Running time of the command.
+ * @param columns Width of the terminal window.
+ *****************************************************************************/
+void write_report(
+    char const *last_command, size_t last_command_len, int exit_code, struct Interval const *interval, int columns)
+{
     char *report = malloc((last_command_len + 64) * sizeof *report);
     char *report_ptr = report;
 
-    LOG_DEBUG("Terminal width is %d columns.", columns);
+    LOG_DEBUG("Terminal width is %d.", columns);
     int left_piece_len = columns * 3 / 8;
     int right_piece_len = left_piece_len;
     if (last_command_len <= (size_t)(left_piece_len + right_piece_len) + 5)
@@ -179,23 +190,64 @@ int report_command_status(
     {
         report_ptr += sprintf(report_ptr, B_RED_RAW "" RESET_RAW " ");
     }
-    unsigned hours, minutes, seconds, milliseconds;
-    human_readable(delay, &hours, &minutes, &seconds, &milliseconds);
-    LOG_DEBUG("Calculated delay is %u h %u m %u s %u ms.", hours, minutes, seconds, milliseconds);
-    if (hours > 0)
+
+    if (interval->hours > 0)
     {
-        report_ptr += sprintf(report_ptr, "%02u:", hours);
+        report_ptr += sprintf(report_ptr, "%02u:", interval->hours);
     }
-    report_ptr += sprintf(report_ptr, "%02u:%02u.%03u", minutes, seconds, milliseconds);
+    report_ptr += sprintf(report_ptr, "%02u:%02u.%03u", interval->minutes, interval->seconds, interval->milliseconds);
 
     // Ensure that the text is right-aligned. Since there are non-printable
     // characters in the string, compensate for the width.
     int width = columns + 12;
-    LOG_DEBUG("Padding report of length %ld to %d characters.", report_ptr - report, width);
+    LOG_DEBUG("Report length is %ld.", report_ptr - report);
+    LOG_DEBUG("Padding report to %d characters.", width);
     fprintf(stderr, "\r%*s\n", width, report);
 
-    free(report);
-    return delay > 10000000000ULL && active_window_id != get_active_window_id() ? EXIT_SUCCESS : EXIT_FAILURE;
+    // free(report);
+}
+
+/******************************************************************************
+ * Show information about the running time of a command if it ran for long.
+ *
+ * @param last_command Most-recently run command.
+ * @param exit_code Code with which the command exited.
+ * @param delay Running time of the command in nanoseconds.
+ * @param active_window_id ID of the focused window when the command started.
+ * @param columns Width of the terminal window.
+ *****************************************************************************/
+void report_command_status(
+    char *last_command, int exit_code, long long unsigned delay, long long unsigned active_window_id, int columns)
+{
+    LOG_DEBUG("Command '%s' exited with code %d in %llu ns.", last_command, exit_code, delay);
+    if (delay <= 5000000000ULL)
+    {
+#ifdef NDEBUG
+        return;
+#endif
+    }
+
+    struct Interval interval;
+    delay_to_interval(delay, &interval);
+
+#ifdef BASH
+    // Remove the initial part (index and timestamp) of the command.
+    last_command = strchr(last_command, RIGHT_SQUARE_BRACKET[0]) + 2;
+#endif
+    // Remove trailing whitespace characters, if any. Then allocate enough
+    // space to write what remains and some additional information.
+    size_t last_command_len = strlen(last_command);
+    while (isspace(last_command[--last_command_len]) != 0)
+    {
+    }
+    last_command[++last_command_len] = '\0';
+    LOG_DEBUG("Command length is %zu.", last_command_len);
+
+    write_report(last_command, last_command_len, exit_code, &interval, columns);
+    if (delay > 10000000000ULL && active_window_id != get_active_window_id())
+    {
+        notify_desktop(last_command);
+    }
 }
 
 /******************************************************************************
@@ -253,9 +305,9 @@ int main(int const argc, char const *argv[])
     char const *git_info = argv[6];
     char const *pwd = argv[7];
 
-    int this_exit_code = report_command_status(last_command, exit_code, delay, active_window_id, columns);
+    report_command_status(last_command, exit_code, delay, active_window_id, columns);
     display_primary_prompt(git_info);
     update_terminal_title(pwd);
 
-    return this_exit_code;
+    return EXIT_SUCCESS;
 }

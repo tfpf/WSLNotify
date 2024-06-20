@@ -4,7 +4,10 @@ LDFLAGS = -flto -O2
 ifneq "$(OS)" "Windows_NT"
     UNAME = $(shell uname)
     ifeq "$(UNAME)" "Linux"
-        LDLIBS += -lX11
+        CPPFLAGS += $(shell pkg-config --cflags glib-2.0 libnotify x11)
+        LDLIBS += $(shell pkg-config --libs glib-2.0 libnotify x11)
+    else
+        LDLIBS += -framework Cocoa -framework CoreGraphics
     endif
 endif
 
@@ -13,8 +16,7 @@ MainBashObject = custom-bash-prompt.o
 MainBashExecutable = $(MainBashObject:.o=)
 MainZshObject = custom-zsh-prompt.o
 MainZshExecutable = $(MainZshObject:.o=)
-GetActiveWindowSources = get_active_window_id_linux.c get_active_window_id_macos.c get_active_window_id_windows.c
-GetActiveWindowObjects = $(GetActiveWindowSources:.c=.o)
+GetActiveWindowIdObjects = get_active_window_id_linux.o get_active_window_id_macos.o get_active_window_id_windows.o
 
 .PHONY: debug release
 
@@ -28,10 +30,10 @@ $(MainBashObject): CPPFLAGS += -DBASH
 $(MainBashObject): $(MainSource)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $^ -o $@
 
-$(MainBashExecutable): $(MainBashObject) $(GetActiveWindowObjects)
+$(MainBashExecutable): $(MainBashObject) $(GetActiveWindowIdObjects)
 
 $(MainZshObject): CPPFLAGS += -DZSH
 $(MainZshObject): $(MainSource)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $^ -o $@
 
-$(MainZshExecutable): $(MainZshObject) $(GetActiveWindowObjects)
+$(MainZshExecutable): $(MainZshObject) $(GetActiveWindowIdObjects)
