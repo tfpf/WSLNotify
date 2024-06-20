@@ -14,8 +14,6 @@ MainBashExecutable = $(MainBashObject:.o=)
 MainZshObject = custom-zsh-prompt.o
 MainZshExecutable = $(MainZshObject:.o=)
 GetActiveWindowIdObjects = get_active_window_id_linux.o get_active_window_id_macos.o get_active_window_id_windows.o
-NotifyDesktopObjects = notify_desktop_linux.o notify_desktop_macos_windows.o
-Objects = $(GetActiveWindowIdObjects) $(NotifyDesktopObjects)
 
 .PHONY: debug release
 
@@ -29,10 +27,10 @@ $(MainBashObject): CPPFLAGS += -DBASH
 $(MainBashObject): $(MainSource)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $^ -o $@
 
-$(MainBashExecutable): $(MainBashObject) $(Objects)
+$(MainBashExecutable): $(MainBashObject) $(GetActiveWindowIdObjects)
 
 $(MainZshObject): CPPFLAGS += -DZSH
 $(MainZshObject): $(MainSource)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $^ -o $@
 
-$(MainZshExecutable): $(MainZshObject) $(Objects)
+$(MainZshExecutable): $(MainZshObject) $(GetActiveWindowIdObjects)
