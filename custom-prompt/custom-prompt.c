@@ -6,7 +6,16 @@
 #include <string.h>
 #include <time.h>
 
+struct Interval
+{
+    unsigned hours;
+    unsigned minutes;
+    unsigned seconds;
+    unsigned milliseconds;
+};
+
 long long unsigned get_active_window_id(void);
+void notify_desktop(char const *, struct Interval *);
 
 #if defined __APPLE__
 #define HOST_ICON ""
@@ -60,14 +69,6 @@ long long unsigned get_active_window_id(void);
 // No formatting.
 #define RESET BEGIN_INVISIBLE ESCAPE LEFT_SQUARE_BRACKET "m" END_INVISIBLE
 #define RESET_RAW ESCAPE LEFT_SQUARE_BRACKET "m"
-
-struct Interval
-{
-    unsigned hours;
-    unsigned minutes;
-    unsigned seconds;
-    unsigned milliseconds;
-};
 
 #ifndef NDEBUG
 #define LOG_DEBUG(fmt, ...) log_debug(__FILE__, __func__, __LINE__, fmt __VA_OPT__(, ) __VA_ARGS__)
@@ -218,7 +219,7 @@ void report_command_status(
     write_report(last_command, last_command_len, exit_code, &interval, columns);
     if (delay > 10000000000ULL && active_window_id != get_active_window_id())
     {
-        // notify_desktop(last_command, &interval);
+        notify_desktop(last_command, &interval);
     }
 }
 
