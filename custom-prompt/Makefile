@@ -28,12 +28,12 @@ release: debug
 
 $(MainBashObject): CPPFLAGS += -DBASH
 $(MainBashObject): $(MainSource)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $^ -o $@
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 $(MainBashExecutable): $(MainBashObject) $(GetActiveWindowIdObjects)
 
 $(MainZshObject): CPPFLAGS += -DZSH
 $(MainZshObject): $(MainSource)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $^ -o $@
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 $(MainZshExecutable): $(MainZshObject) $(GetActiveWindowIdObjects)
