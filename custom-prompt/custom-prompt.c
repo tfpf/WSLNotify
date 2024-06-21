@@ -99,7 +99,7 @@ void log_debug(char const *file_name, char const *function_name, int line_number
     va_list ap;
     va_start(ap, fmt);
     vfprintf(stderr, fmt, ap);
-    va_end(ap);
+    // va_end(ap);
     fprintf(stderr, "\n");
 }
 
@@ -133,8 +133,7 @@ void delay_to_interval(long long unsigned delay, struct Interval *interval)
 }
 
 /******************************************************************************
- * Show information about the running time of a command with a desktop
- * notification.
+ * Show a completed command using a desktop notification.
  *
  * @param last_command Most-recently run command.
  *****************************************************************************/
@@ -155,7 +154,7 @@ void notify_desktop(char const *last_command)
 }
 
 /******************************************************************************
- * Show information about the running time of a command textually.
+ * Show a completed command textually.
  *
  * @param last_command Most-recently run command.
  * @param last_command_len Length of the command.
