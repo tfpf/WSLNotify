@@ -1,3 +1,8 @@
+**This project is obsolete. I don't plan on updating it. I found a better way
+to determine the active window ID and send native notifications on Windows, and
+integrated it with my configurations files in
+[tfpf/dotfiles](https://github.com/tfpf/dotfiles).**
+
 # Native Windows Notifications for WSL
 `notify-send` doesn't work on WSL. `WSLNotify.exe` may be used instead. You can
 grab it from the
@@ -16,27 +21,27 @@ type `WSLNotify` instead of `./WSLNotify.exe` while entering these commands.)
 ```
 ./WSLNotify.exe "Summary Goes Here"
 ```
-![summary](WSLNotify/gallery/1_summary.png)
+![summary](gallery/1_summary.png)
 
 ```
 ./WSLNotify.exe "Summary Goes Here" "Body goes here"
 ```
-![summarybody](WSLNotify/gallery/2_summary_and_body.png)
+![summarybody](gallery/2_summary_and_body.png)
 
 ```
 ./WSLNotify.exe -i "dialog-information" "Good News" "Something good happened"
 ```
-![information](WSLNotify/gallery/3_information.png)
+![information](gallery/3_information.png)
 
 ```
 ./WSLNotify.exe -i "dialog-warning" "News" "Something happened"
 ```
-![warning](WSLNotify/gallery/4_warning.png)
+![warning](gallery/4_warning.png)
 
 ```
 ./WSLNotify.exe -i "dialog-error" "Bad News" "Something bad happened"
 ```
-![error](WSLNotify/gallery/5_error.png)
+![error](gallery/5_error.png)
 
 As of now, only the `-i` option is supported, and only for the three stock
 icons seen above. Support for the `-u` (for urgency) and `-t` (for expire time)
@@ -67,34 +72,10 @@ a little more work, you can make it so that the notification reports the
 elapsed time if the terminal is not the currently active window. To emulate the
 same behaviour on WSL (which behaves like a headless system, whereby
 notifications and active windows are meaningless), Windows notifications and
-Windows window IDs can be used. With a few tricks (using
-[`WSLNotify.exe`](https://github.com/tfpf/WSLNotify/releases/latest) and
-[`WSLGetActiveWindow.exe`](https://github.com/tfpf/WSLNotify/releases/latest),
-as seen in [`dotfiles/.bash_aliases`](dotfiles/.bash_aliases)), the timer works
-seamlessly on GNU/Linux and WSL both.
+Windows window IDs can be used.
 
 ## Known Bugs
 * Hovering the mouse over the system tray icon after the application has
 returned makes the notification disappear.
 * Multiple notifications fill up the system tray with the application icon.
 * The `-i` option does not work on Windows 11.
-
-# Environment-Agnostic Configuration Files
-I am also using this repository to store my dotfiles; the ones for Bash, Zsh
-and GVIM can be used on GNU/Linux or WSL without making any changes whatsoever.
-Having identical files for both means I don't have to spend time setting up my
-environment.
-
-There are a few nifty hacks implemented.
-
-## Command Timer
-As mentioned above. If the terminal in which a command was executed is not the
-active window when the execution is complete, a notification is sent.
-
-## Python Executor
-Run Python programs without writing a new file.
-
-## LaTeX Renderer
-Render mathematical expressions written in a small subset of LaTeX (the subset
-supported by Matplotlib) alongside the code. Basically, a crude version of
-Overleaf.

@@ -1,7 +1,0 @@
-#compdef cfs
-
-if [ $CURRENT -eq 2 ]
-then
-    local completions=(conservative ondemand performance powersave schedutil userspace)
-    compadd -a completions -o nosort
-fi
